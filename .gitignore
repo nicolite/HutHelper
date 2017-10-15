@@ -53,3 +53,7 @@ google-services.json
 freeline.py
 freeline/
 freeline_project_description.json
+
+# API files
+.app/src/main/java/cn/nicolite/huthelper/network/api/
+.app/src/main/java/cn/nicolite/huthelper/model/
