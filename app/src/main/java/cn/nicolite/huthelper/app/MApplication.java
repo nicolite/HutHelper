@@ -12,7 +12,6 @@ import cn.nicolite.huthelper.services.InitializeService;
 
 public class MApplication extends Application {
     public static  Context AppContext;
-    private static final String TAG = "MApplication";
 
     @Override
     public void onCreate() {

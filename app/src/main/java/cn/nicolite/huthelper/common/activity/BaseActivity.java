@@ -140,7 +140,8 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * @param clazz
      */
     public void startActivity(Class<?> clazz){
-        startActivity(clazz);
+        Intent intent = new Intent(this, clazz);
+        startActivity(intent);
     }
 
     /**
