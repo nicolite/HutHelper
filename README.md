@@ -6,7 +6,7 @@
 RxJava2 + Retrofit2 + RxLifecycle2 + MVP
 
 # View注入
-[ButterKnife](http://jakewharton.github.io/butterknife/)
+[ButterKnife](http://jakewharton.github.io/butterknife/)  
 
-#　数据库
+# 数据库
 greenDao的[objectBox](http://greenrobot.org/)
