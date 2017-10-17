@@ -112,7 +112,7 @@ public class ActivityStackManager {
     public void exitApp(Context context){
         finishAllActivity();
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        activityManager.restartPackage(context.getPackageName());
+        activityManager.killBackgroundProcesses(context.getPackageName());
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancelAll();

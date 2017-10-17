@@ -42,8 +42,8 @@
 #Glide 结束
 
 #腾讯mat 开始
--keep class com.tencent.stat.**  {* ;}
--keep class com.tencent.mid.**  {* ;}
+-keep class com.tencent.stat.**{*;}
+-keep class com.tencent.mid.**{*;}
 #腾讯mat 结束
 
 #腾讯bugly 开始

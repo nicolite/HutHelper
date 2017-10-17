@@ -4,8 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
-import org.litepal.LitePal;
-
 import cn.nicolite.huthelper.services.InitializeService;
 
 /**
@@ -20,7 +18,6 @@ public class MApplication extends Application {
     public void onCreate() {
         super.onCreate();
         AppContext = getApplicationContext();
-        LitePal.initialize(this);
         InitializeService.start(this);
     }
 

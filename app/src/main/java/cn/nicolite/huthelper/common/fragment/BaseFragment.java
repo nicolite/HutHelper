@@ -30,9 +30,18 @@ public abstract class BaseFragment extends RxFragment {
         return view;
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        LogUtils.d(TAG, TAG + "-->onActivityCreated()");
+        doBusiness();
+    }
+
     protected abstract void initConfig();
 
     protected abstract int setLayoutId();
+
+    protected  abstract void doBusiness();
 
     @Override
     public void onDestroy() {

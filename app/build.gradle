@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'io.objectbox'
 
 android {
     compileSdkVersion 26
@@ -10,16 +11,17 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
 
         ndk {
             abiFilters 'armeabi-v7a', 'arm64-v8a'//, 'armeabi', 'x86'//, 'x86_64', "mips"
         }
 
         manifestPlaceholders = [
-                XG_ACCESS_ID:"2100267021",
-                XG_ACCESS_KEY : "AK8J5TS61K8D",
-                MTA_APPKEY:"ACIDT96D3M7R",
-                MTA_CHANNEL:"ddc"
+                XG_ACCESS_ID : "2100267021",
+                XG_ACCESS_KEY: "AK8J5TS61K8D",
+                MTA_APPKEY   : "ACIDT96D3M7R",
+                MTA_CHANNEL  : "ddc"
         ]
     }
 
@@ -29,20 +31,35 @@ android {
     }
 
     signingConfigs {
+        //从signing.properties文件中拉取签名信息
+        def keystoreStream = new FileInputStream(rootProject.file('signing.properties'))
+        def keyProperties = new Properties()
+        keyProperties.load(keystoreStream)
+
         config {
-            keyAlias 'huthelper'
-            keyPassword '13755181843'
-            storeFile file('/home/nicolite/AndroidAppKey/appkey.jks')
-            storePassword '13755181843'
+            keyAlias keyProperties.getProperty('KEY_ALIAS')
+            keyPassword keyProperties.getProperty('KEY_PWD')
+            storeFile file(keyProperties.getProperty('KEYSTORE_FILE'))
+            storePassword keyProperties.getProperty('KEYSTORE_PWD')
         }
+
         release {
-            keyAlias 'huthelper'
-            keyPassword '13755181843'
-            storeFile file('/home/nicolite/AndroidAppKey/appkey.jks')
-            storePassword '13755181843'
+            keyAlias keyProperties['KEY_ALIAS']
+            keyPassword keyProperties['KEY_PWD']
+            storeFile file(keyProperties['KEYSTORE_FILE'])
+            storePassword keyProperties['KEYSTORE_PWD']
+        }
+
+        debug {
+            keyAlias keyProperties['KEY_ALIAS']
+            keyPassword keyProperties['KEY_PWD']
+            storeFile file(keyProperties['KEYSTORE_FILE'])
+            storePassword keyProperties['KEYSTORE_PWD']
         }
     }
+
     buildTypes {
+
         release {
             minifyEnabled true
             zipAlignEnabled true
@@ -55,7 +72,7 @@ android {
         debug {
             minifyEnabled false
             zipAlignEnabled true
-            shrinkResources true
+            shrinkResources false
             buildConfigField("boolean", "LOG_DEBUG", "true");
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
@@ -63,12 +80,29 @@ android {
 
     }
 
-   packagingOptions {
-       //rxjava1和自己的rxjava2冲突
-       exclude 'META-INF/rxjava.properties'
-   }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    packagingOptions {
+        //rxjava1和自己的rxjava2冲突
+        exclude 'META-INF/rxjava.properties'
+    }
 
     productFlavors {
+        //酷安
+        kuan {
+            manifestPlaceholders = [
+                    MTA_CHANNEL  : "酷安"
+            ]
+        }
+        //小米
+        xiaomi {
+            manifestPlaceholders = [
+                    MTA_CHANNEL  : "小米应用商店"
+            ]
+        }
     }
 }
 
@@ -117,8 +151,6 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.7.0'
     //Gson---json解析
     compile 'com.google.code.gson:gson:2.8.1'
-    //数据库
-    compile 'org.litepal.android:core:1.6.0'
     //动画低版本支持
     compile 'com.nineoldandroids:library:2.4.0'
     //权限管理
@@ -145,4 +177,9 @@ dependencies {
     compile 'com.qq.mta:mta:3.1.4-alpha'
     //融云kit
     compile project(':IMKit')
+    //数据库
+    ext.objectboxVersion = '1.1.0'
+    compile "io.objectbox:objectbox-android:$objectboxVersion"
+    annotationProcessor "io.objectbox:objectbox-processor:$objectboxVersion"
+
 }
