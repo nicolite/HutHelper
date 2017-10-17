@@ -7,7 +7,7 @@ import android.widget.ImageView;
 
 import butterknife.BindView;
 import cn.nicolite.huthelper.R;
-import cn.nicolite.huthelper.common.activity.BaseActivity;
+import cn.nicolite.huthelper.base.activity.BaseActivity;
 
 /**
  * 闪屏页
@@ -28,7 +28,7 @@ public class SplashActivity extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            startActivity(MainActivity.class);
+            startActivity(LoginActivity.class);
             finish();
         }
     };

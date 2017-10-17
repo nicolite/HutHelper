@@ -6,15 +6,12 @@ import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 
 /**
- * 主页
+ * Created by nicolite on 17-10-17.
  */
-public class MainActivity extends BaseActivity {
 
+public class WebViewActivity extends BaseActivity {
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        //setAllowFullScreen(true);
-        hideToolBar(true);
-        setDeepColorStatusBar(true);
         setImmersiveStatusBar(true);
     }
 
@@ -25,7 +22,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected int setLayoutId() {
-        return R.layout.activity_main;
+        return R.layout.acitivity_webview;
     }
 
     @Override

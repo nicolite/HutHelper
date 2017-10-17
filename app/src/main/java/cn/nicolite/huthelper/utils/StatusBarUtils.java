@@ -20,17 +20,16 @@ public class StatusBarUtils {
     /**
      * 设置状态栏颜色为深色，支持MIUIV6+，FLYME4.0+，Android 6.0+
      * @param window
-     * @param isDeepColor
      */
 
-    public static void setStatusBarFontDeepColor(Window window, boolean isDeepColor) {
-        if (AndroidMStatusBarLightMode(window, isDeepColor)) {
-            LogUtils.d(TAG, "setStatusBarFontDeepColor: " + "Android 6.0+");
+    public static void setDeepColorStatusBar(Window window) {
+        if (AndroidMStatusBarLightMode(window, true)) {
+            LogUtils.d(TAG, "setDeepColorStatusBar: " + "Android 6.0+");
         }
-        if (MIUISetStatusBarLightMode(window, isDeepColor)) {
-            LogUtils.d(TAG, "setStatusBarFontDeepColor: " + "MIUI");
-        } else if (FlymeSetStatusBarLightMode(window, isDeepColor)) {
-            LogUtils.d(TAG, "setStatusBarFontDeepColor: " + "Flyme");
+        if (MIUIStatusBarLightMode(window, true)) {
+            LogUtils.d(TAG, "setDeepColorStatusBar: " + "MIUI");
+        } else if (FlymeStatusBarLightMode(window, true)) {
+            LogUtils.d(TAG, "setDeepColorStatusBar: " + "Flyme");
         } else {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 // 透明状态栏
@@ -38,7 +37,7 @@ public class StatusBarUtils {
                 // 透明导航栏
                 window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             }
-            LogUtils.d(TAG, "setStatusBarFontDeepColor: " + "not supported device");
+            LogUtils.d(TAG, "setDeepColorStatusBar: " + "not supported device");
         }
     }
 
@@ -50,7 +49,7 @@ public class StatusBarUtils {
      * @param isDeepColor   是否把状态栏字体及图标颜色设置为深色
      * @return boolean 成功执行返回true
      */
-    private static boolean FlymeSetStatusBarLightMode(Window window, boolean isDeepColor) {
+    private static boolean FlymeStatusBarLightMode(Window window, boolean isDeepColor) {
         boolean result = false;
         if (window != null) {
             try {
@@ -72,7 +71,7 @@ public class StatusBarUtils {
                 window.setAttributes(lp);
                 result = true;
             } catch (Exception e) {
-                LogUtils.d(TAG, "FlymeSetStatusBarLightMode: " + e.toString());
+                LogUtils.d(TAG, "FlymeStatusBarLightMode: " + e.toString());
             }
         }
         return result;
@@ -85,7 +84,7 @@ public class StatusBarUtils {
      * @param isDeepColor   是否把状态栏字体及图标颜色设置为深色
      * @return boolean 成功执行返回true
      */
-    private static boolean MIUISetStatusBarLightMode(Window window, boolean isDeepColor) {
+    private static boolean MIUIStatusBarLightMode(Window window, boolean isDeepColor) {
         boolean result = false;
         if (window != null) {
             Class<?> clazz = window.getClass();
@@ -102,14 +101,14 @@ public class StatusBarUtils {
                 }
                 result = true;
             } catch (Exception e) {
-                LogUtils.d(TAG, "MIUISetStatusBarLightMode: " + e.toString());
+                LogUtils.d(TAG, "MIUIStatusBarLightMode: " + e.toString());
             }
         }
         return result;
     }
 
-    private static  boolean AndroidMStatusBarLightMode(Window window, boolean dark) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && dark) {
+    private static  boolean AndroidMStatusBarLightMode(Window window, boolean isDeepColor) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && isDeepColor) {
             //必须清除这个flag
             window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             //需要设置这个 flag 才能调用 setStatusBarColor 来设置状态栏颜色

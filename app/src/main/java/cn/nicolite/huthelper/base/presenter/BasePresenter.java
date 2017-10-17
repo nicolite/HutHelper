@@ -1,4 +1,4 @@
-package cn.nicolite.huthelper.common.presenter;
+package cn.nicolite.huthelper.base.presenter;
 
 
 import android.os.Bundle;
@@ -6,7 +6,7 @@ import android.os.Bundle;
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 
-import cn.nicolite.huthelper.common.activity.BaseActivity;
+import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.listener.LifeCycleListener;
 
 /**

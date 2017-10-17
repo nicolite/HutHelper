@@ -1,8 +1,6 @@
 package cn.nicolite.huthelper.network.observer;
 
 import io.reactivex.Observer;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.disposables.Disposable;
 
 /**
  * //TODO
@@ -15,26 +13,6 @@ import io.reactivex.disposables.Disposable;
  * Created by nicolite on 17-10-17.
  */
 
-public class HttpRxObserver<T> implements Observer<T> {
+public abstract class HttpRxObserver<T> implements Observer<T> {
 
-
-    @Override
-    public void onSubscribe(@NonNull Disposable d) {
-
-    }
-
-    @Override
-    public void onNext(@NonNull T t) {
-
-    }
-
-    @Override
-    public void onError(@NonNull Throwable e) {
-
-    }
-
-    @Override
-    public void onComplete() {
-
-    }
 }

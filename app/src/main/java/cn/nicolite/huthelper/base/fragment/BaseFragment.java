@@ -1,4 +1,4 @@
-package cn.nicolite.huthelper.common.fragment;
+package cn.nicolite.huthelper.base.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;

@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import java.util.concurrent.TimeUnit;
 
+import cn.nicolite.huthelper.BuildConfig;
 import cn.nicolite.huthelper.model.Constant;
 import cn.nicolite.huthelper.utils.LogUtils;
 import okhttp3.OkHttpClient;
@@ -21,7 +22,7 @@ public class RetrofitUtils {
 
     private static final String TAG = "RetrofitUtils";
 
-    public static final String BASE_URL = Constant.BASE_URL;
+    public static String BASE_URL = Constant.BASE_URL;
     public static final int CONNECT_TIME_OUT = 30;//连接超时时长x秒
     public static final int READ_TIME_OUT = 30;//读数据超时时长x秒
     public static final int WRITE_TIME_OUT = 30;//写数据接超时时长x秒
@@ -68,6 +69,10 @@ public class RetrofitUtils {
      * @return Retrofit
      */
     public Retrofit retrofit() {
+        if (BuildConfig.LOG_DEBUG){
+            BASE_URL = Constant.TEST_BASE_URL;
+        }
+
         return new Retrofit.Builder()
                 .client(okHttpClient())
                 .baseUrl(BASE_URL)

@@ -1,4 +1,4 @@
-package cn.nicolite.huthelper.common.iview;
+package cn.nicolite.huthelper.base.iview;
 
 /**
  *
@@ -10,5 +10,5 @@ public interface IBaseView {
 
     void closeLoading();
 
-    void showToast();
+    void showMessage(String msg);
 }

@@ -1,4 +1,4 @@
-package cn.nicolite.huthelper.common.activity;
+package cn.nicolite.huthelper.base.activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -239,9 +239,9 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * 设置状态栏字体为深色
      * @param isDeepColor
      */
-    public void setStatusBarFontDeepColor(boolean isDeepColor){
+    public void setDeepColorStatusBar(boolean isDeepColor){
         if (isDeepColor){
-            StatusBarUtils.setStatusBarFontDeepColor(this.getWindow(), isDeepColor);
+            StatusBarUtils.setDeepColorStatusBar(this.getWindow());
         }
     }
 

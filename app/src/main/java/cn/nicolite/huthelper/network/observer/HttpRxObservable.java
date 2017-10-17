@@ -13,7 +13,7 @@ import io.reactivex.schedulers.Schedulers;
  * Created by nicolite on 17-10-17.
  */
 
-public class HttpRxObserverable {
+public class HttpRxObservable {
 
     /**
      * 获取被监听者
@@ -22,7 +22,7 @@ public class HttpRxObserverable {
      * @param observable
      * @return Observable
      */
-    public static Observable<?> getObservable(Observable<?> observable){
+    public static Observable getObservable(Observable observable){
         return observable
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
@@ -37,8 +37,8 @@ public class HttpRxObserverable {
      * @param lifecycleProvider
      * @return
      */
-    public static Observable<?> getObservable(Observable<?> observable,
-                                              LifecycleProvider<?> lifecycleProvider){
+    public static Observable getObservable(Observable observable,
+                                              LifecycleProvider lifecycleProvider){
         if (lifecycleProvider != null){
             return observable
                     .compose(lifecycleProvider.bindToLifecycle())
@@ -60,7 +60,7 @@ public class HttpRxObserverable {
      * @return
      */
 
-    public static Observable<?> getObservable(Observable<?> observable,
+    public static Observable getObservable(Observable observable,
                                               LifecycleProvider<ActivityEvent> lifecycleProvider,
                                               ActivityEvent activityEvent){
         if (lifecycleProvider != null){
@@ -73,7 +73,7 @@ public class HttpRxObserverable {
         }
     }
 
-    public static Observable<?> getObservable(Observable<?> observable,
+    public static Observable getObservable(Observable observable,
                                               LifecycleProvider<FragmentEvent> lifecycleProvider,
                                               FragmentEvent fragmentEvent){
         if (lifecycleProvider != null){

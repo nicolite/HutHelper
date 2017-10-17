@@ -51,7 +51,11 @@
         <activity
             android:name=".view.activity.MainActivity"
             android:theme="@style/AppTheme"/>
-        
+
+        <activity
+            android:name=".view.activity.LoginActivity"
+            android:theme="@style/AppTheme"/>
+
         <service android:name=".services.InitializeService" />
 
         <!-- 融云-->
