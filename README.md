@@ -9,4 +9,4 @@ RxJava2 + Retrofit2 + RxLifecycle2 + MVP
 [ButterKnife](http://jakewharton.github.io/butterknife/)  
 
 # 数据库
-greenDao的[objectBox](http://greenrobot.org/)
+[objectBox](http://objectbox.io/)
