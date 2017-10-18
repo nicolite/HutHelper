@@ -63,3 +63,6 @@ app/src/main/java/cn/nicolite/huthelper/model/
 
 # keyStore file
 signing.properties
+
+# appKey file
+appKey.properties

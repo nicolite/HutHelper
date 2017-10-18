@@ -14,14 +14,19 @@ android {
         multiDexEnabled true
 
         ndk {
-            abiFilters 'armeabi-v7a', 'arm64-v8a'//, 'armeabi', 'x86'//, 'x86_64', "mips"
+            abiFilters 'armeabi-v7a'//, 'arm64-v8a', 'armeabi', 'x86'//, 'x86_64', "mips"
         }
 
+        //appKey.properties文件中拉取信息
+        def appKeyStream = new FileInputStream(rootProject.file('appKey.properties'))
+        def appKeyProperties = new Properties()
+        appKeyProperties.load(appKeyStream)
+
         manifestPlaceholders = [
-                XG_ACCESS_ID : "2100267021",
-                XG_ACCESS_KEY: "AK8J5TS61K8D",
-                MTA_APPKEY   : "ACIDT96D3M7R",
-                MTA_CHANNEL  : "ddc"
+                XG_ACCESS_ID   : appKeyProperties.get("XG_ACCESS_ID"),
+                XG_ACCESS_KEY  : appKeyProperties.get("XG_ACCESS_KEY"),
+                MTA_APPKEY     : appKeyProperties.get("MTA_APPKEY"),
+                MTA_CHANNEL    : appKeyProperties.get("MTA_CHANNEL"),
         ]
     }
 
@@ -75,7 +80,7 @@ android {
             shrinkResources false
             buildConfigField("boolean", "LOG_DEBUG", "true");
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.debug
         }
 
     }
@@ -94,13 +99,13 @@ android {
         //酷安
         kuan {
             manifestPlaceholders = [
-                    MTA_CHANNEL  : "酷安"
+                    MTA_CHANNEL: "酷安"
             ]
         }
         //小米
         xiaomi {
             manifestPlaceholders = [
-                    MTA_CHANNEL  : "小米应用商店"
+                    MTA_CHANNEL: "小米应用商店"
             ]
         }
     }
@@ -184,4 +189,10 @@ dependencies {
     ext.objectboxVersion = '1.1.0'
     compile "io.objectbox:objectbox-android:$objectboxVersion"
     annotationProcessor "io.objectbox:objectbox-processor:$objectboxVersion"
+    //ijkplayer 视频播放
+    compile 'tv.danmaku.ijk.media:ijkplayer-java:0.8.4'
+    compile 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4'
+    //compile 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.4'
+    //ExoPlayer as IMediaPlayer: optional, experimental
+    compile 'tv.danmaku.ijk.media:ijkplayer-exo:0.8.4'
 }
