@@ -13,6 +13,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
+ * Login Presenter1
  * Created by nicolite on 17-10-17.
  */
 
@@ -24,10 +25,10 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
 
     public void login(String username, String password){
 
-
         APIUtils
                 .getLoginAPI()
                 .login(username, password)
+                .compose(activity.<HttpResult<User>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<HttpResult<User>>() {

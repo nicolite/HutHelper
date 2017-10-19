@@ -59,6 +59,10 @@
         <service android:name=".services.InitializeService" />
 
         <!-- 融云-->
+        <meta-data
+            android:name="RONG_CLOUD_APP_KEY"
+            android:value="${RONG_CLOUD_KEY}" />
+
         <provider
             android:name=".provider.RongIMFileProvider"
             android:authorities="${applicationId}.FileProvider"
@@ -183,7 +187,7 @@
             android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
             android:value="GlideModule" />
 
-
+        <!-- 信鸽推送 -->
         <receiver
             android:name=".receiver.XinGeReceiver"
             android:exported="true"

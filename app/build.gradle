@@ -23,10 +23,11 @@ android {
         appKeyProperties.load(appKeyStream)
 
         manifestPlaceholders = [
-                XG_ACCESS_ID   : appKeyProperties.get("XG_ACCESS_ID"),
-                XG_ACCESS_KEY  : appKeyProperties.get("XG_ACCESS_KEY"),
-                MTA_APPKEY     : appKeyProperties.get("MTA_APPKEY"),
-                MTA_CHANNEL    : appKeyProperties.get("MTA_CHANNEL"),
+                XG_ACCESS_ID  : appKeyProperties.get("XG_ACCESS_ID"),
+                XG_ACCESS_KEY : appKeyProperties.get("XG_ACCESS_KEY"),
+                MTA_APPKEY    : appKeyProperties.get("MTA_APPKEY"),
+                MTA_CHANNEL   : appKeyProperties.get("MTA_CHANNEL"),
+                RONG_CLOUD_KEY: appKeyProperties.get("RONG_CLOUD_KEY")
         ]
     }
 
@@ -83,6 +84,19 @@ android {
             signingConfig signingConfigs.debug
         }
 
+    }
+
+    applicationVariants.all {
+        variant ->
+            variant.outputs.each {
+                output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith(".apk")) {
+                        def dirName = outputFile.parent
+                        def fileName = "huthelper-${variant.flavorName}-${variant.versionName}(${variant.versionCode}).apk"
+                        output.outputFile = new File(dirName, fileName)
+                    }
+            }
     }
 
     lintOptions {

@@ -10,9 +10,11 @@ import io.reactivex.processors.PublishProcessor;
  */
 
 public class RxBus {
+
     private final FlowableProcessor<Object> bus;
     private static volatile RxBus instance;
-    public RxBus() {
+
+    private RxBus() {
         bus = PublishProcessor.create().toSerialized();
     }
 

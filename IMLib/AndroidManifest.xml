@@ -20,9 +20,9 @@
 
     <application>
 
-        <meta-data
+        <!--<meta-data
             android:name="RONG_CLOUD_APP_KEY"
-            android:value="x4vkb1qpx05kk" />
+            android:value="" />-->
 
         <service
             android:name="io.rong.imlib.ipc.RongService"

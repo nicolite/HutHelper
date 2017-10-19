@@ -46,4 +46,12 @@ public class KeyBoardUtils {
             }
         });
     }
+
+    /**
+     * TODO
+     * 关闭软键盘
+     */
+    public static void closeSoftKeyBoard(){
+
+    }
 }

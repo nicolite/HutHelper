@@ -19,7 +19,7 @@ import cn.nicolite.huthelper.utils.SlidrUtils;
 import cn.nicolite.huthelper.utils.StatusBarUtils;
 
 /**
- * Activity 基类
+ * Activity 基类 包含生命周期管理
  * 所有Activity都要继承此类
  * Created by nicolite on 17-9-6.
  */

@@ -115,5 +115,6 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     @Override
     public void onSuccess() {
         startActivity(MainActivity.class);
+        finish();
     }
 }
