@@ -83,6 +83,8 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     public void onViewClicked(View view) {
         switch (view.getId()){
             case R.id.btn_login:
+                KeyBoardUtils.hideSoftInput(context, getWindow());
+
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
 

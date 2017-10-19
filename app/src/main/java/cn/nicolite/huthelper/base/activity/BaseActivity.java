@@ -39,11 +39,11 @@ public abstract class BaseActivity extends RxAppCompatActivity {
             lifeCycleListener.onCreate(savedInstanceState);
         }
         ActivityStackManager.getManager().push(this);
-        Bundle bundle = getIntent().getExtras();
         initConfig(savedInstanceState);
         setContentView(setLayoutId());
         context = this;
         unbinder = ButterKnife.bind(this);
+        Bundle bundle = getIntent().getExtras();
         initBundleData(bundle);
         doBusiness();
     }
