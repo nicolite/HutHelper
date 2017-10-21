@@ -23,6 +23,7 @@ import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.utils.ToastUtil;
 import cn.nicolite.huthelper.view.iview.ILoginView;
+import cn.nicolite.huthelper.view.widget.LoadingDialog;
 
 /**
  * 登录页面
@@ -39,6 +40,7 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     @BindView(R.id.tv_message)
     TextView tvMessage;
     private LoginPresenter loginPresenter;
+    private LoadingDialog loadingDialog;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -100,12 +102,14 @@ public class LoginActivity extends BaseActivity implements ILoginView{
 
     @Override
     public void showLoading() {
-
+        loadingDialog = new LoadingDialog(context)
+                .setLoadingText("登录中...");
+        loadingDialog.show();
     }
 
     @Override
     public void closeLoading() {
-
+        loadingDialog.dismiss();
     }
 
     @Override

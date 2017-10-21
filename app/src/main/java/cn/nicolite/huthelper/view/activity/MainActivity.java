@@ -12,7 +12,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        //setAllowFullScreen(true);
         hideToolBar(true);
         setDeepColorStatusBar(true);
         setImmersiveStatusBar(true);

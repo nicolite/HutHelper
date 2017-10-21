@@ -35,7 +35,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-
+        setImmersiveStatusBar(true);
     }
 
     @Override

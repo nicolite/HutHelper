@@ -4,6 +4,7 @@ import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.network.api.APIUtils;
+import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.view.activity.LoginActivity;
 import cn.nicolite.huthelper.view.iview.ILoginView;
 import io.reactivex.Observer;
@@ -13,7 +14,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * Login Presenter1
+ * Login Presenter
  * Created by nicolite on 17-10-17.
  */
 
@@ -28,7 +29,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
         APIUtils
                 .getLoginAPI()
                 .login(username, password)
-                .compose(activity.<HttpResult<User>>bindToLifecycle())
+                .compose(getActivity().<HttpResult<User>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<HttpResult<User>>() {
@@ -55,7 +56,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                     @Override
                     public void onError(@NonNull Throwable e) {
                         if (getView() != null){
-                            getView().showMessage(e.toString());
+                            getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
                     }
 

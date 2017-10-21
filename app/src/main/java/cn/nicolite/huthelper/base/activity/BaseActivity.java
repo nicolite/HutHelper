@@ -2,6 +2,7 @@ package cn.nicolite.huthelper.base.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -213,8 +214,10 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     public void setScreenRotate(boolean isAllowScreenRotate){
         if (isAllowScreenRotate){
             //TODO 允许旋转
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
         }else {
             //TODO 不允许
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
 
@@ -231,6 +234,10 @@ public abstract class BaseActivity extends RxAppCompatActivity {
                 // 透明导航栏
                 getWindow().addFlags(
                         WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+              //  // 布局背景填充状态栏 与键盘监听冲突
+              //  getWindow().addFlags(
+              //          WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+              //  );
             }
         }
     }

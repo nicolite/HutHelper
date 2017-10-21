@@ -19,6 +19,7 @@ import cn.nicolite.huthelper.injection.JsInject;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 
 /**
+ * 通用webView
  * Created by nicolite on 17-10-17.
  */
 

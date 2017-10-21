@@ -13,8 +13,6 @@ import io.reactivex.functions.Function;
 
 public class HttpResultFunction<T> implements Function<Throwable, Observable<T>> {
     private static final String TAG = "HttpResultFunction";
-
-
     @Override
     public Observable<T> apply(@NonNull Throwable throwable) throws Exception {
         LogUtils.d(TAG, TAG + " " + throwable.toString());

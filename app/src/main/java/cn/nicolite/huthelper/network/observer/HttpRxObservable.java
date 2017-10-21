@@ -4,6 +4,7 @@ import com.trello.rxlifecycle2.LifecycleProvider;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.android.FragmentEvent;
 
+import cn.nicolite.huthelper.network.function.HttpResultFunction;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -22,8 +23,9 @@ public class HttpRxObservable {
      * @param observable
      * @return Observable
      */
-    public static Observable getObservable(Observable observable){
+    public static<T> Observable<T> getObservable(Observable<T> observable){
         return observable
+                .onErrorResumeNext(new HttpResultFunction<T>())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
@@ -37,10 +39,11 @@ public class HttpRxObservable {
      * @param lifecycleProvider
      * @return
      */
-    public static Observable getObservable(Observable observable,
-                                              LifecycleProvider lifecycleProvider){
+    public static<T> Observable getObservable(Observable<T> observable,
+                                              LifecycleProvider<T> lifecycleProvider){
         if (lifecycleProvider != null){
             return observable
+                    .onErrorResumeNext(new HttpResultFunction<T>())
                     .compose(lifecycleProvider.bindToLifecycle())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
@@ -60,11 +63,12 @@ public class HttpRxObservable {
      * @return
      */
 
-    public static Observable getObservable(Observable observable,
+    public static<T> Observable getObservable(Observable<T> observable,
                                               LifecycleProvider<ActivityEvent> lifecycleProvider,
                                               ActivityEvent activityEvent){
         if (lifecycleProvider != null){
             return observable
+                    .onErrorResumeNext(new HttpResultFunction<T>())
                     .compose(lifecycleProvider.bindUntilEvent(activityEvent))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
@@ -73,11 +77,12 @@ public class HttpRxObservable {
         }
     }
 
-    public static Observable getObservable(Observable observable,
+    public static<T> Observable getObservable(Observable<T> observable,
                                               LifecycleProvider<FragmentEvent> lifecycleProvider,
                                               FragmentEvent fragmentEvent){
         if (lifecycleProvider != null){
             return observable
+                    .onErrorResumeNext(new HttpResultFunction<T>())
                     .compose(lifecycleProvider.bindUntilEvent(fragmentEvent))
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread());
