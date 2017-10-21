@@ -17,6 +17,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.model.Constant;
 import cn.nicolite.huthelper.presenter.LoginPresenter;
 import cn.nicolite.huthelper.utils.KeyBoardUtils;
 import cn.nicolite.huthelper.utils.LogUtils;
@@ -64,7 +65,11 @@ public class LoginActivity extends BaseActivity implements ILoginView{
         spannableString.setSpan(new ClickableSpan() {
             @Override
             public void onClick(View widget) {
-
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", WebViewActivity.TYPE_CHANGE_PWD);
+                bundle.putString("title", "修改密码");
+                bundle.putString("url", Constant.CHANGE_PWD);
+                LoginActivity.this.startActivity(WebViewActivity.class, bundle);
             }
 
             @Override

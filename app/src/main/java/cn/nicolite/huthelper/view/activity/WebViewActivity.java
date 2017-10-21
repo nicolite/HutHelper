@@ -5,14 +5,17 @@ import android.graphics.PixelFormat;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.injection.JsInject;
@@ -30,21 +33,20 @@ public class WebViewActivity extends BaseActivity {
     WebView webView;
     @BindView(R.id.rootView)
     LinearLayout rootView;
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
     private int type;
     private String url;
     private String title;
     private WebSettings settings;
 
-    public static final int TYPE_NEWS = 884;
-    public static final int TYPE_NEWS_BANNER = 811;
-    public static final int TYPE_TY_VIDEO = 995;
-    public static final int TYPE_TY_CARTOON = 840;
-    public static final int TYPE_TY_COS = 734;
-    public static final int TYPE_VIDEO = 517;
+    public static final int TYPE_CHANGE_PWD = 561;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar(true);
+        setDeepColorStatusBar(true);
+        setSlideExit(true);
         getWindow().setFormat(PixelFormat.TRANSLUCENT);
     }
 
@@ -66,6 +68,7 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void doBusiness() {
+        toolbarTitle.setText("");
         initWebView();
         loadHtml(type, title, url);
     }
@@ -116,17 +119,24 @@ public class WebViewActivity extends BaseActivity {
             @Override
             public void onProgressChanged(WebView webView, int i) {
                 super.onProgressChanged(webView, i);
-                if (i == 100){
-                    addImgClickListener();
-                }else {
+                if (i == 100) {
+                    if (type != TYPE_CHANGE_PWD){
+                        addImgClickListener();
+                    }
+                    progressBar.setVisibility(View.GONE);
+                } else {
                     progressBar.setProgress(i);
                 }
             }
         });
     }
 
-    private void loadHtml(int type, String title,String url){
-        switch (type){
+    private void loadHtml(int type, String title, String url) {
+        switch (type) {
+            case TYPE_CHANGE_PWD:
+                toolbarTitle.setText(title);
+                webView.loadUrl(url);
+                break;
             default:
                 SnackbarUtils.showShortSnackbar(rootView, "未知类型");
         }
@@ -168,5 +178,18 @@ public class WebViewActivity extends BaseActivity {
             webView.destroy();
             webView = null;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        if (webView.canGoBack()){
+            webView.goBack();
+        }
+    }
+
+    @OnClick(R.id.toolbar_back)
+    public void onViewClicked() {
+        finish();
     }
 }

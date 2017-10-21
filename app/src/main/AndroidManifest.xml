@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     package="cn.nicolite.huthelper">
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -50,11 +51,19 @@
 
         <activity
             android:name=".view.activity.MainActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
 
         <activity
             android:name=".view.activity.LoginActivity"
-            android:theme="@style/AppTheme"/>
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".view.activity.WebViewActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".view.activity.ShowImageActivity"
+            android:theme="@style/AppTheme" />
 
         <service android:name=".services.InitializeService" />
 
