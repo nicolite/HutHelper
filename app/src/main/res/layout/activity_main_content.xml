@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@drawable/banner">
+
+        <ImageView
+            android:id="@+id/imgbtn_menusetting"
+            android:layout_width="31dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="21dp"
+            android:paddingBottom="8dp"
+            android:paddingEnd="12dp"
+            android:paddingStart="0dp"
+            android:paddingTop="14dp"
+            android:src="@drawable/ic_menu_main" />
+
+        <FrameLayout
+            android:id="@+id/unReadMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="5dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="21dp">
+
+            <ImageView
+                android:id="@+id/imgbtn_bell"
+                android:layout_width="31dp"
+                android:layout_height="40dp"
+                android:layout_gravity="start"
+                android:paddingBottom="8dp"
+                android:paddingTop="10dp"
+                android:src="@drawable/bell" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_below="@id/imgbtn_menusetting"
+            android:layout_marginEnd="40dp"
+            android:layout_marginTop="55dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_wd_temp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="sans-serif-thin"
+                android:gravity="center"
+                android:text="N/A"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/tv_wd_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="株洲 | 阴"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingEnd="10dp"
+            android:paddingStart="10dp">
+
+            <TextView
+                android:id="@+id/tv_course_maincontent"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="120dp"
+                android:text="下节课：计算机网络 公共楼211"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_date_maincontent"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="12周 星期1"
+                android:textColor="@color/white"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginStart="10dp">
+
+            <ImageView
+                android:id="@+id/iv_dateline"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="start|center_vertical"
+                android:src="@drawable/ic_dateline" />
+
+            <cn.nicolite.huthelper.view.widget.DateLineView
+                android:id="@+id/dateLineView"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_gravity="end|center_vertical"
+                android:layout_marginStart="30dp" />
+        </FrameLayout>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_main_tongzhi"
+        android:layout_width="match_parent"
+        android:layout_height="73dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp">
+
+        <ImageView
+            android:id="@+id/mu_tongzhi"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_centerVertical="true"
+            android:paddingBottom="5dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/ic_info" />
+
+        <TextView
+            android:id="@+id/tv_tongzhi_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@id/mu_tongzhi"
+            android:layout_marginStart="20dp"
+            android:layout_toEndOf="@+id/mu_tongzhi"
+            android:ellipsize="end"
+            android:maxWidth="160dp"
+            android:singleLine="true"
+            android:text="通知"
+            android:textColor="#adadad"
+            android:textSize="12sp" />
+        <cn.nicolite.huthelper.view.widget.RichTextView
+            android:id="@+id/tv_notice_maincontent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignTop="@id/mu_tongzhi"
+            android:layout_gravity="center_vertical"
+            android:drawablePadding="10dp"
+            android:text="查看全部通知"
+            android:textColor="#1dcbdb"
+            android:textSize="12sp"
+            view:drawable_height="9dp"
+            view:drawable_location="right"
+            view:drawable_src="@drawable/img_right"
+            view:drawable_width="6dp" />
+
+
+        <TextView
+            android:id="@+id/tv_tongzhi_contont"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/mu_tongzhi"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/mu_tongzhi"
+            android:ellipsize="end"
+            android:maxWidth="200dp"
+            android:singleLine="true"
+            android:text="暂时没有通知"
+            android:textColor="#404040"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/tv_tongzhi_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/mu_tongzhi"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="10dp"
+            android:text=""
+            android:textColor="#adadad"
+            android:textSize="12sp" />
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="@color/bg_grey" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_main_menu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:overScrollMode="never"
+        android:scrollbars="none" />
+
+</LinearLayout>

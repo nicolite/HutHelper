@@ -4,6 +4,8 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import org.litepal.LitePal;
+
 import cn.nicolite.huthelper.services.InitializeService;
 
 /**
@@ -12,11 +14,13 @@ import cn.nicolite.huthelper.services.InitializeService;
 
 public class MApplication extends Application {
     public static  Context AppContext;
-
+    public static  MApplication application;
     @Override
     public void onCreate() {
         super.onCreate();
         AppContext = getApplicationContext();
+        application = this;
+        LitePal.initialize(this);
         InitializeService.start(this);
     }
 
@@ -26,6 +30,5 @@ public class MApplication extends Application {
         //初始化多dex配置
         MultiDex.install(this);
     }
-
 
 }

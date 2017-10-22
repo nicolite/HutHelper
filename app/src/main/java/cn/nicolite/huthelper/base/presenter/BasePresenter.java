@@ -29,6 +29,7 @@ public class BasePresenter<V, T> implements LifeCycleListener {
         setListener(activity);
     }
 
+
     /**
      * 设置生命周期监听
      * @param activity

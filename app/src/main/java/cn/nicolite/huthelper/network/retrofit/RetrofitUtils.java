@@ -23,9 +23,9 @@ public class RetrofitUtils {
     private static final String TAG = "RetrofitUtils";
 
     public static String BASE_URL = Constant.BASE_URL;
-    public static final int CONNECT_TIME_OUT = 30;//连接超时时长x秒
-    public static final int READ_TIME_OUT = 30;//读数据超时时长x秒
-    public static final int WRITE_TIME_OUT = 30;//写数据接超时时长x秒
+    public static final int CONNECT_TIME_OUT = 20;//连接超时时长x秒
+    public static final int READ_TIME_OUT = 20;//读数据超时时长x秒
+    public static final int WRITE_TIME_OUT = 20;//写数据接超时时长x秒
     private static RetrofitUtils instance;
 
     private RetrofitUtils() {

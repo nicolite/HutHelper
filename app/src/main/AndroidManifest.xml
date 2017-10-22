@@ -65,6 +65,10 @@
             android:name=".view.activity.ShowImageActivity"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".view.activity.AboutActivity"
+            android:theme="@style/AppTheme" />
+
         <service android:name=".services.InitializeService" />
 
         <!-- 融云-->

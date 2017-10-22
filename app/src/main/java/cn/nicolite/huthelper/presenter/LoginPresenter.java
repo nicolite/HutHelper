@@ -1,5 +1,7 @@
 package cn.nicolite.huthelper.presenter;
 
+import org.litepal.crud.DataSupport;
+
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.User;
@@ -24,7 +26,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
         super(view, activity);
     }
 
-    public void login(String username, String password){
+    public void login(final String username, String password) {
 
         APIUtils
                 .getLoginAPI()
@@ -35,7 +37,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                 .subscribe(new Observer<HttpResult<User>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        if (getView() != null){
+                        if (getView() != null) {
                             getView().showLoading();
                         }
 
@@ -43,11 +45,12 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
 
                     @Override
                     public void onNext(@NonNull HttpResult<User> userHttpResult) {
-                        if (getView() != null){
+                        if (getView() != null) {
                             getView().closeLoading();
-                            if (userHttpResult.getCode().equals("200")){
+                            if (userHttpResult.getCode().equals("200")) {
                                 getView().onSuccess();
-                            }else {
+                                userHttpResult.getData().saveOrUpdateAsync("user_id", userHttpResult.getData().getUser_id());
+                            } else {
                                 getView().showMessage(userHttpResult.getMsg());
                             }
                         }
@@ -55,7 +58,8 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        if (getView() != null){
+                        if (getView() != null) {
+                            getView().closeLoading();
                             getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
                     }
@@ -66,4 +70,13 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                     }
                 });
     }
+
+    public boolean isLogin(){
+        User user = DataSupport.findFirst(User.class);
+        if (user != null){
+            return true;
+        }
+        return false;
+    }
+
 }

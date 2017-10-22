@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.view.WindowManager;
 
+import com.tencent.stat.StatService;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import butterknife.ButterKnife;
@@ -65,6 +66,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         if (lifeCycleListener != null){
             lifeCycleListener.onResume();
         }
+        StatService.onResume(context);
     }
 
     @Override
@@ -74,6 +76,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         if (lifeCycleListener != null){
             lifeCycleListener.onPause();
         }
+        StatService.onPause(context);
     }
 
     @Override
@@ -83,6 +86,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         if (lifeCycleListener != null){
             lifeCycleListener.onStop();
         }
+        StatService.onStop(context);
     }
 
     @Override
@@ -234,11 +238,19 @@ public abstract class BaseActivity extends RxAppCompatActivity {
                 // 透明导航栏
                 getWindow().addFlags(
                         WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-              //  // 布局背景填充状态栏 与键盘监听冲突
-              //  getWindow().addFlags(
-              //          WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-              //  );
             }
+        }
+    }
+
+    /**
+     *  使布局背景填充状态栏
+     */
+    public void setLayoutNoLimits(boolean isNoLimits){
+        // 布局背景填充状态栏 与键盘监听冲突
+        if (isNoLimits){
+            getWindow().addFlags(
+                    WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+            );
         }
     }
 

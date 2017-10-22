@@ -35,7 +35,9 @@ public class AboutActivity extends BaseActivity {
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-
+        setImmersiveStatusBar(true);
+        setDeepColorStatusBar(true);
+        setSlideExit(true);
     }
 
     @Override

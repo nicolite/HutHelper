@@ -24,6 +24,16 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+
+# Java Bean 开始
+-keep class cn.nicolite.huthelper.model.bean.**{*;}
+# Java Bean 结束
+
+#Litepal 开始
+-keep class org.litepal.** {*;}
+-keep class * extends org.litepal.crud.DataSupport {*;}
+#Litepal 结束
+
 #Slidr 开始
 -dontwarn com.r0adkll.slidr
 -keep class com.r0adkll.slidr.** {*;}
