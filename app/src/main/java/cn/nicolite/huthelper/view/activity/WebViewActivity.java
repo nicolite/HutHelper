@@ -27,6 +27,7 @@ import cn.nicolite.huthelper.utils.SnackbarUtils;
  */
 
 public class WebViewActivity extends BaseActivity {
+
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
     @BindView(R.id.webView)
@@ -41,6 +42,8 @@ public class WebViewActivity extends BaseActivity {
     private WebSettings settings;
 
     public static final int TYPE_CHANGE_PWD = 561;
+    public static final int TYPE_HELP = 334;
+    public static final int TYPE_PERMISSION = 545;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -134,6 +137,14 @@ public class WebViewActivity extends BaseActivity {
     private void loadHtml(int type, String title, String url) {
         switch (type) {
             case TYPE_CHANGE_PWD:
+                toolbarTitle.setText(title);
+                webView.loadUrl(url);
+                break;
+            case TYPE_HELP:
+                toolbarTitle.setText(title);
+                webView.loadUrl(url);
+                break;
+            case TYPE_PERMISSION:
                 toolbarTitle.setText(title);
                 webView.loadUrl(url);
                 break;

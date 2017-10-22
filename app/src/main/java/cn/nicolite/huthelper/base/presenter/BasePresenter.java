@@ -10,7 +10,7 @@ import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.listener.LifeCycleListener;
 
 /**
- *
+ * Presenter基类  所有Persenter都要继承此类
  * Created by nicolite on 17-10-13.
  */
 
