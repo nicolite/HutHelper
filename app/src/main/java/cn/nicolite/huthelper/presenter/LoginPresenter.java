@@ -1,8 +1,8 @@
 package cn.nicolite.huthelper.presenter;
 
-import org.litepal.crud.DataSupport;
 
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
+import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.network.api.APIUtils;
@@ -49,7 +49,14 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                             getView().closeLoading();
                             if (userHttpResult.getCode().equals("200")) {
                                 getView().onSuccess();
-                                userHttpResult.getData().saveOrUpdateAsync("user_id", userHttpResult.getData().getUser_id());
+
+                                boxHelper.getUserBox().put(userHttpResult.getData());
+
+                                Configure configure = new Configure();
+                                configure.setUserId(Integer.parseInt(userHttpResult.getData().getUser_id()));
+                                configure.setAppRememberCode(userHttpResult.getRemember_code_app());
+                                configure.setStudentKH(userHttpResult.getData().getStudentKH());
+                                boxHelper.getConfigureBox().put(configure);
                             } else {
                                 getView().showMessage(userHttpResult.getMsg());
                             }
@@ -72,11 +79,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
     }
 
     public boolean isLogin(){
-        User user = DataSupport.findFirst(User.class);
-        if (user != null){
-            return true;
-        }
-        return false;
+        return boxHelper.getUserBox().count() > 0;
     }
 
 }

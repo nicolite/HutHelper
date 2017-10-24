@@ -8,20 +8,27 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.tencent.android.tpush.XGPushManager;
+import com.tencent.bugly.beta.Beta;
+
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.model.bean.Menu;
 import cn.nicolite.huthelper.model.bean.TimeAxis;
+import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.model.bean.Weather;
 import cn.nicolite.huthelper.presenter.MainPresenter;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.iview.IMainView;
+import cn.nicolite.huthelper.view.widget.CommonDialog;
 import cn.nicolite.huthelper.view.widget.DateLineView;
 import cn.nicolite.huthelper.view.widget.DragLayout;
 import cn.nicolite.huthelper.view.widget.RichTextView;
+import io.rong.imkit.RongIM;
 
 /**
  * 主页
@@ -59,7 +66,8 @@ public class MainActivity extends BaseActivity implements IMainView {
     @BindView(R.id.rootView)
     DragLayout rootView;
     private MainPresenter mainPresenter;
-
+    private User user;
+    private long exitTime = 0;
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         hideToolBar(true);
@@ -80,6 +88,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     protected void doBusiness() {
+        user = boxHelper.getUserBox().get(1);
         rootView.setDragListener(new DragLayout.DragListener() {
             @Override
             public void onOpen() {
@@ -97,8 +106,10 @@ public class MainActivity extends BaseActivity implements IMainView {
             }
         });
         mainPresenter = new MainPresenter(this, this);
+        mainPresenter.showMenu();
         mainPresenter.showDateLine();
         mainPresenter.showWeather();
+        mainPresenter.initPush(user.getStudentKH());
     }
 
     @OnClick({R.id.iv_nav_avatar, R.id.tv_nav_name, R.id.tv_nav_private_message,
@@ -113,21 +124,52 @@ public class MainActivity extends BaseActivity implements IMainView {
             case R.id.tv_nav_private_message:
                 break;
             case R.id.tv_nav_update:
+                Beta.checkUpgrade();
                 break;
             case R.id.tv_nav_share:
+                mainPresenter.share();
                 break;
             case R.id.tv_nav_logout:
+                final CommonDialog commonDialog = new CommonDialog(context);
+                commonDialog
+                        .setMessage("确定退出？")
+                        .setPositiveButton("是的", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                RongIM.getInstance().logout();
+                                XGPushManager.deleteTag(context, user.getStudentKH());
+                                XGPushManager.registerPush(context, "*");
+                                XGPushManager.unregisterPush(context);
+                                //TODO 删除登录用户信息
+                                startActivity(LoginActivity.class);
+                                finish();
+                                commonDialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton("再想想", null)
+                        .show();
                 break;
             case R.id.tv_nav_about:
                 startActivity(AboutActivity.class);
                 break;
             case R.id.tv_nav_fback:
+                startActivity(FeedBackActivity.class);
                 break;
             case R.id.imgbtn_menusetting:
                 rootView.open();
                 break;
             case R.id.imgbtn_bell:
                 break;
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (System.currentTimeMillis() - exitTime > 2000){
+            SnackbarUtils.showShortSnackbar(rootView, "再按一次返回键退出");
+            exitTime = System.currentTimeMillis();
+        }else {
+            super.onBackPressed();
         }
     }
 
@@ -168,7 +210,8 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     @Override
-    public void showMenu() {
+    public void showMenu(List<Menu> menuList) {
 
     }
+
 }

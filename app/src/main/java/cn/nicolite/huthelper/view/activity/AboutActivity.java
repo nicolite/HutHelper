@@ -15,7 +15,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
-import cn.nicolite.huthelper.model.Constant;
+import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.utils.ToastUtil;
 import io.rong.imkit.RongIM;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -79,14 +79,14 @@ public class AboutActivity extends BaseActivity {
             case R.id.help:
                 Bundle bundle = new Bundle();
                 bundle.putInt("type", WebViewActivity.TYPE_HELP);
-                bundle.putString("url", Constant.HELP);
+                bundle.putString("url", Constants.HELP);
                 bundle.putString("title", "帮助");
                 startActivity(WebViewActivity.class, bundle);
                 break;
             case R.id.permission_message:
                 Bundle bundle1 = new Bundle();
                 bundle1.putInt("type", WebViewActivity.TYPE_PERMISSION);
-                bundle1.putString("url", Constant.PERMISSON);
+                bundle1.putString("url", Constants.PERMISSON);
                 bundle1.putString("title", "软件许可协议");
                 startActivity(WebViewActivity.class, bundle1);
                 break;

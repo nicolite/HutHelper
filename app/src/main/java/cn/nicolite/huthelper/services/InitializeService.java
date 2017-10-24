@@ -13,13 +13,14 @@ import com.tencent.stat.StatService;
 import com.tencent.stat.common.StatConstants;
 
 import cn.nicolite.huthelper.BuildConfig;
-import cn.nicolite.huthelper.model.Constant;
+import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.view.activity.MainActivity;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.model.Conversation;
 import io.rong.push.RongPushClient;
 
 /**
+ * 初始化服务
  * Created by nicolite on 17-9-6.
  */
 
@@ -49,7 +50,7 @@ public class InitializeService extends IntentService {
     private void performInit(){
 
         //注册融云小米push
-        RongPushClient.registerMiPush(getApplicationContext(), Constant.XIAOMI_APPID, Constant.XIAOMI_APPKEY);
+        RongPushClient.registerMiPush(getApplicationContext(), Constants.XIAOMI_APPID, Constants.XIAOMI_APPKEY);
 
         //初始化融云
         RongIM.init(getApplicationContext());
@@ -64,7 +65,7 @@ public class InitializeService extends IntentService {
         RongIM.getInstance().setReadReceiptConversationTypeList(types);
 
         try {
-            StatService.startStatService(getApplicationContext(), Constant.MAT_APPKEY, StatConstants.VERSION);
+            StatService.startStatService(getApplicationContext(), Constants.MAT_APPKEY, StatConstants.VERSION);
             //开启Java Crash异常捕获
             StatCrashReporter.getStatCrashReporter(getApplicationContext()).setJavaCrashHandlerStatus(true);
             //开启Native异常捕获
@@ -76,7 +77,7 @@ public class InitializeService extends IntentService {
         //只在MainActivity上显示升级对话框
         Beta.canShowUpgradeActs.add(MainActivity.class);
         //初始化腾讯Bugly
-        Bugly.init(getApplicationContext(), Constant.BUGLY_APPID, BuildConfig.LOG_DEBUG);
+        Bugly.init(getApplicationContext(), Constants.BUGLY_APPID, BuildConfig.LOG_DEBUG);
     }
 
 }

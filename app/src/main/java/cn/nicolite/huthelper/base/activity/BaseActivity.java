@@ -14,6 +14,8 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.nicolite.huthelper.app.MApplication;
+import cn.nicolite.huthelper.db.BoxHelper;
 import cn.nicolite.huthelper.listener.LifeCycleListener;
 import cn.nicolite.huthelper.manager.ActivityStackManager;
 import cn.nicolite.huthelper.utils.LogUtils;
@@ -32,6 +34,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected Context context;
     protected LifeCycleListener lifeCycleListener;
     protected Unbinder unbinder;
+    protected BoxHelper boxHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,6 +48,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         setContentView(setLayoutId());
         context = this;
         unbinder = ButterKnife.bind(this);
+        boxHelper = BoxHelper.getBoxHelper(MApplication.application);
         Bundle bundle = getIntent().getExtras();
         initBundleData(bundle);
         doBusiness();

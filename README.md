@@ -18,4 +18,4 @@ Ubuntu 16.04 LTS 、Android Studio 2.3.3 、JDK1.8
 [ButterKnife](http://jakewharton.github.io/butterknife/)  
 
 # 数据库
-[LitePal](https://github.com/LitePalFramework/LitePal)
+[objectBox](http://objectbox.io/)

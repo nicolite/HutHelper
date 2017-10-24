@@ -6,7 +6,9 @@ import android.os.Bundle;
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 
+import cn.nicolite.huthelper.app.MApplication;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.db.BoxHelper;
 import cn.nicolite.huthelper.listener.LifeCycleListener;
 
 /**
@@ -22,13 +24,18 @@ public class BasePresenter<V, T> implements LifeCycleListener {
     protected V view;
     protected Reference<T> activityRef;
     protected T activity;
+    protected BoxHelper boxHelper;
 
     public BasePresenter(V view, T activity){
         attachView(view);
         attachActivity(activity);
         setListener(activity);
+        setBoxHelper(MApplication.application);
     }
 
+    private void setBoxHelper(MApplication application){
+        boxHelper = BoxHelper.getBoxHelper(application);
+    }
 
     /**
      * 设置生命周期监听

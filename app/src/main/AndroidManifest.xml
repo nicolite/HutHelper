@@ -69,6 +69,58 @@
             android:name=".view.activity.AboutActivity"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".view.activity.FeedBackActivity"
+            android:theme="@style/AppTheme" />
+
+        <!--会话列表-->
+        <activity
+            android:name=".view.activity.ConversationListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="cn.nicolite.huthelper"
+                    android:pathPrefix="/conversationlist"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
+        <!--聚合会话列表-->
+        <activity
+            android:name=".view.activity.SubConversationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="io.rong.fast"
+                    android:pathPrefix="/subconversationlist"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
+        <!--会话界面-->
+        <activity
+            android:name=".view.activity.ConversationActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateHidden|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="cn.nicolite.huthelper"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
+
         <service android:name=".services.InitializeService" />
 
         <!-- 融云-->
@@ -111,18 +163,8 @@
         <!-- 高德地图 -->
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="62b540aecf60622f770b8c7538b84a6f" />
+            android:value="${GAODE_APIKEY}" />
         <!-- 高德地图结束 -->
-
-        <!-- bugly -->
-        <meta-data
-            android:name="BUGLY_APPID"
-            android:value="06373e7169" />
-
-        <!-- bugly 是否开启调试模式 -->
-        <meta-data
-            android:name="BUGLY_ENABLE_DEBUG"
-            android:value="false" />
 
         <!-- 腾讯bugly -->
         <provider

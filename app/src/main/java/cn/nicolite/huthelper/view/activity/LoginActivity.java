@@ -17,7 +17,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
-import cn.nicolite.huthelper.model.Constant;
+import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.presenter.LoginPresenter;
 import cn.nicolite.huthelper.utils.KeyBoardUtils;
 import cn.nicolite.huthelper.utils.LogUtils;
@@ -68,7 +68,7 @@ public class LoginActivity extends BaseActivity implements ILoginView{
                 Bundle bundle = new Bundle();
                 bundle.putInt("type", WebViewActivity.TYPE_CHANGE_PWD);
                 bundle.putString("title", "修改密码");
-                bundle.putString("url", Constant.CHANGE_PWD);
+                bundle.putString("url", Constants.CHANGE_PWD);
                 LoginActivity.this.startActivity(WebViewActivity.class, bundle);
             }
 
@@ -86,9 +86,9 @@ public class LoginActivity extends BaseActivity implements ILoginView{
 
         loginPresenter = new LoginPresenter(this, this);
 
-        if (loginPresenter.isLogin()){
-            onSuccess();
-        }
+       if (loginPresenter.isLogin()){
+           onSuccess();
+       }
     }
 
     @OnClick(R.id.btn_login)
