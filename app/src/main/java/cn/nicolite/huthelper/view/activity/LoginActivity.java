@@ -86,9 +86,6 @@ public class LoginActivity extends BaseActivity implements ILoginView{
 
         loginPresenter = new LoginPresenter(this, this);
 
-       if (loginPresenter.isLogin()){
-           onSuccess();
-       }
     }
 
     @OnClick(R.id.btn_login)

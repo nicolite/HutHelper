@@ -3,12 +3,15 @@ package cn.nicolite.huthelper.presenter;
 
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.model.bean.Configure;
+import cn.nicolite.huthelper.model.bean.Configure_;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.network.api.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
+import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.view.activity.LoginActivity;
 import cn.nicolite.huthelper.view.iview.ILoginView;
+import io.objectbox.Box;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -27,7 +30,8 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
     }
 
     public void login(final String username, String password) {
-
+        boxHelper.getUserBox().removeAll();
+        boxHelper.getConfigureBox().removeAll();
         APIUtils
                 .getLoginAPI()
                 .login(username, password)
@@ -47,8 +51,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                     public void onNext(@NonNull HttpResult<User> userHttpResult) {
                         if (getView() != null) {
                             getView().closeLoading();
-                            if (userHttpResult.getCode().equals("200")) {
-                                getView().onSuccess();
+                            if (userHttpResult.getCode() == 200) {
 
                                 boxHelper.getUserBox().put(userHttpResult.getData());
 
@@ -57,6 +60,9 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                                 configure.setAppRememberCode(userHttpResult.getRemember_code_app());
                                 configure.setStudentKH(userHttpResult.getData().getStudentKH());
                                 boxHelper.getConfigureBox().put(configure);
+
+                                getToken(userHttpResult.getData().getUser_id(), userHttpResult.getData().getUsername());
+
                             } else {
                                 getView().showMessage(userHttpResult.getMsg());
                             }
@@ -78,8 +84,42 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                 });
     }
 
-    public boolean isLogin(){
-        return boxHelper.getUserBox().count() > 0;
-    }
+    public void getToken(final String userId, String userName){
+        APIUtils
+                .getMessageAPI()
+                .getToken(userId, userName)
+                .compose(getActivity().<Configure>bindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<Configure>() {
+                    @Override
+                    public void onSubscribe(@NonNull Disposable d) {
+                        getView().showLoading();
+                    }
 
+                    @Override
+                    public void onNext(@NonNull Configure configure) {
+                        getView().closeLoading();
+                        getView().onSuccess();
+                        Box<Configure> configureBox = boxHelper.getConfigureBox();
+                        Configure first = configureBox.query().equal(Configure_.userId, Long.parseLong(userId)).build().findFirst();
+                        if (first != null){
+                            LogUtils.d(TAG, configure.getToken());
+                            first.setToken(configure.getToken());
+                            configureBox.put(first);
+                        }
+                    }
+
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        getView().closeLoading();
+                        getView().showMessage(ExceptionEngine.handleException(e).getMsg());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 }

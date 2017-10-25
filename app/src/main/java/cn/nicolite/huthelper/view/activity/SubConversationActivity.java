@@ -1,7 +1,12 @@
 package cn.nicolite.huthelper.view.activity;
 
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.widget.TextView;
 
+import butterknife.BindView;
+import butterknife.OnClick;
+import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 
 /**
@@ -9,9 +14,16 @@ import cn.nicolite.huthelper.base.activity.BaseActivity;
  */
 
 public class SubConversationActivity extends BaseActivity {
+    @BindView(R.id.toolbar_title)
+    TextView toolbarTitle;
+    @BindView(R.id.rootView)
+    CoordinatorLayout rootView;
+
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-
+        setDeepColorStatusBar(true);
+        setImmersiveStatusBar(true);
+        setSlideExit(true);
     }
 
     @Override
@@ -21,11 +33,17 @@ public class SubConversationActivity extends BaseActivity {
 
     @Override
     protected int setLayoutId() {
-        return 0;
+        return R.layout.activity_sub_conversation;
     }
 
     @Override
     protected void doBusiness() {
 
+    }
+
+
+    @OnClick(R.id.toolbar_back)
+    public void onViewClicked() {
+        finish();
     }
 }

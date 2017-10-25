@@ -11,7 +11,9 @@ import android.widget.TextView;
 import com.tencent.android.tpush.XGPushManager;
 import com.tencent.bugly.beta.Beta;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -29,6 +31,7 @@ import cn.nicolite.huthelper.view.widget.DateLineView;
 import cn.nicolite.huthelper.view.widget.DragLayout;
 import cn.nicolite.huthelper.view.widget.RichTextView;
 import io.rong.imkit.RongIM;
+import io.rong.imlib.model.Conversation;
 
 /**
  * 主页
@@ -110,6 +113,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         mainPresenter.showDateLine();
         mainPresenter.showWeather();
         mainPresenter.initPush(user.getStudentKH());
+        mainPresenter.connectRongIM();
     }
 
     @OnClick({R.id.iv_nav_avatar, R.id.tv_nav_name, R.id.tv_nav_private_message,
@@ -122,6 +126,9 @@ public class MainActivity extends BaseActivity implements IMainView {
             case R.id.tv_nav_name:
                 break;
             case R.id.tv_nav_private_message:
+                Map<String, Boolean> supportedConversation = new HashMap<>();
+                supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(), false);
+                RongIM.getInstance().startConversationList(MainActivity.this, supportedConversation);
                 break;
             case R.id.tv_nav_update:
                 Beta.checkUpgrade();
@@ -140,7 +147,8 @@ public class MainActivity extends BaseActivity implements IMainView {
                                 XGPushManager.deleteTag(context, user.getStudentKH());
                                 XGPushManager.registerPush(context, "*");
                                 XGPushManager.unregisterPush(context);
-                                //TODO 删除登录用户信息
+                                boxHelper.getUserBox().removeAll();
+                                boxHelper.getConfigureBox().removeAll();
                                 startActivity(LoginActivity.class);
                                 finish();
                                 commonDialog.dismiss();

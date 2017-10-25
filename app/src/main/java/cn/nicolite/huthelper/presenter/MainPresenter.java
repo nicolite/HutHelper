@@ -1,6 +1,7 @@
 package cn.nicolite.huthelper.presenter;
 
 import android.content.Intent;
+import android.net.Uri;
 
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
@@ -11,11 +12,14 @@ import java.util.List;
 
 import cn.nicolite.huthelper.BuildConfig;
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
+import cn.nicolite.huthelper.model.Constants;
+import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.Menu;
 import cn.nicolite.huthelper.model.bean.Menu_;
 import cn.nicolite.huthelper.model.bean.TimeAxis;
 import cn.nicolite.huthelper.model.bean.Update;
+import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.model.bean.Weather;
 import cn.nicolite.huthelper.network.api.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
@@ -28,8 +32,12 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.UserInfo;
 
 /**
+ * MainPresenter
  * Created by nicolite on 17-10-22.
  */
 
@@ -211,7 +219,35 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     }
 
     public void connectRongIM() {
+        Configure configure = boxHelper.getConfigureBox().get(1);
+        if (configure == null){
+            getView().showMessage("Token不存在，请重新登录！");
+            return;
+        }
+        RongIM.connect(configure.getToken(), new RongIMClient.ConnectCallback() {
+            @Override
+            public void onTokenIncorrect() {
+                getView().showMessage("Token不正确，请重新登录！");
+            }
 
+            @Override
+            public void onSuccess(String s) {
+                User user = boxHelper.getUserBox().get(1);
+                if (user == null){
+                    getView().showMessage("未获取到用户信息，请重新登录！");
+                    return;
+                }
+                RongIM.getInstance()
+                        .setCurrentUserInfo(new UserInfo(user.getUser_id(), user.getTrueName(),
+                                Uri.parse(Constants.PICTURE_URL + user.getHead_pic_thumb())));
+                RongIM.getInstance().setMessageAttachedUserInfo(true);
+            }
+
+            @Override
+            public void onError(RongIMClient.ErrorCode errorCode) {
+                getView().showMessage("连接即时聊天服务器出错！");
+            }
+        });
     }
 
     public void initPush(String studentKH) {

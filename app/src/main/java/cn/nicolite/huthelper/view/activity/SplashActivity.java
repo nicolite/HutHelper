@@ -28,7 +28,11 @@ public class SplashActivity extends BaseActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            startActivity(LoginActivity.class);
+            if (isLogin()){
+                startActivity(MainActivity.class);
+            }else {
+                startActivity(LoginActivity.class);
+            }
             finish();
         }
     };
@@ -54,4 +58,7 @@ public class SplashActivity extends BaseActivity {
         handler.sendEmptyMessageDelayed(what, 2000);
     }
 
+    public boolean isLogin(){
+        return boxHelper.getUserBox().count() > 0;
+    }
 }
