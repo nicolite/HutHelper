@@ -5,10 +5,10 @@ import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.Configure_;
 import cn.nicolite.huthelper.model.bean.HttpResult;
+import cn.nicolite.huthelper.model.bean.Token;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.network.api.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
-import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.view.activity.LoginActivity;
 import cn.nicolite.huthelper.view.iview.ILoginView;
 import io.objectbox.Box;
@@ -56,9 +56,9 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                                 boxHelper.getUserBox().put(userHttpResult.getData());
 
                                 Configure configure = new Configure();
-                                configure.setUserId(Integer.parseInt(userHttpResult.getData().getUser_id()));
                                 configure.setAppRememberCode(userHttpResult.getRemember_code_app());
                                 configure.setStudentKH(userHttpResult.getData().getStudentKH());
+                                configure.setUserId(userHttpResult.getData().getUser_id());
                                 boxHelper.getConfigureBox().put(configure);
 
                                 getToken(userHttpResult.getData().getUser_id(), userHttpResult.getData().getUsername());
@@ -88,24 +88,23 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
         APIUtils
                 .getMessageAPI()
                 .getToken(userId, userName)
-                .compose(getActivity().<Configure>bindToLifecycle())
+                .compose(getActivity().<Token>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Configure>() {
+                .subscribe(new Observer<Token>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
                         getView().showLoading();
                     }
 
                     @Override
-                    public void onNext(@NonNull Configure configure) {
+                    public void onNext(@NonNull Token token) {
                         getView().closeLoading();
                         getView().onSuccess();
                         Box<Configure> configureBox = boxHelper.getConfigureBox();
-                        Configure first = configureBox.query().equal(Configure_.userId, Long.parseLong(userId)).build().findFirst();
+                        Configure first = configureBox.query().equal(Configure_.userId, userId).build().findFirst();
                         if (first != null){
-                            LogUtils.d(TAG, configure.getToken());
-                            first.setToken(configure.getToken());
+                            first.setToken(token.getToken());
                             configureBox.put(first);
                         }
                     }
