@@ -126,15 +126,14 @@ public class WebViewActivity extends BaseActivity {
             @Override
             public void onProgressChanged(WebView webView, int i) {
                 super.onProgressChanged(webView, i);
-                if (i == 100) {
-                    if (type != TYPE_CHANGE_PWD){
-                        addImgClickListener();
+                    if (i == 100) {
+                        if (type != TYPE_CHANGE_PWD){
+                            addImgClickListener();
+                        }
+                        progressBar.setVisibility(View.GONE);
+                    } else {
+                        progressBar.setProgress(i);
                     }
-                    progressBar.setVisibility(View.GONE);
-                } else {
-                    //TODO 这里居然报空指针
-                    progressBar.setProgress(i);
-                }
             }
         });
     }
@@ -201,12 +200,12 @@ public class WebViewActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (webView != null) {
-            webView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+            webView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null); //会导致空指针
             webView.clearHistory();
             webView.clearCache(true);
             webView.clearFormData();
-            webView.removeAllViews();
             rootView.removeView(webView);
+            webView.removeAllViews();
             webView.destroy();
             webView = null;
         }
@@ -214,9 +213,10 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
         if (webView.canGoBack()){
             webView.goBack();
+        }else {
+            super.onBackPressed();
         }
     }
 
