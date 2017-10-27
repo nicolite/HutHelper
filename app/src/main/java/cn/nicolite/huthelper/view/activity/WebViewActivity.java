@@ -7,9 +7,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -19,6 +22,7 @@ import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.injection.JsInject;
+import cn.nicolite.huthelper.utils.CommUtil;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.utils.ToastUtil;
 
@@ -41,6 +45,8 @@ public class WebViewActivity extends BaseActivity {
     private String url;
     private String title;
     private WebSettings settings;
+    private View mErrorView;
+    private boolean mIsErrorPage;
 
     public static final int TYPE_CHANGE_PWD = 561;
     public static final int TYPE_HELP = 334;
@@ -120,12 +126,24 @@ public class WebViewActivity extends BaseActivity {
                 super.onPageStarted(webView, s, bitmap);
 
             }
+
+            @Override
+            public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
+                super.onReceivedError(view, request, error);
+                showErrorPage();
+            }
+
         });
 
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView webView, int i) {
                 super.onProgressChanged(webView, i);
+
+                if (progressBar == null){
+                    return;
+                }
+
                     if (i == 100) {
                         if (type != TYPE_CHANGE_PWD){
                             addImgClickListener();
@@ -224,4 +242,53 @@ public class WebViewActivity extends BaseActivity {
     public void onViewClicked() {
         finish();
     }
+
+    protected void initErrorPage() {
+        if (mErrorView == null) {
+            mErrorView = View.inflate(this, R.layout.online_error, null);
+            ImageButton button = (ImageButton) mErrorView.findViewById(R.id.btn_refer);
+            button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    if (!CommUtil.isOnline(getApplicationContext())) {
+                        SnackbarUtils.showShortSnackbar(rootView, "网络不可用！");
+                    }
+                    hideErrorPage();
+                    webView.reload();
+                }
+            });
+            mErrorView.setOnClickListener(null);
+        }
+    }
+
+    /**
+     * 显示自定义错误提示页面，用一个View覆盖在WebView
+     */
+    protected void showErrorPage() {
+        if (webView == null){
+            return;
+        }
+        LinearLayout webParentView = (LinearLayout) webView.getParent();
+        if (webParentView != null) {
+            initErrorPage();
+            while (webParentView.getChildCount() > 1) {
+                webParentView.removeViewAt(1);
+            }
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+            webParentView.addView(mErrorView, 1, lp);
+            mIsErrorPage = true;
+        }
+
+    }
+
+    protected void hideErrorPage() {
+        LinearLayout webParentView = (LinearLayout) mErrorView.getParent();
+
+        mIsErrorPage = false;
+        while (webParentView.getChildCount() > 1) {
+            webParentView.removeViewAt(1);
+        }
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+        webParentView.addView(webView, 1, lp);
+    }
+
 }
