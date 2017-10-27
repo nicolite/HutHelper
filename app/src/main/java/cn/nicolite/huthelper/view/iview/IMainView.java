@@ -15,7 +15,7 @@ import cn.nicolite.huthelper.model.bean.Weather;
 public interface IMainView extends IBaseView {
     void showWeather(Weather weather);
     void showDateLine(List<TimeAxis> timeAxisList);
-    void showNotification();
+    void showNotice();
     void showSyllabus();
     void showMenu(List<Menu> menuList);
     void showUser(User user);

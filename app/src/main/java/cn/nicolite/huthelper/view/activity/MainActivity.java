@@ -25,6 +25,7 @@ import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.model.Constants;
+import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.Menu;
 import cn.nicolite.huthelper.model.bean.TimeAxis;
 import cn.nicolite.huthelper.model.bean.User;
@@ -91,6 +92,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     private MenuAdapter menuAdapter;
     private boolean isOpen;
     private QBadgeView qBadgeView;
+    private Configure configure;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -113,6 +115,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     protected void doBusiness() {
         user = boxHelper.getUserBox().get(1);
+        configure = boxHelper.getConfigureBox().get(1);
         rootView.setDragListener(new DragLayout.DragListener() {
             @Override
             public void onOpen() {
@@ -138,6 +141,12 @@ public class MainActivity extends BaseActivity implements IMainView {
                 try {
                     Menu menu = menuList.get(position);
                     Bundle bundle = new Bundle();
+                    if (menu.getType() == WebViewActivity.TYPE_LIBRARY){
+                        bundle.putString("url", Constants.LIBRARY);
+                    }else if (menu.getType() == WebViewActivity.TYPE_HOMEWORK){
+                        bundle.putString("url", Constants.HOMEWORK + configure.getStudentKH() +  "/" + configure.getAppRememberCode());
+                    }
+                    bundle.putString("title", menu.getTitle());
                     bundle.putInt("type", menu.getType());
                     startActivity(Class.forName(menu.getPath()), bundle);
                 } catch (ClassNotFoundException e) {
@@ -282,7 +291,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     @Override
-    public void showNotification() {
+    public void showNotice() {
 
     }
 

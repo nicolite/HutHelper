@@ -20,6 +20,7 @@ import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.injection.JsInject;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
+import cn.nicolite.huthelper.utils.ToastUtil;
 
 /**
  * 通用webView
@@ -44,7 +45,10 @@ public class WebViewActivity extends BaseActivity {
     public static final int TYPE_CHANGE_PWD = 561;
     public static final int TYPE_HELP = 334;
     public static final int TYPE_PERMISSION = 545;
-
+    public static final int TYPE_LIBRARY = 278;
+    public static final int TYPE_HOMEWORK = 576;
+    public static final int TYPE_FRESHMAN_HELPER = 685;
+    public static final int TYPE_NOTICE = 174;
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar(true);
@@ -59,7 +63,7 @@ public class WebViewActivity extends BaseActivity {
         url = bundle.getString("url", null);
         title = bundle.getString("title", null);
         if (type == -1 || TextUtils.isEmpty(url) || TextUtils.isEmpty(title)) {
-            SnackbarUtils.showShortSnackbar(rootView, "获取数据失败！");
+            ToastUtil.showToastShort("获取数据失败！");
             finish();
         }
     }
@@ -128,6 +132,7 @@ public class WebViewActivity extends BaseActivity {
                     }
                     progressBar.setVisibility(View.GONE);
                 } else {
+                    //TODO 这里居然报空指针
                     progressBar.setProgress(i);
                 }
             }
@@ -145,6 +150,22 @@ public class WebViewActivity extends BaseActivity {
                 webView.loadUrl(url);
                 break;
             case TYPE_PERMISSION:
+                toolbarTitle.setText(title);
+                webView.loadUrl(url);
+                break;
+            case TYPE_LIBRARY:
+                toolbarTitle.setText(title);
+                webView.loadUrl(url);
+                break;
+            case TYPE_HOMEWORK:
+                toolbarTitle.setText(title);
+                webView.loadUrl(url);
+                break;
+            case TYPE_FRESHMAN_HELPER:
+                toolbarTitle.setText(title);
+                webView.loadUrl(url);
+                break;
+            case TYPE_NOTICE:
                 toolbarTitle.setText(title);
                 webView.loadUrl(url);
                 break;

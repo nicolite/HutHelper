@@ -70,7 +70,7 @@ public class RetrofitUtils {
      */
     public Retrofit retrofit() {
         if (BuildConfig.LOG_DEBUG){
-            BASE_URL = Constants.TEST_BASE_URL;
+       //     BASE_URL = Constants.TEST_BASE_URL;
         }
 
         return new Retrofit.Builder()

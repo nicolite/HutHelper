@@ -28,6 +28,7 @@ import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.view.activity.MainActivity;
+import cn.nicolite.huthelper.view.activity.WebViewActivity;
 import cn.nicolite.huthelper.view.iview.IMainView;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -146,7 +147,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
         if (boxHelper.getMenuBox().count() < 15) {
             List<Menu> menuItems = new ArrayList<>();
-            Menu item = new Menu(1, 0, 0, 1, "图书馆", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
+            Menu item = new Menu(1, 0, 0, WebViewActivity.TYPE_LIBRARY, "图书馆", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
             menuItems.add(item);
             item = new Menu(2, 1, 1, 0, "课程表", "cn.nicolite.huthelper.view.activity.CourseTableActivity", true);
             menuItems.add(item);
@@ -154,7 +155,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             menuItems.add(item);
             item = new Menu(4, 3, 3, 0, "成绩查询", "cn.nicolite.huthelper.view.activity.NewGradeActivity", true);
             menuItems.add(item);
-            item = new Menu(5, 4, 4, 2, "网上作业", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
+            item = new Menu(5, 4, 4, WebViewActivity.TYPE_HOMEWORK, "网上作业", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
             menuItems.add(item);
             item = new Menu(6, 5, 5, 0, "二手市场", "cn.nicolite.huthelper.view.activity.MarketActivity", true);
             menuItems.add(item);
