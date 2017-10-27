@@ -25,6 +25,7 @@ import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
 
 /**
+ * 私信聊天界面
  * Created by nicolite on 17-10-24.
  */
 

@@ -1,37 +1,49 @@
 package cn.nicolite.huthelper.view.activity;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.tencent.android.tpush.XGPushManager;
 import com.tencent.bugly.beta.Beta;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Menu;
 import cn.nicolite.huthelper.model.bean.TimeAxis;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.model.bean.Weather;
 import cn.nicolite.huthelper.presenter.MainPresenter;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
+import cn.nicolite.huthelper.view.adapter.MenuAdapter;
 import cn.nicolite.huthelper.view.iview.IMainView;
 import cn.nicolite.huthelper.view.widget.CommonDialog;
 import cn.nicolite.huthelper.view.widget.DateLineView;
 import cn.nicolite.huthelper.view.widget.DragLayout;
 import cn.nicolite.huthelper.view.widget.RichTextView;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.manager.IUnReadMessageObserver;
+import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import jp.wasabeef.glide.transformations.CropCircleTransformation;
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 
 /**
  * 主页
@@ -68,9 +80,18 @@ public class MainActivity extends BaseActivity implements IMainView {
     RecyclerView rvMainMenu;
     @BindView(R.id.rootView)
     DragLayout rootView;
+    @BindView(R.id.iv_nav_avatar)
+    ImageView ivNavAvatar;
+    @BindView(R.id.tv_nav_name)
+    RichTextView tvNavName;
     private MainPresenter mainPresenter;
     private User user;
     private long exitTime = 0;
+    private List<Menu> menuList = new ArrayList<>();
+    private MenuAdapter menuAdapter;
+    private boolean isOpen;
+    private QBadgeView qBadgeView;
+
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         hideToolBar(true);
@@ -95,12 +116,12 @@ public class MainActivity extends BaseActivity implements IMainView {
         rootView.setDragListener(new DragLayout.DragListener() {
             @Override
             public void onOpen() {
-
+                isOpen = true;
             }
 
             @Override
             public void onClose() {
-
+                isOpen = false;
             }
 
             @Override
@@ -108,12 +129,64 @@ public class MainActivity extends BaseActivity implements IMainView {
 
             }
         });
+        menuAdapter = new MenuAdapter(context, menuList);
+        rvMainMenu.setAdapter(menuAdapter);
+        rvMainMenu.setLayoutManager(new GridLayoutManager(context, 4, OrientationHelper.VERTICAL, false));
+        menuAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                try {
+                    Menu menu = menuList.get(position);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("type", menu.getType());
+                    startActivity(Class.forName(menu.getPath()), bundle);
+                } catch (ClassNotFoundException e) {
+                    SnackbarUtils.showShortSnackbar(rootView, "找不到该页面！");
+                    e.printStackTrace();
+                }
+            }
+        });
+
         mainPresenter = new MainPresenter(this, this);
         mainPresenter.showMenu();
         mainPresenter.showDateLine();
         mainPresenter.showWeather();
         mainPresenter.initPush(user.getStudentKH());
         mainPresenter.connectRongIM();
+        mainPresenter.initUser();
+
+        qBadgeView = new QBadgeView(MainActivity.this);
+        qBadgeView.bindTarget(unReadMessage);
+        qBadgeView.setBadgeGravity(Gravity.END|Gravity.TOP);
+        qBadgeView.setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
+            @Override
+            public void onDragStateChanged(int dragState, Badge badge, View targetView) {
+
+            }
+        });
+
+        qBadgeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                qBadgeView.hide(false);
+                mainPresenter.startChat();
+            }
+        });
+
+        RongIM.getInstance().addUnReadMessageCountChangedObserver(new IUnReadMessageObserver() {
+            @Override
+            public void onCountChanged(int i) {
+                if (i == 0){
+                    qBadgeView.hide(false);
+                }else {
+                    if (i > 99){
+                        qBadgeView.setBadgeText("99+");
+                    }else {
+                        qBadgeView.setBadgeText(String.valueOf(i));
+                    }
+                }
+            }
+        }, Conversation.ConversationType.PRIVATE);
     }
 
     @OnClick({R.id.iv_nav_avatar, R.id.tv_nav_name, R.id.tv_nav_private_message,
@@ -126,9 +199,7 @@ public class MainActivity extends BaseActivity implements IMainView {
             case R.id.tv_nav_name:
                 break;
             case R.id.tv_nav_private_message:
-                Map<String, Boolean> supportedConversation = new HashMap<>();
-                supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(), false);
-                RongIM.getInstance().startConversationList(MainActivity.this, supportedConversation);
+                mainPresenter.startChat();
                 break;
             case R.id.tv_nav_update:
                 Beta.checkUpgrade();
@@ -167,16 +238,19 @@ public class MainActivity extends BaseActivity implements IMainView {
                 rootView.open();
                 break;
             case R.id.imgbtn_bell:
+                mainPresenter.startChat();
                 break;
         }
     }
 
     @Override
     public void onBackPressed() {
-        if (System.currentTimeMillis() - exitTime > 2000){
+        if (isOpen) {
+            rootView.close(true);
+        } else if (System.currentTimeMillis() - exitTime > 2000) {
             SnackbarUtils.showShortSnackbar(rootView, "再按一次返回键退出");
             exitTime = System.currentTimeMillis();
-        }else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -219,7 +293,55 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void showMenu(List<Menu> menuList) {
-
+        this.menuList.clear();
+        this.menuList.addAll(menuList);
+        menuAdapter.notifyDataSetChanged();
     }
 
+    @Override
+    public void showUser(User user) {
+        tvNavName.setText(user.getTrueName());
+        if (!TextUtils.isEmpty(user.getHead_pic_thumb())) {
+            Glide
+                    .with(MainActivity.this)
+                    .load(Constants.PICTURE_URL + user.getHead_pic_thumb())
+                    .bitmapTransform(new CropCircleTransformation(MainActivity.this))
+                    .skipMemoryCache(true)
+                    .crossFade()
+                    .into(ivNavAvatar);
+        } else {
+            if ("男".equals(user.getSex())) {
+                Glide
+                        .with(MainActivity.this)
+                        .load(R.drawable.head_boy)
+                        .bitmapTransform(new CropCircleTransformation(MainActivity.this))
+                        .skipMemoryCache(true)
+                        .crossFade()
+                        .into(ivNavAvatar);
+            } else {
+                Glide
+                        .with(MainActivity.this)
+                        .load(R.drawable.head_girl)
+                        .bitmapTransform(new CropCircleTransformation(MainActivity.this))
+                        .skipMemoryCache(true)
+                        .crossFade()
+                        .into(ivNavAvatar);
+            }
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        RongIM.getInstance().removeUnReadMessageCountChangedObserver(new IUnReadMessageObserver() {
+            @Override
+            public void onCountChanged(int i) {
+
+            }
+        });
+        if (RongIM.getInstance().getCurrentConnectionStatus()
+                == RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED){
+            RongIM.getInstance().disconnect();
+        }
+    }
 }

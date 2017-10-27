@@ -16,6 +16,7 @@ import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.iview.IFeedBackView;
 
 /**
+ * 反馈界面
  * Created by nicolite on 17-10-24.
  */
 

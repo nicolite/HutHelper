@@ -5,6 +5,7 @@ import java.util.List;
 import cn.nicolite.huthelper.base.iview.IBaseView;
 import cn.nicolite.huthelper.model.bean.Menu;
 import cn.nicolite.huthelper.model.bean.TimeAxis;
+import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.model.bean.Weather;
 
 /**
@@ -17,4 +18,5 @@ public interface IMainView extends IBaseView {
     void showNotification();
     void showSyllabus();
     void showMenu(List<Menu> menuList);
+    void showUser(User user);
 }

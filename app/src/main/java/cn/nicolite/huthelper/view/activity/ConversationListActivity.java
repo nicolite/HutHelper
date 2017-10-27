@@ -15,6 +15,7 @@ import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
 /**
+ * 消息列表
  * Created by nicolite on 17-10-24.
  */
 
@@ -43,7 +44,7 @@ public class ConversationListActivity extends BaseActivity {
 
     @Override
     protected void doBusiness() {
-        toolbarTitle.setText("会话");
+        toolbarTitle.setText("消息列表");
 
         if ( RongIMClient.getInstance().getCurrentConnectionStatus()
                 == RongIMClient.ConnectionStatusListener.ConnectionStatus.DISCONNECTED  ){

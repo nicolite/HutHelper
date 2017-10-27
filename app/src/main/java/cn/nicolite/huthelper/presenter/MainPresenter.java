@@ -8,7 +8,9 @@ import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.nicolite.huthelper.BuildConfig;
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
@@ -34,6 +36,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.UserInfo;
 
 /**
@@ -143,37 +146,37 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
         if (boxHelper.getMenuBox().count() < 15) {
             List<Menu> menuItems = new ArrayList<>();
-            Menu item = new Menu(0, 0, 0, 1, "cn.nicolite.huthelper.view.activity.WebViewActivity", "图书馆", true);
+            Menu item = new Menu(1, 0, 0, 1, "图书馆", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
             menuItems.add(item);
-            item = new Menu(1, 1, 1, 0, "cn.nicolite.huthelper.view.activity.CourseTableActivity", "课程表", true);
+            item = new Menu(2, 1, 1, 0, "课程表", "cn.nicolite.huthelper.view.activity.CourseTableActivity", true);
             menuItems.add(item);
-            item = new Menu(2, 2, 2, 0, "cn.nicolite.huthelper.view.activity.ExamActivity", "考试查询", true);
+            item = new Menu(3, 2, 2, 0, "考试查询", "cn.nicolite.huthelper.view.activity.ExamActivity", true);
             menuItems.add(item);
-            item = new Menu(3, 3, 3, 0, "cn.nicolite.huthelper.view.activity.NewGradeActivity", "成绩查询", true);
+            item = new Menu(4, 3, 3, 0, "成绩查询", "cn.nicolite.huthelper.view.activity.NewGradeActivity", true);
             menuItems.add(item);
-            item = new Menu(4, 4, 4, 2, "cn.nicolite.huthelper.view.activity.WebViewActivity", "网上作业", true);
+            item = new Menu(5, 4, 4, 2, "网上作业", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
             menuItems.add(item);
-            item = new Menu(5, 5, 5, 0, "cn.nicolite.huthelper.view.activity.MarketActivity", "二手市场", true);
+            item = new Menu(6, 5, 5, 0, "二手市场", "cn.nicolite.huthelper.view.activity.MarketActivity", true);
             menuItems.add(item);
-            item = new Menu(6, 6, 6, 0, "cn.nicolite.huthelper.view.activity.SayActivity", "校园说说", true);
+            item = new Menu(7, 6, 6, 0, "校园说说", "cn.nicolite.huthelper.view.activity.SayActivity", true);
             menuItems.add(item);
-            item = new Menu(7, 7, 7, 0, "cn.nicolite.huthelper.view.activity.ElecticActivity", "电费查询", true);
+            item = new Menu(8, 7, 7, 0, "电费查询", "cn.nicolite.huthelper.view.activity.ElecticActivity", true);
             menuItems.add(item);
-            item = new Menu(8, 8, 8, 0, "cn.nicolite.huthelper.view.activity.OfferActivity", "校招薪水", false);
+            item = new Menu(9, 8, 8, 0, "校招薪水", "cn.nicolite.huthelper.view.activity.OfferActivity", false);
             menuItems.add(item);
-            item = new Menu(9, 9, 9, 0, "cn.nicolite.huthelper.view.activity.ExpLessonActivity", "实验课表", true);
+            item = new Menu(10, 9, 9, 0, "实验课表", "cn.nicolite.huthelper.view.activity.ExpLessonActivity", true);
             menuItems.add(item);
-            item = new Menu(10, 10, 10, 0, "cn.nicolite.huthelper.view.activity.CalendarActivity", "校历", false);
+            item = new Menu(11, 10, 10, 0, "校历", "cn.nicolite.huthelper.view.activity.CalendarActivity", false);
             menuItems.add(item);
-            item = new Menu(11, 11, 11, 0, "cn.nicolite.huthelper.view.activity.LoseListActivity", "失物招领",true);
+            item = new Menu(12, 11, 11, 0, "失物招领","cn.nicolite.huthelper.view.activity.LoseListActivity", true);
             menuItems.add(item);
-            item = new Menu(12, 12, 12, 0, "cn.nicolite.huthelper.view.activity.CareerTalkActivity", "宣讲会", true);
+            item = new Menu(13, 12, 12, 0, "宣讲会", "cn.nicolite.huthelper.view.activity.CareerTalkActivity", true);
             menuItems.add(item);
-            item = new Menu(13, 13, 13, 0, "cn.nicolite.huthelper.view.activity.AllActivity", "全部", true);
+            item = new Menu(14, 13, 13, 0, "全部", "cn.nicolite.huthelper.view.activity.AllActivity", true);
             menuItems.add(item);
-            item = new Menu(14, 14, 14, 0, "cn.nicolite.huthelper.view.activity.VideoListActivity", "视频专栏", false);
+            item = new Menu(15, 14, 14, 0, "视频专栏", "cn.nicolite.huthelper.view.activity.VideoListActivity", false);
             menuItems.add(item);
-            item = new Menu(15, 15, 15, 0, "cn.nicolite.huthelper.view.activity.FreshmanHelpActivity", "新生攻略", false);
+            item = new Menu(16, 15, 15, 0, "新生攻略", "cn.nicolite.huthelper.view.activity.FreshmanHelpActivity", false);
             menuItems.add(item);
 
             boxHelper.getMenuBox().put(menuItems);
@@ -270,6 +273,13 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
     }
 
+    public void initUser(){
+        User user = boxHelper.getUserBox().get(1);
+        if (user != null){
+            getView().showUser(user);
+        }
+    }
+
     public void share()
     {
         Intent intent = new Intent(Intent.ACTION_SEND);
@@ -278,5 +288,11 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
         intent.putExtra(Intent.EXTRA_TEXT, "工大助手下载连接：https://www.coolapk.com/apk/cn.nicolite.huthelper");
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         getActivity().startActivity(Intent.createChooser(intent, "分享"));
+    }
+
+    public void startChat(){
+        Map<String, Boolean> supportedConversation = new HashMap<>();
+        supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(), false);
+        RongIM.getInstance().startConversationList(getActivity(), supportedConversation);
     }
 }
