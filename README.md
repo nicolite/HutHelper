@@ -9,7 +9,7 @@
 Android 4.3 (API 18)以上  
 
 # 开发环境
-Ubuntu 16.04 LTS 、Android Studio 2.3.3 、JDK1.8
+Ubuntu 16.04 LTS 、Android Studio 3.0 、JDK1.8
 
 # 项目架构
 [RxJava2](https://github.com/ReactiveX/RxJava) + [Retrofit2](http://square.github.io/retrofit/) + [RxLifecycle2](https://github.com/trello/RxLifecycle) + [MVP](https://github.com/RuffianZhong/Rx-Mvp)

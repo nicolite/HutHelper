@@ -163,7 +163,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         mainPresenter.initPush(user.getStudentKH());
         mainPresenter.connectRongIM();
         mainPresenter.initUser();
-
+        mainPresenter.checkUpdate(user.getStudentKH());
         qBadgeView = new QBadgeView(MainActivity.this);
         qBadgeView.bindTarget(unReadMessage);
         qBadgeView.setBadgeGravity(Gravity.END|Gravity.TOP);
@@ -204,8 +204,10 @@ public class MainActivity extends BaseActivity implements IMainView {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_nav_avatar:
+                startActivity(UserInfoActivity.class);
                 break;
             case R.id.tv_nav_name:
+                startActivity(UserInfoActivity.class);
                 break;
             case R.id.tv_nav_private_message:
                 mainPresenter.startChat();
@@ -281,7 +283,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void showWeather(Weather weather) {
-        tvWdLocation.setText(weather.getData().getCity() + "|" + weather.getData().getForecast().get(0).getType());
+        tvWdLocation.setText(String.valueOf(weather.getData().getCity() + "|" + weather.getData().getForecast().get(0).getType()));
         tvWdTemp.setText(String.valueOf(weather.getData().getWendu() + "℃"));
     }
 
@@ -321,7 +323,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         } else {
             if ("男".equals(user.getSex())) {
                 Glide
-                        .with(MainActivity.this)
+                        .with(this)
                         .load(R.drawable.head_boy)
                         .bitmapTransform(new CropCircleTransformation(MainActivity.this))
                         .skipMemoryCache(true)
@@ -329,7 +331,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                         .into(ivNavAvatar);
             } else {
                 Glide
-                        .with(MainActivity.this)
+                        .with(this)
                         .load(R.drawable.head_girl)
                         .bitmapTransform(new CropCircleTransformation(MainActivity.this))
                         .skipMemoryCache(true)

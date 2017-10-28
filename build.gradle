@@ -4,10 +4,11 @@ buildscript {
     repositories {
         jcenter()
         maven { url "http://objectbox.net/beta-repo/" }
+        google()
     }
     dependencies {
         ext.objectboxVersion = '1.1.0'
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.0.0'
         classpath "io.objectbox:objectbox-gradle-plugin:$objectboxVersion"
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -21,6 +22,7 @@ allprojects {
         maven { url "https://jitpack.io" }
         maven { url "http://objectbox.net/beta-repo/" }
         mavenCentral()
+        google()
     }
 }
 

@@ -1,6 +1,7 @@
 package cn.nicolite.huthelper.presenter;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 
 import com.tencent.android.tpush.XGIOperateCallback;
@@ -192,34 +193,40 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     }
 
     //必须调用此接口以记录该用户是否使用工大助手
-    public void checkUpdate(String num, String versionCode) {
-        APIUtils
-                .getUpdateAPI()
-                .checkUpdate(num, versionCode)
-                .compose(getActivity().<HttpResult<Update>>bindToLifecycle())
-                .observeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<HttpResult<Update>>() {
-                    @Override
-                    public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
+    public void checkUpdate(String num) {
+        try {
+            int versionCode = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionCode;
+            APIUtils
+                    .getUpdateAPI()
+                    .checkUpdate(num, versionCode)
+                    .compose(getActivity().<HttpResult<Update>>bindToLifecycle())
+                    .observeOn(Schedulers.io())
+                    .subscribeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Observer<HttpResult<Update>>() {
+                        @Override
+                        public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onNext(@io.reactivex.annotations.NonNull HttpResult<Update> updateHttpResult) {
+                        @Override
+                        public void onNext(@io.reactivex.annotations.NonNull HttpResult<Update> updateHttpResult) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+                        @Override
+                        public void onError(@io.reactivex.annotations.NonNull Throwable e) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onComplete() {
+                        @Override
+                        public void onComplete() {
 
-                    }
-                });
+                        }
+                    });
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void connectRongIM() {

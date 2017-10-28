@@ -121,6 +121,10 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".view.activity.UserInfoActivity"
+            android:theme="@style/AppTheme" />
+
         <service android:name=".services.InitializeService" />
 
         <!-- 融云-->

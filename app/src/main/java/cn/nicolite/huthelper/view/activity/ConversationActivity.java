@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.utils.LogUtils;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.MessageTag;
@@ -65,9 +66,12 @@ public class ConversationActivity extends BaseActivity {
 
         if (RongIM.getInstance().getCurrentConnectionStatus()
                 == RongIMClient.ConnectionStatusListener.ConnectionStatus.DISCONNECTED) {
-            String token = getSharedPreferences("RongIM", MODE_PRIVATE).getString("token", null);
-            if (!TextUtils.isEmpty(token)) {
-                RongIM.connect(token, new RongIMClient.ConnectCallback() {
+            Configure configure = boxHelper.getConfigureBox().get(1);
+            if (configure == null){
+                return;
+            }
+            if (!TextUtils.isEmpty(configure.getToken())) {
+                RongIM.connect(configure.getToken(), new RongIMClient.ConnectCallback() {
                     @Override
                     public void onTokenIncorrect() {
                     }
