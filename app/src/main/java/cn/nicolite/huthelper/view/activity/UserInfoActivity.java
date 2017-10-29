@@ -3,10 +3,12 @@ package cn.nicolite.huthelper.view.activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -16,6 +18,8 @@ import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
@@ -24,6 +28,8 @@ import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.presenter.UserInfoPresenter;
 import cn.nicolite.huthelper.utils.DensityUtils;
+import cn.nicolite.huthelper.utils.ListUtils;
+import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.iview.IUserInfoView;
 import io.rong.imkit.RongIM;
 
@@ -32,7 +38,7 @@ import io.rong.imkit.RongIM;
  * Created by nicolite on 17-10-28.
  */
 
-public class UserInfoActivity extends BaseActivity implements IUserInfoView{
+public class UserInfoActivity extends BaseActivity implements IUserInfoView {
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
     @BindView(R.id.iv_user_headview)
@@ -53,9 +59,12 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView{
     TextView tvUserSchool;
     @BindView(R.id.tv_user_class)
     TextView tvUserClass;
+    @BindView(R.id.rootView)
+    LinearLayout rootView;
     private UserInfoPresenter userInfoPresenter;
     private final int REQUEST_CODE_CHOOSE = 111;
     private final int REQUEST_CODE_CUT = 222;
+
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         setDeepColorStatusBar(true);
@@ -92,18 +101,23 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView{
             case R.id.rl_user_nickname:
                 break;
             case R.id.rl_user_password:
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", WebViewActivity.TYPE_CHANGE_PWD);
+                bundle.putString("title", "修改密码");
+                bundle.putString("url", Constants.CHANGE_PWD);
+                startActivity(WebViewActivity.class, bundle);
                 break;
             case R.id.user_logout:
                 User user = boxHelper.getUserBox().get(1);
-                if (user == null){
+                if (user == null) {
                     return;
                 }
                 RongIM.getInstance().logout();
                 XGPushManager.deleteTag(context, user.getStudentKH());
                 XGPushManager.registerPush(context, "*");
                 XGPushManager.unregisterPush(context);
-                boxHelper.getUserBox().removeAll();
-                boxHelper.getConfigureBox().removeAll();
+                boxHelper.getUserBox().remove(1);
+                boxHelper.getConfigureBox().remove(1);
                 startActivity(LoginActivity.class);
                 finish();
                 break;
@@ -122,19 +136,19 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView{
 
     @Override
     public void showMessage(String msg) {
-
+        SnackbarUtils.showShortSnackbar(rootView, msg);
     }
 
     @Override
     public void showUserInfo(User user) {
         tvUserNickname.setText(user.getUsername());
         tvUserName.setText(user.getTrueName());
-        ivUserGender.setImageResource(user.getSex().equals("男")? R.drawable.male : R.drawable.female);
+        ivUserGender.setImageResource(user.getSex().equals("男") ? R.drawable.male : R.drawable.female);
         tvUserSchool.setText(user.getDep_name());
         tvUserNum.setText(user.getStudentKH());
         tvUserClass.setText(user.getClass_name());
 
-        if (!TextUtils.isEmpty(user.getHead_pic_thumb())){
+        if (!TextUtils.isEmpty(user.getHead_pic_thumb())) {
             int width = DensityUtils.dp2px(context, 40);
             Glide
                     .with(this)
@@ -167,6 +181,28 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView{
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
+            List<Uri> uriList = Matisse.obtainResult(data);
+            if (!ListUtils.isEmpty(uriList)) {
+                Uri uri = uriList.get(0);
+                Intent intent = new Intent();
+                intent.setAction("com.android.camera.action.CROP");
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                intent.setDataAndType(uri, "image/*");// mUri是已经选择的图片Uri
+                intent.putExtra("crop", "true");
+                intent.putExtra("aspectX", 1);// 裁剪框比例
+                intent.putExtra("aspectY", 1);
+                intent.putExtra("outputX", 150);// 输出图片大小
+                intent.putExtra("outputY", 150);
+                intent.putExtra("return-data", true);
+                startActivityForResult(intent, REQUEST_CODE_CUT);
+            }
+        } else if (requestCode == REQUEST_CODE_CUT && resultCode == RESULT_OK) {
+            Bitmap bitmap = data.getParcelableExtra("data");
+            userInfoPresenter.uploadAvatar(bitmap);
+        } else {
+            userInfoPresenter.showUserData();
+        }
     }
+
 }

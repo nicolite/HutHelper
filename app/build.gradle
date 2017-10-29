@@ -228,7 +228,7 @@ dependencies {
     compile project(':IMKit')
 
     //数据库
-    ext.objectboxVersion = '1.1.0'
+    ext.objectboxVersion = '1.2.0-RC'
     annotationProcessor "io.objectbox:objectbox-processor:$objectboxVersion"
     compile "io.objectbox:objectbox-android:$objectboxVersion"
 

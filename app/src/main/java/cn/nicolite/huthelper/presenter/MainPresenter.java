@@ -1,5 +1,6 @@
 package cn.nicolite.huthelper.presenter;
 
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -7,6 +8,8 @@ import android.net.Uri;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
 import com.tencent.android.tpush.XGPushManager;
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.PermissionListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -72,7 +75,17 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                         if (getView() != null) {
                             getView().closeLoading();
                             if (weather != null) {
-                                getView().showWeather(weather);
+                                if (boxHelper.getConfigureBox().count() > 0){
+                                    Configure configure = boxHelper.getConfigureBox().get(1);
+                                    if (configure != null){
+                                        configure.setCity(weather.getData().getCity());
+                                        configure.setTmp(weather.getData().getWendu());
+                                        configure.setContent(weather.getData().getForecast().get(0).getType());
+                                        boxHelper.getConfigureBox().put(configure);
+                                    }
+                                }
+                                getView().showWeather(weather.getData().getCity(), weather.getData().getWendu(),
+                                        weather.getData().getForecast().get(0).getType());
                             } else {
                                 getView().showMessage("未获取到天气数据！");
                             }
@@ -84,6 +97,12 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                         if (getView() != null) {
                             getView().closeLoading();
                             getView().showMessage(ExceptionEngine.handleException(e).getMsg());
+                            if (boxHelper.getConfigureBox().count() > 0){
+                                Configure configure = boxHelper.getConfigureBox().get(1);
+                                if (configure.getCity() != null){
+                                    getView().showWeather(configure.getCity(), configure.getTmp(), configure.getContent());
+                                }
+                            }
                         }
                     }
 
@@ -94,7 +113,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                 });
     }
 
-    public void showDateLine() {
+    public void showTimeAxis() {
         APIUtils
                 .getDateLineAPI()
                 .getTimeAxis()
@@ -114,7 +133,9 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                         if (getView() != null) {
                             getView().closeLoading();
                             if (!ListUtils.isEmpty(timeAxisList)) {
-                                getView().showDateLine(timeAxisList);
+                                boxHelper.getTimeAxisBox().removeAll();
+                                boxHelper.getTimeAxisBox().put(timeAxisList);
+                                getView().showTimeAxis(timeAxisList);
                             } else {
                                 getView().showMessage("未获取到时间轴数据！");
                             }
@@ -126,6 +147,9 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                         if (getView() != null) {
                             getView().closeLoading();
                             getView().showMessage(ExceptionEngine.handleException(e).getMsg());
+                            if (boxHelper.getTimeAxisBox().count() > 0){
+                                getView().showTimeAxis(boxHelper.getTimeAxisBox().getAll());
+                            }
                         }
                     }
 
@@ -302,5 +326,28 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
         Map<String, Boolean> supportedConversation = new HashMap<>();
         supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(), false);
         RongIM.getInstance().startConversationList(getActivity(), supportedConversation);
+    }
+
+    public void checkPermission(){
+        String[] permissions = new String[]{
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_PHONE_STATE,
+        };
+        AndPermission
+                .with(getActivity())
+                .requestCode(200)
+                .permission(permissions)
+                .callback(new PermissionListener() {
+                    @Override
+                    public void onSucceed(int requestCode, @android.support.annotation.NonNull List<String> grantPermissions) {
+
+                    }
+
+                    @Override
+                    public void onFailed(int requestCode, @android.support.annotation.NonNull List<String> deniedPermissions) {
+                        getView().showMessage("获取权限失败，请授予文件读写和读取手机状态权限！");
+                    }
+                })
+                .start();
     }
 }

@@ -35,16 +35,16 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
         super(view, activity);
     }
 
-    public void showUserData(){
+    public void showUserData() {
         User user = boxHelper.getUserBox().get(1);
-        if (user == null){
+        if (user == null) {
             getView().showMessage("获取用户信息失败！");
             return;
         }
         getView().showUserInfo(user);
     }
 
-    public void uploadAvatar(final Bitmap bitmap){
+    public void uploadAvatar(final Bitmap bitmap) {
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
         byte[] bytes = outputStream.toByteArray();
@@ -53,10 +53,11 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
 
         final User user = boxHelper.getUserBox().get(1);
         Configure configure = boxHelper.getConfigureBox().get(1);
-        if (user == null || configure == null){
+        if (user == null || configure == null) {
             getView().showMessage("获取用户信息失败！");
             return;
         }
+        getView().showMessage("头像上传中！");
         APIUtils
                 .getUploadAPI()
                 .uploadAvatar(user.getStudentKH(), configure.getAppRememberCode(), file)
@@ -93,6 +94,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
 
                     @Override
                     public void onError(Throwable e) {
+                        getActivity().closeLoading();
                         getActivity().showMessage(ExceptionEngine.handleException(e).getMsg());
                     }
 
@@ -104,7 +106,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
 
     }
 
-    public void changAvatar(){
+    public void changAvatar() {
         AndPermission
                 .with(getActivity())
                 .requestCode(100)
@@ -112,7 +114,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                 .callback(new PermissionListener() {
                     @Override
                     public void onSucceed(int requestCode, @NonNull List<String> grantPermissions) {
-                        if (requestCode == 100){
+                        if (requestCode == 100) {
                             getView().changeAvatar();
                         }
                     }
@@ -123,5 +125,51 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                     }
                 })
                 .start();
+    }
+
+    public void changeUserName(String userName) {
+        Configure configure = boxHelper.getConfigureBox().get(1);
+        if (configure == null) {
+            getView().showMessage("获取用户信息失败！");
+            return;
+        }
+        APIUtils
+                .getUserAPI()
+                .changeUsername(configure.getStudentKH(), configure.getAppRememberCode(), userName)
+                .compose(getActivity().<HttpResult>bindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<HttpResult>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(HttpResult httpResult) {
+                        String msg;
+                        switch (httpResult.getMsg()) {
+                            case "ok":
+                                msg = "修改成功！";
+                                break;
+                            case "令牌错误":
+                                msg = "令牌错误，请重新登录！";
+                                break;
+                            default:
+                                msg = httpResult.getMsg();
+                        }
+                        getView().showMessage(msg);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        getView().showMessage(ExceptionEngine.handleException(e).getMsg());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

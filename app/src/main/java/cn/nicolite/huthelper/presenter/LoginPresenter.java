@@ -50,8 +50,11 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                     @Override
                     public void onNext(@NonNull HttpResult<User> userHttpResult) {
                         if (getView() != null) {
-                            getView().closeLoading();
+                           // getView().closeLoading();
                             if (userHttpResult.getCode() == 200) {
+
+                                boxHelper.getUserBox().remove(1);
+                                boxHelper.getConfigureBox().remove(1);
 
                                 boxHelper.getUserBox().put(userHttpResult.getData());
 
@@ -94,7 +97,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                 .subscribe(new Observer<Token>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        getView().showLoading();
+                        //getView().showLoading();
                     }
 
                     @Override

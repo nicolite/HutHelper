@@ -74,7 +74,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
         if (isEdit) {
             holder.ivEdit.setVisibility(View.VISIBLE);
-            if (menu.getIsMain()) {
+            if (menu.isMain()) {
                 holder.ivEdit.setImageResource(R.drawable.ic_edit_delete);
             } else {
                 holder.ivEdit.setImageResource(R.drawable.ic_editadd);

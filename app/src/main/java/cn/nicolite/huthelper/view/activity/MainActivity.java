@@ -29,7 +29,6 @@ import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.Menu;
 import cn.nicolite.huthelper.model.bean.TimeAxis;
 import cn.nicolite.huthelper.model.bean.User;
-import cn.nicolite.huthelper.model.bean.Weather;
 import cn.nicolite.huthelper.presenter.MainPresenter;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.MenuAdapter;
@@ -158,13 +157,14 @@ public class MainActivity extends BaseActivity implements IMainView {
 
         mainPresenter = new MainPresenter(this, this);
         mainPresenter.showMenu();
-        mainPresenter.showDateLine();
+        mainPresenter.showTimeAxis();
         mainPresenter.showWeather();
         mainPresenter.initPush(user.getStudentKH());
         mainPresenter.connectRongIM();
         mainPresenter.initUser();
         mainPresenter.checkUpdate(user.getStudentKH());
-        qBadgeView = new QBadgeView(MainActivity.this);
+        mainPresenter.checkPermission();
+        qBadgeView = new QBadgeView(context);
         qBadgeView.bindTarget(unReadMessage);
         qBadgeView.setBadgeGravity(Gravity.END|Gravity.TOP);
         qBadgeView.setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
@@ -229,8 +229,8 @@ public class MainActivity extends BaseActivity implements IMainView {
                                 XGPushManager.deleteTag(context, user.getStudentKH());
                                 XGPushManager.registerPush(context, "*");
                                 XGPushManager.unregisterPush(context);
-                                boxHelper.getUserBox().removeAll();
-                                boxHelper.getConfigureBox().removeAll();
+                                boxHelper.getUserBox().remove(1);
+                                boxHelper.getConfigureBox().remove(1);
                                 startActivity(LoginActivity.class);
                                 finish();
                                 commonDialog.dismiss();
@@ -282,13 +282,13 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     @Override
-    public void showWeather(Weather weather) {
-        tvWdLocation.setText(String.valueOf(weather.getData().getCity() + "|" + weather.getData().getForecast().get(0).getType()));
-        tvWdTemp.setText(String.valueOf(weather.getData().getWendu() + "℃"));
+    public void showWeather(String city, String tmp, String content) {
+        tvWdLocation.setText(String.valueOf(city + "|" + content));
+        tvWdTemp.setText(String.valueOf(tmp + "℃"));
     }
 
     @Override
-    public void showDateLine(List<TimeAxis> timeAxisList) {
+    public void showTimeAxis(List<TimeAxis> timeAxisList) {
         dateLineView.setDateLineData(timeAxisList);
     }
 

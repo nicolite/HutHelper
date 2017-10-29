@@ -3,6 +3,7 @@ package cn.nicolite.huthelper.db;
 import cn.nicolite.huthelper.app.MApplication;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.Menu;
+import cn.nicolite.huthelper.model.bean.TimeAxis;
 import cn.nicolite.huthelper.model.bean.User;
 import io.objectbox.Box;
 import io.objectbox.BoxStore;
@@ -42,4 +43,7 @@ public class BoxHelper {
         return boxStore.boxFor(Configure.class);
     }
 
+    public Box<TimeAxis> getTimeAxisBox() {
+        return boxStore.boxFor(TimeAxis.class);
+    }
 }
