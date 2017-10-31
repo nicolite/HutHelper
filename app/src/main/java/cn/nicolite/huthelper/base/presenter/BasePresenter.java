@@ -1,15 +1,21 @@
 package cn.nicolite.huthelper.base.presenter;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import cn.nicolite.huthelper.app.MApplication;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
-import cn.nicolite.huthelper.db.BoxHelper;
+import cn.nicolite.huthelper.db.DaoHelper;
+import cn.nicolite.huthelper.db.dao.ConfigureDao;
+import cn.nicolite.huthelper.db.dao.DaoSession;
 import cn.nicolite.huthelper.listener.LifeCycleListener;
+import cn.nicolite.huthelper.model.bean.Configure;
 
 /**
  * Presenter基类  所有Persenter都要继承此类
@@ -24,45 +30,65 @@ public class BasePresenter<V, T> implements LifeCycleListener {
     protected V view;
     protected Reference<T> activityRef;
     protected T activity;
-    protected BoxHelper boxHelper;
 
-    public BasePresenter(V view, T activity){
+    public BasePresenter(V view, T activity) {
         attachView(view);
         attachActivity(activity);
         setListener(activity);
-        setBoxHelper(MApplication.application);
     }
 
-    private void setBoxHelper(MApplication application){
-        boxHelper = BoxHelper.getBoxHelper(application);
+    /**
+     * 获取daoSession
+     */
+    protected DaoSession getDaoSession() {
+        return DaoHelper.getDaoHelper(MApplication.AppContext).getDaoSession();
+    }
+
+    /**
+     * 获取配置
+     */
+    protected List<Configure> getConfigureList() {
+        ConfigureDao configureDao = getDaoSession().getConfigureDao();
+        return configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(getLoginUser())).list();
+    }
+
+    /**
+     * 获取当前登录用户
+     */
+    protected String getLoginUser() {
+        SharedPreferences preferences = MApplication.AppContext.getSharedPreferences("login_user", Context.MODE_PRIVATE);
+        return preferences.getString("userId", null);
     }
 
     /**
      * 设置生命周期监听
+     *
      * @param activity
      */
-    private void setListener(T activity){
-        if (getActivity() != null){
-            if (activity instanceof BaseActivity){
-                ((BaseActivity)getActivity()).setOnLifeCycleListener(this);
+    private void setListener(T activity) {
+        if (getActivity() != null) {
+            if (activity instanceof BaseActivity) {
+                ((BaseActivity) getActivity()).setOnLifeCycleListener(this);
             }
         }
     }
 
     /**
      * 绑定View
+     *
      * @param view
      */
-    private void attachView(V view){
+    private void attachView(V view) {
         viewRef = new WeakReference<V>(view);
         this.view = viewRef.get();
     }
 
     /**
      * 绑定Activity
+     *
      * @param activity
      */
-    private void attachActivity(T activity){
+    private void attachActivity(T activity) {
         activityRef = new WeakReference<T>(activity);
         this.activity = activityRef.get();
     }
@@ -70,8 +96,8 @@ public class BasePresenter<V, T> implements LifeCycleListener {
     /**
      * 解除View绑定
      */
-    private void detachView(){
-        if (isViewAttached()){
+    private void detachView() {
+        if (isViewAttached()) {
             viewRef.clear();
             viewRef = null;
         }
@@ -80,8 +106,8 @@ public class BasePresenter<V, T> implements LifeCycleListener {
     /**
      * 解除Activity绑定
      */
-    private void detachActivity(){
-        if (isActivityAttached()){
+    private void detachActivity() {
+        if (isActivityAttached()) {
             activityRef.clear();
             activityRef = null;
         }
@@ -89,10 +115,11 @@ public class BasePresenter<V, T> implements LifeCycleListener {
 
     /**
      * 获取View
+     *
      * @return
      */
-    public V getView(){
-        if (viewRef ==null){
+    public V getView() {
+        if (viewRef == null) {
             return null;
         }
         return viewRef.get();
@@ -100,10 +127,11 @@ public class BasePresenter<V, T> implements LifeCycleListener {
 
     /**
      * 获取Activity
+     *
      * @return
      */
-    public T getActivity(){
-        if (activityRef == null){
+    public T getActivity() {
+        if (activityRef == null) {
             return null;
         }
         return activityRef.get();
@@ -111,18 +139,20 @@ public class BasePresenter<V, T> implements LifeCycleListener {
 
     /**
      * 判断是否已经绑定View
+     *
      * @return
      */
-    public boolean isViewAttached(){
+    public boolean isViewAttached() {
         return viewRef != null && viewRef.get() != null;
     }
 
     /**
      * 判定是否已经绑定Activity
+     *
      * @return
      */
-    public boolean isActivityAttached(){
-        return activityRef != null && activityRef.get() !=null;
+    public boolean isActivityAttached() {
+        return activityRef != null && activityRef.get() != null;
     }
 
 

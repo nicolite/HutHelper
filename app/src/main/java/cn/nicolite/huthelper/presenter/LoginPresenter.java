@@ -1,17 +1,23 @@
 package cn.nicolite.huthelper.presenter;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
+import java.util.List;
+
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
+import cn.nicolite.huthelper.db.dao.ConfigureDao;
+import cn.nicolite.huthelper.db.dao.UserDao;
 import cn.nicolite.huthelper.model.bean.Configure;
-import cn.nicolite.huthelper.model.bean.Configure_;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.Token;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.network.api.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
+import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.view.activity.LoginActivity;
 import cn.nicolite.huthelper.view.iview.ILoginView;
-import io.objectbox.Box;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
@@ -30,8 +36,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
     }
 
     public void login(final String username, String password) {
-        boxHelper.getUserBox().removeAll();
-        boxHelper.getConfigureBox().removeAll();
+
         APIUtils
                 .getLoginAPI()
                 .login(username, password)
@@ -50,23 +55,40 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                     @Override
                     public void onNext(@NonNull HttpResult<User> userHttpResult) {
                         if (getView() != null) {
-                           // getView().closeLoading();
+                            // getView().closeLoading();
                             if (userHttpResult.getCode() == 200) {
+                                //保存当前登录用户的userId，用作标识当前登录的用户
+                                SharedPreferences.Editor editor = getActivity().getSharedPreferences("login_user", Context.MODE_PRIVATE).edit();
+                                editor.putString("userId", userHttpResult.getData().getUser_id());
+                                editor.apply();
 
-                                boxHelper.getUserBox().remove(1);
-                                boxHelper.getConfigureBox().remove(1);
-
-                                boxHelper.getUserBox().put(userHttpResult.getData());
+                                UserDao userDao = getDaoSession().getUserDao();
+                                List<User> userList = userDao.queryBuilder().where(UserDao.Properties.User_id.eq(userHttpResult.getData().getUser_id())).list();
+                                if (ListUtils.isEmpty(userList)) {
+                                    userDao.insert(userHttpResult.getData());
+                                } else {
+                                    userDao.update(userList.get(0));
+                                }
 
                                 Configure configure = new Configure();
                                 configure.setAppRememberCode(userHttpResult.getRemember_code_app());
-                                configure.setStudentKH(userHttpResult.getData().getStudentKH());
                                 configure.setUserId(userHttpResult.getData().getUser_id());
-                                boxHelper.getConfigureBox().put(configure);
+                                ConfigureDao configureDao = getDaoSession().getConfigureDao();
+
+                                List<Configure> configureList = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userHttpResult.getData().getUser_id())).list();
+
+                                if (ListUtils.isEmpty(configureList)) {
+                                    configureDao.insert(configure);
+                                } else {
+                                    Configure newConfigure = configureList.get(0);
+                                    newConfigure.setAppRememberCode(userHttpResult.getRemember_code_app());
+                                    configureDao.update(newConfigure);
+                                }
 
                                 getToken(userHttpResult.getData().getUser_id(), userHttpResult.getData().getUsername());
 
                             } else {
+                                getView().closeLoading();
                                 getView().showMessage(userHttpResult.getMsg());
                             }
                         }
@@ -87,7 +109,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                 });
     }
 
-    public void getToken(final String userId, String userName){
+    public void getToken(final String userId, String userName) {
         APIUtils
                 .getMessageAPI()
                 .getToken(userId, userName)
@@ -103,13 +125,17 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                     @Override
                     public void onNext(@NonNull Token token) {
                         getView().closeLoading();
-                        getView().onSuccess();
-                        Box<Configure> configureBox = boxHelper.getConfigureBox();
-                        Configure first = configureBox.query().equal(Configure_.userId, userId).build().findFirst();
-                        if (first != null){
-                            first.setToken(token.getToken());
-                            configureBox.put(first);
+
+                        ConfigureDao configureDao = getDaoSession().getConfigureDao();
+                        List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
+                        if (!ListUtils.isEmpty(list)) {
+                            Configure configure = list.get(0);
+                            configure.setToken(token.getToken());
+                            configureDao.update(configure);
                         }
+
+                        getView().onSuccess();
+
                     }
 
                     @Override

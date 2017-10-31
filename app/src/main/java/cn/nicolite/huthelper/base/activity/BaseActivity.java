@@ -2,6 +2,7 @@ package cn.nicolite.huthelper.base.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,12 +13,17 @@ import android.view.WindowManager;
 import com.tencent.stat.StatService;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.nicolite.huthelper.app.MApplication;
-import cn.nicolite.huthelper.db.BoxHelper;
+import cn.nicolite.huthelper.db.DaoHelper;
+import cn.nicolite.huthelper.db.dao.ConfigureDao;
+import cn.nicolite.huthelper.db.dao.DaoSession;
 import cn.nicolite.huthelper.listener.LifeCycleListener;
 import cn.nicolite.huthelper.manager.ActivityStackManager;
+import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.utils.SlidrUtils;
 import cn.nicolite.huthelper.utils.StatusBarUtils;
@@ -34,7 +40,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected Context context;
     protected LifeCycleListener lifeCycleListener;
     protected Unbinder unbinder;
-    protected BoxHelper boxHelper;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,10 +53,33 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         setContentView(setLayoutId());
         context = this;
         unbinder = ButterKnife.bind(this);
-        boxHelper = BoxHelper.getBoxHelper(MApplication.application);
+
         Bundle bundle = getIntent().getExtras();
         initBundleData(bundle);
         doBusiness();
+    }
+
+    /**
+     * 获取daoSession
+     */
+    protected DaoSession getDaoSession() {
+        return DaoHelper.getDaoHelper(MApplication.AppContext).getDaoSession();
+    }
+
+    /**
+     * 获取配置
+     */
+    protected List<Configure> getConfigureList() {
+        ConfigureDao configureDao = getDaoSession().getConfigureDao();
+        return configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(getLoginUser())).list();
+    }
+
+    /**
+     * 获取当前登录用户
+     */
+    protected String getLoginUser() {
+        SharedPreferences preferences = context.getSharedPreferences("login_user", Context.MODE_PRIVATE);
+        return preferences.getString("userId", null);
     }
 
     @Override

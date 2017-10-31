@@ -25,12 +25,14 @@ import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.model.Constants;
+import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.presenter.UserInfoPresenter;
 import cn.nicolite.huthelper.utils.DensityUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.iview.IUserInfoView;
+import cn.nicolite.huthelper.view.widget.CommonDialog;
 import io.rong.imkit.RongIM;
 
 /**
@@ -99,6 +101,21 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
                 userInfoPresenter.changAvatar();
                 break;
             case R.id.rl_user_nickname:
+                final CommonDialog commonDialog = new CommonDialog(context);
+                commonDialog
+                        .setTitle("请输入新的昵称")
+                        .setInput()
+                        .setPositiveButton("确认", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String inputText = commonDialog.getInputText();
+                                userInfoPresenter.changeUserName(inputText);
+                                tvUserNickname.setText(inputText);
+                                commonDialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton("不改了", null)
+                        .show();
                 break;
             case R.id.rl_user_password:
                 Bundle bundle = new Bundle();
@@ -108,16 +125,13 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
                 startActivity(WebViewActivity.class, bundle);
                 break;
             case R.id.user_logout:
-                User user = boxHelper.getUserBox().get(1);
-                if (user == null) {
-                    return;
-                }
+                List<Configure> configureList = getConfigureList();
+                User user = configureList.get(0).getUser();
                 RongIM.getInstance().logout();
                 XGPushManager.deleteTag(context, user.getStudentKH());
                 XGPushManager.registerPush(context, "*");
                 XGPushManager.unregisterPush(context);
-                boxHelper.getUserBox().remove(1);
-                boxHelper.getConfigureBox().remove(1);
+
                 startActivity(LoginActivity.class);
                 finish();
                 break;

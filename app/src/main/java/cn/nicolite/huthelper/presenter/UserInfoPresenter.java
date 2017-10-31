@@ -1,8 +1,11 @@
 package cn.nicolite.huthelper.presenter;
 
 import android.Manifest;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
@@ -11,11 +14,13 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
+import cn.nicolite.huthelper.db.dao.ConfigureDao;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.network.api.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
+import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.view.activity.UserInfoActivity;
 import cn.nicolite.huthelper.view.iview.IUserInfoView;
 import io.reactivex.Observer;
@@ -27,6 +32,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 /**
+ * UserInfoPresenter
  * Created by nicolite on 17-10-28.
  */
 
@@ -36,7 +42,22 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
     }
 
     public void showUserData() {
-        User user = boxHelper.getUserBox().get(1);
+        SharedPreferences preferences = getActivity().getSharedPreferences("login_user", Context.MODE_PRIVATE);
+        String userId = preferences.getString("userId", null);
+
+        if (TextUtils.isEmpty(userId)) {
+            getView().showMessage("获取当前登录用户失败，请重新登录！");
+            return;
+        }
+
+        List<Configure> configureList = getConfigureList();
+        if (ListUtils.isEmpty(configureList)){
+            getView().showMessage("获取用户信息失败！");
+            return;
+        }
+
+        User user = configureList.get(0).getUser();
+
         if (user == null) {
             getView().showMessage("获取用户信息失败！");
             return;
@@ -51,13 +72,24 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
         RequestBody requestBody = RequestBody.create(MediaType.parse("img/jpeg"), bytes);
         MultipartBody.Part file = MultipartBody.Part.createFormData("file", "01.jpg", requestBody);
 
-        final User user = boxHelper.getUserBox().get(1);
-        Configure configure = boxHelper.getConfigureBox().get(1);
-        if (user == null || configure == null) {
+        String userId = getLoginUser();
+        if (TextUtils.isEmpty(userId)) {
+            getView().showMessage("获取当前登录用户失败，请重新登录！");
+            return;
+        }
+
+        ConfigureDao configureDao = getDaoSession().getConfigureDao();
+        List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
+        if (ListUtils.isEmpty(list)){
             getView().showMessage("获取用户信息失败！");
             return;
         }
+
+        final Configure configure = list.get(0);
+        final User user = configure.getUser();
+
         getView().showMessage("头像上传中！");
+
         APIUtils
                 .getUploadAPI()
                 .uploadAvatar(user.getStudentKH(), configure.getAppRememberCode(), file)
@@ -80,7 +112,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                                 getActivity().changeAvatarSuccess(bitmap);
                                 user.setHead_pic_thumb(stringHttpResult.getData());
                                 user.setHead_pic(stringHttpResult.getData());
-                                boxHelper.getUserBox().put(user);
+
                                 break;
                             case "令牌错误":
                                 msg = "修改失败：帐号异地登录，请重新登录！";
@@ -128,14 +160,27 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
     }
 
     public void changeUserName(String userName) {
-        Configure configure = boxHelper.getConfigureBox().get(1);
-        if (configure == null) {
+        String userId = getLoginUser();
+
+        if (TextUtils.isEmpty(userId)) {
+            getView().showMessage("获取当前登录用户失败，请重新登录！");
+            return;
+        }
+
+        ConfigureDao configureDao = getDaoSession().getConfigureDao();
+        List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
+        if (ListUtils.isEmpty(list)){
             getView().showMessage("获取用户信息失败！");
             return;
         }
+
+        Configure configure = list.get(0);
+        User user = list.get(0).getUser();
+
+        getView().showMessage("昵称修改中！");
         APIUtils
                 .getUserAPI()
-                .changeUsername(configure.getStudentKH(), configure.getAppRememberCode(), userName)
+                .changeUsername(user.getStudentKH(), configure.getAppRememberCode(), userName)
                 .compose(getActivity().<HttpResult>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

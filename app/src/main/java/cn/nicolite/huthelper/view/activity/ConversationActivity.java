@@ -66,7 +66,7 @@ public class ConversationActivity extends BaseActivity {
 
         if (RongIM.getInstance().getCurrentConnectionStatus()
                 == RongIMClient.ConnectionStatusListener.ConnectionStatus.DISCONNECTED) {
-            Configure configure = boxHelper.getConfigureBox().get(1);
+            Configure configure = new Configure();
             if (configure == null){
                 return;
             }

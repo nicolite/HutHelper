@@ -1,5 +1,6 @@
 package cn.nicolite.huthelper.view.activity;
 
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -83,6 +84,10 @@ public class LoginActivity extends BaseActivity implements ILoginView{
         tvMessage.setMovementMethod(LinkMovementMethod.getInstance());
 
         KeyBoardUtils.scrollLayoutAboveKeyBoard(context, rootView, tvMessage);
+
+        SharedPreferences.Editor editor = getSharedPreferences("login_user", MODE_PRIVATE).edit();
+        editor.putString("userId", "*");
+        editor.apply();
 
         loginPresenter = new LoginPresenter(this, this);
 

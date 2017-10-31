@@ -30,6 +30,7 @@ import cn.nicolite.huthelper.model.bean.Menu;
 import cn.nicolite.huthelper.model.bean.TimeAxis;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.presenter.MainPresenter;
+import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.MenuAdapter;
 import cn.nicolite.huthelper.view.iview.IMainView;
@@ -113,8 +114,21 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     protected void doBusiness() {
-        user = boxHelper.getUserBox().get(1);
-        configure = boxHelper.getConfigureBox().get(1);
+        String userId = getLoginUser();
+        if (TextUtils.isEmpty(userId)) {
+            startActivity(LoginActivity.class);
+            finish();
+        }
+
+        List<Configure> configureList = getConfigureList();
+        if (ListUtils.isEmpty(configureList)) {
+            startActivity(LoginActivity.class);
+            finish();
+        }
+
+        configure = configureList.get(0);
+        user = configure.getUser();
+
         rootView.setDragListener(new DragLayout.DragListener() {
             @Override
             public void onOpen() {
@@ -140,10 +154,10 @@ public class MainActivity extends BaseActivity implements IMainView {
                 try {
                     Menu menu = menuList.get(position);
                     Bundle bundle = new Bundle();
-                    if (menu.getType() == WebViewActivity.TYPE_LIBRARY){
+                    if (menu.getType() == WebViewActivity.TYPE_LIBRARY) {
                         bundle.putString("url", Constants.LIBRARY);
-                    }else if (menu.getType() == WebViewActivity.TYPE_HOMEWORK){
-                        bundle.putString("url", Constants.HOMEWORK + configure.getStudentKH() +  "/" + configure.getAppRememberCode());
+                    } else if (menu.getType() == WebViewActivity.TYPE_HOMEWORK) {
+                        bundle.putString("url", Constants.HOMEWORK + user.getStudentKH() + "/" + configure.getAppRememberCode());
                     }
                     bundle.putString("title", menu.getTitle());
                     bundle.putInt("type", menu.getType());
@@ -166,7 +180,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         mainPresenter.checkPermission();
         qBadgeView = new QBadgeView(context);
         qBadgeView.bindTarget(unReadMessage);
-        qBadgeView.setBadgeGravity(Gravity.END|Gravity.TOP);
+        qBadgeView.setBadgeGravity(Gravity.END | Gravity.TOP);
         qBadgeView.setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
             @Override
             public void onDragStateChanged(int dragState, Badge badge, View targetView) {
@@ -185,12 +199,12 @@ public class MainActivity extends BaseActivity implements IMainView {
         RongIM.getInstance().addUnReadMessageCountChangedObserver(new IUnReadMessageObserver() {
             @Override
             public void onCountChanged(int i) {
-                if (i == 0){
+                if (i == 0) {
                     qBadgeView.hide(false);
-                }else {
-                    if (i > 99){
+                } else {
+                    if (i > 99) {
                         qBadgeView.setBadgeText("99+");
-                    }else {
+                    } else {
                         qBadgeView.setBadgeText(String.valueOf(i));
                     }
                 }
@@ -226,11 +240,9 @@ public class MainActivity extends BaseActivity implements IMainView {
                             @Override
                             public void onClick(View v) {
                                 RongIM.getInstance().logout();
-                                XGPushManager.deleteTag(context, user.getStudentKH());
-                                XGPushManager.registerPush(context, "*");
-                                XGPushManager.unregisterPush(context);
-                                boxHelper.getUserBox().remove(1);
-                                boxHelper.getConfigureBox().remove(1);
+                                XGPushManager.deleteTag(getApplicationContext(), user.getStudentKH());
+                                XGPushManager.registerPush(getApplicationContext(), "*");
+                                XGPushManager.unregisterPush(getApplicationContext());
                                 startActivity(LoginActivity.class);
                                 finish();
                                 commonDialog.dismiss();
@@ -351,7 +363,7 @@ public class MainActivity extends BaseActivity implements IMainView {
             }
         });
         if (RongIM.getInstance().getCurrentConnectionStatus()
-                == RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED){
+                == RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED) {
             RongIM.getInstance().disconnect();
         }
     }

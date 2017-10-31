@@ -49,7 +49,7 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, FeedBackActi
                 e.printStackTrace();
             }
 
-            from = "来源：" + boxHelper.getUserBox().get(1).getStudentKH();
+            from = "来源：";
             content = "内容：";
 
             if (!TextUtils.isEmpty(version) && !TextUtils.isEmpty(model)) {
