@@ -185,7 +185,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             menuItems.add(item);
             item = new Menu((long)7, 6, 6, 0, "校园说说", "cn.nicolite.huthelper.view.activity.SayActivity", true);
             menuItems.add(item);
-            item = new Menu((long)8, 7, 7, 0, "电费查询", "cn.nicolite.huthelper.view.activity.ElecticActivity", true);
+            item = new Menu((long)8, 7, 7, 0, "电费查询", "cn.nicolite.huthelper.view.activity.ElectricActivity", true);
             menuItems.add(item);
             item = new Menu((long)9, 8, 8, 0, "校招薪水", "cn.nicolite.huthelper.view.activity.OfferActivity", false);
             menuItems.add(item);

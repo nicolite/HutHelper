@@ -15,6 +15,7 @@ import java.util.List;
 
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.db.dao.ConfigureDao;
+import cn.nicolite.huthelper.db.dao.UserDao;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.User;
@@ -159,7 +160,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                 .start();
     }
 
-    public void changeUserName(String userName) {
+    public void changeUserName(final String userName) {
         String userId = getLoginUser();
 
         if (TextUtils.isEmpty(userId)) {
@@ -196,6 +197,25 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                         switch (httpResult.getMsg()) {
                             case "ok":
                                 msg = "修改成功！";
+                                String userId = getLoginUser();
+
+                                if (TextUtils.isEmpty(userId)) {
+                                    getView().showMessage("获取当前登录用户失败，请重新登录！");
+                                    return;
+                                }
+
+                                UserDao userDao = getDaoSession().getUserDao();
+                                List<User> userList = userDao.queryBuilder().where(UserDao.Properties.User_id.eq(userId)).list();
+
+                                if (ListUtils.isEmpty(userList)){
+                                    getView().showMessage("获取用户信息失败！");
+                                    return;
+                                }
+
+                                User user = userList.get(0);
+                                user.setUsername(userName);
+                                userDao.update(user);
+
                                 break;
                             case "令牌错误":
                                 msg = "令牌错误，请重新登录！";

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_electic"
+    android:orientation="vertical">
+
+
+    <include layout="@layout/toolbar_nomenu_transparent" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_wd_temp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="sans-serif-thin"
+                android:gravity="center"
+                android:text="N/A"
+                android:textColor="@color/white"
+                android:textSize="30sp"
+                android:textStyle="normal" />
+
+            <TextView
+                android:id="@+id/tv_wd_location"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="株洲 | 阴"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+        </LinearLayout>
+
+
+        <EditText
+            android:id="@+id/et_electric_lou"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="130dp"
+            android:background="@null"
+            android:drawableBottom="@drawable/et_electric"
+            android:drawablePadding="15dp"
+            android:gravity="center"
+            android:hint="宿舍楼栋"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:textColor="#ccffffff"
+            android:textColorHint="#ccffffff"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/et_electric_hao"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/et_electric_lou"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="25dp"
+            android:background="@null"
+            android:drawableBottom="@drawable/et_electric"
+            android:drawablePadding="15dp"
+            android:gravity="center"
+            android:hint="宿舍号"
+            android:maxLines="1"
+            android:textColor="#ccffffff"
+            android:textColorHint="#ccffffff"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/btn_electric_ok"
+            android:layout_width="200dp"
+            android:layout_height="34dp"
+            android:layout_below="@+id/et_electric_hao"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:background="@drawable/btn_electric"
+            android:text="查询"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <RelativeLayout
+            android:id="@+id/rl_ele_choose"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btn_electric_ok"
+            android:layout_marginEnd="33dp"
+            android:layout_marginStart="33dp"
+            android:layout_marginTop="40dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:lineSpacingExtra="6dp"
+                android:text="今天\n宿舍开空调了吗"
+                android:textColor="#e5e5e5"
+                android:textSize="14sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="1dp"
+                android:layout_toStartOf="@+id/radio_group_electric"
+                android:lineSpacingExtra="20dp"
+                android:text="开了\n没开"
+                android:textColor="#e5e5e5"
+                android:textSize="15sp" />
+
+
+            <RadioGroup
+                android:id="@+id/radio_group_electric"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:orientation="vertical">
+
+                <RadioButton
+                    android:id="@+id/radio_electric_open"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:background="@drawable/radio_bg"
+                    android:button="@null"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    tools:checked="true" />
+
+                <RadioButton
+                    android:id="@+id/radio_electric_unopen"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="16dp"
+                    android:background="@drawable/radio_bg"
+                    android:button="@null"
+                    android:textColor="@color/white" />
+            </RadioGroup>
+        </RelativeLayout>
+
+        <cn.nicolite.huthelper.widget.BarListView
+            android:id="@+id/elebar_electric"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/rl_ele_choose"
+            android:layout_marginLeft="33dp"
+            android:layout_marginRight="33dp"
+            android:layout_marginTop="30dp"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
+</LinearLayout>

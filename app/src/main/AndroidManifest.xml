@@ -125,6 +125,10 @@
             android:name=".view.activity.UserInfoActivity"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".view.activity.ElectricActivity"
+            android:theme="@style/AppTheme" />
+
         <service android:name=".services.InitializeService" />
 
         <!-- 融云-->
