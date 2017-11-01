@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar_nomenu_new" />
+        <include layout="@layout/toolbar_nomenu" />
 
         <fragment
             android:id="@+id/conversation"

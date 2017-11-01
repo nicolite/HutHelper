@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     android:background="@color/white">
 
     <android.support.design.widget.CoordinatorLayout
@@ -10,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include layout="@layout/toolbar_nomenu_new" />
+        <include layout="@layout/toolbar_nomenu" />
 
         <fragment
             android:id="@+id/subconversationlist"

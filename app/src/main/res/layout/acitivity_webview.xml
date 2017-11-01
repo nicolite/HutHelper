@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_nomenu_new" />
+    <include layout="@layout/toolbar_nomenu" />
 
     <ProgressBar
         android:id="@+id/progressBar"
