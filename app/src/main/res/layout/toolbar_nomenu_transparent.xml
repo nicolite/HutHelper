@@ -8,18 +8,20 @@
     <FrameLayout
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:paddingTop="20dp">
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp">
 
         <ImageView
             android:id="@+id/toolbar_back"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_gravity="start|center_vertical"
-            android:paddingBottom="13dp"
+            android:paddingBottom="5dp"
             android:paddingEnd="23dp"
             android:paddingStart="5dp"
-            android:paddingTop="13dp"
+            android:paddingTop="5dp"
             android:src="@drawable/toolbar_back_icon2" />
 
         <TextView

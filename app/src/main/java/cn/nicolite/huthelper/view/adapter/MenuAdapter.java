@@ -37,12 +37,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
     /**
      * 图片索引
      * 0--图书馆 1--课程表   2--考试   3--成绩   4--作业   5--二手   6--说说   7--电费   8--薪水
-     * 9--实验课  10--校历 11--失物  12--视频 13--全部 14--宣讲会 15--新生攻略
+     * 9--实验课  10--校历 11--失物  12--宣讲会  13--全部 14--视频 15--新生攻略
      */
     private final int[] PIC_INDEX = {R.drawable.tushuguan, R.drawable.kechengbiao, R.drawable.kaoshichaxun, R.drawable.chengjichaxun
-            , R.drawable.wangshangzuoye, R.drawable.ershoushichang, R.drawable.xiaoyuanshuoshuo, R.drawable.dianfeichaxun, R.drawable.xiaozhaoxinshui
-            , R.drawable.shiyankebiao, R.drawable.rili, R.drawable.shiwuzhaoling, R.drawable.shipinzhuanlan, R.drawable.more, R.drawable.xuanjianghui
-            , R.drawable.laoxiangxiaoyou};
+            , R.drawable.wangshangzuoye, R.drawable.ershoushichang, R.drawable.xiaoyuanshuoshuo, R.drawable.dianfeichaxun,
+            R.drawable.xiaozhaoxinshui, R.drawable.shiyankebiao, R.drawable.rili, R.drawable.shiwuzhaoling,
+            R.drawable.xuanjianghui, R.drawable.more, R.drawable.shipinzhuanlan, R.drawable.laoxiangxiaoyou};
 
     public MenuAdapter(Context context, List<Menu> menuList) {
         this.context = context;
