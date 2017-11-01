@@ -9,5 +9,8 @@ import cn.nicolite.huthelper.model.bean.Electric;
  */
 
 public interface IElectricView extends IBaseView {
+    void showLouHao(String lou, String hao);
     void showElectric(Electric electric);
+    void showWeather(String city, String tmp, String content);
+    void showVoteSummary(String yes, String no, String opt);
 }

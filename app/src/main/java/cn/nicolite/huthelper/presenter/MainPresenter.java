@@ -19,6 +19,7 @@ import java.util.Map;
 
 import cn.nicolite.huthelper.BuildConfig;
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
+import cn.nicolite.huthelper.db.dao.ConfigureDao;
 import cn.nicolite.huthelper.db.dao.MenuDao;
 import cn.nicolite.huthelper.db.dao.TimeAxisDao;
 import cn.nicolite.huthelper.model.Constants;
@@ -78,7 +79,26 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                             getView().closeLoading();
                             getView().showWeather(weather.getData().getCity(), weather.getData().getWendu(),
                                     weather.getData().getForecast().get(0).getType());
+
                             String userId = getLoginUser();
+
+                            if (TextUtils.isEmpty(userId)) {
+                                getView().showMessage("获取当前登录用户失败，请重新登录！");
+                                return;
+                            }
+
+                            final ConfigureDao configureDao = getDaoSession().getConfigureDao();
+                            List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
+                            if (ListUtils.isEmpty(list)){
+                                getView().showMessage("获取用户信息失败！");
+                                return;
+                            }
+
+                            Configure configure = list.get(0);
+                            configure.setCity(weather.getData().getCity());
+                            configure.setTmp(weather.getData().getWendu());
+                            configure.setContent(weather.getData().getForecast().get(0).getType());
+                            configureDao.update(configure);
                         }
                     }
 
