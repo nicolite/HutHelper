@@ -6,6 +6,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+
+import java.lang.ref.WeakReference;
+
 import butterknife.BindView;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
@@ -24,19 +28,39 @@ public class SplashActivity extends BaseActivity {
             R.drawable.start_4, R.drawable.start_5};
 
     private static final int what = 958;
+    private static final int finish = 156;
 
-    private Handler handler = new Handler(){
+    private final MyHandler handler = new MyHandler(this);
+
+    private static class MyHandler extends Handler {
+        private final WeakReference<SplashActivity> splashActivityWeakReference;
+
+        private MyHandler(SplashActivity splashActivity) {
+            this.splashActivityWeakReference = new WeakReference<SplashActivity>(splashActivity);
+        }
+
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (isLogin()){
-                startActivity(MainActivity.class);
-            }else {
-                startActivity(LoginActivity.class);
+            SplashActivity splashActivity = splashActivityWeakReference.get();
+            switch (msg.what) {
+                case what:
+                    if (splashActivity.isLogin()) {
+                        splashActivity.startActivity(MainActivity.class);
+                    } else {
+                        splashActivity.startActivity(LoginActivity.class);
+                    }
+                    //解决MIUI9上Splash结束后出现应用图标
+                    splashActivity.handler.sendEmptyMessageDelayed(finish, 3000);
+                    break;
+                case finish:
+                    if (splashActivity != null) {
+                        splashActivity.finish();
+                    }
+                    break;
             }
-            finish();
         }
-    };
+    }
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -55,11 +79,17 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void doBusiness() {
-        imageView.setImageResource(bgs[(int) (Math.random() * 4)]);
-        handler.sendEmptyMessageDelayed(what, 2000);
+        Glide
+                .with(this)
+                .load(bgs[(int) (Math.random() * 4)])
+                .asBitmap()
+                .centerCrop()
+                .crossFade()
+                .into(imageView);
+        handler.sendEmptyMessageDelayed(what, 1500);
     }
 
-    public boolean isLogin(){
+    public boolean isLogin() {
         SharedPreferences preferences = getSharedPreferences("login_user", MODE_PRIVATE);
         String userId = preferences.getString("userId", null);
         return userId != null && !userId.equals("*");

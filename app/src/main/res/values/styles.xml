@@ -11,9 +11,11 @@
     </style>
 
     <style name="AppSplash" parent="AppTheme">
-        <item name="android:windowDisablePreview">true</item>
+        <item name="android:windowDisablePreview">false</item>
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowBackground">@drawable/start_1</item>
     </style>
 
     <style name="loading_dialog" parent="@android:style/Theme.Dialog">

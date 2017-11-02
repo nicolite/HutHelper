@@ -53,6 +53,7 @@ public class AboutActivity extends BaseActivity {
     @Override
     protected void doBusiness() {
         toolbarTitle.setText("关于");
+
         Glide
                 .with(this)
                 .load(R.drawable.logo256)

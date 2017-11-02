@@ -24,6 +24,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.manager.ActivityStackManager;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.Menu;
@@ -274,7 +275,8 @@ public class MainActivity extends BaseActivity implements IMainView {
             SnackbarUtils.showShortSnackbar(rootView, "再按一次返回键退出");
             exitTime = System.currentTimeMillis();
         } else {
-            super.onBackPressed();
+           // super.onBackPressed();
+            ActivityStackManager.getManager().exitApp(context);
         }
     }
 
