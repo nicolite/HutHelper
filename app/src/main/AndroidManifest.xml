@@ -135,6 +135,8 @@
 
         <service android:name=".services.InitializeService" />
 
+        <service android:name=".services.LoginService" />
+
         <!-- 融云-->
         <meta-data
             android:name="RONG_CLOUD_APP_KEY"

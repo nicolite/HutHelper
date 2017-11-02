@@ -179,6 +179,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         mainPresenter.initUser();
         mainPresenter.checkUpdate(user.getStudentKH());
         mainPresenter.checkPermission();
+        mainPresenter.startLoginService();
         qBadgeView = new QBadgeView(context);
         qBadgeView.bindTarget(unReadMessage);
         qBadgeView.setBadgeGravity(Gravity.END | Gravity.TOP);

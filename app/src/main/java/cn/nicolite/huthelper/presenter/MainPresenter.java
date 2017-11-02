@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.nicolite.huthelper.BuildConfig;
+import cn.nicolite.huthelper.app.MApplication;
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.db.dao.ConfigureDao;
 import cn.nicolite.huthelper.db.dao.MenuDao;
@@ -32,6 +33,7 @@ import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.model.bean.Weather;
 import cn.nicolite.huthelper.network.api.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
+import cn.nicolite.huthelper.services.LoginService;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.view.activity.MainActivity;
@@ -402,4 +404,9 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                 })
                 .start();
     }
+
+    public void startLoginService(){
+        LoginService.start(MApplication.application);
+    }
+
 }
