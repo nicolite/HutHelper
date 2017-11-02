@@ -59,6 +59,21 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     }
 
     public void showWeather() {
+
+        String userId = getLoginUser();
+
+        if (TextUtils.isEmpty(userId)) {
+            getView().showMessage("获取当前登录用户失败，请重新登录！");
+            return;
+        }
+
+        final ConfigureDao configureDao = getDaoSession().getConfigureDao();
+        final List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
+        if (ListUtils.isEmpty(list)){
+            getView().showMessage("获取用户信息失败！");
+            return;
+        }
+
         APIUtils
                 .getWeatherAPI()
                 .getWeather()
@@ -80,20 +95,6 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                             getView().showWeather(weather.getData().getCity(), weather.getData().getWendu(),
                                     weather.getData().getForecast().get(0).getType());
 
-                            String userId = getLoginUser();
-
-                            if (TextUtils.isEmpty(userId)) {
-                                getView().showMessage("获取当前登录用户失败，请重新登录！");
-                                return;
-                            }
-
-                            final ConfigureDao configureDao = getDaoSession().getConfigureDao();
-                            List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
-                            if (ListUtils.isEmpty(list)){
-                                getView().showMessage("获取用户信息失败！");
-                                return;
-                            }
-
                             Configure configure = list.get(0);
                             configure.setCity(weather.getData().getCity());
                             configure.setTmp(weather.getData().getWendu());
@@ -106,6 +107,8 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                     public void onError(@NonNull Throwable e) {
                         if (getView() != null) {
                             getView().closeLoading();
+                            Configure configure = list.get(0);
+                            getView().showWeather(configure.getCity(), configure.getTmp(), configure.getContent());
                             getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
                     }
@@ -118,6 +121,9 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     }
 
     public void showTimeAxis() {
+        final TimeAxisDao timeAxisDao = getDaoSession().getTimeAxisDao();
+        final List<TimeAxis> list = timeAxisDao.queryBuilder().list();
+
         APIUtils
                 .getDateLineAPI()
                 .getTimeAxis()
@@ -138,15 +144,12 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                             getView().closeLoading();
                             if (!ListUtils.isEmpty(timeAxisList)) {
                                 getView().showTimeAxis(timeAxisList);
-                                TimeAxisDao timeAxisDao = getDaoSession().getTimeAxisDao();
                                 timeAxisDao.deleteAll();
                                 for (TimeAxis timeAxis : timeAxisList) {
                                     timeAxisDao.insert(timeAxis);
                                 }
 
                             } else {
-                                TimeAxisDao timeAxisDao = getDaoSession().getTimeAxisDao();
-                                List<TimeAxis> list = timeAxisDao.queryBuilder().list();
                                 if (!ListUtils.isEmpty(list)){
                                     getView().showTimeAxis(list);
                                 }
@@ -160,8 +163,6 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                         if (getView() != null) {
                             getView().closeLoading();
 
-                            TimeAxisDao timeAxisDao = getDaoSession().getTimeAxisDao();
-                            List<TimeAxis> list = timeAxisDao.queryBuilder().list();
                             if (!ListUtils.isEmpty(list)){
                                 getView().showTimeAxis(list);
                             }

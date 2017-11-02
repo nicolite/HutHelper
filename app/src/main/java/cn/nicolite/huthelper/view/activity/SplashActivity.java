@@ -13,6 +13,7 @@ import java.lang.ref.WeakReference;
 import butterknife.BindView;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.utils.ListUtils;
 
 /**
  * 闪屏页
@@ -92,6 +93,6 @@ public class SplashActivity extends BaseActivity {
     public boolean isLogin() {
         SharedPreferences preferences = getSharedPreferences("login_user", MODE_PRIVATE);
         String userId = preferences.getString("userId", null);
-        return userId != null && !userId.equals("*");
+        return userId != null && !userId.equals("*") && !ListUtils.isEmpty(getConfigureList());
     }
 }

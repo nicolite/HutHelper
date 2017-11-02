@@ -1,8 +1,6 @@
 package cn.nicolite.huthelper.presenter;
 
 import android.Manifest;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
@@ -43,8 +41,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
     }
 
     public void showUserData() {
-        SharedPreferences preferences = getActivity().getSharedPreferences("login_user", Context.MODE_PRIVATE);
-        String userId = preferences.getString("userId", null);
+        String userId = getLoginUser();
 
         if (TextUtils.isEmpty(userId)) {
             getView().showMessage("获取当前登录用户失败，请重新登录！");
@@ -52,7 +49,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
         }
 
         List<Configure> configureList = getConfigureList();
-        if (ListUtils.isEmpty(configureList)){
+        if (ListUtils.isEmpty(configureList)) {
             getView().showMessage("获取用户信息失败！");
             return;
         }
@@ -81,7 +78,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
 
         ConfigureDao configureDao = getDaoSession().getConfigureDao();
         List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
-        if (ListUtils.isEmpty(list)){
+        if (ListUtils.isEmpty(list)) {
             getView().showMessage("获取用户信息失败！");
             return;
         }
@@ -170,7 +167,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
 
         ConfigureDao configureDao = getDaoSession().getConfigureDao();
         List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
-        if (ListUtils.isEmpty(list)){
+        if (ListUtils.isEmpty(list)) {
             getView().showMessage("获取用户信息失败！");
             return;
         }
@@ -207,7 +204,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                                 UserDao userDao = getDaoSession().getUserDao();
                                 List<User> userList = userDao.queryBuilder().where(UserDao.Properties.User_id.eq(userId)).list();
 
-                                if (ListUtils.isEmpty(userList)){
+                                if (ListUtils.isEmpty(userList)) {
                                     getView().showMessage("获取用户信息失败！");
                                     return;
                                 }

@@ -121,7 +121,9 @@ public class LoginActivity extends BaseActivity implements ILoginView{
 
     @Override
     public void closeLoading() {
-        loadingDialog.dismiss();
+        if (loadingDialog != null){
+            loadingDialog.dismiss();
+        }
     }
 
     @Override
