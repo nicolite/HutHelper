@@ -18,8 +18,10 @@ import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.model.bean.Valid;
 import cn.nicolite.huthelper.network.api.APIUtils;
+import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.utils.ListUtils;
-import cn.nicolite.huthelper.view.activity.LoginActivity;
+import cn.nicolite.huthelper.utils.LogUtils;
+import cn.nicolite.huthelper.view.activity.OffsiteLoginDialogActivity;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -34,11 +36,13 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class LoginService extends IntentService {
 
-    private static final int DELAY = 3000;
-    private static final int PERIOD = 1000 * 60 * 60;
+    private static final int DELAY = 2 * 1000;
+    private static final int PERIOD = 15 * 1000;
     private static final String ACTION_INIT_WHEN_APP_CREATE = "cn.nicolite.huthelper.service.action.INIT";
+    private static final String TAG = "LoginService";
+    private Timer timer;
 
-    public LoginService(){
+    public LoginService() {
         super("LoginService");
     }
 
@@ -46,15 +50,16 @@ public class LoginService extends IntentService {
         super(name);
     }
 
-    public static void start(Context context){
+    public static void start(Context context) {
         Intent intent = new Intent(context, LoginService.class);
         intent.setAction(ACTION_INIT_WHEN_APP_CREATE);
         context.startService(intent);
+        LogUtils.d(TAG, "start");
     }
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
-        Timer timer = new Timer();
+        timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
@@ -63,18 +68,20 @@ public class LoginService extends IntentService {
         }, DELAY, PERIOD);
     }
 
-    private void isLoginOnOtherPlace(){
+    private void isLoginOnOtherPlace() {
         DaoSession daoSession = DaoHelper.getDaoHelper(MApplication.AppContext).getDaoSession();
         SharedPreferences preferences = getSharedPreferences("login_user", Context.MODE_PRIVATE);
         String userId = preferences.getString("userId", null);
 
-        if (userId == null || userId.equals("*")){
+        if (userId == null || userId.equals("*")) {
+            LogUtils.d(TAG, "没有找到登录用户");
             return;
         }
 
         List<Configure> list = daoSession.getConfigureDao().queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
 
-        if (ListUtils.isEmpty(list)){
+        if (ListUtils.isEmpty(list)) {
+            LogUtils.d(TAG, "没有找到登录用户");
             return;
         }
 
@@ -94,27 +101,17 @@ public class LoginService extends IntentService {
 
                     @Override
                     public void onNext(Valid valid) {
-                        if (!valid.isCode()){
+                        if (!valid.isCode()) {
+                            LogUtils.d(TAG, "帐号已在在另一台设备登录！");
                             startLogin();
-                           // final CommonDialog commonDialog = new CommonDialog(MApplication.application);
-                           // commonDialog
-                           //         .setTitle("下线通知")
-                           //         .setMessage("你的帐号已在另一台设备登录。如非本人操作，则密码可能已泄露，建议修改密码。")
-                           //         .setPositiveButton("重新登录", new View.OnClickListener() {
-                           //             @Override
-                           //             public void onClick(View view) {
-                           //                 startLogin();
-                           //                 commonDialog.dismiss();
-                           //             }
-                           //         })
-                           //         .setNegativeButton("退出", null)
-                           //         .show();
+                        } else {
+                            LogUtils.d(TAG, "未发现在其他设备登录！");
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        LogUtils.d(TAG, ExceptionEngine.handleException(e).getMsg());
                     }
 
                     @Override
@@ -124,9 +121,20 @@ public class LoginService extends IntentService {
                 });
     }
 
-    private void startLogin(){
-        Intent intent = new Intent(this, LoginActivity.class);
+    private void startLogin() {
+        Intent intent = new Intent(this, OffsiteLoginDialogActivity.class);
         intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
+
+        if (timer != null){
+            timer.cancel();
+        }
+        stopService(intent);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LogUtils.d(TAG, "destroy");
     }
 }

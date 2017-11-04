@@ -20,6 +20,7 @@ import cn.nicolite.huthelper.view.iview.IExamView;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Function;
 import io.reactivex.schedulers.Schedulers;
 
 /**
@@ -63,31 +64,20 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
                         EncryptUtils.MD5(user.getStudentKH() + "apiforapp!"))
                 .compose(getActivity().<ExamResult>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<ExamResult>() {
+                .map(new Function<ExamResult, List<Exam>>() {
                     @Override
-                    public void onSubscribe(Disposable d) {
-                        if (ListUtils.isEmpty(list) || isManual){
-                            getView().showLoading();
-                        }
-                    }
-
-                    @Override
-                    public void onNext(ExamResult examResult) {
-                        getView().closeLoading();
+                    public List<Exam> apply(ExamResult examResult) throws Exception {
+                        List<Exam> examList = new ArrayList<>();
 
                         if (examResult != null && examResult.getStatus().equals("success")) {
-                            List<Exam> examList = new ArrayList<>();
                             List<Exam> exam1 = examResult.getRes().getExam();
                             List<Exam> cxexam = examResult.getRes().getCxexam();
 
-                            if (ListUtils.isEmpty(exam1) && ListUtils.isEmpty(cxexam)) {
-                                getView().showMessage("没有找到你的考试计划！");
+                            if (!ListUtils.isEmpty(exam1)) {
+                                examList.addAll(exam1);
                             }
 
-                            examList.addAll(exam1);
-
-                            if (ListUtils.isEmpty(cxexam)) {
+                            if (!ListUtils.isEmpty(cxexam)) {
                                 examList.addAll(cxexam);
                             }
 
@@ -102,23 +92,41 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
                                 examDao.insert(exam);
                             }
 
-                            getView().showExam(examList);
-
                         } else {
                             if (!ListUtils.isEmpty(list)) {
-                                getView().showExam(list);
+                                examList.addAll(list);
                             }
-                            getView().showMessage("没有找到你的考试计划！");
                         }
+                        return examList;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<List<Exam>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        if (ListUtils.isEmpty(list) || isManual) {
+                            getView().showLoading();
+                        }
+                    }
 
-
+                    @Override
+                    public void onNext(List<Exam> exams) {
+                        getView().closeLoading();
+                        if (ListUtils.isEmpty(exams)) {
+                            getView().showMessage("没有找到你的考试计划！");
+                            return;
+                        }
+                        getView().showExam(exams);
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         getView().closeLoading();
-                        getView().showExam(list);
+                        if (!ListUtils.isEmpty(list)){
+                            getView().showExam(list);
+                        }
                         getView().showMessage("加载失败，" + ExceptionEngine.handleException(e).getMsg());
+
                     }
 
                     @Override
@@ -126,6 +134,5 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
 
                     }
                 });
-
     }
 }

@@ -106,13 +106,34 @@ public class CommonDialog {
         return this;
     }
 
+
     public String getInputText() {
         return inputArea.getText().toString();
     }
 
+    public CommonDialog setCancelable(boolean flag){
+        if (dialog == null){
+            dialog = builder.create();
+        }
+        dialog.setCancelable(flag);
+        return this;
+    }
+
+    public CommonDialog setCanceledOnTouchOutside(boolean flag){
+        if (dialog == null){
+            dialog = builder.create();
+        }
+        dialog.setCanceledOnTouchOutside(flag);
+        return this;
+    }
+
     public void show() {
-        dialog = builder.create();
+        if (dialog == null){
+            dialog = builder.create();
+        }
+
         dialog.show();
+
     }
 
     public void dismiss() {
