@@ -51,8 +51,10 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ExamViewHolder
 
         if (!exam.getIsset().equals("0")){
             holder.tvGradeTime.setText(String.valueOf(exam.getCourseName() + "（重修）"));
+        }else {
+            holder.tvGradeTime.setText(exam.getCourseName());
         }
-        holder.tvGradeTime.setText(exam.getCourseName());
+
         holder.tvGradeJidian.setText(exam.getRoomName());
         String remainder = "今天";
         try {

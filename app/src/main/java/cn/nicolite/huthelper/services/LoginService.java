@@ -36,7 +36,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class LoginService extends IntentService {
 
-    private static final int DELAY = 2 * 1000;
+    private static final int DELAY = 3 * 1000;
     private static final int PERIOD = 15 * 1000;
     private static final String ACTION_INIT_WHEN_APP_CREATE = "cn.nicolite.huthelper.service.action.INIT";
     private static final String TAG = "LoginService";

@@ -58,6 +58,14 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
         final ExamDao examDao = getDaoSession().getExamDao();
         final List<Exam> list = examDao.queryBuilder().where(ExamDao.Properties.UserId.eq(userId)).list();
 
+        if (ListUtils.isEmpty(list) || isManual) {
+            getView().showLoading();
+        }
+
+        if (!ListUtils.isEmpty(list)) {
+            getView().showExam(list);
+        }
+
         APIUtils
                 .getExamAPI()
                 .getExamData(user.getStudentKH(),
@@ -104,9 +112,7 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
                 .subscribe(new Observer<List<Exam>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        if (ListUtils.isEmpty(list) || isManual) {
-                            getView().showLoading();
-                        }
+
                     }
 
                     @Override
@@ -122,7 +128,7 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
                     @Override
                     public void onError(Throwable e) {
                         getView().closeLoading();
-                        if (!ListUtils.isEmpty(list)){
+                        if (!ListUtils.isEmpty(list)) {
                             getView().showExam(list);
                         }
                         getView().showMessage("加载失败，" + ExceptionEngine.handleException(e).getMsg());

@@ -21,7 +21,7 @@ import cn.nicolite.huthelper.app.MApplication;
 import cn.nicolite.huthelper.db.DaoHelper;
 import cn.nicolite.huthelper.db.dao.ConfigureDao;
 import cn.nicolite.huthelper.db.dao.DaoSession;
-import cn.nicolite.huthelper.listener.LifeCycleListener;
+import cn.nicolite.huthelper.listener.ActivityLifeCycleListener;
 import cn.nicolite.huthelper.manager.ActivityStackManager;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.utils.LogUtils;
@@ -38,7 +38,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     /**Log Tag*/
     protected final String TAG = getClass().getSimpleName();
     protected Context context;
-    protected LifeCycleListener lifeCycleListener;
+    protected ActivityLifeCycleListener lifeCycleListener;
     protected Unbinder unbinder;
 
     @Override
@@ -168,7 +168,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * 设置生命周期监听
      * @param lifecycleListener
      */
-    public void setOnLifeCycleListener(LifeCycleListener lifecycleListener){
+    public void setOnLifeCycleListener(ActivityLifeCycleListener lifecycleListener){
         this.lifeCycleListener = lifecycleListener;
     }
 

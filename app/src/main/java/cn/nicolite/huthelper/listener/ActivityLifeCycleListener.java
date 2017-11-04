@@ -3,11 +3,11 @@ package cn.nicolite.huthelper.listener;
 import android.os.Bundle;
 
 /**
- * 生命周期监听
+ * Activity生命周期监听
  * Created by nicolite on 17-10-14.
  */
 
-public interface LifeCycleListener {
+public interface ActivityLifeCycleListener {
 
     void onCreate(Bundle saveInstanceState);
 

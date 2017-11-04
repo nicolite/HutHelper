@@ -49,18 +49,17 @@ public class OffsiteLoginDialogActivity extends BaseActivity {
                 .setPositiveButton("重新登录", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        commonDialog.dismiss();
                         Intent intent = new Intent(context, LoginActivity.class);
                         startActivity(intent);
-                        commonDialog.dismiss();
                         finish();
                     }
                 })
                 .setNegativeButton("退出", new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        ActivityStackManager.getManager().exitApp(context);
                         commonDialog.dismiss();
-                        finish();
+                        ActivityStackManager.getManager().exitApp(context);
                     }
                 })
                 .show();

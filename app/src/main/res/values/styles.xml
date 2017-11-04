@@ -30,7 +30,7 @@
         <item name="android:backgroundDimAmount">0.6</item>
     </style>
 
-    <style name="Transparent" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Transparent" parent="AppTheme">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowIsTranslucent">true</item>

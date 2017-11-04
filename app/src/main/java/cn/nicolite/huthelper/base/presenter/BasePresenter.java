@@ -14,7 +14,7 @@ import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.db.DaoHelper;
 import cn.nicolite.huthelper.db.dao.ConfigureDao;
 import cn.nicolite.huthelper.db.dao.DaoSession;
-import cn.nicolite.huthelper.listener.LifeCycleListener;
+import cn.nicolite.huthelper.listener.ActivityLifeCycleListener;
 import cn.nicolite.huthelper.model.bean.Configure;
 
 /**
@@ -22,7 +22,7 @@ import cn.nicolite.huthelper.model.bean.Configure;
  * Created by nicolite on 17-10-13.
  */
 
-public class BasePresenter<V, T> implements LifeCycleListener {
+public class BasePresenter<V, T> implements ActivityLifeCycleListener {
 
     protected final String TAG = getClass().getSimpleName();
 
