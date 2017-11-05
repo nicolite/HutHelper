@@ -65,6 +65,9 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
         String userId = getLoginUser();
 
         if (TextUtils.isEmpty(userId)) {
+            if (getView() == null){
+                return;
+            }
             getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
@@ -72,6 +75,9 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
         final ConfigureDao configureDao = getDaoSession().getConfigureDao();
         final List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
         if (ListUtils.isEmpty(list)){
+            if (getView() == null){
+                return;
+            }
             getView().showMessage("获取用户信息失败！");
             return;
         }
@@ -255,12 +261,18 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
         String userId = getLoginUser();
 
         if (TextUtils.isEmpty(userId)) {
+            if (getView() == null){
+                return;
+            }
             getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
 
         final List<Configure> configureList = getConfigureList();
         if (ListUtils.isEmpty(configureList)) {
+            if (getView() == null){
+                return;
+            }
             getView().showMessage("获取用户信息失败！");
             return;
         }
@@ -316,6 +328,9 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     public void connectRongIM() {
         String userId = getLoginUser();
         if (TextUtils.isEmpty(userId)) {
+            if (getView() == null){
+                return;
+            }
             getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
@@ -324,6 +339,9 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
         final Configure configure;
         if (ListUtils.isEmpty(configureList)) {
+            if (getView() == null){
+                return;
+            }
             getView().showMessage("获取Token失败，请重新登录！");
             return;
         }
@@ -339,6 +357,9 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             @Override
             public void onSuccess(String s) {
                 if (user == null) {
+                    if (getView() == null){
+                        return;
+                    }
                     getView().showMessage("未获取到用户信息，请重新登录！");
                     return;
                 }
@@ -350,6 +371,9 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
+                if (getView() == null){
+                    return;
+                }
                 getView().showMessage("连接即时聊天服务器出错！");
             }
         });
@@ -365,6 +389,9 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             @Override
             public void onFail(Object o, int i, String s) {
                 LogUtils.d(TAG, "注册失败，错误码：" + i + "，错误信息：" + s);
+                if (getView() == null){
+                    return;
+                }
                 getView().showMessage("注册推送服务失败：" + s);
             }
         });
@@ -378,11 +405,17 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     public void initUser() {
         String userId = getLoginUser();
         if (TextUtils.isEmpty(userId)) {
+            if (getView() == null){
+                return;
+            }
             getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
         List<Configure> configureList = getConfigureList();
         if (ListUtils.isEmpty(configureList)){
+            if (getView() == null){
+                return;
+            }
             getView().showMessage("获取用户信息失败！");
             return;
         }
@@ -426,6 +459,9 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
                     @Override
                     public void onFailed(int requestCode, @android.support.annotation.NonNull List<String> deniedPermissions) {
+                        if (getView() == null){
+                            return;
+                        }
                         getView().showMessage("获取权限失败，请授予文件读写和读取手机状态权限！");
                     }
                 })

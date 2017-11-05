@@ -44,12 +44,18 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
         String userId = getLoginUser();
 
         if (TextUtils.isEmpty(userId)) {
+            if (getView() == null) {
+                return;
+            }
             getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
 
         List<Configure> configureList = getConfigureList();
         if (ListUtils.isEmpty(configureList)) {
+            if (getView() == null) {
+                return;
+            }
             getView().showMessage("获取用户信息失败！");
             return;
         }
@@ -57,6 +63,9 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
         User user = configureList.get(0).getUser();
 
         if (user == null) {
+            if (getView() == null) {
+                return;
+            }
             getView().showMessage("获取用户信息失败！");
             return;
         }
@@ -72,6 +81,9 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
 
         String userId = getLoginUser();
         if (TextUtils.isEmpty(userId)) {
+            if (getView() == null) {
+                return;
+            }
             getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
@@ -79,6 +91,9 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
         ConfigureDao configureDao = getDaoSession().getConfigureDao();
         List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
         if (ListUtils.isEmpty(list)) {
+            if (getView() == null) {
+                return;
+            }
             getView().showMessage("获取用户信息失败！");
             return;
         }
@@ -102,7 +117,6 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
 
                     @Override
                     public void onNext(HttpResult<String> stringHttpResult) {
-                        getActivity().closeLoading();
                         String msg;
                         switch (stringHttpResult.getMsg()) {
                             case "ok":
@@ -119,11 +133,18 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                                 msg = stringHttpResult.getMsg();
                                 break;
                         }
+                        if (getView() == null) {
+                            return;
+                        }
+                        getActivity().closeLoading();
                         getActivity().showMessage(msg);
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) {
+                            return;
+                        }
                         getActivity().closeLoading();
                         getActivity().showMessage(ExceptionEngine.handleException(e).getMsg());
                     }
@@ -145,12 +166,18 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                     @Override
                     public void onSucceed(int requestCode, @NonNull List<String> grantPermissions) {
                         if (requestCode == 100) {
+                            if (getView() == null) {
+                                return;
+                            }
                             getView().changeAvatar();
                         }
                     }
 
                     @Override
                     public void onFailed(int requestCode, @NonNull List<String> deniedPermissions) {
+                        if (getView() == null) {
+                            return;
+                        }
                         getView().showMessage("获取权限失败，请授予文件读写权限！");
                     }
                 })
@@ -161,6 +188,9 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
         String userId = getLoginUser();
 
         if (TextUtils.isEmpty(userId)) {
+            if (getView() == null) {
+                return;
+            }
             getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
@@ -168,6 +198,9 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
         ConfigureDao configureDao = getDaoSession().getConfigureDao();
         List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
         if (ListUtils.isEmpty(list)) {
+            if (getView() == null) {
+                return;
+            }
             getView().showMessage("获取用户信息失败！");
             return;
         }
@@ -175,7 +208,11 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
         Configure configure = list.get(0);
         User user = list.get(0).getUser();
 
+        if (getView() == null) {
+            return;
+        }
         getView().showMessage("昵称修改中！");
+
         APIUtils
                 .getUserAPI()
                 .changeUsername(user.getStudentKH(), configure.getAppRememberCode(), userName)
@@ -197,6 +234,9 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                                 String userId = getLoginUser();
 
                                 if (TextUtils.isEmpty(userId)) {
+                                    if (getView() == null) {
+                                        return;
+                                    }
                                     getView().showMessage("获取当前登录用户失败，请重新登录！");
                                     return;
                                 }
@@ -205,6 +245,9 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                                 List<User> userList = userDao.queryBuilder().where(UserDao.Properties.User_id.eq(userId)).list();
 
                                 if (ListUtils.isEmpty(userList)) {
+                                    if (getView() == null) {
+                                        return;
+                                    }
                                     getView().showMessage("获取用户信息失败！");
                                     return;
                                 }
@@ -220,11 +263,17 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                             default:
                                 msg = httpResult.getMsg();
                         }
+                        if (getView() == null) {
+                            return;
+                        }
                         getView().showMessage(msg);
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null) {
+                            return;
+                        }
                         getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                     }
 

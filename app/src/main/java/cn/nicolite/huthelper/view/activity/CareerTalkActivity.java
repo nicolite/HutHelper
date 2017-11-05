@@ -87,7 +87,7 @@ public class CareerTalkActivity extends BaseActivity implements ICareerTalkView 
             @Override
             public void onRefresh() {
                 currentPage = 1;
-              careerTalkPresenter.showCareerTalkList(currentPage, true, isAll);
+                careerTalkPresenter.showCareerTalkList(currentPage, true, isAll);
             }
         });
 
@@ -108,7 +108,9 @@ public class CareerTalkActivity extends BaseActivity implements ICareerTalkView 
         lRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
+                Bundle bundle = new Bundle();
+                bundle.putInt("id", careerTalkList.get(position).getId());
+                startActivity(CareerTalkItemActivity.class, bundle);
             }
         });
 
@@ -125,7 +127,7 @@ public class CareerTalkActivity extends BaseActivity implements ICareerTalkView 
 
     @Override
     public void closeLoading() {
-        if (loadingDialog != null){
+        if (loadingDialog != null) {
             loadingDialog.dismiss();
         }
     }
@@ -159,9 +161,9 @@ public class CareerTalkActivity extends BaseActivity implements ICareerTalkView 
                 break;
             case R.id.toolbar_left_text:
                 isAll = !isAll;
-                if (isAll){
+                if (isAll) {
                     toolbarLeftText.setText("省内");
-                }else {
+                } else {
                     toolbarLeftText.setText("校内");
                 }
                 currentPage = 1;

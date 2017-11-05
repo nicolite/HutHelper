@@ -24,6 +24,10 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+# LRecyclerview 开始
+-dontwarn com.github.jdsjlzx.**
+-keep class com.github.jdsjlzx.progressindicator.indicators.** { *; }
+# LRecyclerview 结束
 
 # Java Bean 开始
 -keep class cn.nicolite.huthelper.model.bean.**{*;}

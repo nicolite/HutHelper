@@ -37,12 +37,18 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
         final String userId = getLoginUser();
 
         if (TextUtils.isEmpty(userId)) {
+            if (getView() == null){
+                return;
+            }
             getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
 
         List<Configure> configureList = getConfigureList();
         if (ListUtils.isEmpty(configureList)) {
+            if (getView() == null){
+                return;
+            }
             getView().showMessage("获取用户信息失败！");
             return;
         }
@@ -50,6 +56,9 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
         User user = configureList.get(0).getUser();
 
         if (user == null) {
+            if (getView() == null){
+                return;
+            }
             getView().showMessage("获取用户信息失败！");
             return;
         }
@@ -117,6 +126,9 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
 
                     @Override
                     public void onNext(List<Exam> exams) {
+                        if (getView() == null){
+                            return;
+                        }
                         getView().closeLoading();
                         if (ListUtils.isEmpty(exams)) {
                             getView().showMessage("没有找到你的考试计划！");
@@ -127,6 +139,9 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null){
+                            return;
+                        }
                         getView().closeLoading();
                         if (!ListUtils.isEmpty(list)) {
                             getView().showExam(list);

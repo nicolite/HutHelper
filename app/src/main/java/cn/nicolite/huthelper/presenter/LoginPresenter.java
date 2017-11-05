@@ -46,10 +46,10 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                 .subscribe(new Observer<HttpResult<User>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        if (getView() != null) {
-                            getView().showLoading();
+                        if (getView() == null) {
+                            return;
                         }
-
+                        getView().showLoading();
                     }
 
                     @Override
@@ -124,7 +124,6 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
 
                     @Override
                     public void onNext(@NonNull Token token) {
-                        getView().closeLoading();
 
                         ConfigureDao configureDao = getDaoSession().getConfigureDao();
                         List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
@@ -134,12 +133,19 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                             configureDao.update(configure);
                         }
 
+                        if (getView() == null) {
+                            return;
+                        }
+                        getView().closeLoading();
                         getView().onSuccess();
 
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        if (getView() == null){
+                            return;
+                        }
                         getView().closeLoading();
                         getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                     }

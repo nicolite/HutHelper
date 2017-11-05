@@ -46,12 +46,18 @@ public class CareerTalkPresenter extends BasePresenter<ICareerTalkView, CareerTa
                     @Override
                     public void onSubscribe(Disposable d) {
                         if (!isManual) {
+                            if (getView() == null){
+                                return;
+                            }
                             getView().showLoading();
                         }
                     }
 
                     @Override
                     public void onNext(CareerTalkResult<List<CareerTalk>> listCareerTalkResult) {
+                        if (getView() == null){
+                            return;
+                        }
                         getView().closeLoading();
                         if (!TextUtils.isEmpty(listCareerTalkResult.getStatus())
                                 && listCareerTalkResult.getStatus().equals("success")) {
@@ -67,6 +73,9 @@ public class CareerTalkPresenter extends BasePresenter<ICareerTalkView, CareerTa
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null){
+                            return;
+                        }
                         getView().closeLoading();
                         getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                     }
@@ -89,12 +98,18 @@ public class CareerTalkPresenter extends BasePresenter<ICareerTalkView, CareerTa
                     @Override
                     public void onSubscribe(Disposable d) {
                         if (!isManual) {
+                            if (getView() == null){
+                                return;
+                            }
                             getView().showLoading();
                         }
                     }
 
                     @Override
                     public void onNext(CareerTalkResult<List<CareerTalk>> listCareerTalkResult) {
+                        if (getView() == null){
+                            return;
+                        }
                         getView().closeLoading();
                         if (!TextUtils.isEmpty(listCareerTalkResult.getStatus())
                                 && listCareerTalkResult.getStatus().equals("success")) {
@@ -110,6 +125,9 @@ public class CareerTalkPresenter extends BasePresenter<ICareerTalkView, CareerTa
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null){
+                            return;
+                        }
                         getView().closeLoading();
                         getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                     }

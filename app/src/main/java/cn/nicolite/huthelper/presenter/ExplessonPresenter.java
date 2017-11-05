@@ -34,12 +34,18 @@ public class ExplessonPresenter extends BasePresenter<IExplessonView, ExpLessonA
         final String userId = getLoginUser();
 
         if (TextUtils.isEmpty(userId)) {
+            if (getView() == null){
+                return;
+            }
             getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
 
         List<Configure> configureList = getConfigureList();
         if (ListUtils.isEmpty(configureList)) {
+            if (getView() == null){
+                return;
+            }
             getView().showMessage("获取用户信息失败！");
             return;
         }
@@ -53,6 +59,9 @@ public class ExplessonPresenter extends BasePresenter<IExplessonView, ExpLessonA
                 .list();
 
         if (!ListUtils.isEmpty(list)){
+            if (getView() == null){
+                return;
+            }
             getView().showExpLesson(list);
         }
 
@@ -65,13 +74,16 @@ public class ExplessonPresenter extends BasePresenter<IExplessonView, ExpLessonA
                     @Override
                     public void onSubscribe(Disposable d) {
                         if (ListUtils.isEmpty(list) || isManual){
+                            if (getView() == null){
+                                return;
+                            }
                             getView().showLoading();
                         }
                     }
 
                     @Override
                     public void onNext(HttpResult<List<ExpLesson>> listHttpResult) {
-                        getView().closeLoading();
+
                         if (listHttpResult != null && listHttpResult.getMsg().equals("ok")){
                             List<ExpLesson> expLessonList = listHttpResult.getData();
                             if (!ListUtils.isEmpty(expLessonList)){
@@ -92,12 +104,19 @@ public class ExplessonPresenter extends BasePresenter<IExplessonView, ExpLessonA
                             return;
                         }
 
+                        if (getView() == null){
+                            return;
+                        }
+                        getView().closeLoading();
                         getView().showMessage("暂时没有实验课表！");
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        if (getView() == null){
+                            return;
+                        }
                         getView().closeLoading();
                         if (!ListUtils.isEmpty(list)){
                             getView().showExpLesson(list);
