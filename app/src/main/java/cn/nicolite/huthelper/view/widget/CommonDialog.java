@@ -59,11 +59,21 @@ public class CommonDialog {
         return this;
     }
 
+    public CommonDialog setTitleGravity(int gravity){
+        tvTitle.setGravity(gravity);
+        return this;
+    }
+
     public CommonDialog setMessage(String text) {
         tvMessageRoot.setVisibility(View.VISIBLE);
         tvMessage.setVisibility(View.VISIBLE);
         tvMessage.setMovementMethod(ScrollingMovementMethod.getInstance());
         tvMessage.setText(text);
+        return this;
+    }
+
+    public CommonDialog setMessageGravity(int gravity){
+        tvMessage.setGravity(gravity);
         return this;
     }
 
@@ -106,6 +116,10 @@ public class CommonDialog {
         return this;
     }
 
+    public CommonDialog setInputGravity(int gravity){
+        inputRoot.setGravity(gravity);
+        return this;
+    }
 
     public String getInputText() {
         return inputArea.getText().toString();

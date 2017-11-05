@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.bean.ExpLesson;
+import cn.nicolite.huthelper.utils.ListUtils;
 
 /**
  * Created by nicolite on 17-11-4.
@@ -55,7 +56,7 @@ public class ExpLessonAdapter extends RecyclerView.Adapter<ExpLessonAdapter.ExpL
 
     @Override
     public int getItemCount() {
-        return expLessonList == null ? 0 : expLessonList.size();
+        return ListUtils.isEmpty(expLessonList) ? 0 : expLessonList.size();
     }
 
     static class ExpLessonViewHolder extends RecyclerView.ViewHolder {

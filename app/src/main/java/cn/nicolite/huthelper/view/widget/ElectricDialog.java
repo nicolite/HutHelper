@@ -63,7 +63,9 @@ public class ElectricDialog {
     }
 
     public void show() {
-        dialog = builder.create();
+        if (dialog == null){
+            dialog = builder.create();
+        }
         dialog.show();
     }
 

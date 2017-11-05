@@ -98,7 +98,6 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         hideToolBar(true);
-        setDeepColorStatusBar(true);
         setImmersiveStatusBar(true);
         setLayoutNoLimits(true);
     }
@@ -156,7 +155,11 @@ public class MainActivity extends BaseActivity implements IMainView {
                     Menu menu = menuList.get(position);
                     Bundle bundle = new Bundle();
                     if (menu.getType() == WebViewActivity.TYPE_LIBRARY) {
-                        bundle.putString("url", Constants.LIBRARY);
+                        String url = Constants.LIBRARY;
+                        if (!TextUtils.isEmpty(configure.getLibraryUrl())){
+                            url = configure.getLibraryUrl();
+                        }
+                        bundle.putString("url", url);
                     } else if (menu.getType() == WebViewActivity.TYPE_HOMEWORK) {
                         bundle.putString("url", Constants.HOMEWORK + user.getStudentKH() + "/" + configure.getAppRememberCode());
                     }
@@ -172,13 +175,13 @@ public class MainActivity extends BaseActivity implements IMainView {
 
         mainPresenter = new MainPresenter(this, this);
         mainPresenter.showMenu();
+        mainPresenter.checkUpdate(user.getStudentKH());
+        mainPresenter.initUser();
         mainPresenter.showTimeAxis();
         mainPresenter.showWeather();
+        mainPresenter.checkPermission();
         mainPresenter.initPush(user.getStudentKH());
         mainPresenter.connectRongIM();
-        mainPresenter.initUser();
-        mainPresenter.checkUpdate(user.getStudentKH());
-        mainPresenter.checkPermission();
         mainPresenter.startLoginService();
         qBadgeView = new QBadgeView(context);
         qBadgeView.bindTarget(unReadMessage);
@@ -246,8 +249,8 @@ public class MainActivity extends BaseActivity implements IMainView {
                                 XGPushManager.registerPush(getApplicationContext(), "*");
                                 XGPushManager.unregisterPush(getApplicationContext());
                                 startActivity(LoginActivity.class);
-                                finish();
                                 commonDialog.dismiss();
+                                finish();
                             }
                         })
                         .setNegativeButton("再想想", null)

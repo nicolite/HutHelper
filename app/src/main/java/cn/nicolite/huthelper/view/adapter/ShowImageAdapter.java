@@ -16,6 +16,7 @@ import com.github.chrisbanes.photoview.PhotoViewAttacher;
 import java.util.List;
 
 import cn.nicolite.huthelper.R;
+import cn.nicolite.huthelper.utils.ListUtils;
 
 
 /**
@@ -33,7 +34,7 @@ public class ShowImageAdapter extends PagerAdapter{
 
     @Override
     public int getCount() {
-        return images == null ? 0 : images.size();
+        return ListUtils.isEmpty(images) ? 0 : images.size();
     }
 
     @Override

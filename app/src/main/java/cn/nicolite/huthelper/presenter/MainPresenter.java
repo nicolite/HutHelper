@@ -251,6 +251,21 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
     //必须调用此接口以记录该用户是否使用工大助手
     public void checkUpdate(String num) {
+
+        String userId = getLoginUser();
+
+        if (TextUtils.isEmpty(userId)) {
+            getView().showMessage("获取当前登录用户失败，请重新登录！");
+            return;
+        }
+
+        final List<Configure> configureList = getConfigureList();
+        if (ListUtils.isEmpty(configureList)) {
+            getView().showMessage("获取用户信息失败！");
+            return;
+        }
+
+
         try {
             int versionCode = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionCode;
             APIUtils
@@ -258,7 +273,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                     .checkUpdate(num, versionCode)
                     .compose(getActivity().<HttpResult<Update>>bindToLifecycle())
                     .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                    .observeOn(Schedulers.io())
                     .subscribe(new Observer<HttpResult<Update>>() {
                         @Override
                         public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
@@ -267,7 +282,19 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
                         @Override
                         public void onNext(@io.reactivex.annotations.NonNull HttpResult<Update> updateHttpResult) {
+                            if (updateHttpResult.getMsg().equals("ok")){
+                                Update data = updateHttpResult.getData();
+                                if (data == null){
+                                    return;
+                                }
 
+                                Configure configure = configureList.get(0);
+                                configure.setLibraryUrl(data.getApi_base_address().getLibrary());
+                                configure.setTestPlanUrl(data.getApi_base_address().getTest_plan());
+                                configure.setNewTermDate(data.getApi_base_address().getSchool_opens());
+                                configure.update();
+
+                            }
                         }
 
                         @Override

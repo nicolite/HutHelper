@@ -1,6 +1,7 @@
 package cn.nicolite.huthelper.base.fragment;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -10,9 +11,16 @@ import android.view.ViewGroup;
 
 import com.trello.rxlifecycle2.components.support.RxFragment;
 
+import java.util.List;
+
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import cn.nicolite.huthelper.app.MApplication;
+import cn.nicolite.huthelper.db.DaoHelper;
+import cn.nicolite.huthelper.db.dao.ConfigureDao;
+import cn.nicolite.huthelper.db.dao.DaoSession;
 import cn.nicolite.huthelper.listener.FragmentLifeCycleListener;
+import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.utils.LogUtils;
 
 /**
@@ -25,6 +33,30 @@ public abstract class BaseFragment extends RxFragment {
     protected Unbinder unbinder;
     protected FragmentLifeCycleListener lifeCycleListener;
     protected Context context;
+
+    /**
+     * 获取daoSession
+     */
+    protected DaoSession getDaoSession() {
+        return DaoHelper.getDaoHelper(MApplication.AppContext).getDaoSession();
+    }
+
+    /**
+     * 获取配置
+     */
+    protected List<Configure> getConfigureList() {
+        ConfigureDao configureDao = getDaoSession().getConfigureDao();
+        return configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(getLoginUser())).list();
+    }
+
+    /**
+     * 获取当前登录用户
+     */
+    protected String getLoginUser() {
+        SharedPreferences preferences = context.getSharedPreferences("login_user", Context.MODE_PRIVATE);
+        return preferences.getString("userId", null);
+    }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -56,7 +88,7 @@ public abstract class BaseFragment extends RxFragment {
         initConfig(savedInstanceState);
 
         Bundle arguments = getArguments();
-        initBundleData(arguments);
+        initArguments(arguments);
 
         context = getContext();
 
@@ -150,6 +182,7 @@ public abstract class BaseFragment extends RxFragment {
         this.lifeCycleListener = lifecycleListener;
     }
 
+
     /**
      * 初始化Activity配置,
      */
@@ -158,9 +191,9 @@ public abstract class BaseFragment extends RxFragment {
     /**
      * 初始化Bundle参数
      *
-     * @param bundle
+     * @param arguments
      */
-    protected abstract void initBundleData(Bundle bundle);
+    protected abstract void initArguments(Bundle arguments);
 
     /**
      * 获取 xml layout

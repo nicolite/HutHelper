@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    android:background="@color/white"
+    android:paddingBottom="10dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="10dp">
+
+    <ImageView
+        android:id="@+id/careertalk_log"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/au_hut" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp">
+
+        <TextView
+            android:id="@+id/careertalk_company"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:singleLine="true"
+            android:text="公司名称"
+            android:textColor="@color/dull_grey"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/careertalk_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/careertalk_company"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:text="学校简称  具体地点"
+            android:textColor="@color/medium_grey"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/careertalk_holdtime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/careertalk_address"
+            android:layout_marginTop="8dp"
+            android:text="周几（今天？）  下午14:00"
+            android:textColor="@color/medium_grey"
+            android:textSize="13sp" />
+    </RelativeLayout>
+</LinearLayout>

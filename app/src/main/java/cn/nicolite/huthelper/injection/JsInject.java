@@ -12,12 +12,12 @@ import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.view.activity.ShowImageActivity;
 
 /**
- * TODO
  * JS注入
  * Created by nicolite on 17-10-13.
  */
 
 public class JsInject {
+
     private Context context;
 
     public JsInject(Context context) {

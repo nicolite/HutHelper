@@ -47,7 +47,7 @@ public class SlidrUtils {
                 .velocityThreshold(2400)
                 .distanceThreshold(0.25f)
                 .edge(true)
-                .edgeSize(0.15f) // The % of the screen that counts as the edge, default 18%
+                .edgeSize(0.18f) // The % of the screen that counts as the edge, default 18%
                 .listener(new SlidrListener() {
                     @Override
                     public void onSlideStateChanged(int state) {

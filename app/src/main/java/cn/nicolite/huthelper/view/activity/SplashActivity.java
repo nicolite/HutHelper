@@ -34,16 +34,16 @@ public class SplashActivity extends BaseActivity {
     private final MyHandler handler = new MyHandler(this);
 
     private static class MyHandler extends Handler {
-        private final WeakReference<SplashActivity> splashActivityWeakReference;
+        private final WeakReference<SplashActivity> activityWeakReference;
 
-        private MyHandler(SplashActivity splashActivity) {
-            this.splashActivityWeakReference = new WeakReference<SplashActivity>(splashActivity);
+        private MyHandler(SplashActivity activity) {
+            this.activityWeakReference = new WeakReference<SplashActivity>(activity);
         }
 
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            SplashActivity splashActivity = splashActivityWeakReference.get();
+            SplashActivity splashActivity = activityWeakReference.get();
             switch (msg.what) {
                 case what:
                     if (splashActivity.isLogin()) {

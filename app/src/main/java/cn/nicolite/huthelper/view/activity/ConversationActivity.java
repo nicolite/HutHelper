@@ -1,14 +1,20 @@
 package cn.nicolite.huthelper.view.activity;
 
+import android.Manifest;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.design.widget.CoordinatorLayout;
 import android.text.TextUtils;
 import android.widget.TextView;
 
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.PermissionListener;
+
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -16,7 +22,9 @@ import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.model.bean.Configure;
+import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.LogUtils;
+import cn.nicolite.huthelper.utils.ToastUtil;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.MessageTag;
 import io.rong.imlib.RongIMClient;
@@ -66,10 +74,24 @@ public class ConversationActivity extends BaseActivity {
 
         if (RongIM.getInstance().getCurrentConnectionStatus()
                 == RongIMClient.ConnectionStatusListener.ConnectionStatus.DISCONNECTED) {
-            Configure configure = new Configure();
-            if (configure == null){
+            String userId = getLoginUser();
+
+            if (TextUtils.isEmpty(userId)) {
                 return;
             }
+
+            List<Configure> configureList = getConfigureList();
+
+            if (ListUtils.isEmpty(configureList)) {
+                return;
+            }
+
+            Configure configure = configureList.get(0);
+
+            if (configure == null) {
+                return;
+            }
+
             if (!TextUtils.isEmpty(configure.getToken())) {
                 RongIM.connect(configure.getToken(), new RongIMClient.ConnectCallback() {
                     @Override
@@ -88,10 +110,10 @@ public class ConversationActivity extends BaseActivity {
             }
         }
 
-        final String userId = getIntent().getData().getQueryParameter("targetId");
+        final String userIds = getIntent().getData().getQueryParameter("targetId");
         final String name = getIntent().getData().getQueryParameter("title");
 
-        toolbarTitle.setText(userId);
+        toolbarTitle.setText(userIds);
         if (!TextUtils.isEmpty(name)) {
             toolbarTitle.setText(name);
         }
@@ -178,6 +200,24 @@ public class ConversationActivity extends BaseActivity {
                 }
             }
         });
+
+        String[] permissions = new String[]{Manifest.permission.CAMERA,
+                Manifest.permission.ACCESS_FINE_LOCATION};
+        AndPermission
+                .with(context)
+                .requestCode(200)
+                .permission(permissions)
+                .callback(new PermissionListener() {
+                    @Override
+                    public void onSucceed(int requestCode, @NonNull List<String> grantPermissions) {
+
+                    }
+
+                    @Override
+                    public void onFailed(int requestCode, @NonNull List<String> deniedPermissions) {
+                        ToastUtil.showToastShort("获取权限失败，请授予调用相机和定位权限！");
+                    }
+                });
 
     }
 

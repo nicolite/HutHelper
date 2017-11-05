@@ -49,9 +49,9 @@ public class ExpLessonFragment extends BaseFragment {
     }
 
     @Override
-    protected void initBundleData(Bundle bundle) {
-        if (bundle != null){
-            type = bundle.getInt("type", 1);
+    protected void initArguments(Bundle arguments) {
+        if (arguments != null){
+            type = arguments.getInt("type", 1);
         }
     }
 

@@ -86,10 +86,19 @@ public class ExpLessonActivity extends BaseActivity implements IExplessonView{
 
     private List<Fragment> getFragmentList(){
         List<Fragment> fragmentList = new ArrayList<>();
-        expLessonFragmentUnfinish = ExpLessonFragment.newInstance(ExpLessonFragment.TYPE_FINISHED);
-        expLessonFragmentFinish = ExpLessonFragment.newInstance(ExpLessonFragment.TYPE_FINISHED);
+
+        if (expLessonFragmentUnfinish == null){
+            expLessonFragmentUnfinish = ExpLessonFragment.newInstance(ExpLessonFragment.TYPE_FINISHED);
+        }
+
+        if (expLessonFragmentFinish == null){
+            expLessonFragmentFinish = ExpLessonFragment.newInstance(ExpLessonFragment.TYPE_FINISHED);
+        }
+
+        fragmentList.clear();
         fragmentList.add(expLessonFragmentUnfinish);
         fragmentList.add(expLessonFragmentFinish);
+
         return fragmentList;
     }
 
@@ -121,6 +130,7 @@ public class ExpLessonActivity extends BaseActivity implements IExplessonView{
 
     @Override
     public void showExpLesson(List<ExpLesson> expLessonList) {
+
         Collections.sort(expLessonList, new Comparator<ExpLesson>() {
             @Override
             public int compare(ExpLesson expLesson, ExpLesson t1) {
@@ -128,7 +138,7 @@ public class ExpLessonActivity extends BaseActivity implements IExplessonView{
             }
         });
 
-        //TODO 区分是否已完成
+        //TODO 未区分是否已完成
         expLessonFragmentUnfinish.updateDate(expLessonList);
         expLessonFragmentFinish.updateDate(expLessonList);
     }

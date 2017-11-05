@@ -12,27 +12,15 @@ import android.view.ViewGroup;
  * Created by nicolite on 17-11-4.
  */
 
-public interface FragmentLifeCycleListener {
+public interface FragmentLifeCycleListener extends ActivityLifeCycleListener {
 
     void onAttach(Context context);
-
-    void onCreate(Bundle saveInstanceState);
 
     void onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState);
 
     void onActivityCreated(@Nullable Bundle savedInstanceState);
 
-    void onStart();
-
-    void onResume();
-
-    void onPause();
-
-    void onStop();
-
     void onDestroyView();
-
-    void onDestroy();
 
     void onDetach();
 }

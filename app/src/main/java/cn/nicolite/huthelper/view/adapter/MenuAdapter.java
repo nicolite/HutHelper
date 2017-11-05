@@ -20,6 +20,7 @@ import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.bean.Menu;
 import cn.nicolite.huthelper.utils.ButtonUtils;
+import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.view.widget.CustomItemTouchHelper;
 
 /**
@@ -94,7 +95,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
     @Override
     public int getItemCount() {
-        return menuList == null? 0 : menuList.size();
+        return ListUtils.isEmpty(menuList)? 0 : menuList.size();
     }
 
 

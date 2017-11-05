@@ -18,6 +18,7 @@ import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.model.bean.Electric;
 import cn.nicolite.huthelper.presenter.ElectricPresenter;
+import cn.nicolite.huthelper.utils.KeyBoardUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.iview.IElectricView;
 import cn.nicolite.huthelper.view.widget.BarListView;
@@ -55,7 +56,6 @@ public class ElectricActivity extends BaseActivity implements IElectricView {
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar(true);
-        setDeepColorStatusBar(true);
         setSlideExit(true);
     }
 
@@ -85,6 +85,7 @@ public class ElectricActivity extends BaseActivity implements IElectricView {
                 finish();
                 break;
             case R.id.btn_electric_ok:
+                KeyBoardUtils.hideSoftInput(context, getWindow());
                 electricPresenter.showElectricData(etElectricLou.getText().toString(), etElectricHao.getText().toString());
                 break;
             case R.id.radio_electric_open:

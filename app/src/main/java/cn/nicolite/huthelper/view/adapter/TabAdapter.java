@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.List;
 
+import cn.nicolite.huthelper.utils.ListUtils;
+
 /**
  * TabLayout with ViewPager 通用适配器
  * Created by nicolite on 17-7-30.
@@ -42,6 +44,6 @@ public class TabAdapter extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return titleList == null ? super.getPageTitle(position) : titleList.get(position);
+        return ListUtils.isEmpty(titleList) ? super.getPageTitle(position) : titleList.get(position);
     }
 }
