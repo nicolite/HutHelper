@@ -22,9 +22,9 @@ import cn.nicolite.huthelper.view.adapter.ExpLessonAdapter;
 
 public class ExpLessonFragment extends BaseFragment {
 
-    public static final int TYPE_FINISHED = 0;
-    public static final int TYPE_UNFINISHED = 1;
-    private int type = 1;
+    public static final int FINISHED = 0;
+    public static final int UNFINISHED = 1;
+    private int type = UNFINISHED;
 
     private List<ExpLesson> expLessonList = new ArrayList<>();
     @BindView(R.id.rootView)
@@ -51,7 +51,7 @@ public class ExpLessonFragment extends BaseFragment {
     @Override
     protected void initArguments(Bundle arguments) {
         if (arguments != null){
-            type = arguments.getInt("type", 1);
+            type = arguments.getInt("type", UNFINISHED);
         }
     }
 

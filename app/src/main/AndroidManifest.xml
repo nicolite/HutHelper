@@ -149,6 +149,10 @@
             android:name=".view.activity.CareerTalkItemActivity"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".view.activity.MarketActivity"
+            android:theme="@style/AppTheme" />
+
         <service android:name=".services.InitializeService" />
 
         <service android:name=".services.LoginService" />

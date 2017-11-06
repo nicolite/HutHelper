@@ -15,8 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/bg_grey"
-        android:orientation="vertical"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:orientation="vertical">
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:text="联系方式（选填，便于我们与你取得联系）"
+            android:text="联系方式（便于我们与你取得联系）"
             android:textColor="#adadad"
             android:textSize="12sp" />
 

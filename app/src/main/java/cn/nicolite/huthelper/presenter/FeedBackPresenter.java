@@ -34,8 +34,8 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, FeedBackActi
 
     public void feeBack(String content, String contact) {
         String userId = getLoginUser();
-        if (TextUtils.isEmpty(userId)){
-            if (getView() == null){
+        if (TextUtils.isEmpty(userId)) {
+            if (getView() == null) {
                 return;
             }
             getView().showMessage("获取用户信息失败！");
@@ -43,8 +43,8 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, FeedBackActi
         }
         List<Configure> configureList = getConfigureList();
 
-        if (ListUtils.isEmpty(configureList)){
-            if (getView() == null){
+        if (ListUtils.isEmpty(configureList)) {
+            if (getView() == null) {
                 return;
             }
             getView().showMessage("获取用户信息失败！");
@@ -53,18 +53,18 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, FeedBackActi
         User user = configureList.get(0).getUser();
 
         if (TextUtils.isEmpty(content)) {
-            if (getView() == null){
+            if (getView() == null) {
                 return;
             }
             getView().showMessage("反馈意见不能为空！");
         } else if (contact.length() > 200) {
-            if (getView() == null){
+            if (getView() == null) {
                 return;
             }
             getView().showMessage("字数超过限制！");
 
         } else if (TextUtils.isEmpty(contact)) {
-            if (getView() == null){
+            if (getView() == null) {
                 return;
             }
             getView().showMessage("联系方式不能为空！");
@@ -73,17 +73,16 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, FeedBackActi
             try {
                 PackageManager pm = getActivity().getPackageManager();
                 PackageInfo pi = pm.getPackageInfo(getActivity().getPackageName(), PackageManager.GET_ACTIVITIES);
-                version = "版本：Android " + pi.versionName + " (" + pi.versionCode + ")";
-                model = "机型：" + Build.MANUFACTURER + Build.MODEL + " (Android" + Build.VERSION.RELEASE + ")";
+                version = "版本：Android " + pi.versionName + "（" + pi.versionCode + "）";
+                model = "机型：" + Build.MANUFACTURER + Build.MODEL + "（Android " + Build.VERSION.RELEASE + "）";
             } catch (PackageManager.NameNotFoundException e) {
                 e.printStackTrace();
             }
 
-            from = "来源：" + user.getStudentKH();
-            content = "内容：";
+            from = "来源：" + user.getTrueName() + " " + user.getClass_name() + " " + user.getStudentKH();
 
             if (!TextUtils.isEmpty(version) && !TextUtils.isEmpty(model)) {
-                content = from + "<br/>" + version + "<br/>" + model + "<br/>" + content;
+                content = from + "<br/>" + version + "<br/>" + model + "<br/>" + "内容：" + content;
             }
 
             APIUtils
@@ -95,7 +94,7 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, FeedBackActi
                     .subscribe(new Observer<ResponseBody>() {
                         @Override
                         public void onSubscribe(@NonNull Disposable d) {
-                            if (getView() == null){
+                            if (getView() == null) {
                                 return;
                             }
                             getView().showLoading();
@@ -103,7 +102,7 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, FeedBackActi
 
                         @Override
                         public void onNext(@NonNull ResponseBody responseBody) {
-                            if (getView() == null){
+                            if (getView() == null) {
                                 return;
                             }
                             getView().closeLoading();
@@ -112,7 +111,7 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, FeedBackActi
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            if (getView() == null){
+                            if (getView() == null) {
                                 return;
                             }
                             getView().closeLoading();

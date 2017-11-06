@@ -2,7 +2,6 @@ package cn.nicolite.huthelper.presenter;
 
 import android.Manifest;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.text.TextUtils;
 
@@ -65,7 +64,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
         String userId = getLoginUser();
 
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null){
+            if (getView() == null) {
                 return;
             }
             getView().showMessage("获取当前登录用户失败，请重新登录！");
@@ -74,8 +73,8 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
         final ConfigureDao configureDao = getDaoSession().getConfigureDao();
         final List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
-        if (ListUtils.isEmpty(list)){
-            if (getView() == null){
+        if (ListUtils.isEmpty(list)) {
+            if (getView() == null) {
                 return;
             }
             getView().showMessage("获取用户信息失败！");
@@ -158,7 +157,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                                 }
 
                             } else {
-                                if (!ListUtils.isEmpty(list)){
+                                if (!ListUtils.isEmpty(list)) {
                                     getView().showTimeAxis(list);
                                 }
                                 getView().showMessage("未获取到时间轴数据！");
@@ -171,7 +170,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                         if (getView() != null) {
                             getView().closeLoading();
 
-                            if (!ListUtils.isEmpty(list)){
+                            if (!ListUtils.isEmpty(list)) {
                                 getView().showTimeAxis(list);
                             }
 
@@ -200,46 +199,46 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
         if (menuDao.count() == 0 || menuDao.count() > 15) {
             List<Menu> menuItems = new ArrayList<>();
-            Menu item = new Menu((long)1, 0, 0, WebViewActivity.TYPE_LIBRARY, "图书馆", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
+            Menu item = new Menu((long) 1, 0, 0, WebViewActivity.TYPE_LIBRARY, "图书馆", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
             menuItems.add(item);
-            item = new Menu((long)2, 1, 1, 0, "课程表", "cn.nicolite.huthelper.view.activity.CourseTableActivity", true);
+            item = new Menu((long) 2, 1, 1, 0, "课程表", "cn.nicolite.huthelper.view.activity.CourseTableActivity", true);
             menuItems.add(item);
-            item = new Menu((long)3, 2, 2, 0, "考试查询", "cn.nicolite.huthelper.view.activity.ExamActivity", true);
+            item = new Menu((long) 3, 2, 2, 0, "考试查询", "cn.nicolite.huthelper.view.activity.ExamActivity", true);
             menuItems.add(item);
-            item = new Menu((long)4, 3, 3, 0, "成绩查询", "cn.nicolite.huthelper.view.activity.NewGradeActivity", true);
+            item = new Menu((long) 4, 3, 3, 0, "成绩查询", "cn.nicolite.huthelper.view.activity.GradeActivity", true);
             menuItems.add(item);
-            item = new Menu((long)5, 4, 4, WebViewActivity.TYPE_HOMEWORK, "网上作业", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
+            item = new Menu((long) 5, 4, 4, WebViewActivity.TYPE_HOMEWORK, "网上作业", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
             menuItems.add(item);
-            item = new Menu((long)6, 5, 5, 0, "二手市场", "cn.nicolite.huthelper.view.activity.MarketActivity", true);
+            item = new Menu((long) 6, 5, 5, 0, "二手市场", "cn.nicolite.huthelper.view.activity.MarketActivity", true);
             menuItems.add(item);
-            item = new Menu((long)7, 6, 6, 0, "校园说说", "cn.nicolite.huthelper.view.activity.SayActivity", true);
+            item = new Menu((long) 7, 6, 6, 0, "校园说说", "cn.nicolite.huthelper.view.activity.SayActivity", true);
             menuItems.add(item);
-            item = new Menu((long)8, 7, 7, 0, "电费查询", "cn.nicolite.huthelper.view.activity.ElectricActivity", true);
+            item = new Menu((long) 8, 7, 7, 0, "电费查询", "cn.nicolite.huthelper.view.activity.ElectricActivity", true);
             menuItems.add(item);
-            item = new Menu((long)9, 8, 8, 0, "校招薪水", "cn.nicolite.huthelper.view.activity.OfferActivity", false);
+            item = new Menu((long) 9, 8, 8, 0, "校招薪水", "cn.nicolite.huthelper.view.activity.OfferActivity", false);
             menuItems.add(item);
-            item = new Menu((long)10, 9, 9, 0, "实验课表", "cn.nicolite.huthelper.view.activity.ExpLessonActivity", true);
+            item = new Menu((long) 10, 9, 9, 0, "实验课表", "cn.nicolite.huthelper.view.activity.ExpLessonActivity", true);
             menuItems.add(item);
-            item = new Menu((long)11, 10, 10, 0, "校历", "cn.nicolite.huthelper.view.activity.CalendarActivity", false);
+            item = new Menu((long) 11, 10, 10, 0, "校历", "cn.nicolite.huthelper.view.activity.CalendarActivity", false);
             menuItems.add(item);
-            item = new Menu((long)12, 11, 11, 0, "失物招领", "cn.nicolite.huthelper.view.activity.LoseListActivity", true);
+            item = new Menu((long) 12, 11, 11, 0, "失物招领", "cn.nicolite.huthelper.view.activity.LoseListActivity", true);
             menuItems.add(item);
-            item = new Menu((long)13, 12, 12, 0, "宣讲会", "cn.nicolite.huthelper.view.activity.CareerTalkActivity", true);
+            item = new Menu((long) 13, 12, 12, 0, "宣讲会", "cn.nicolite.huthelper.view.activity.CareerTalkActivity", true);
             menuItems.add(item);
-            item = new Menu((long)14, 13, 13, 0, "全部", "cn.nicolite.huthelper.view.activity.AllActivity", true);
+            item = new Menu((long) 14, 13, 13, 0, "全部", "cn.nicolite.huthelper.view.activity.AllActivity", true);
             menuItems.add(item);
-            item = new Menu((long)15, 14, 14, 0, "视频专栏", "cn.nicolite.huthelper.view.activity.VideoListActivity", false);
+            item = new Menu((long) 15, 14, 14, 0, "视频专栏", "cn.nicolite.huthelper.view.activity.VideoListActivity", false);
             menuItems.add(item);
-            item = new Menu((long)16, 15, 15, 0, "新生攻略", "cn.nicolite.huthelper.view.activity.FreshmanHelpActivity", false);
+            item = new Menu((long) 16, 15, 15, 0, "新生攻略", "cn.nicolite.huthelper.view.activity.FreshmanHelpActivity", false);
             menuItems.add(item);
 
             for (Menu menu : menuItems) {
                 menu.setUserId(getLoginUser());
                 List<Menu> list = menuDao.queryBuilder().where(MenuDao.Properties.Id.eq(menu.getId())).list();
-               if (!ListUtils.isEmpty(list)) {
-                   menuDao.update(menu);
-                   continue;
-               }
+                if (!ListUtils.isEmpty(list)) {
+                    menuDao.update(menu);
+                    continue;
+                }
                 menuDao.insert(menu);
             }
         }
@@ -261,7 +260,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
         String userId = getLoginUser();
 
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null){
+            if (getView() == null) {
                 return;
             }
             getView().showMessage("获取当前登录用户失败，请重新登录！");
@@ -270,65 +269,63 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
         final List<Configure> configureList = getConfigureList();
         if (ListUtils.isEmpty(configureList)) {
-            if (getView() == null){
+            if (getView() == null) {
                 return;
             }
             getView().showMessage("获取用户信息失败！");
             return;
         }
 
+        Configure configure = configureList.get(0);
 
-        try {
-            int versionCode = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionCode;
-            APIUtils
-                    .getUpdateAPI()
-                    .checkUpdate(num, versionCode)
-                    .compose(getActivity().<HttpResult<Update>>bindToLifecycle())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(Schedulers.io())
-                    .subscribe(new Observer<HttpResult<Update>>() {
-                        @Override
-                        public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
 
-                        }
+        APIUtils
+                .getUpdateAPI()
+                .checkUpdate(num, configure.getAppRememberCode())
+                .compose(getActivity().<HttpResult<Update>>bindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .subscribe(new Observer<HttpResult<Update>>() {
+                    @Override
+                    public void onSubscribe(@io.reactivex.annotations.NonNull Disposable d) {
 
-                        @Override
-                        public void onNext(@io.reactivex.annotations.NonNull HttpResult<Update> updateHttpResult) {
-                            if (updateHttpResult.getMsg().equals("ok")){
-                                Update data = updateHttpResult.getData();
-                                if (data == null){
-                                    return;
-                                }
+                    }
 
-                                Configure configure = configureList.get(0);
-                                configure.setLibraryUrl(data.getApi_base_address().getLibrary());
-                                configure.setTestPlanUrl(data.getApi_base_address().getTest_plan());
-                                configure.setNewTermDate(data.getApi_base_address().getSchool_opens());
-                                configure.update();
-
+                    @Override
+                    public void onNext(@io.reactivex.annotations.NonNull HttpResult<Update> updateHttpResult) {
+                        if (updateHttpResult.getMsg().equals("ok")) {
+                            Update data = updateHttpResult.getData();
+                            if (data == null) {
+                                return;
                             }
-                        }
 
-                        @Override
-                        public void onError(@io.reactivex.annotations.NonNull Throwable e) {
-
-                        }
-
-                        @Override
-                        public void onComplete() {
+                            Configure configure = configureList.get(0);
+                            configure.setLibraryUrl(data.getApi_base_address().getLibrary());
+                            configure.setTestPlanUrl(data.getApi_base_address().getTest_plan());
+                            configure.setNewTermDate(data.getApi_base_address().getSchool_opens());
+                            configure.update();
 
                         }
-                    });
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+                    }
+
+                    @Override
+                    public void onError(@io.reactivex.annotations.NonNull Throwable e) {
+
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
 
     }
 
     public void connectRongIM() {
         String userId = getLoginUser();
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null){
+            if (getView() == null) {
                 return;
             }
             getView().showMessage("获取当前登录用户失败，请重新登录！");
@@ -339,7 +336,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
         final Configure configure;
         if (ListUtils.isEmpty(configureList)) {
-            if (getView() == null){
+            if (getView() == null) {
                 return;
             }
             getView().showMessage("获取Token失败，请重新登录！");
@@ -357,7 +354,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             @Override
             public void onSuccess(String s) {
                 if (user == null) {
-                    if (getView() == null){
+                    if (getView() == null) {
                         return;
                     }
                     getView().showMessage("未获取到用户信息，请重新登录！");
@@ -371,7 +368,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
-                if (getView() == null){
+                if (getView() == null) {
                     return;
                 }
                 getView().showMessage("连接即时聊天服务器出错！");
@@ -389,7 +386,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             @Override
             public void onFail(Object o, int i, String s) {
                 LogUtils.d(TAG, "注册失败，错误码：" + i + "，错误信息：" + s);
-                if (getView() == null){
+                if (getView() == null) {
                     return;
                 }
                 getView().showMessage("注册推送服务失败：" + s);
@@ -405,15 +402,15 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     public void initUser() {
         String userId = getLoginUser();
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null){
+            if (getView() == null) {
                 return;
             }
             getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
         List<Configure> configureList = getConfigureList();
-        if (ListUtils.isEmpty(configureList)){
-            if (getView() == null){
+        if (ListUtils.isEmpty(configureList)) {
+            if (getView() == null) {
                 return;
             }
             getView().showMessage("获取用户信息失败！");
@@ -422,9 +419,9 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
         User user = configureList.get(0).getUser();
 
-         if (user != null){
-             getView().showUser(user);
-         }
+        if (user != null) {
+            getView().showUser(user);
+        }
     }
 
     public void share() {
@@ -459,7 +456,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
                     @Override
                     public void onFailed(int requestCode, @android.support.annotation.NonNull List<String> deniedPermissions) {
-                        if (getView() == null){
+                        if (getView() == null) {
                             return;
                         }
                         getView().showMessage("获取权限失败，请授予文件读写和读取手机状态权限！");
@@ -468,7 +465,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                 .start();
     }
 
-    public void startLoginService(){
+    public void startLoginService() {
         LoginService.start(MApplication.application);
     }
 

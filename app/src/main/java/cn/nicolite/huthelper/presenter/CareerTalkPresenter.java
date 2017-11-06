@@ -26,16 +26,24 @@ public class CareerTalkPresenter extends BasePresenter<ICareerTalkView, CareerTa
         super(view, activity);
     }
 
-    public void showCareerTalkList(int page, final boolean isManual, boolean isAll) {
+    public void showCareerTalkList(final boolean isManual, boolean isAll) {
         if (isAll){
-            loadMoreAll(page, isManual, false);
+            loadMoreAll(1, isManual, false);
         }else {
-            loadMoreHUT(page, isManual, false);
+            loadMoreHUT(1, isManual, false);
         }
 
     }
 
-    public void loadMoreAll(int page, final boolean isManual, final boolean isloadMore) {
+    public void loadMore(int page, boolean isAll) {
+        if (isAll) {
+            loadMoreAll(page, true, true);
+        } else {
+            loadMoreHUT(page, true, true);
+        }
+    }
+
+    public void loadMoreAll(int page, final boolean isManual, final boolean isLoadMore) {
         APIUtils
                 .getCareerTalkAPI()
                 .getCareerTalkList("after", "cs", page)
@@ -61,7 +69,7 @@ public class CareerTalkPresenter extends BasePresenter<ICareerTalkView, CareerTa
                         getView().closeLoading();
                         if (!TextUtils.isEmpty(listCareerTalkResult.getStatus())
                                 && listCareerTalkResult.getStatus().equals("success")) {
-                            if (isloadMore) {
+                            if (isLoadMore) {
                                 getView().loadMore(listCareerTalkResult.getData());
                                 return;
                             }
@@ -87,7 +95,7 @@ public class CareerTalkPresenter extends BasePresenter<ICareerTalkView, CareerTa
                 });
     }
 
-    public void loadMoreHUT(int page, final boolean isManual, final boolean isloadMore) {
+    public void loadMoreHUT(int page, final boolean isManual, final boolean isLoadMore) {
         APIUtils
                 .getCareerTalkAPI()
                 .getCareerTalkList(218, "after", "cs", page)
@@ -113,7 +121,7 @@ public class CareerTalkPresenter extends BasePresenter<ICareerTalkView, CareerTa
                         getView().closeLoading();
                         if (!TextUtils.isEmpty(listCareerTalkResult.getStatus())
                                 && listCareerTalkResult.getStatus().equals("success")) {
-                            if (isloadMore) {
+                            if (isLoadMore) {
                                 getView().loadMore(listCareerTalkResult.getData());
                                 return;
                             }
@@ -139,11 +147,5 @@ public class CareerTalkPresenter extends BasePresenter<ICareerTalkView, CareerTa
                 });
     }
 
-    public void loadMore(int page, boolean isAll) {
-        if (isAll) {
-            loadMoreAll(page, true, true);
-        } else {
-            loadMoreHUT(page, true, true);
-        }
-    }
+
 }

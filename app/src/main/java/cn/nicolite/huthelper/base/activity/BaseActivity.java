@@ -51,9 +51,9 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         ActivityStackManager.getManager().push(this);
         initConfig(savedInstanceState);
         setContentView(setLayoutId());
-        context = this;
         unbinder = ButterKnife.bind(this);
 
+        context = this;
         Bundle bundle = getIntent().getExtras();
         initBundleData(bundle);
         doBusiness();

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -17,8 +18,11 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.ExpLesson;
 import cn.nicolite.huthelper.presenter.ExplessonPresenter;
+import cn.nicolite.huthelper.utils.DateUtiils;
+import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.TabAdapter;
 import cn.nicolite.huthelper.view.fragment.ExpLessonFragment;
@@ -88,14 +92,13 @@ public class ExpLessonActivity extends BaseActivity implements IExplessonView{
         List<Fragment> fragmentList = new ArrayList<>();
 
         if (expLessonFragmentUnfinish == null){
-            expLessonFragmentUnfinish = ExpLessonFragment.newInstance(ExpLessonFragment.TYPE_FINISHED);
+            expLessonFragmentUnfinish = ExpLessonFragment.newInstance(ExpLessonFragment.FINISHED);
         }
 
         if (expLessonFragmentFinish == null){
-            expLessonFragmentFinish = ExpLessonFragment.newInstance(ExpLessonFragment.TYPE_FINISHED);
+            expLessonFragmentFinish = ExpLessonFragment.newInstance(ExpLessonFragment.FINISHED);
         }
 
-        fragmentList.clear();
         fragmentList.add(expLessonFragmentUnfinish);
         fragmentList.add(expLessonFragmentFinish);
 
@@ -138,8 +141,36 @@ public class ExpLessonActivity extends BaseActivity implements IExplessonView{
             }
         });
 
-        //TODO 未区分是否已完成
-        expLessonFragmentUnfinish.updateDate(expLessonList);
-        expLessonFragmentFinish.updateDate(expLessonList);
+        String userId = getLoginUser();
+
+        if (TextUtils.isEmpty(userId)){
+            showMessage("获取用户信息失败！");
+            return;
+        }
+
+        List<Configure> configureList = getConfigureList();
+
+        if (ListUtils.isEmpty(configureList)){
+            showMessage("获取用户信息失败！");
+            return;
+        }
+
+        Configure configure = configureList.get(0);
+
+        int nowWeek = DateUtiils.getNowWeek(configure.getNewTermDate());
+
+        List<ExpLesson> unfinish = new ArrayList<>();
+        List<ExpLesson> finish = new ArrayList<>();
+
+        for (ExpLesson explesson : expLessonList) {
+            if (Integer.parseInt(explesson.getWeeks_no()) > nowWeek){
+                unfinish.add(explesson);
+            }else {
+                finish.add(explesson);
+            }
+        }
+
+        expLessonFragmentUnfinish.updateDate(unfinish);
+        expLessonFragmentFinish.updateDate(finish);
     }
 }

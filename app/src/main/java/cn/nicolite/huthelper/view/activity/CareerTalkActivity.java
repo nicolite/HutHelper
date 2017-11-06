@@ -46,7 +46,6 @@ public class CareerTalkActivity extends BaseActivity implements ICareerTalkView 
     LinearLayout rootView;
 
     private List<CareerTalk> careerTalkList = new ArrayList<>();
-    private CareerTalkAdapter careerTalkAdapter;
     private LRecyclerViewAdapter lRecyclerViewAdapter;
     private CareerTalkPresenter careerTalkPresenter;
     private LoadingDialog loadingDialog;
@@ -79,7 +78,7 @@ public class CareerTalkActivity extends BaseActivity implements ICareerTalkView 
 
         lRecyclerView.setLayoutManager(new LinearLayoutManager(context, OrientationHelper.VERTICAL, false));
 
-        careerTalkAdapter = new CareerTalkAdapter(context, careerTalkList);
+        CareerTalkAdapter careerTalkAdapter = new CareerTalkAdapter(context, careerTalkList);
         lRecyclerViewAdapter = new LRecyclerViewAdapter(careerTalkAdapter);
         lRecyclerView.setAdapter(lRecyclerViewAdapter);
 
@@ -87,7 +86,7 @@ public class CareerTalkActivity extends BaseActivity implements ICareerTalkView 
             @Override
             public void onRefresh() {
                 currentPage = 1;
-                careerTalkPresenter.showCareerTalkList(currentPage, true, isAll);
+                careerTalkPresenter.showCareerTalkList(true, isAll);
             }
         });
 
@@ -114,7 +113,7 @@ public class CareerTalkActivity extends BaseActivity implements ICareerTalkView 
             }
         });
 
-        careerTalkPresenter.showCareerTalkList(1, true, isAll);
+        careerTalkPresenter.showCareerTalkList(false, isAll);
     }
 
 
@@ -167,7 +166,7 @@ public class CareerTalkActivity extends BaseActivity implements ICareerTalkView 
                     toolbarLeftText.setText("校内");
                 }
                 currentPage = 1;
-                careerTalkPresenter.showCareerTalkList(currentPage, true, isAll);
+                careerTalkPresenter.showCareerTalkList(false, isAll);
                 break;
         }
     }
