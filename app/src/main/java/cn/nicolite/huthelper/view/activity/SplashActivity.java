@@ -46,16 +46,12 @@ public class SplashActivity extends BaseActivity {
             SplashActivity splashActivity = activityWeakReference.get();
             switch (msg.what) {
                 case what:
-                    if (splashActivity.isLogin()) {
-                        splashActivity.startActivity(MainActivity.class);
-                    } else {
-                        splashActivity.startActivity(LoginActivity.class);
-                    }
-                    //解决MIUI9上Splash结束后出现应用图标
-                    splashActivity.handler.sendEmptyMessageDelayed(finish, 3000);
-                    break;
-                case finish:
                     if (splashActivity != null) {
+                        if (splashActivity.isLogin()) {
+                            splashActivity.startActivity(MainActivity.class);
+                        } else {
+                            splashActivity.startActivity(LoginActivity.class);
+                        }
                         splashActivity.finish();
                     }
                     break;

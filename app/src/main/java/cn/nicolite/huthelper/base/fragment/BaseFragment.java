@@ -33,6 +33,9 @@ public abstract class BaseFragment extends RxFragment {
     protected Unbinder unbinder;
     protected FragmentLifeCycleListener lifeCycleListener;
     protected Context context;
+    protected boolean isViewCreated;
+    protected boolean isUIVisible;
+    protected boolean isFirstVisible;
 
     /**
      * 获取daoSession
@@ -53,8 +56,23 @@ public abstract class BaseFragment extends RxFragment {
      * 获取当前登录用户
      */
     protected String getLoginUser() {
-        SharedPreferences preferences = context.getSharedPreferences("login_user", Context.MODE_PRIVATE);
+        SharedPreferences preferences = MApplication.AppContext.getSharedPreferences("login_user", Context.MODE_PRIVATE);
         return preferences.getString("userId", null);
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        isUIVisible = isVisibleToUser;
+
+        if (isViewCreated && isUIVisible && isFirstVisible) {
+            visibleToUser(true, true);
+            isFirstVisible = false;
+        }
+
+        if (isViewCreated && isUIVisible) {
+            visibleToUser(true, false);
+        }
     }
 
     @Override
@@ -73,6 +91,7 @@ public abstract class BaseFragment extends RxFragment {
         if (lifeCycleListener != null) {
             lifeCycleListener.onCreate(savedInstanceState);
         }
+        isFirstVisible = true;
     }
 
 
@@ -91,8 +110,9 @@ public abstract class BaseFragment extends RxFragment {
         initArguments(arguments);
 
         context = getContext();
-
         unbinder = ButterKnife.bind(this, view);
+
+        isViewCreated = true;
         return view;
     }
 
@@ -205,5 +225,12 @@ public abstract class BaseFragment extends RxFragment {
      */
     protected abstract void doBusiness();
 
+    /**
+     * fragment对用户可见
+     *
+     * @param isVisible      是否可见
+     * @param isFirstVisible 是否第一次可见
+     */
+    protected abstract void visibleToUser(boolean isVisible, boolean isFirstVisible);
 
 }

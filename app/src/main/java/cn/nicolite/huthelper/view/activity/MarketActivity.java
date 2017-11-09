@@ -17,7 +17,6 @@ import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.view.adapter.TabAdapter;
 import cn.nicolite.huthelper.view.fragment.MarketFragment;
-import cn.nicolite.huthelper.view.widget.LoadingDialog;
 
 /**
  * 二手市场页面
@@ -34,10 +33,6 @@ public class MarketActivity extends BaseActivity {
     ViewPager viewpager;
     @BindView(R.id.rootView)
     LinearLayout rootView;
-    private MarketFragment marketFragmentSold;
-    private MarketFragment marketFragmentBuy;
-    private MarketFragment marketFragmentAll;
-    private LoadingDialog loadingDialog;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -77,19 +72,9 @@ public class MarketActivity extends BaseActivity {
 
     private List<Fragment> getFragmentList() {
         List<Fragment> fragmentList = new ArrayList<>();
-
-        if (marketFragmentAll == null) {
-            marketFragmentAll = MarketFragment.newInstance(MarketFragment.ALL);
-        }
-        if (marketFragmentSold == null) {
-            marketFragmentSold = MarketFragment.newInstance(MarketFragment.SOLD);
-        }
-        if (marketFragmentBuy == null) {
-            marketFragmentBuy = MarketFragment.newInstance(MarketFragment.BUY);
-        }
-        fragmentList.add(marketFragmentAll);
-        fragmentList.add(marketFragmentSold);
-        fragmentList.add(marketFragmentBuy);
+        fragmentList.add(MarketFragment.newInstance(MarketFragment.ALL));
+        fragmentList.add(MarketFragment.newInstance(MarketFragment.SOLD));
+        fragmentList.add(MarketFragment.newInstance(MarketFragment.BUY));
         return fragmentList;
     }
 

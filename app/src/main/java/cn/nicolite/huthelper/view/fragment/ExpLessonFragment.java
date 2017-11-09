@@ -67,6 +67,11 @@ public class ExpLessonFragment extends BaseFragment {
         recyclerView.setAdapter(adapter);
     }
 
+    @Override
+    protected void visibleToUser(boolean isVisible, boolean isFirstVisible) {
+
+    }
+
     public void updateDate(List<ExpLesson> expLessonList){
 
         this.expLessonList.clear();

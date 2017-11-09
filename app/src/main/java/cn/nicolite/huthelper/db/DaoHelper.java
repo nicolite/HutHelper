@@ -18,7 +18,7 @@ public class DaoHelper {
     private DaoMaster daoMaster;
     private DaoSession daoSession;
 
-    private DaoHelper(Context context){
+    private DaoHelper(Context context) {
         helper = new DaoMaster.DevOpenHelper(context, Constants.DBNAME);
         db = helper.getWritableDatabase();
         daoMaster = new DaoMaster(db);
@@ -27,20 +27,23 @@ public class DaoHelper {
 
     public static DaoHelper getDaoHelper(Context context) {
         if (instance == null) {
-            synchronized (DaoHelper.class) {
-                if (instance == null) {
-                    instance = new DaoHelper(context);
-                }
-            }
+            //加上同步锁后频繁出现ANR
+            // synchronized (DaoHelper.class) {
+            //     if (instance == null) {
+            //         instance = new DaoHelper(context);
+            //     }
+            // }
+            instance = new DaoHelper(context);
+
         }
         return instance;
     }
 
-    public DaoSession getDaoSession(){
+    public DaoSession getDaoSession() {
         return daoSession;
     }
 
-    public SQLiteDatabase getDb(){
+    public SQLiteDatabase getDb() {
         return db;
     }
 }

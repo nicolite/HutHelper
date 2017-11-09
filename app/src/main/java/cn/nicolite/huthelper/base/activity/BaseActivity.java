@@ -17,7 +17,6 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import cn.nicolite.huthelper.app.MApplication;
 import cn.nicolite.huthelper.db.DaoHelper;
 import cn.nicolite.huthelper.db.dao.ConfigureDao;
 import cn.nicolite.huthelper.db.dao.DaoSession;
@@ -40,7 +39,9 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected Context context;
     protected ActivityLifeCycleListener lifeCycleListener;
     protected Unbinder unbinder;
-
+    protected static final int SENSOR = 697;
+    protected static final int PORTRAIT = 519;
+    protected static final int LANDSCAPE = 539;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +64,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * 获取daoSession
      */
     protected DaoSession getDaoSession() {
-        return DaoHelper.getDaoHelper(MApplication.AppContext).getDaoSession();
+        return DaoHelper.getDaoHelper(getApplicationContext()).getDaoSession();
     }
 
     /**
@@ -78,7 +79,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * 获取当前登录用户
      */
     protected String getLoginUser() {
-        SharedPreferences preferences = context.getSharedPreferences("login_user", Context.MODE_PRIVATE);
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("login_user", Context.MODE_PRIVATE);
         return preferences.getString("userId", null);
     }
 
@@ -244,16 +245,20 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     }
 
     /**
-     * 是否允许旋转
-     * @param isAllowScreenRotate
+     * 设置屏幕旋转
+     * @param rotate SENSOR根据传感器自动旋转 PORTRAIT竖屏 LANDSCAPE横屏
      */
-    public void setScreenRotate(boolean isAllowScreenRotate){
-        if (isAllowScreenRotate){
-            //TODO 允许旋转
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
-        }else {
-            //TODO 不允许
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    public void setScreenRotate(int rotate){
+        switch (rotate){
+            case SENSOR:
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
+                break;
+            case PORTRAIT:
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                break;
+            case LANDSCAPE:
+                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                break;
         }
     }
 

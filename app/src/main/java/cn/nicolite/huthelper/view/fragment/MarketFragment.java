@@ -1,8 +1,8 @@
 package cn.nicolite.huthelper.view.fragment;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -21,6 +21,7 @@ import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.fragment.BaseFragment;
 import cn.nicolite.huthelper.model.bean.Goods;
 import cn.nicolite.huthelper.presenter.MarketPresenter;
+import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.MarketAdapter;
 import cn.nicolite.huthelper.view.iview.IMarketView;
@@ -45,8 +46,7 @@ public class MarketFragment extends BaseFragment implements IMarketView {
     private LRecyclerViewAdapter lRecyclerViewAdapter;
     private MarketPresenter marketPresenter;
     private int currentPage = 1;
-    private boolean isNomore = false;
-
+    private boolean isNoMore = false;
     public static MarketFragment newInstance(int type) {
 
         Bundle args = new Bundle();
@@ -76,7 +76,7 @@ public class MarketFragment extends BaseFragment implements IMarketView {
 
     @Override
     protected void doBusiness() {
-        lRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL));
+        lRecyclerView.setLayoutManager(new GridLayoutManager(context, 2, OrientationHelper.VERTICAL, false));
         lRecyclerViewAdapter = new LRecyclerViewAdapter(new MarketAdapter(context, goodsList));
         lRecyclerView.setAdapter(lRecyclerViewAdapter);
 
@@ -93,7 +93,7 @@ public class MarketFragment extends BaseFragment implements IMarketView {
         lRecyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                if (!isNomore){
+                if (!isNoMore){
                     marketPresenter.loadMore(++currentPage, type);
                 }
             }
@@ -102,7 +102,7 @@ public class MarketFragment extends BaseFragment implements IMarketView {
         lRecyclerView.setOnNetWorkErrorListener(new OnNetWorkErrorListener() {
             @Override
             public void reload() {
-                if (!isNomore){
+                if (!isNoMore){
                     marketPresenter.loadMore(currentPage, type);
                 }
             }
@@ -115,7 +115,21 @@ public class MarketFragment extends BaseFragment implements IMarketView {
             }
         });
 
-        marketPresenter.showGoodsList(type, false);
+        if (isUIVisible && isFirstVisible){
+            //marketPresenter.showGoodsList(type, false);
+            lRecyclerView.forceToRefresh();
+            isFirstVisible = false;
+        }
+    }
+
+    @Override
+    protected void visibleToUser(boolean isVisible, boolean isFirstVisible) {
+        LogUtils.d(TAG, "xxx " +  isVisible + " " + isFirstVisible);
+        if (isFirstVisible){
+            //marketPresenter.showGoodsList(type, false);
+            lRecyclerView.forceToRefresh();
+        }
+
     }
 
     @Override
@@ -135,7 +149,7 @@ public class MarketFragment extends BaseFragment implements IMarketView {
 
     @Override
     public void showGoodsList(List<Goods.GoodsBean> goodsBeanList) {
-        isNomore = false;
+        isNoMore = false;
         lRecyclerView.setNoMore(false);
         goodsList.clear();
         goodsList.addAll(goodsBeanList);
@@ -145,7 +159,7 @@ public class MarketFragment extends BaseFragment implements IMarketView {
 
     @Override
     public void showLoadMoreList(List<Goods.GoodsBean> goodsBeanList) {
-        int start = goodsList.size();
+        int start = goodsList.size() + 1;
         goodsList.addAll(goodsBeanList);
         lRecyclerView.refreshComplete(goodsList.size());
         lRecyclerViewAdapter.notifyItemRangeInserted(start, goodsBeanList.size());
@@ -154,7 +168,7 @@ public class MarketFragment extends BaseFragment implements IMarketView {
     @Override
     public void noMoreData() {
         --currentPage;
-        isNomore = true;
+        isNoMore = true;
         lRecyclerView.setNoMore(true);
     }
 

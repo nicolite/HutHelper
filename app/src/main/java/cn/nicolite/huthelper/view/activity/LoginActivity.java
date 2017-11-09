@@ -3,8 +3,6 @@ package cn.nicolite.huthelper.view.activity;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextPaint;
@@ -15,8 +13,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import java.lang.ref.WeakReference;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -47,31 +43,6 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     TextView tvMessage;
     private LoginPresenter loginPresenter;
     private LoadingDialog loadingDialog;
-
-    private static final int finish = 58;
-
-    private final MyHandler handler = new MyHandler(this);
-
-    private static class MyHandler extends Handler {
-        private final WeakReference<LoginActivity> activityWeakReference;
-
-        private MyHandler(LoginActivity activity) {
-            this.activityWeakReference = new WeakReference<LoginActivity>(activity);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            LoginActivity activity = activityWeakReference.get();
-            switch (msg.what) {
-                case finish:
-                    if (activity != null){
-                        activity.finish();
-                    }
-                    break;
-            }
-        }
-    }
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -164,6 +135,6 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     @Override
     public void onSuccess() {
         startActivity(MainActivity.class);
-        handler.sendEmptyMessageDelayed(finish, 3000);
+        finish();
     }
 }

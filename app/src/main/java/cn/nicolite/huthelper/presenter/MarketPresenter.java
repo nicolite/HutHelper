@@ -5,7 +5,6 @@ import cn.nicolite.huthelper.model.bean.Goods;
 import cn.nicolite.huthelper.network.api.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.utils.ListUtils;
-import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.view.fragment.MarketFragment;
 import cn.nicolite.huthelper.view.iview.IMarketView;
 import io.reactivex.Observer;
@@ -94,7 +93,6 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                             if (goods.getCode() == 200 && !ListUtils.isEmpty(goods.getGoods())) {
                                 if (isloadMore) {
                                     if (page <= goods.getPageination()) {
-                                        LogUtils.d(TAG, "xxxcs");
                                         getView().showLoadMoreList(goods.getGoods());
                                     } else {
                                         getView().noMoreData();
