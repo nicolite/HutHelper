@@ -59,13 +59,15 @@ public class MarketActivity extends BaseActivity {
         viewpager.setOffscreenPageLimit(2);
     }
 
-    @OnClick({R.id.toolbar_back, R.id.toolbar_menu})
+    @OnClick({R.id.toolbar_back, R.id.toolbar_menu, R.id.toolbar_search})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_back:
                 finish();
                 break;
             case R.id.toolbar_menu:
+                break;
+            case R.id.toolbar_search:
                 break;
         }
     }
@@ -85,4 +87,5 @@ public class MarketActivity extends BaseActivity {
         titleList.add("求购");
         return titleList;
     }
+
 }

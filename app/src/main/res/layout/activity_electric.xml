@@ -4,10 +4,9 @@
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@drawable/bg_electic"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
-
 
     <include layout="@layout/toolbar_nomenu_transparent" />
 

@@ -1,8 +1,8 @@
 package cn.nicolite.huthelper.view.fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -76,7 +76,7 @@ public class MarketFragment extends BaseFragment implements IMarketView {
 
     @Override
     protected void doBusiness() {
-        lRecyclerView.setLayoutManager(new GridLayoutManager(context, 2, OrientationHelper.VERTICAL, false));
+        lRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL));
         lRecyclerViewAdapter = new LRecyclerViewAdapter(new MarketAdapter(context, goodsList));
         lRecyclerView.setAdapter(lRecyclerViewAdapter);
 
@@ -115,6 +115,7 @@ public class MarketFragment extends BaseFragment implements IMarketView {
             }
         });
 
+        //第一次打开Activity时不会回调visibleToUser，会导致第一个Fragment页面不加载数据，在这里进行处理
         if (isUIVisible && isFirstVisible){
             //marketPresenter.showGoodsList(type, false);
             lRecyclerView.forceToRefresh();

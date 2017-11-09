@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_menu" />
+    <include layout="@layout/toolbar_search_menu" />
 
     <android.support.design.widget.TabLayout
         android:id="@+id/tab"

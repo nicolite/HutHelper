@@ -153,6 +153,10 @@
             android:name=".view.activity.MarketActivity"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".view.activity.GoodsInfoActivity"
+            android:theme="@style/AppTheme" />
+
         <service android:name=".services.InitializeService" />
 
         <service android:name=".services.LoginService" />
@@ -272,7 +276,7 @@
         <!-- 融云小米推送 配置结束 < -->
 
         <!-- Glide 使用OkHttp作为网络连接-->
-       <meta-data
+        <meta-data
             android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
             android:value="GlideModule" />
 
