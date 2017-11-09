@@ -36,11 +36,15 @@ public class BasePresenter<V, T> implements ActivityLifeCycleListener, FragmentL
     protected V view;
     protected Reference<T> activityRef;
     protected T activity;
+    protected DaoSession daoSession;
+    protected String userId;
 
     public BasePresenter(V view, T activity) {
         attachView(view);
         attachActivity(activity);
         setListener(activity);
+        userId = getLoginUser();
+        daoSession = getDaoSession();
     }
 
     /**
@@ -54,7 +58,7 @@ public class BasePresenter<V, T> implements ActivityLifeCycleListener, FragmentL
      * 获取配置
      */
     protected List<Configure> getConfigureList() {
-        ConfigureDao configureDao = getDaoSession().getConfigureDao();
+        ConfigureDao configureDao = daoSession.getConfigureDao();
         return configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(getLoginUser())).list();
     }
 
@@ -75,8 +79,8 @@ public class BasePresenter<V, T> implements ActivityLifeCycleListener, FragmentL
         if (getActivity() != null) {
             if (activity instanceof BaseActivity) {
                 ((BaseActivity) getActivity()).setOnLifeCycleListener(this);
-            }else if (activity instanceof BaseFragment){
-                ((BaseFragment)getActivity()).setOnLifeCycleListener(this);
+            } else if (activity instanceof BaseFragment) {
+                ((BaseFragment) getActivity()).setOnLifeCycleListener(this);
             }
         }
     }
@@ -191,7 +195,7 @@ public class BasePresenter<V, T> implements ActivityLifeCycleListener, FragmentL
 
     @Override
     public void onDestroy() {
-        if (activity instanceof BaseActivity){
+        if (activity instanceof BaseActivity) {
             detachView();
             detachActivity();
         }
@@ -219,7 +223,7 @@ public class BasePresenter<V, T> implements ActivityLifeCycleListener, FragmentL
 
     @Override
     public void onDestroyView() {
-        if (activity instanceof BaseFragment){
+        if (activity instanceof BaseFragment) {
             detachView();
             detachActivity();
         }

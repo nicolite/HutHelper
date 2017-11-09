@@ -1,6 +1,8 @@
 package cn.nicolite.huthelper.base.fragment;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -33,6 +35,7 @@ public abstract class BaseFragment extends RxFragment {
     protected Unbinder unbinder;
     protected FragmentLifeCycleListener lifeCycleListener;
     protected Context context;
+    protected Activity activity;
     protected boolean isViewCreated;
     protected boolean isUIVisible;
     protected boolean isFirstVisible;
@@ -110,6 +113,7 @@ public abstract class BaseFragment extends RxFragment {
         initArguments(arguments);
 
         context = getContext();
+
         unbinder = ButterKnife.bind(this, view);
 
         isViewCreated = true;
@@ -123,6 +127,7 @@ public abstract class BaseFragment extends RxFragment {
         if (lifeCycleListener != null) {
             lifeCycleListener.onActivityCreated(savedInstanceState);
         }
+        activity = getActivity();
         doBusiness();
     }
 
@@ -233,4 +238,90 @@ public abstract class BaseFragment extends RxFragment {
      */
     protected abstract void visibleToUser(boolean isVisible, boolean isFirstVisible);
 
+
+    /**
+     * 页面跳转
+     *
+     * @param clazz
+     */
+    public void startActivity(Class<?> clazz) {
+        Intent intent = new Intent(context, clazz);
+        startActivity(intent);
+    }
+
+    /**
+     * 页面携带数据跳转
+     *
+     * @param clazz
+     * @param bundle
+     */
+    public void startActivity(Class<?> clazz, Bundle bundle) {
+        Intent intent = new Intent();
+        intent.setClass(context, clazz);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        startActivity(intent);
+    }
+
+    /**
+     * 包含回调的页面跳转
+     *
+     * @param clazz
+     * @param requestCode
+     */
+    public void startActivityForResult(Class<?> clazz, int requestCode) {
+        Intent intent = new Intent();
+        intent.setClass(context, clazz);
+        startActivityForResult(intent, requestCode);
+    }
+
+    /**
+     * 包含回调和数据的页面跳转
+     *
+     * @param clazz
+     * @param bundle
+     * @param requestCode
+     */
+    public void startActivityForResult(Class<?> clazz, Bundle bundle, int requestCode) {
+        Intent intent = new Intent();
+        intent.setClass(context, clazz);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        startActivityForResult(intent, requestCode);
+    }
+
+
+    /**
+     * 带动画的页面跳转
+     *
+     * @param clazz
+     * @param options ActivityOptionsCompat.makeSceneTransitionAnimation()
+     */
+    public void startActivityWithOptions(Class<?> clazz, Bundle options) {
+        Intent intent = new Intent();
+        intent.setClass(context, clazz);
+        if (options != null) {
+            startActivity(intent, options);
+        }
+    }
+
+    /**
+     * 带数据和动画的页面跳转
+     *
+     * @param clazz
+     * @param bundle  数据
+     * @param options ActivityOptionsCompat.makeSceneTransitionAnimation()
+     */
+    public void startActivity(Class<?> clazz, Bundle bundle, Bundle options) {
+        Intent intent = new Intent();
+        intent.setClass(context, clazz);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        if (options != null) {
+            startActivity(intent, options);
+        }
+    }
 }

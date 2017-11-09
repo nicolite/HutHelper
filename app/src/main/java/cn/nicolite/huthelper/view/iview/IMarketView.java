@@ -10,8 +10,8 @@ import cn.nicolite.huthelper.model.bean.Goods;
  */
 
 public interface IMarketView extends IBaseView {
-    void showGoodsList(List<Goods.GoodsBean> goodsBeanList);
-    void showLoadMoreList(List<Goods.GoodsBean> goodsBeanList);
+    void showGoodsList(List<Goods> goodsBeanList);
+    void showLoadMoreList(List<Goods> goodsBeanList);
     void noMoreData();
     void loadMoreFailure();
 }

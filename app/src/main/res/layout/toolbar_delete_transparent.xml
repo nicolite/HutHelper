@@ -45,7 +45,7 @@
             android:src="@drawable/user111" />
 
         <ImageView
-            android:id="@+id/toolbar_menu"
+            android:id="@+id/toolbar_delete"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_gravity="end|center_vertical"

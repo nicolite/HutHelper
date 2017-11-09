@@ -27,9 +27,9 @@ import cn.nicolite.huthelper.utils.ListUtils;
 public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.MarketViewHolder> {
 
     private Context context;
-    private List<Goods.GoodsBean> goodsList;
+    private List<Goods> goodsList;
 
-    public MarketAdapter(Context context, List<Goods.GoodsBean> goodsList) {
+    public MarketAdapter(Context context, List<Goods> goodsList) {
         this.context = context;
         this.goodsList = goodsList;
     }
@@ -42,7 +42,7 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.MarketView
 
     @Override
     public void onBindViewHolder(MarketViewHolder holder, int position) {
-        Goods.GoodsBean goodsBean = goodsList.get(position);
+        Goods goodsBean = goodsList.get(position);
 
         Glide
                 .with(context)

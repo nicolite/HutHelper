@@ -34,7 +34,9 @@ import cn.nicolite.huthelper.utils.StatusBarUtils;
  */
 
 public abstract class BaseActivity extends RxAppCompatActivity {
-    /**Log Tag*/
+    /**
+     * Log Tag
+     */
     protected final String TAG = getClass().getSimpleName();
     protected Context context;
     protected ActivityLifeCycleListener lifeCycleListener;
@@ -42,11 +44,12 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected static final int SENSOR = 697;
     protected static final int PORTRAIT = 519;
     protected static final int LANDSCAPE = 539;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LogUtils.d(TAG, TAG + "-->onCreate()");
-        if (lifeCycleListener != null){
+        if (lifeCycleListener != null) {
             lifeCycleListener.onCreate(savedInstanceState);
         }
         ActivityStackManager.getManager().push(this);
@@ -87,7 +90,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected void onStart() {
         super.onStart();
         LogUtils.d(TAG, TAG + "-->onStart()");
-        if (lifeCycleListener != null){
+        if (lifeCycleListener != null) {
             lifeCycleListener.onStart();
         }
     }
@@ -96,7 +99,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected void onResume() {
         super.onResume();
         LogUtils.d(TAG, TAG + "-->onResume()");
-        if (lifeCycleListener != null){
+        if (lifeCycleListener != null) {
             lifeCycleListener.onResume();
         }
         StatService.onResume(context);
@@ -106,7 +109,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected void onPause() {
         super.onPause();
         LogUtils.d(TAG, TAG + "-->onPause()");
-        if (lifeCycleListener != null){
+        if (lifeCycleListener != null) {
             lifeCycleListener.onPause();
         }
         StatService.onPause(context);
@@ -116,7 +119,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected void onStop() {
         super.onStop();
         LogUtils.d(TAG, TAG + "-->onStop()");
-        if (lifeCycleListener != null){
+        if (lifeCycleListener != null) {
             lifeCycleListener.onStop();
         }
         StatService.onStop(context);
@@ -126,10 +129,10 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         LogUtils.d(TAG, TAG + "-->onDestroy()");
-        if (lifeCycleListener != null){
+        if (lifeCycleListener != null) {
             lifeCycleListener.onDestroy();
         }
-        if (unbinder != null){
+        if (unbinder != null) {
             unbinder.unbind();
         }
         ActivityStackManager.getManager().remove(this);
@@ -139,7 +142,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected void onRestart() {
         super.onRestart();
         LogUtils.d(TAG, TAG + "-->onRestart()");
-        if (lifeCycleListener != null){
+        if (lifeCycleListener != null) {
             lifeCycleListener.onRestart();
         }
     }
@@ -151,6 +154,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
     /**
      * 初始化Bundle参数
+     *
      * @param bundle
      */
     protected abstract void initBundleData(Bundle bundle);
@@ -167,27 +171,30 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
     /**
      * 设置生命周期监听
+     *
      * @param lifecycleListener
      */
-    public void setOnLifeCycleListener(ActivityLifeCycleListener lifecycleListener){
+    public void setOnLifeCycleListener(ActivityLifeCycleListener lifecycleListener) {
         this.lifeCycleListener = lifecycleListener;
     }
 
     /**
      * 页面跳转
+     *
      * @param clazz
      */
-    public void startActivity(Class<?> clazz){
+    public void startActivity(Class<?> clazz) {
         Intent intent = new Intent(this, clazz);
         startActivity(intent);
     }
 
     /**
      * 页面携带数据跳转
+     *
      * @param clazz
      * @param bundle
      */
-    public void startActivity(Class<?> clazz, Bundle bundle){
+    public void startActivity(Class<?> clazz, Bundle bundle) {
         Intent intent = new Intent();
         intent.setClass(this, clazz);
         if (bundle != null) {
@@ -198,22 +205,56 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
     /**
      * 包含回调的页面跳转
+     *
      * @param clazz
      * @param requestCode
      */
-    public void startActivityForResult(Class<?> clazz, int requestCode){
+    public void startActivityForResult(Class<?> clazz, int requestCode) {
         Intent intent = new Intent();
         intent.setClass(this, clazz);
         startActivityForResult(intent, requestCode);
     }
 
     /**
-     *包含回调和数据的页面跳转
+     * 带动画的页面跳转
+     *
+     * @param clazz
+     * @param options ActivityOptionsCompat.makeSceneTransitionAnimation()
+     */
+    public void startActivityWithOptions(Class<?> clazz, Bundle options) {
+        Intent intent = new Intent();
+        intent.setClass(this, clazz);
+        if (options != null) {
+            startActivity(intent, options);
+        }
+    }
+
+    /**
+     * 带数据和动画的页面跳转
+     *
+     * @param clazz
+     * @param bundle  数据
+     * @param options ActivityOptionsCompat.makeSceneTransitionAnimation()
+     */
+    public void startActivity(Class<?> clazz, Bundle bundle, Bundle options) {
+        Intent intent = new Intent();
+        intent.setClass(this, clazz);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        if (options != null) {
+            startActivity(intent, options);
+        }
+    }
+
+    /**
+     * 包含回调和数据的页面跳转
+     *
      * @param clazz
      * @param bundle
      * @param requestCode
      */
-    public void startActivityForResult(Class<?> clazz, Bundle bundle, int requestCode){
+    public void startActivityForResult(Class<?> clazz, Bundle bundle, int requestCode) {
         Intent intent = new Intent();
         intent.setClass(this, clazz);
         if (bundle != null) {
@@ -224,20 +265,21 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
     /**
      * 是否允许全屏
+     *
      * @param isAllowFullScreen
      */
-    public void setAllowFullScreen(boolean isAllowFullScreen){
-        if (isAllowFullScreen){
+    public void setAllowFullScreen(boolean isAllowFullScreen) {
+        if (isAllowFullScreen) {
             this.getWindow().setFlags(
                     WindowManager.LayoutParams.FLAG_FULLSCREEN,
                     WindowManager.LayoutParams.FLAG_FULLSCREEN);
         }
     }
 
-    public void hideToolBar(boolean hide){
-        if (hide){
+    public void hideToolBar(boolean hide) {
+        if (hide) {
             ActionBar actionBar = getSupportActionBar();
-            if (actionBar != null){
+            if (actionBar != null) {
                 actionBar.hide();
             }
             //requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -246,10 +288,11 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
     /**
      * 设置屏幕旋转
+     *
      * @param rotate SENSOR根据传感器自动旋转 PORTRAIT竖屏 LANDSCAPE横屏
      */
-    public void setScreenRotate(int rotate){
-        switch (rotate){
+    public void setScreenRotate(int rotate) {
+        switch (rotate) {
             case SENSOR:
                 setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_SENSOR);
                 break;
@@ -264,10 +307,11 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
     /**
      * 是否设置沉浸状态栏
+     *
      * @param isSetStatusBar
      */
-    public void setImmersiveStatusBar(boolean isSetStatusBar){
-        if (isSetStatusBar){
+    public void setImmersiveStatusBar(boolean isSetStatusBar) {
+        if (isSetStatusBar) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                 // 透明状态栏
                 getWindow().addFlags(
@@ -280,11 +324,11 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     }
 
     /**
-     *  使布局背景填充状态栏
+     * 使布局背景填充状态栏
      */
-    public void setLayoutNoLimits(boolean isNoLimits){
+    public void setLayoutNoLimits(boolean isNoLimits) {
         // 布局背景填充状态栏 与键盘监听冲突
-        if (isNoLimits){
+        if (isNoLimits) {
             getWindow().addFlags(
                     WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
             );
@@ -293,10 +337,11 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
     /**
      * 设置状态栏字体为深色
+     *
      * @param isDeepColor
      */
-    public void setDeepColorStatusBar(boolean isDeepColor){
-        if (isDeepColor){
+    public void setDeepColorStatusBar(boolean isDeepColor) {
+        if (isDeepColor) {
             StatusBarUtils.setDeepColorStatusBar(this.getWindow());
         }
     }
@@ -304,10 +349,11 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     /**
      * 是否设置滑动退出
      * 需要在主题中设置<item name="android:windowIsTranslucent">true</item>，否则将显示异常
+     *
      * @param isSlideExit
      */
-    public void setSlideExit(boolean isSlideExit){
-        if (isSlideExit){
+    public void setSlideExit(boolean isSlideExit) {
+        if (isSlideExit) {
             SlidrUtils.setSlidrExit(this);
         }
     }

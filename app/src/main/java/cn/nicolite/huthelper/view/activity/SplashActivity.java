@@ -1,6 +1,5 @@
 package cn.nicolite.huthelper.view.activity;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -83,12 +82,11 @@ public class SplashActivity extends BaseActivity {
                 .centerCrop()
                 .crossFade()
                 .into(imageView);
-        handler.sendEmptyMessageDelayed(what, 1500);
+        handler.sendEmptyMessageDelayed(what, 2000);
     }
 
     public boolean isLogin() {
-        SharedPreferences preferences = getSharedPreferences("login_user", MODE_PRIVATE);
-        String userId = preferences.getString("userId", null);
+        String userId = getLoginUser();
         return userId != null && !userId.equals("*") && !ListUtils.isEmpty(getConfigureList());
     }
 }

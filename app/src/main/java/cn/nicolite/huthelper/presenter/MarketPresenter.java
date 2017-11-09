@@ -1,7 +1,10 @@
 package cn.nicolite.huthelper.presenter;
 
+import java.util.List;
+
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.model.bean.Goods;
+import cn.nicolite.huthelper.model.bean.GoodsResult;
 import cn.nicolite.huthelper.network.api.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.utils.ListUtils;
@@ -74,10 +77,10 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
         APIUtils
                 .getMarketAPI()
                 .getGoodsList(page, type)
-                .compose(getActivity().<Goods>bindToLifecycle())
+                .compose(getActivity().<GoodsResult<List<Goods>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Goods>() {
+                .subscribe(new Observer<GoodsResult<List<Goods>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         if (getView() != null && !isManual) {
@@ -86,22 +89,21 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                     }
 
                     @Override
-                    public void onNext(Goods goods) {
+                    public void onNext(GoodsResult<List<Goods>> listGoodsResult) {
                         if (getView() != null) {
                             getView().closeLoading();
-
-                            if (goods.getCode() == 200 && !ListUtils.isEmpty(goods.getGoods())) {
+                            if (listGoodsResult.getCode() == 200 && !ListUtils.isEmpty(listGoodsResult.getData())) {
                                 if (isloadMore) {
-                                    if (page <= goods.getPageination()) {
-                                        getView().showLoadMoreList(goods.getGoods());
+                                    if (page <= listGoodsResult.getPageination()) {
+                                        getView().showLoadMoreList(listGoodsResult.getData());
                                     } else {
                                         getView().noMoreData();
                                     }
                                 } else {
-                                    getView().showGoodsList(goods.getGoods());
+                                    getView().showGoodsList(listGoodsResult.getData());
                                 }
                             } else {
-                                getView().showMessage("获取数据失败，" + goods.getCode());
+                                getView().showMessage("获取数据失败，" + listGoodsResult.getCode());
                             }
                         }
                     }

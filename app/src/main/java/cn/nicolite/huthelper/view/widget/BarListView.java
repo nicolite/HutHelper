@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Build;
+import android.support.annotation.Nullable;
 import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
@@ -40,12 +41,16 @@ public class BarListView extends View {
     private Bitmap fullImage;
 
     public BarListView(Context context) {
-        super(context);
-        init(context);
+        this(context, null);
     }
 
     public BarListView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
+
+    }
+
+    public BarListView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
         init(context);
     }
 
