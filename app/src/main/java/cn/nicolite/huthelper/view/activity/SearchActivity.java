@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -150,6 +151,10 @@ public class SearchActivity extends BaseActivity implements ISearchView {
     }
 
     private void startSearchResult() {
+        if (TextUtils.isEmpty(toolbarSearchEdit.getText().toString())){
+            showMessage("你还没有输入搜索内容！");
+            return;
+        }
         Bundle bundle = new Bundle();
         bundle.putInt("type", type);
         bundle.putString("searchText", toolbarSearchEdit.getText().toString());

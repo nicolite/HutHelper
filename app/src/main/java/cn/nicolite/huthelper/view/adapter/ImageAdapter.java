@@ -1,8 +1,7 @@
 package cn.nicolite.huthelper.view.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -19,7 +17,6 @@ import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.utils.ListUtils;
-import cn.nicolite.huthelper.view.activity.ShowImageActivity;
 
 /**
  * Created by nicolite on 17-11-10.
@@ -28,10 +25,22 @@ import cn.nicolite.huthelper.view.activity.ShowImageActivity;
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHolder> {
     private Context context;
     private List<String> list;
+    private List<Uri> uriList;
+
+    public static final int STRING = 300;
+    public static final int URI = 57;
+    private int flag = STRING;
+    private OnItemClickListener onItemClickListener;
 
     public ImageAdapter(Context context, List<String> list) {
         this.context = context;
         this.list = list;
+    }
+
+    public ImageAdapter(Context context, List<Uri> uriList, int flag) {
+        this.context = context;
+        this.uriList = uriList;
+        this.flag = flag;
     }
 
     @Override
@@ -43,33 +52,46 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     @Override
     public void onBindViewHolder(final ImageViewHolder holder, int position) {
 
-        Glide
-                .with(context)
-                .load(Constants.PICTURE_URL + list.get(position))
-                .placeholder(R.drawable.img_loading)
-                .error(R.drawable.img_error)
-                .skipMemoryCache(true)
-                .centerCrop()
-                .crossFade()
-                .into(holder.image);
+        if (flag == STRING) {
+            Glide
+                    .with(context)
+                    .load(Constants.PICTURE_URL + list.get(position))
+                    .placeholder(R.drawable.img_loading)
+                    .error(R.drawable.img_error)
+                    .skipMemoryCache(true)
+                    .centerCrop()
+                    .crossFade()
+                    .into(holder.image);
+        } else if (flag == URI) {
+            Glide
+                    .with(context)
+                    .load(uriList.get(position))
+                    .placeholder(R.drawable.img_loading)
+                    .error(R.drawable.img_error)
+                    .skipMemoryCache(true)
+                    .centerCrop()
+                    .crossFade()
+                    .into(holder.image);
+        }
 
         holder.image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putStringArrayList("images", (ArrayList<String>) list);
-                bundle.putInt("curr", holder.getAdapterPosition());
-                Intent intent = new Intent();
-                intent.setClass(context, ShowImageActivity.class);
-                intent.putExtras(bundle);
-                context.startActivity(intent);
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(view, holder.getAdapterPosition(), holder.getItemId());
+                }
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return ListUtils.isEmpty(list) ? 0 : list.size();
+        if (flag == STRING) {
+            return ListUtils.isEmpty(list) ? 0 : list.size();
+        } else if (flag == URI) {
+            return ListUtils.isEmpty(uriList) ? 0 : uriList.size();
+        }
+        return 0;
     }
 
     static class ImageViewHolder extends RecyclerView.ViewHolder {
@@ -80,5 +102,13 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position, long itemId);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 }

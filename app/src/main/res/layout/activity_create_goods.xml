@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg_grey"
+    android:background="@drawable/blur_plac_min"
     android:fitsSystemWindows="true"
-    android:transitionName="goodsTransition">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/iv_bgimage"
-        android:layout_width="match_parent"
-        android:layout_height="420dp"
-        android:layout_alignParentTop="true"
-        android:scaleType="centerCrop"
-        android:src="@drawable/blur_plac_min" />
+    <include layout="@layout/toolbar_selector_ok_transparent" />
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -25,67 +19,81 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <android.support.v4.widget.Space
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="18dp" />
-
-            <include layout="@layout/toolbar_delete_transparent" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                android:paddingLeft="25dp"
+                android:paddingRight="25dp">
 
                 <LinearLayout
-                    android:id="@+id/imgandtext"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:orientation="vertical"
-                    android:paddingLeft="25dp"
-                    android:paddingRight="25dp">
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/add_pic"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginStart="5dp"
+                        android:src="@drawable/ic_addpic" />
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rv_goods_images"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:minHeight="100dp" />
-
-                    <TextView
-                        android:id="@+id/tv_text_title"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="30dp"
-                        android:lineSpacingExtra="3dp"
-                        android:minLines="1"
-                        android:scrollHorizontally="true"
-                        android:singleLine="true"
-                        android:textColor="#ffffff"
-                        android:textSize="14sp" />
-
-                    <TextView
-                        android:id="@+id/tv_text_content"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="3dp"
-                        android:lineSpacingExtra="3dp"
-                        android:minLines="4"
-                        android:textColor="#ffffff"
-                        android:textSize="14sp" />
                 </LinearLayout>
+
+                <EditText
+                    android:id="@+id/tv_text_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@color/transparent"
+                    android:hint="请添加标题"
+                    android:lineSpacingExtra="3dp"
+                    android:maxLines="1"
+                    android:minLines="1"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:textColor="#ffffff"
+                    android:textColorHint="@color/white"
+                    android:textSize="14sp" />
+
+                <EditText
+                    android:id="@+id/tv_text_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:background="@color/transparent"
+                    android:hint="再添加点详情描述吧...."
+                    android:lineSpacingExtra="3dp"
+                    android:minLines="4"
+                    android:textColor="#ffffff"
+                    android:textColorHint="@color/white"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="20dp"
+                android:background="@color/bg_grey">
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="290dp"
+                    android:layout_height="314dp"
                     android:layout_below="@id/imgandtext"
-                    android:layout_marginTop="20dp"
-                    android:background="#efefef" />
+                    android:background="@color/bg_grey" />
 
                 <LinearLayout
                     android:id="@+id/ll_content1"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
                     android:layout_below="@id/imgandtext"
-                    android:layout_marginTop="20dp"
                     android:background="@color/white"
                     android:orientation="horizontal">
 
@@ -105,12 +113,19 @@
                             android:textColor="#adadad"
                             android:textSize="12sp" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_goods_price"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
                             android:layout_marginTop="20dp"
-                            android:text="加载中..."
+                            android:background="@color/transparent"
+                            android:hint="价格"
+                            android:imeOptions="actionNext"
+                            android:inputType="numberDecimal|number"
+                            android:maxLines="1"
+                            android:minHeight="20dp"
+                            android:singleLine="true"
                             android:textColor="#404040"
                             android:textSize="16sp" />
 
@@ -140,9 +155,12 @@
                         <TextView
                             android:id="@+id/tv_goods_quality"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_height="20dp"
                             android:layout_marginTop="20dp"
-                            android:text="加载中..."
+                            android:background="@color/transparent"
+                            android:drawableEnd="@drawable/ic_dropdown_3"
+                            android:gravity="start"
+                            android:hint="成色"
                             android:textColor="#404040"
                             android:textSize="16sp" />
                     </LinearLayout>
@@ -170,7 +188,7 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingEnd="25dp"
+                        android:paddingEnd="0dp"
                         android:paddingStart="25dp">
 
                         <TextView
@@ -180,12 +198,20 @@
                             android:textColor="#adadad"
                             android:textSize="12sp" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_goods_tel"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
                             android:layout_marginTop="20dp"
-                            android:text="加载中..."
+                            android:background="@color/transparent"
+                            android:hint="联系方式"
+                            android:imeOptions="actionNext"
+                            android:inputType="number"
+                            android:maxLength="11"
+                            android:maxLines="1"
+                            android:minHeight="20dp"
+                            android:singleLine="true"
                             android:textColor="#404040"
                             android:textSize="16sp" />
 
@@ -202,8 +228,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingEnd="25dp"
-                        android:paddingStart="25dp">
+                        android:paddingLeft="25dp"
+                        android:paddingRight="25dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -212,55 +238,24 @@
                             android:textColor="#adadad"
                             android:textSize="12sp" />
 
-                        <TextView
+                        <EditText
                             android:id="@+id/tv_goods_location"
-                            android:layout_width="wrap_content"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginEnd="5dp"
                             android:layout_marginTop="20dp"
-                            android:text="加载中..."
+                            android:background="@color/transparent"
+                            android:hint="发布区域"
+                            android:imeOptions="actionDone"
+                            android:minHeight="20dp"
                             android:textColor="#404040"
                             android:textSize="16sp" />
                     </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_below="@id/square2"
-                    android:background="#efefef"
-                    android:orientation="horizontal"
-                    android:weightSum="2">
-
-                    <TextView
-                        android:id="@+id/iv_num_lost"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:gravity="start"
-                        android:paddingTop="10dp"
-                        android:text="加载中..."
-                        android:textColor="#adadad"
-                        android:textSize="12sp" />
-
-                    <TextView
-                        android:id="@+id/tv_sendtime_lost"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="end"
-                        android:layout_marginEnd="10dp"
-                        android:layout_weight="1"
-                        android:gravity="end"
-                        android:paddingTop="10dp"
-                        android:text="加载中..."
-                        android:textColor="#adadad"
-                        android:textSize="12sp" />
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 
+</LinearLayout>
 
-</android.support.design.widget.CoordinatorLayout>

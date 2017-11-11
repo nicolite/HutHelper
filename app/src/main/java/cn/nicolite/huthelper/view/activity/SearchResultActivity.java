@@ -15,6 +15,7 @@ import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.presenter.SearchPresenter;
 import cn.nicolite.huthelper.utils.ToastUtil;
 import cn.nicolite.huthelper.view.fragment.MarketFragment;
+import cn.nicolite.huthelper.view.fragment.UserListFragment;
 
 /**
  * Created by nicolite on 17-11-11.
@@ -57,9 +58,9 @@ public class SearchResultActivity extends BaseActivity {
 
     @Override
     protected void doBusiness() {
-        if (TextUtils.isEmpty(searchText)){
+        if (TextUtils.isEmpty(searchText)) {
             toolbarTitle.setText("搜索结果");
-        }else {
+        } else {
             toolbarTitle.setText(searchText);
         }
         loadFragment(type);
@@ -81,6 +82,7 @@ public class SearchResultActivity extends BaseActivity {
             case SearchPresenter.TYPE_LOST:
                 break;
             case SearchPresenter.TYPE_USER:
+                transaction.replace(R.id.fragment_content, UserListFragment.newInstance(searchText));
                 break;
             default:
                 ToastUtil.showToastShort("未知类型！");

@@ -44,9 +44,9 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
     ImageView toolbarUser;
     @BindView(R.id.toolbar_delete)
     ImageView toolbarDelete;
-    @BindView(R.id.tv_text_lost_title)
+    @BindView(R.id.tv_text_title)
     TextView tvTextLostTitle;
-    @BindView(R.id.tv_text_lost)
+    @BindView(R.id.tv_text_content)
     TextView tvTextLost;
     @BindView(R.id.tv_goods_price)
     TextView tvGoodsPrice;
@@ -110,6 +110,15 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
         recyclerView.setLayoutManager(new LinearLayoutManager(context, OrientationHelper.HORIZONTAL, false));
         adapter = new ImageAdapter(context, imageList);
         recyclerView.setAdapter(adapter);
+        adapter.setOnItemClickListener(new ImageAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position, long itemId) {
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("images", (ArrayList<String>) imageList);
+                bundle.putInt("curr", position);
+                startActivity(ShowImageActivity.class, bundle);
+            }
+        });
         goodsInfoPresenter = new GoodsInfoPresenter(this, this);
         goodsInfoPresenter.showGoodsInfo(goodsId);
     }

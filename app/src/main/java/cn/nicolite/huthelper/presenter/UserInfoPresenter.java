@@ -42,29 +42,26 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
     public void showUserData() {
 
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取当前登录用户失败，请重新登录！");
             }
-            getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
 
         List<Configure> configureList = getConfigureList();
         if (ListUtils.isEmpty(configureList)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取当前登录用户失败，请重新登录！");
             }
-            getView().showMessage("获取用户信息失败！");
             return;
         }
 
         User user = configureList.get(0).getUser();
 
         if (user == null) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取当前登录用户失败，请重新登录！");
             }
-            getView().showMessage("获取用户信息失败！");
             return;
         }
         getView().showUserInfo(user);
@@ -78,26 +75,26 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
         MultipartBody.Part file = MultipartBody.Part.createFormData("file", "01.jpg", requestBody);
 
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取当前登录用户失败，请重新登录！");
             }
-            getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
 
         List<Configure> list = getConfigureList();
         if (ListUtils.isEmpty(list)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
             }
-            getView().showMessage("获取用户信息失败！");
             return;
         }
 
         final Configure configure = list.get(0);
         final User user = configure.getUser();
 
-        getView().showMessage("头像上传中！");
+        if (getView() != null){
+            getView().showMessage("头像上传中！");
+        }
 
         APIUtils
                 .getUploadAPI()
@@ -113,36 +110,35 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
 
                     @Override
                     public void onNext(HttpResult<String> stringHttpResult) {
-                        String msg;
-                        switch (stringHttpResult.getMsg()) {
-                            case "ok":
-                                msg = "修改成功!";
-                                getActivity().changeAvatarSuccess(bitmap);
-                                user.setHead_pic_thumb(stringHttpResult.getData());
-                                user.setHead_pic(stringHttpResult.getData());
+                        if (getView() != null) {
+                            String msg;
+                            switch (stringHttpResult.getMsg()) {
+                                case "ok":
+                                    msg = "修改成功!";
+                                    getActivity().changeAvatarSuccess(bitmap);
+                                    user.setHead_pic_thumb(stringHttpResult.getData());
+                                    user.setHead_pic(stringHttpResult.getData());
 
-                                break;
-                            case "令牌错误":
-                                msg = "修改失败：帐号异地登录，请重新登录！";
-                                break;
-                            default:
-                                msg = stringHttpResult.getMsg();
-                                break;
+                                    break;
+                                case "令牌错误":
+                                    msg = "修改失败：帐号异地登录，请重新登录！";
+                                    break;
+                                default:
+                                    msg = stringHttpResult.getMsg();
+                                    break;
+                            }
+                            getView().closeLoading();
+                            getView().showMessage(msg);
                         }
-                        if (getView() == null) {
-                            return;
-                        }
-                        getActivity().closeLoading();
-                        getActivity().showMessage(msg);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        if (getView() == null) {
-                            return;
+                        if (getView() != null) {
+                            getView().closeLoading();
+                            getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
-                        getActivity().closeLoading();
-                        getActivity().showMessage(ExceptionEngine.handleException(e).getMsg());
+
                     }
 
                     @Override
@@ -161,20 +157,18 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                 .callback(new PermissionListener() {
                     @Override
                     public void onSucceed(int requestCode, @NonNull List<String> grantPermissions) {
-                        if (requestCode == 100) {
-                            if (getView() == null) {
-                                return;
+                        if (getView() != null) {
+                            if (requestCode == 100) {
+                                getView().changeAvatar();
                             }
-                            getView().changeAvatar();
                         }
                     }
 
                     @Override
                     public void onFailed(int requestCode, @NonNull List<String> deniedPermissions) {
-                        if (getView() == null) {
-                            return;
+                        if (getView() != null) {
+                            getView().showMessage("获取权限失败，请授予文件读写权限！");
                         }
-                        getView().showMessage("获取权限失败，请授予文件读写权限！");
                     }
                 })
                 .start();
@@ -183,19 +177,17 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
     public void changeUserName(final String userName) {
 
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取当前登录用户失败，请重新登录！");
             }
-            getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
 
         List<Configure> list = getConfigureList();
         if (ListUtils.isEmpty(list)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
             }
-            getView().showMessage("获取用户信息失败！");
             return;
         }
 
@@ -228,10 +220,9 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                                 String userId = getLoginUser();
 
                                 if (TextUtils.isEmpty(userId)) {
-                                    if (getView() == null) {
-                                        return;
+                                    if (getView() != null) {
+                                        getView().showMessage("获取当前登录用户失败，请重新登录！");
                                     }
-                                    getView().showMessage("获取当前登录用户失败，请重新登录！");
                                     return;
                                 }
 
@@ -239,10 +230,9 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                                 List<User> userList = userDao.queryBuilder().where(UserDao.Properties.User_id.eq(userId)).list();
 
                                 if (ListUtils.isEmpty(userList)) {
-                                    if (getView() == null) {
-                                        return;
+                                    if (getView() != null) {
+                                        getView().showMessage("获取用户信息失败！");
                                     }
-                                    getView().showMessage("获取用户信息失败！");
                                     return;
                                 }
 
@@ -257,18 +247,16 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                             default:
                                 msg = httpResult.getMsg();
                         }
-                        if (getView() == null) {
-                            return;
+                        if (getView() != null) {
+                            getView().showMessage(msg);
                         }
-                        getView().showMessage(msg);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        if (getView() == null) {
-                            return;
+                        if (getView() != null) {
+                            getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
-                        getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                     }
 
                     @Override

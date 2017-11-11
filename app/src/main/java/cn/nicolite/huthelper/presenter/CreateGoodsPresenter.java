@@ -1,0 +1,291 @@
+package cn.nicolite.huthelper.presenter;
+
+import android.Manifest;
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.text.TextUtils;
+
+import com.yanzhenjie.permission.AndPermission;
+import com.yanzhenjie.permission.PermissionListener;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import cn.nicolite.huthelper.base.presenter.BasePresenter;
+import cn.nicolite.huthelper.model.bean.Configure;
+import cn.nicolite.huthelper.model.bean.HttpResult;
+import cn.nicolite.huthelper.model.bean.UploadImages;
+import cn.nicolite.huthelper.model.bean.User;
+import cn.nicolite.huthelper.network.api.APIUtils;
+import cn.nicolite.huthelper.network.exception.ExceptionEngine;
+import cn.nicolite.huthelper.utils.CommUtil;
+import cn.nicolite.huthelper.utils.EncryptUtils;
+import cn.nicolite.huthelper.utils.ListUtils;
+import cn.nicolite.huthelper.view.activity.CreateGoodsActivity;
+import cn.nicolite.huthelper.view.iview.ICreateGoodsView;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import top.zibin.luban.Luban;
+import top.zibin.luban.OnCompressListener;
+
+/**
+ * Created by nicolite on 17-11-11.
+ */
+
+public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, CreateGoodsActivity> {
+    public CreateGoodsPresenter(ICreateGoodsView view, CreateGoodsActivity activity) {
+        super(view, activity);
+    }
+
+    public void uploadGoodsInfo(int type, String title, String content, String price, int attr, String phone, String address, String hidden) {
+
+        if (getView() != null) {
+            if (TextUtils.isEmpty(phone)) {
+                getView().showMessage("联系方式必须填写");
+                return;
+            } else if (TextUtils.isEmpty(String.valueOf(attr))) {
+                getView().showMessage("请选择商品成色");
+                return;
+            } else if (TextUtils.isEmpty(address)) {
+                getView().showMessage("请填写发布区域");
+                return;
+            }
+        }
+
+        if (TextUtils.isEmpty(userId)) {
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
+            }
+            return;
+        }
+
+        List<Configure> configureList = getConfigureList();
+
+        if (ListUtils.isEmpty(configureList)) {
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
+            }
+            return;
+        }
+
+        Configure configure = configureList.get(0);
+        User user = configure.getUser();
+
+        APIUtils
+                .getMarketAPI()
+                .createGoods(user.getStudentKH(), configure.getAppRememberCode(),
+                        title, content, price, attr, phone, address, type, hidden)
+                .compose(getActivity().<HttpResult<String>>bindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<HttpResult<String>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        if (getView() != null) {
+                            getView().showLoading();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(HttpResult<String> stringHttpResult) {
+                        if (getView() != null) {
+                            getView().closeLoading();
+                            if (stringHttpResult.getCode() == 200) {
+                                getView().showMessage("发布成功！");
+                            } else {
+                                getView().showMessage("发不失败，" + stringHttpResult.getCode());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (getView() != null) {
+                            getView().closeLoading();
+                            getView().showMessage(ExceptionEngine.handleException(e).getMsg());
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+
+    private StringBuilder stringBuilder = new StringBuilder();
+
+    /**
+     * @param bitmap
+     * @param i      现在上传的是第几个
+     * @param count  总共需要上传的图片个数
+     */
+    public void uploadImages(Bitmap bitmap, int count, final int i) {
+
+        if (TextUtils.isEmpty(userId)) {
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
+            }
+            return;
+        }
+
+        List<Configure> configureList = getConfigureList();
+
+        if (ListUtils.isEmpty(configureList)) {
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
+            }
+            return;
+        }
+
+        Configure configure = configureList.get(0);
+        User user = configure.getUser();
+
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
+        String date = simpleDateFormat.format(new Date());
+        String env = EncryptUtils.SHA1(user.getStudentKH() + configure.getAppRememberCode() + date);
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+        byte[] bytes = outputStream.toByteArray();
+        RequestBody requestBody = RequestBody.create(MediaType.parse("img/jpeg"), bytes);
+        MultipartBody.Part file = MultipartBody.Part.createFormData("file", "01.jpg", requestBody);
+
+        if (getView() != null) {
+            getView().showMessage(String.valueOf("正在上传第" + i + "张图片"));
+        }
+
+        APIUtils
+                .getUploadAPI()
+                .uploadImages(user.getStudentKH(), configure.getAppRememberCode(), env, 1, file)
+                .compose(getActivity().<UploadImages>bindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<UploadImages>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(UploadImages uploadImages) {
+                        if (getView() != null) {
+                            if (uploadImages.getCode() == 200) {
+                                stringBuilder.append("//");
+                                stringBuilder.append(uploadImages.getData());
+                                getView().showMessage(String.valueOf("成功正在上传第" + i + "张图片！"));
+                            } else {
+                                getView().showMessage(String.valueOf("正在上传第" + i + "张图片失败！"));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (getView() == null) {
+                            getView().showMessage(ExceptionEngine.handleException(e).getMsg());
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+        if (getView() != null && i == count) {
+            String string = stringBuilder.toString();
+            if (!TextUtils.isEmpty(string)) {
+                getView().uploadGoodsInfo(string);
+            } else {
+                getView().showMessage("获取上传图片信息失败！");
+            }
+        }
+    }
+
+    public void selectImages() {
+        AndPermission
+                .with(getActivity())
+                .requestCode(100)
+                .permission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .callback(new PermissionListener() {
+                    @Override
+                    public void onSucceed(int requestCode, @NonNull List<String> grantPermissions) {
+                        if (getView() != null) {
+                            if (requestCode == 100) {
+                                getView().selectImages();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailed(int requestCode, @NonNull List<String> deniedPermissions) {
+                        if (getView() != null) {
+                            getView().showMessage("获取权限失败，请授予文件读写权限！");
+                        }
+                    }
+                })
+                .start();
+    }
+
+
+    List<File> fileList = new ArrayList<>();
+
+    public void createGoods(Activity activity, List<Uri> uriList) {
+        if (ListUtils.isEmpty(uriList)) {
+            if (getView() != null) {
+                getView().showMessage("未选择图片！");
+            }
+            return;
+        }
+
+        for (int i = 0; i < uriList.size(); i++) {
+            if (getView() != null) {
+                getView().showMessage(String.valueOf("正在压缩第" + (i + 1) + "图片！"));
+            }
+            Luban
+                    .with(activity)
+                    .load(CommUtil.uri2File(activity, uriList.get(i)))
+                    .setCompressListener(new OnCompressListener() {
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onSuccess(File file) {
+                            fileList.add(file);
+                        }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            if (getView() != null) {
+                                getView().showMessage(ExceptionEngine.handleException(e).getMsg());
+                            }
+                        }
+                    }).launch();
+        }
+
+        if (!ListUtils.isEmpty(fileList)) {
+            for (int i = 0; i < fileList.size(); i++) {
+                Bitmap bitmap = BitmapFactory.decodeFile(fileList.get(i).getPath());
+                uploadImages(bitmap, fileList.size(), i + 1);
+            }
+        }
+
+    }
+}

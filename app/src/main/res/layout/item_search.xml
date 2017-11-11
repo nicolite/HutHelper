@@ -7,6 +7,7 @@
     android:background="@drawable/search_item_bg"
     android:gravity="center"
     android:padding="10dp"
+    android:singleLine="true"
     android:text="学生证"
     android:textColor="@color/black"
     android:textSize="14sp" />

@@ -1,5 +1,6 @@
 package cn.nicolite.huthelper.base.activity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -39,6 +40,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      */
     protected final String TAG = getClass().getSimpleName();
     protected Context context;
+    protected Activity activity;
     protected ActivityLifeCycleListener lifeCycleListener;
     protected Unbinder unbinder;
     protected static final int SENSOR = 697;
@@ -59,6 +61,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         setContentView(setLayoutId());
         unbinder = ButterKnife.bind(this);
         context = this;
+        activity = this;
         daoSession = getDaoSession();
         userId = getLoginUser();
         Bundle bundle = getIntent().getExtras();

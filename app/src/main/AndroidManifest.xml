@@ -166,6 +166,10 @@
             android:name=".view.activity.SearchResultActivity"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".view.activity.CreateGoodsActivity"
+            android:theme="@style/AppTheme" />
+
         <service android:name=".services.LoginService" />
 
         <!-- 融云-->

@@ -46,7 +46,6 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                 if (onItemClickListener != null) {
                     onItemClickListener.onItemClick(view, holder.getAdapterPosition(), holder.getItemId());
                 }
-
             }
         });
     }

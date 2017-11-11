@@ -1,11 +1,16 @@
 package cn.nicolite.huthelper.view.activity;
 
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,7 +20,12 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.model.bean.Configure;
+import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.presenter.SearchPresenter;
+import cn.nicolite.huthelper.utils.DensityUtils;
+import cn.nicolite.huthelper.utils.ListUtils;
+import cn.nicolite.huthelper.utils.ToastUtil;
 import cn.nicolite.huthelper.view.adapter.TabAdapter;
 import cn.nicolite.huthelper.view.fragment.MarketFragment;
 
@@ -34,7 +44,8 @@ public class MarketActivity extends BaseActivity {
     ViewPager viewpager;
     @BindView(R.id.rootView)
     LinearLayout rootView;
-
+    @BindView(R.id.toolbar_menu)
+    ImageView toolbarMenu;
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar(true);
@@ -67,6 +78,7 @@ public class MarketActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.toolbar_menu:
+                showMenuWindows(toolbarMenu);
                 break;
             case R.id.toolbar_search:
                 Bundle bundle = new Bundle();
@@ -92,4 +104,60 @@ public class MarketActivity extends BaseActivity {
         return titleList;
     }
 
+    protected PopupWindow weekListWindow;
+    protected View popupWindowLayout;
+
+
+    private void showMenuWindows(View parent) {
+        if (TextUtils.isEmpty(userId)) {
+            ToastUtil.showToastShort("获取用户信息失败！");
+            return;
+        }
+
+        List<Configure> configureList = getConfigureList();
+
+        if (ListUtils.isEmpty(configureList)) {
+            ToastUtil.showToastShort("获取用户信息失败！");
+            return;
+        }
+        final User user = configureList.get(0).getUser();
+
+        if (weekListWindow == null) {
+            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+            popupWindowLayout = layoutInflater.inflate(R.layout.popup_list_choose, null);
+
+            weekListWindow = new PopupWindow(popupWindowLayout,
+                    DensityUtils.dp2px(MarketActivity.this, 170),
+                    DensityUtils.dp2px(MarketActivity.this, 115));
+
+            TextView tvMime = (TextView) popupWindowLayout.findViewById(R.id.tv_popmenu_mime);
+            TextView tvAdd = (TextView) popupWindowLayout.findViewById(R.id.tv_popmenu_add);
+            tvAdd.setText("发布商品");
+            tvMime.setText("我的发布");
+            tvAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    startActivity(CreateGoodsActivity.class);
+                }
+            });
+            tvMime.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    weekListWindow.dismiss();
+                    Bundle bundle = new Bundle();
+                    bundle.putString("user_id", user.getUser_id());
+                    bundle.putString("username", user.getUsername());
+                    // startActivity(MyGoodsActivity.class, bundle);
+                }
+            });
+
+        }
+
+        weekListWindow.setFocusable(true);
+        //设置点击外部可消失
+        weekListWindow.setOutsideTouchable(true);
+        weekListWindow.setBackgroundDrawable(new BitmapDrawable());
+        weekListWindow.showAsDropDown(parent, -DensityUtils.dp2px(context, 115), 20);
+    }
 }
