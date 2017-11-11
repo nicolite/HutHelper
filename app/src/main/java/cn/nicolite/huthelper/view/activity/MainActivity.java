@@ -31,6 +31,7 @@ import cn.nicolite.huthelper.model.bean.Menu;
 import cn.nicolite.huthelper.model.bean.TimeAxis;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.presenter.MainPresenter;
+import cn.nicolite.huthelper.utils.ButtonUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.MenuAdapter;
@@ -151,24 +152,28 @@ public class MainActivity extends BaseActivity implements IMainView {
         menuAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                try {
-                    Menu menu = menuList.get(position);
-                    Bundle bundle = new Bundle();
-                    if (menu.getType() == WebViewActivity.TYPE_LIBRARY) {
-                        String url = Constants.LIBRARY;
-                        if (!TextUtils.isEmpty(configure.getLibraryUrl())){
-                            url = configure.getLibraryUrl();
+                if (!ButtonUtils.isFastDoubleClick()) {
+                    try {
+                        Menu menu = menuList.get(position);
+                        Bundle bundle = new Bundle();
+                        if (menu.getType() == WebViewActivity.TYPE_LIBRARY) {
+                            String url = Constants.LIBRARY;
+                            if (!TextUtils.isEmpty(configure.getLibraryUrl())) {
+                                url = configure.getLibraryUrl() + "/opac/m/index";
+                            }
+                            bundle.putString("url", url);
+                        } else if (menu.getType() == WebViewActivity.TYPE_HOMEWORK) {
+                            bundle.putString("url", Constants.HOMEWORK + user.getStudentKH() + "/" + configure.getAppRememberCode());
                         }
-                        bundle.putString("url", url);
-                    } else if (menu.getType() == WebViewActivity.TYPE_HOMEWORK) {
-                        bundle.putString("url", Constants.HOMEWORK + user.getStudentKH() + "/" + configure.getAppRememberCode());
+                        bundle.putString("title", menu.getTitle());
+                        bundle.putInt("type", menu.getType());
+                        startActivity(Class.forName(menu.getPath()), bundle);
+                    } catch (ClassNotFoundException e) {
+                        showMessage("找不到该页面！");
+                        e.printStackTrace();
                     }
-                    bundle.putString("title", menu.getTitle());
-                    bundle.putInt("type", menu.getType());
-                    startActivity(Class.forName(menu.getPath()), bundle);
-                } catch (ClassNotFoundException e) {
-                    SnackbarUtils.showShortSnackbar(rootView, "找不到该页面！");
-                    e.printStackTrace();
+                }else {
+                    showMessage("你点的太快了！");
                 }
             }
         });
@@ -279,7 +284,7 @@ public class MainActivity extends BaseActivity implements IMainView {
             SnackbarUtils.showShortSnackbar(rootView, "再按一次返回键退出");
             exitTime = System.currentTimeMillis();
         } else {
-           // super.onBackPressed();
+            // super.onBackPressed();
             ActivityStackManager.getManager().exitApp(context);
         }
     }

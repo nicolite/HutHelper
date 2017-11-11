@@ -16,6 +16,7 @@ import com.github.chrisbanes.photoview.PhotoViewAttacher;
 import java.util.List;
 
 import cn.nicolite.huthelper.R;
+import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.utils.ListUtils;
 
 
@@ -51,9 +52,15 @@ public class ShowImageAdapter extends PagerAdapter{
     public Object instantiateItem(ViewGroup container, int position) {
         final PhotoView imageView = new PhotoView(context);
         final PhotoViewAttacher attacher = new PhotoViewAttacher(imageView);
+        String url = images.get(position);
+
+        if (!url.startsWith("http") || !url.startsWith("https")){
+            url = Constants.PICTURE_URL + url;
+        }
+
         Glide
                 .with(context)
-                .load(images.get(position))
+                .load(url)
                 .placeholder(R.drawable.img_loading)
                 .error(R.drawable.img_error)
                 .skipMemoryCache(true)

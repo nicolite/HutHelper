@@ -19,7 +19,6 @@ import java.util.Map;
 import cn.nicolite.huthelper.BuildConfig;
 import cn.nicolite.huthelper.app.MApplication;
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
-import cn.nicolite.huthelper.db.dao.ConfigureDao;
 import cn.nicolite.huthelper.db.dao.MenuDao;
 import cn.nicolite.huthelper.db.dao.TimeAxisDao;
 import cn.nicolite.huthelper.model.Constants;
@@ -61,8 +60,6 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
     public void showWeather() {
 
-        String userId = getLoginUser();
-
         if (TextUtils.isEmpty(userId)) {
             if (getView() == null) {
                 return;
@@ -71,8 +68,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             return;
         }
 
-        final ConfigureDao configureDao = getDaoSession().getConfigureDao();
-        final List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
+        final List<Configure> list = getConfigureList();
         if (ListUtils.isEmpty(list)) {
             if (getView() == null) {
                 return;
@@ -106,7 +102,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                             configure.setCity(weather.getData().getCity());
                             configure.setTmp(weather.getData().getWendu());
                             configure.setContent(weather.getData().getForecast().get(0).getType());
-                            configureDao.update(configure);
+                            configure.update();
                         }
                     }
 
@@ -128,7 +124,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     }
 
     public void showTimeAxis() {
-        final TimeAxisDao timeAxisDao = getDaoSession().getTimeAxisDao();
+        final TimeAxisDao timeAxisDao = daoSession.getTimeAxisDao();
         final List<TimeAxis> list = timeAxisDao.queryBuilder().list();
 
         APIUtils
@@ -195,7 +191,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
     public void showMenu() {
 
-        MenuDao menuDao = getDaoSession().getMenuDao();
+        MenuDao menuDao = daoSession.getMenuDao();
 
         if (menuDao.count() == 0 || menuDao.count() > 15) {
             List<Menu> menuItems = new ArrayList<>();
@@ -257,8 +253,6 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     //必须调用此接口以记录该用户是否使用工大助手
     public void checkUpdate(String num) {
 
-        String userId = getLoginUser();
-
         if (TextUtils.isEmpty(userId)) {
             if (getView() == null) {
                 return;
@@ -293,7 +287,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
                     @Override
                     public void onNext(@io.reactivex.annotations.NonNull HttpResult<Update> updateHttpResult) {
-                        if (updateHttpResult.getMsg().equals("ok")) {
+                        if (updateHttpResult.getCode() == 200) {
                             Update data = updateHttpResult.getData();
                             if (data == null) {
                                 return;
@@ -302,7 +296,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                             Configure configure = configureList.get(0);
                             configure.setLibraryUrl(data.getApi_base_address().getLibrary());
                             configure.setTestPlanUrl(data.getApi_base_address().getTest_plan());
-                            configure.setNewTermDate(data.getApi_base_address().getSchool_opens());
+                            configure.setNewTermDate(data.getSchool_opens());
                             configure.update();
 
                         }
@@ -323,7 +317,6 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     }
 
     public void connectRongIM() {
-        String userId = getLoginUser();
         if (TextUtils.isEmpty(userId)) {
             if (getView() == null) {
                 return;
@@ -400,7 +393,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     }
 
     public void initUser() {
-        String userId = getLoginUser();
+
         if (TextUtils.isEmpty(userId)) {
             if (getView() == null) {
                 return;

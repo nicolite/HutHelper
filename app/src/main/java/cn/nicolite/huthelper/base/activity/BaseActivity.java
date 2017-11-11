@@ -44,6 +44,8 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected static final int SENSOR = 697;
     protected static final int PORTRAIT = 519;
     protected static final int LANDSCAPE = 539;
+    protected DaoSession daoSession;
+    protected String userId;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,8 +58,9 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         initConfig(savedInstanceState);
         setContentView(setLayoutId());
         unbinder = ButterKnife.bind(this);
-
         context = this;
+        daoSession = getDaoSession();
+        userId = getLoginUser();
         Bundle bundle = getIntent().getExtras();
         initBundleData(bundle);
         doBusiness();
@@ -75,7 +78,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      */
     protected List<Configure> getConfigureList() {
         ConfigureDao configureDao = getDaoSession().getConfigureDao();
-        return configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(getLoginUser())).list();
+        return configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
     }
 
     /**

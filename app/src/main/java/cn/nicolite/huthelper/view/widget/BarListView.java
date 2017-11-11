@@ -51,7 +51,8 @@ public class BarListView extends View {
 
     public BarListView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context);
+        this.context = context;
+        init();
     }
 
     public void setBars(List<Bar> points) {
@@ -64,8 +65,7 @@ public class BarListView extends View {
         this.maxValue = maxValue;
     }
 
-    private void init(Context context) {
-        this.context = context;
+    private void init() {
         tp.setColor(Color.WHITE);
         tp.setAntiAlias(true);
         tp.setTextSize(DensityUtils.sp2px(context, 15));

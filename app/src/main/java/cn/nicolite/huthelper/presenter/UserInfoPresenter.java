@@ -12,7 +12,6 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
-import cn.nicolite.huthelper.db.dao.ConfigureDao;
 import cn.nicolite.huthelper.db.dao.UserDao;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.HttpResult;
@@ -41,7 +40,6 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
     }
 
     public void showUserData() {
-        String userId = getLoginUser();
 
         if (TextUtils.isEmpty(userId)) {
             if (getView() == null) {
@@ -79,7 +77,6 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
         RequestBody requestBody = RequestBody.create(MediaType.parse("img/jpeg"), bytes);
         MultipartBody.Part file = MultipartBody.Part.createFormData("file", "01.jpg", requestBody);
 
-        String userId = getLoginUser();
         if (TextUtils.isEmpty(userId)) {
             if (getView() == null) {
                 return;
@@ -88,8 +85,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
             return;
         }
 
-        ConfigureDao configureDao = getDaoSession().getConfigureDao();
-        List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
+        List<Configure> list = getConfigureList();
         if (ListUtils.isEmpty(list)) {
             if (getView() == null) {
                 return;
@@ -185,7 +181,6 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
     }
 
     public void changeUserName(final String userName) {
-        String userId = getLoginUser();
 
         if (TextUtils.isEmpty(userId)) {
             if (getView() == null) {
@@ -195,8 +190,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
             return;
         }
 
-        ConfigureDao configureDao = getDaoSession().getConfigureDao();
-        List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
+        List<Configure> list = getConfigureList();
         if (ListUtils.isEmpty(list)) {
             if (getView() == null) {
                 return;
@@ -206,7 +200,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
         }
 
         Configure configure = list.get(0);
-        User user = list.get(0).getUser();
+        User user = configure.getUser();
 
         if (getView() == null) {
             return;
@@ -241,7 +235,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                                     return;
                                 }
 
-                                UserDao userDao = getDaoSession().getUserDao();
+                                UserDao userDao = daoSession.getUserDao();
                                 List<User> userList = userDao.queryBuilder().where(UserDao.Properties.User_id.eq(userId)).list();
 
                                 if (ListUtils.isEmpty(userList)) {

@@ -15,6 +15,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.presenter.SearchPresenter;
 import cn.nicolite.huthelper.view.adapter.TabAdapter;
 import cn.nicolite.huthelper.view.fragment.MarketFragment;
 
@@ -68,15 +69,18 @@ public class MarketActivity extends BaseActivity {
             case R.id.toolbar_menu:
                 break;
             case R.id.toolbar_search:
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", SearchPresenter.TYPE_MARKET);
+                startActivity(SearchActivity.class, bundle);
                 break;
         }
     }
 
     private List<Fragment> getFragmentList() {
         List<Fragment> fragmentList = new ArrayList<>();
-        fragmentList.add(MarketFragment.newInstance(MarketFragment.ALL));
-        fragmentList.add(MarketFragment.newInstance(MarketFragment.SOLD));
-        fragmentList.add(MarketFragment.newInstance(MarketFragment.BUY));
+        fragmentList.add(MarketFragment.newInstance(MarketFragment.ALL, null));
+        fragmentList.add(MarketFragment.newInstance(MarketFragment.SOLD, null));
+        fragmentList.add(MarketFragment.newInstance(MarketFragment.BUY, null));
         return fragmentList;
     }
 

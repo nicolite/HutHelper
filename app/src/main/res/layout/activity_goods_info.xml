@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_grey"
-    android:fitsSystemWindows="true"
-    android:transitionName="goodsTransition">
+    android:fitsSystemWindows="true">
 
     <ImageView
         android:id="@+id/iv_bgimage"
@@ -14,16 +13,17 @@
         android:layout_height="400dp"
         android:layout_alignParentTop="true"
         android:scaleType="centerCrop"
-        android:src="@drawable/blur_plac" />
+        android:src="@drawable/blur_plac_min"
+        android:transitionName="goodsTransition" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <View
+        <android.support.v4.widget.Space
             android:layout_width="match_parent"
-            android:layout_height="15dp" />
+            android:layout_height="18dp" />
 
         <include layout="@layout/toolbar_delete_transparent" />
 
@@ -176,7 +176,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingLeft="25dp">
+                        android:paddingEnd="25dp"
+                        android:paddingStart="25dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -207,8 +208,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingLeft="25dp"
-                        android:paddingRight="25dp">
+                        android:paddingEnd="25dp"
+                        android:paddingStart="25dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -245,7 +246,7 @@
                         android:layout_weight="1"
                         android:gravity="start"
                         android:paddingTop="10dp"
-                        android:text="1111*11"
+                        android:text="加载中..."
                         android:textColor="#adadad"
                         android:textSize="12sp" />
 
@@ -258,7 +259,7 @@
                         android:layout_weight="1"
                         android:gravity="end"
                         android:paddingTop="10dp"
-                        android:text="2017.05.05/18:54"
+                        android:text="加载中..."
                         android:textColor="#adadad"
                         android:textSize="12sp" />
                 </LinearLayout>

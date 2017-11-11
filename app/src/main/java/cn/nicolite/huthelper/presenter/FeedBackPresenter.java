@@ -33,7 +33,6 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, FeedBackActi
     }
 
     public void feeBack(String content, String contact) {
-        String userId = getLoginUser();
         if (TextUtils.isEmpty(userId)) {
             if (getView() == null) {
                 return;

@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Locale;
 
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
-import cn.nicolite.huthelper.db.dao.ConfigureDao;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.Electric;
 import cn.nicolite.huthelper.model.bean.User;
@@ -41,8 +40,6 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
 
     public void showLouHao() {
 
-        String userId = getLoginUser();
-
         if (TextUtils.isEmpty(userId)) {
             if (getView() == null) {
                 return;
@@ -51,9 +48,8 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
             return;
         }
 
-        final ConfigureDao configureDao = getDaoSession().getConfigureDao();
-        List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
-        if (ListUtils.isEmpty(list)) {
+        List<Configure> configureList = getConfigureList();
+        if (ListUtils.isEmpty(configureList)) {
             if (getView() == null) {
                 return;
             }
@@ -61,7 +57,7 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
             return;
         }
 
-        Configure configure = list.get(0);
+        Configure configure = configureList.get(0);
 
         if (!TextUtils.isEmpty(configure.getLou()) && !TextUtils.isEmpty(configure.getHao())) {
             if (getView() == null) {
@@ -82,8 +78,6 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
             return;
         }
 
-        String userId = getLoginUser();
-
         if (TextUtils.isEmpty(userId)) {
             if (getView() == null) {
                 return;
@@ -92,8 +86,7 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
             return;
         }
 
-        final ConfigureDao configureDao = getDaoSession().getConfigureDao();
-        List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
+        List<Configure> list = getConfigureList();
         if (ListUtils.isEmpty(list)) {
             if (getView() == null) {
                 return;
@@ -107,7 +100,7 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
 
         configure.setLou(lou);
         configure.setHao(hao);
-        configureDao.update(configure);
+        configure.update();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
         String date = simpleDateFormat.format(new Date());
@@ -155,7 +148,6 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
     }
 
     public void showWeather() {
-        String userId = getLoginUser();
 
         if (TextUtils.isEmpty(userId)) {
             if (getView() == null) {
@@ -165,8 +157,7 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
             return;
         }
 
-        final ConfigureDao configureDao = getDaoSession().getConfigureDao();
-        List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
+        List<Configure> list = getConfigureList();
         if (ListUtils.isEmpty(list)) {
             if (getView() == null) {
                 return;
@@ -181,23 +172,19 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
     }
 
     public void showVoteSummary() {
-        String userId = getLoginUser();
 
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取当前登录用户失败，请重新登录！");
             }
-            getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
 
-        final ConfigureDao configureDao = getDaoSession().getConfigureDao();
-        List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
+        List<Configure> list = getConfigureList();
         if (ListUtils.isEmpty(list)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
             }
-            getView().showMessage("获取用户信息失败！");
             return;
         }
 
@@ -218,26 +205,24 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
 
                     @Override
                     public void onNext(Vote vote) {
-                        if (getView() == null) {
-                            return;
-                        }
-                        if (!TextUtils.isEmpty(vote.getMsg()) && vote.getMsg().equals("令牌错误")) {
-                            getView().showMessage(vote.getMsg() + "，请重新登录！");
-                            return;
-                        }
-                        if (vote.isCode()) {
-                            getView().showVoteSummary(vote.getData().getYes(), vote.getData().getNo(), vote.getOpt());
-                        } else {
-                            getView().showMessage("获取投票数据失败！　" + vote.getMsg());
+                        if (getView() != null) {
+                            if (!TextUtils.isEmpty(vote.getMsg()) && vote.getMsg().equals("令牌错误")) {
+                                getView().showMessage(vote.getMsg() + "，请重新登录！");
+                                return;
+                            }
+                            if (vote.isCode()) {
+                                getView().showVoteSummary(vote.getData().getYes(), vote.getData().getNo(), vote.getOpt());
+                            } else {
+                                getView().showMessage("获取投票数据失败！　" + vote.getMsg());
+                            }
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        if (getView() == null) {
-                            return;
+                        if (getView() != null) {
+                            getView().showMessage("获取投票数据失败，请检查网络！");
                         }
-                        getView().showMessage("获取投票数据失败，请检查网络！");
                     }
 
                     @Override
@@ -248,23 +233,19 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
     }
 
     public void vote(String opt) {
-        String userId = getLoginUser();
 
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取当前登录用户失败，请重新登录！");
             }
-            getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
 
-        final ConfigureDao configureDao = getDaoSession().getConfigureDao();
-        List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
+        List<Configure> list = getConfigureList();
         if (ListUtils.isEmpty(list)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
             }
-            getView().showMessage("获取用户信息失败！");
             return;
         }
 
@@ -285,33 +266,26 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
 
                     @Override
                     public void onNext(Vote vote) {
-                        if (!TextUtils.isEmpty(vote.getMsg()) && vote.getMsg().equals("令牌错误")) {
-                            if (getView() == null) {
+                        if (getView() != null){
+                            if (!TextUtils.isEmpty(vote.getMsg()) && vote.getMsg().equals("令牌错误")) {
+                                getView().showMessage(vote.getMsg() + "，请重新登录！");
                                 return;
                             }
-                            getView().showMessage(vote.getMsg() + "，请重新登录！");
-                            return;
+                            if (vote.isCode()) {
+                                getView().showMessage("投票成功！");
+                                getView().showVoteSummary(vote.getData().getYes(), vote.getData().getNo(), vote.getOpt());
+                            } else {
+                                getView().showMessage("投票失败，你已经投过了！");
+                            }
                         }
-                        if (vote.isCode()) {
-                            if (getView() == null) {
-                                return;
-                            }
-                            getView().showMessage("投票成功！");
-                            getView().showVoteSummary(vote.getData().getYes(), vote.getData().getNo(), vote.getOpt());
-                        } else {
-                            if (getView() == null) {
-                                return;
-                            }
-                            getView().showMessage("投票失败，你已经投过了！");
-                        }
+
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        if (getView() == null) {
-                            return;
+                        if (getView() != null) {
+                            getView().showMessage("投票失败! " + ExceptionEngine.handleException(e).getMsg());
                         }
-                        getView().showMessage("投票失败! " + ExceptionEngine.handleException(e).getMsg());
                     }
 
                     @Override

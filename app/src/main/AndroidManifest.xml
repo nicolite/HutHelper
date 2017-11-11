@@ -38,6 +38,7 @@
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppSplash"
@@ -157,7 +158,13 @@
             android:name=".view.activity.GoodsInfoActivity"
             android:theme="@style/AppTheme" />
 
-        <service android:name=".services.InitializeService" />
+        <activity
+            android:name=".view.activity.SearchActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".view.activity.SearchResultActivity"
+            android:theme="@style/AppTheme" />
 
         <service android:name=".services.LoginService" />
 

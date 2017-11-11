@@ -23,6 +23,7 @@ import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.injection.JsInject;
 import cn.nicolite.huthelper.utils.CommUtil;
+import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.utils.ToastUtil;
 
@@ -55,6 +56,7 @@ public class WebViewActivity extends BaseActivity {
     public static final int TYPE_HOMEWORK = 576;
     public static final int TYPE_FRESHMAN_HELPER = 685;
     public static final int TYPE_NOTICE = 174;
+
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar(true);
@@ -140,23 +142,23 @@ public class WebViewActivity extends BaseActivity {
             public void onProgressChanged(WebView webView, int i) {
                 super.onProgressChanged(webView, i);
 
-                if (progressBar == null){
+                if (progressBar == null) {
                     return;
                 }
-
-                    if (i == 100) {
-                        if (type != TYPE_CHANGE_PWD){
-                            addImgClickListener();
-                        }
-                        progressBar.setVisibility(View.GONE);
-                    } else {
-                        progressBar.setProgress(i);
+                if (i == 100) {
+                    if (type != TYPE_CHANGE_PWD) {
+                        addImgClickListener();
                     }
+                    progressBar.setVisibility(View.GONE);
+                } else {
+                    progressBar.setProgress(i);
+                }
             }
         });
     }
 
     private void loadHtml(int type, String title, String url) {
+        LogUtils.d(TAG,"webView " + url);
         switch (type) {
             case TYPE_CHANGE_PWD:
                 toolbarTitle.setText(title);
@@ -231,9 +233,9 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if (webView.canGoBack()){
+        if (webView.canGoBack()) {
             webView.goBack();
-        }else {
+        } else {
             super.onBackPressed();
         }
     }
@@ -264,7 +266,7 @@ public class WebViewActivity extends BaseActivity {
      * 显示自定义错误提示页面，用一个View覆盖在WebView
      */
     protected void showErrorPage() {
-        if (webView == null){
+        if (webView == null) {
             return;
         }
         LinearLayout webParentView = (LinearLayout) webView.getParent();

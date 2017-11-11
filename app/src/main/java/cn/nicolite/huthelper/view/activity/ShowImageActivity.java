@@ -1,16 +1,19 @@
 package cn.nicolite.huthelper.view.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.utils.ButtonUtils;
+import cn.nicolite.huthelper.utils.CommUtil;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.ToastUtil;
 import cn.nicolite.huthelper.view.adapter.ShowImageAdapter;
@@ -24,23 +27,24 @@ public class ShowImageActivity extends BaseActivity {
     ViewPager viewpager;
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.rootView)
-    CoordinatorLayout rootView;
+    FrameLayout rootView;
+
     private ArrayList<String> images;
     private int currentPosition;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar(true);
+        setLayoutNoLimits(true);
+        setSlideExit(true);
     }
 
     @Override
     protected void initBundleData(Bundle bundle) {
         images = bundle.getStringArrayList("images");
         currentPosition = bundle.getInt("curr");
-        if (ListUtils.isEmpty(images)){
+        if (ListUtils.isEmpty(images)) {
             ToastUtil.showToastShort("获取数据出错");
             finish();
         }
@@ -53,7 +57,7 @@ public class ShowImageActivity extends BaseActivity {
 
     @Override
     protected void doBusiness() {
-        toolbarTitle.setText((currentPosition + 1) + "/" + images.size());
+        toolbarTitle.setText(String.valueOf((currentPosition + 1) + "/" + images.size()));
         viewpager.setAdapter(new ShowImageAdapter(context, images));
         viewpager.setCurrentItem(currentPosition);
 
@@ -65,7 +69,7 @@ public class ShowImageActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                toolbarTitle.setText((position + 1) + "/" + images.size());
+                toolbarTitle.setText(String.valueOf((position + 1) + "/" + images.size()));
                 currentPosition = position;
             }
 
@@ -74,5 +78,20 @@ public class ShowImageActivity extends BaseActivity {
 
             }
         });
+    }
+
+
+    @OnClick({R.id.toolbar_back, R.id.toolbar_download})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.toolbar_back:
+                finish();
+                break;
+            case R.id.toolbar_download:
+                if (!ButtonUtils.isFastDoubleClick()) {
+                    CommUtil.downloadBitmap(context, images.get(currentPosition));
+                }
+                break;
+        }
     }
 }

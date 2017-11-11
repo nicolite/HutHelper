@@ -158,7 +158,7 @@
             android:layout_marginLeft="33dp"
             android:layout_marginRight="33dp"
             android:layout_marginTop="30dp"
-            android:visibility="gone" />
+            android:visibility="invisible" />
 
     </RelativeLayout>
 

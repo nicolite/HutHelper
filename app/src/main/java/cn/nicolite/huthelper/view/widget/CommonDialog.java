@@ -32,7 +32,7 @@ public class CommonDialog {
     private LinearLayout tvMessageRoot;
 
     public CommonDialog(Context context) {
-        view = LayoutInflater.from(context).inflate(R.layout.common_dialog, null, false);
+        view = LayoutInflater.from(context).inflate(R.layout.dialog_common, null, false);
         tvMessage = (TextView) view.findViewById(R.id.tv_message);
         btOk = (Button) view.findViewById(R.id.bt_ok);
         btCancel = (Button) view.findViewById(R.id.bt_cancel);

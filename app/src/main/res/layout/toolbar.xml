@@ -30,6 +30,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             android:text="宣讲会"
             android:textColor="@color/colorPrimary"
             android:textSize="16sp" />

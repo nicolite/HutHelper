@@ -72,7 +72,6 @@ public class ExamActivity extends BaseActivity implements IExamView {
         examPresenter.showExam(false);
     }
 
-
     @OnClick({R.id.toolbar_back, R.id.toolbar_menu})
     public void onViewClicked(View view) {
         switch (view.getId()) {

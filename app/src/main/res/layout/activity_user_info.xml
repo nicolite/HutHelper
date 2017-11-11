@@ -96,6 +96,40 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_user_bio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="签名"
+                        android:textColor="@color/dull_grey"
+                        android:textSize="15sp" />
+
+                    <TextView
+                        android:id="@+id/tv_user_bio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:text=""
+                        android:textColor="@color/light_grey"
+                        android:textSize="13sp" />
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0.5dp"
+                        android:layout_below="@+id/tv_user_bio"
+                        android:layout_marginTop="15dp"
+                        android:src="@color/line_grey" />
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:id="@+id/rl_user_password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

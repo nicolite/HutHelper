@@ -63,6 +63,8 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
     TextView tvUserClass;
     @BindView(R.id.rootView)
     LinearLayout rootView;
+    @BindView(R.id.tv_user_bio)
+    TextView tvUserBio;
     private UserInfoPresenter userInfoPresenter;
     private final int REQUEST_CODE_CHOOSE = 111;
     private final int REQUEST_CODE_CUT = 222;

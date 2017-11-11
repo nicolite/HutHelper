@@ -1,6 +1,5 @@
 package cn.nicolite.huthelper.utils;
 
-import android.text.TextUtils;
 import android.util.Base64;
 
 import java.io.UnsupportedEncodingException;
@@ -22,7 +21,7 @@ public class EncryptUtils {
             MessageDigest digest = MessageDigest.getInstance("SHA-1");
             digest.update(env.getBytes());
             //获取字节数组
-            byte messageDigest[] = digest.digest();
+            byte[] messageDigest = digest.digest();
             // Create Hex String
             StringBuilder hexString = new StringBuilder();
             // 字节数组转换为 十六进制 数
@@ -48,9 +47,6 @@ public class EncryptUtils {
      * @return
      */
     public static String BASE64(String env) {
-        if (TextUtils.isEmpty(env)) {
-            return null;
-        }
         try {
             byte[] encode = env.getBytes("UTF-8");
             // base64 加密
@@ -64,28 +60,30 @@ public class EncryptUtils {
     /***
      * MD5加码 生成32位md5码
      */
-    public static String MD5(String inStr) {
-        MessageDigest md5;
+    public static String MD5(String env) {
         try {
-            md5 = MessageDigest.getInstance("MD5");
+            MessageDigest digest = MessageDigest.getInstance("MD5");
+            digest.update(env.getBytes());
+            byte[] messageDigest = digest.digest();
+            StringBuilder hexString = new StringBuilder();
+            for (byte aMessageDigest : messageDigest) {
+                String md5Hex = Integer.toHexString(aMessageDigest & 0xFF);
+                if (md5Hex.length() < 2) {
+                    hexString.append(0);
+                }
+                hexString.append(md5Hex);
+            }
+            return hexString.toString().toLowerCase();
         } catch (Exception e) {
-            System.out.println(e.toString());
             e.printStackTrace();
-            return "";
         }
-        char[] charArray = inStr.toCharArray();
-        byte[] byteArray = new byte[charArray.length];
+        return null;
+    }
 
-        for (int i = 0; i < charArray.length; i++)
-            byteArray[i] = (byte) charArray[i];
-        byte[] md5Bytes = md5.digest(byteArray);
-        StringBuilder hexValue = new StringBuilder();
-        for (byte md5Byte : md5Bytes) {
-            int val = ((int) md5Byte) & 0xff;
-            if (val < 16)
-                hexValue.append("0");
-            hexValue.append(Integer.toHexString(val));
-        }
-        return hexValue.toString();
+    //TODO 实现RSA
+    public static String RSA(String env, String publicKey) {
+
+
+        return null;
     }
 }

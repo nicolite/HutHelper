@@ -39,7 +39,8 @@ public abstract class BaseFragment extends RxFragment {
     protected boolean isViewCreated;
     protected boolean isUIVisible;
     protected boolean isFirstVisible;
-
+    protected DaoSession daoSession;
+    protected String userId;
     /**
      * 获取daoSession
      */
@@ -105,7 +106,6 @@ public abstract class BaseFragment extends RxFragment {
         if (lifeCycleListener != null) {
             lifeCycleListener.onCreateView(inflater, container, savedInstanceState);
         }
-
         View view = inflater.inflate(setLayoutId(), container, false);
         initConfig(savedInstanceState);
 
@@ -128,6 +128,8 @@ public abstract class BaseFragment extends RxFragment {
             lifeCycleListener.onActivityCreated(savedInstanceState);
         }
         activity = getActivity();
+        daoSession = getDaoSession();
+        userId = getLoginUser();
         doBusiness();
     }
 

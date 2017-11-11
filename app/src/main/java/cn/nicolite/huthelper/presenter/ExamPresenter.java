@@ -13,7 +13,6 @@ import cn.nicolite.huthelper.model.bean.ExamResult;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.network.api.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
-import cn.nicolite.huthelper.utils.EncryptUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.view.activity.ExamActivity;
 import cn.nicolite.huthelper.view.iview.IExamView;
@@ -34,10 +33,9 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
     }
 
     public void showExam(final boolean isManual) {
-        final String userId = getLoginUser();
 
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null){
+            if (getView() == null) {
                 return;
             }
             getView().showMessage("获取当前登录用户失败，请重新登录！");
@@ -46,17 +44,18 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
 
         List<Configure> configureList = getConfigureList();
         if (ListUtils.isEmpty(configureList)) {
-            if (getView() == null){
+            if (getView() == null) {
                 return;
             }
             getView().showMessage("获取用户信息失败！");
             return;
         }
 
-        User user = configureList.get(0).getUser();
+        Configure configure = configureList.get(0);
+        User user = configure.getUser();
 
         if (user == null) {
-            if (getView() == null){
+            if (getView() == null) {
                 return;
             }
             getView().showMessage("获取用户信息失败！");
@@ -77,8 +76,7 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
 
         APIUtils
                 .getExamAPI()
-                .getExamData(user.getStudentKH(),
-                        EncryptUtils.MD5(user.getStudentKH() + "apiforapp!"))
+                .getExamData(user.getStudentKH(), configure.getAppRememberCode())
                 .compose(getActivity().<ExamResult>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .map(new Function<ExamResult, List<Exam>>() {
@@ -126,7 +124,7 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
 
                     @Override
                     public void onNext(List<Exam> exams) {
-                        if (getView() == null){
+                        if (getView() == null) {
                             return;
                         }
                         getView().closeLoading();
@@ -139,7 +137,7 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
 
                     @Override
                     public void onError(Throwable e) {
-                        if (getView() == null){
+                        if (getView() == null) {
                             return;
                         }
                         getView().closeLoading();

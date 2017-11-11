@@ -31,10 +31,9 @@ public class ExplessonPresenter extends BasePresenter<IExplessonView, ExpLessonA
     }
 
     public void showExplesson(final boolean isManual) {
-        final String userId = getLoginUser();
 
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null){
+            if (getView() == null) {
                 return;
             }
             getView().showMessage("获取当前登录用户失败，请重新登录！");
@@ -43,7 +42,7 @@ public class ExplessonPresenter extends BasePresenter<IExplessonView, ExpLessonA
 
         List<Configure> configureList = getConfigureList();
         if (ListUtils.isEmpty(configureList)) {
-            if (getView() == null){
+            if (getView() == null) {
                 return;
             }
             getView().showMessage("获取用户信息失败！");
@@ -58,8 +57,8 @@ public class ExplessonPresenter extends BasePresenter<IExplessonView, ExpLessonA
                 .where(ExpLessonDao.Properties.UserId.eq(userId))
                 .list();
 
-        if (!ListUtils.isEmpty(list)){
-            if (getView() == null){
+        if (!ListUtils.isEmpty(list)) {
+            if (getView() == null) {
                 return;
             }
             getView().showExpLesson(list);
@@ -73,24 +72,25 @@ public class ExplessonPresenter extends BasePresenter<IExplessonView, ExpLessonA
                 .subscribe(new Observer<HttpResult<List<ExpLesson>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        if (ListUtils.isEmpty(list) || isManual){
-                            if (getView() == null){
-                                return;
+                        if (ListUtils.isEmpty(list) || isManual) {
+                            if (getView() != null) {
+                                getView().showLoading();
                             }
-                            getView().showLoading();
                         }
                     }
 
                     @Override
                     public void onNext(HttpResult<List<ExpLesson>> listHttpResult) {
-                        if (getView() != null){
-                            if (listHttpResult != null && listHttpResult.getMsg().equals("ok")){
+                        if (getView() != null) {
+                            if (listHttpResult != null && listHttpResult.getMsg().equals("ok")) {
+                                getView().closeLoading();
+
                                 List<ExpLesson> expLessonList = listHttpResult.getData();
-                                if (!ListUtils.isEmpty(expLessonList)){
+                                if (!ListUtils.isEmpty(expLessonList)) {
 
                                     getView().showExpLesson(expLessonList);
 
-                                    if (!ListUtils.isEmpty(list)){
+                                    if (!ListUtils.isEmpty(list)) {
                                         for (ExpLesson ex : list) {
                                             expLessonDao.delete(ex);
                                         }
@@ -103,7 +103,6 @@ public class ExplessonPresenter extends BasePresenter<IExplessonView, ExpLessonA
                                 }
                                 return;
                             }
-                            getView().closeLoading();
                             getView().showMessage("暂时没有实验课表！");
                         }
 
@@ -111,9 +110,9 @@ public class ExplessonPresenter extends BasePresenter<IExplessonView, ExpLessonA
 
                     @Override
                     public void onError(Throwable e) {
-                        if (getView() != null){
+                        if (getView() != null) {
                             getView().closeLoading();
-                            if (!ListUtils.isEmpty(list)){
+                            if (!ListUtils.isEmpty(list)) {
                                 getView().showExpLesson(list);
                             }
                             getView().showMessage("获取失败，" + ExceptionEngine.handleException(e).getMsg());

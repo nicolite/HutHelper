@@ -34,7 +34,6 @@ public class DaoHelper {
             //     }
             // }
             instance = new DaoHelper(context);
-
         }
         return instance;
     }

@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +14,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -21,9 +25,9 @@ import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.GoodsItem;
 import cn.nicolite.huthelper.presenter.GoodsInfoPresenter;
 import cn.nicolite.huthelper.utils.ListUtils;
-import cn.nicolite.huthelper.utils.ScreenUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.utils.ToastUtil;
+import cn.nicolite.huthelper.view.adapter.ImageAdapter;
 import cn.nicolite.huthelper.view.iview.IGoodsInfoView;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.ColorFilterTransformation;
@@ -60,11 +64,15 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
     CoordinatorLayout rootView;
     @BindView(R.id.iv_bgimage)
     ImageView ivBgimage;
+    @BindView(R.id.rv_goods_images)
+    RecyclerView recyclerView;
     private String userId;
     private boolean delete;
     private GoodsInfoPresenter goodsInfoPresenter;
     private String goodsId;
     private String phone;
+    private List<String> imageList = new ArrayList<>();
+    private ImageAdapter adapter;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -99,6 +107,9 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
             toolbarDelete.setVisibility(View.VISIBLE);
         }
 
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, OrientationHelper.HORIZONTAL, false));
+        adapter = new ImageAdapter(context, imageList);
+        recyclerView.setAdapter(adapter);
         goodsInfoPresenter = new GoodsInfoPresenter(this, this);
         goodsInfoPresenter.showGoodsInfo(goodsId);
     }
@@ -142,7 +153,8 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
     @Override
     public void showGoodsInfo(GoodsItem goodsItem) {
         phone = goodsItem.getPhone();
-        List<String> pics = goodsItem.getPics();
+        imageList.clear();
+        imageList.addAll(goodsItem.getPics());
         tvSendtimeLost.setText(goodsItem.getCreated_on());
         tvTextLostTitle.setText(goodsItem.getTit());
         tvGoodsQuality.setText(goodsItem.getAttr());
@@ -151,18 +163,17 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
         tvGoodsTel.setText(TextUtils.isEmpty(phone) ? "无联系方式" : phone);
         tvGoodsLocation.setText(TextUtils.isEmpty(goodsItem.getAddress()) ? "湖工大" : goodsItem.getAddress());
 
-        if (!ListUtils.isEmpty(pics)) {
-            int width = ScreenUtils.getScreenWidth(context);
-
+        if (!ListUtils.isEmpty(imageList)) {
             Glide
                     .with(this)
-                    .load(Constants.PICTURE_URL + pics.get(0))
+                    .load(Constants.PICTURE_URL + imageList.get(0))
                     .skipMemoryCache(true)
-                    .placeholder(R.drawable.blur_plac)
-                    .error(R.drawable.blur_plac)
+                    .placeholder(R.drawable.blur_plac_min)
+                    .error(R.drawable.blur_plac_min)
                     .bitmapTransform(new BlurTransformation(context, 100), new ColorFilterTransformation(this, 0x29000000))
                     .crossFade()
                     .into(ivBgimage);
+            adapter.notifyDataSetChanged();
         }
     }
 

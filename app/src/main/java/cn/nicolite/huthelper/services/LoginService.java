@@ -3,7 +3,6 @@ package cn.nicolite.huthelper.services;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.Nullable;
 
 import java.util.List;
@@ -42,6 +41,8 @@ public class LoginService extends IntentService {
     private static final String TAG = "LoginService";
     private Timer timer;
 
+    private DaoSession daoSession = DaoHelper.getDaoHelper(MApplication.AppContext).getDaoSession();
+
     public LoginService() {
         super("LoginService");
     }
@@ -55,6 +56,7 @@ public class LoginService extends IntentService {
         intent.setAction(ACTION_INIT_WHEN_APP_CREATE);
         context.startService(intent);
         LogUtils.d(TAG, "start");
+
     }
 
     @Override
@@ -69,10 +71,7 @@ public class LoginService extends IntentService {
     }
 
     private void isLoginOnOtherPlace() {
-        DaoSession daoSession = DaoHelper.getDaoHelper(MApplication.AppContext).getDaoSession();
-        SharedPreferences preferences = getSharedPreferences("login_user", Context.MODE_PRIVATE);
-        String userId = preferences.getString("userId", null);
-
+        String userId = getSharedPreferences("login_user", Context.MODE_PRIVATE).getString("userId", null);
         if (userId == null || userId.equals("*")) {
             LogUtils.d(TAG, "没有找到登录用户");
             return;
@@ -126,7 +125,7 @@ public class LoginService extends IntentService {
         intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
-        if (timer != null){
+        if (timer != null) {
             timer.cancel();
         }
         stopService(intent);

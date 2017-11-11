@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -22,7 +23,6 @@ import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.fragment.BaseFragment;
 import cn.nicolite.huthelper.model.bean.Goods;
 import cn.nicolite.huthelper.presenter.MarketPresenter;
-import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.activity.GoodsInfoActivity;
 import cn.nicolite.huthelper.view.adapter.MarketAdapter;
@@ -44,17 +44,22 @@ public class MarketFragment extends BaseFragment implements IMarketView {
     public static final int ALL = 0;
     public static final int SOLD = 1;
     public static final int BUY = 2;
+    public static final int SEARCH = 3;
     private int type = ALL;
     private LRecyclerViewAdapter lRecyclerViewAdapter;
     private MarketPresenter marketPresenter;
     private int currentPage = 1;
     private boolean isNoMore = false;
+    private String searchText;
 
-    public static MarketFragment newInstance(int type) {
+    public static MarketFragment newInstance(int type, String searchText) {
 
         Bundle args = new Bundle();
 
         args.putInt("type", type);
+        if (!TextUtils.isEmpty(searchText)){
+            args.putString("searchText", searchText);
+        }
         MarketFragment fragment = new MarketFragment();
         fragment.setArguments(args);
         return fragment;
@@ -69,6 +74,9 @@ public class MarketFragment extends BaseFragment implements IMarketView {
     protected void initArguments(Bundle arguments) {
         if (arguments != null) {
             type = arguments.getInt("type", ALL);
+            if (type == SEARCH) {
+                searchText = arguments.getString("searchText", "");
+            }
         }
     }
 
@@ -89,7 +97,11 @@ public class MarketFragment extends BaseFragment implements IMarketView {
             @Override
             public void onRefresh() {
                 currentPage = 1;
-                marketPresenter.showGoodsList(type, true);
+                if (type == SEARCH) {
+                    marketPresenter.searchGoods(searchText, currentPage, false);
+                } else {
+                    marketPresenter.showGoodsList(type, true);
+                }
             }
         });
 
@@ -97,7 +109,11 @@ public class MarketFragment extends BaseFragment implements IMarketView {
             @Override
             public void onLoadMore() {
                 if (!isNoMore) {
-                    marketPresenter.loadMore(++currentPage, type);
+                    if (type == SEARCH) {
+                        marketPresenter.searchGoods(searchText, ++currentPage, true);
+                    } else {
+                        marketPresenter.loadMore(++currentPage, type);
+                    }
                 }
             }
         });
@@ -106,7 +122,11 @@ public class MarketFragment extends BaseFragment implements IMarketView {
             @Override
             public void reload() {
                 if (!isNoMore) {
-                    marketPresenter.loadMore(currentPage, type);
+                    if (type == SEARCH) {
+                        marketPresenter.searchGoods(searchText, currentPage, true);
+                    } else {
+                        marketPresenter.loadMore(currentPage, type);
+                    }
                 }
             }
         });
@@ -125,7 +145,7 @@ public class MarketFragment extends BaseFragment implements IMarketView {
         });
 
         //第一次打开Activity时不会回调visibleToUser，会导致第一个Fragment页面不加载数据，在这里进行处理
-        if (isUIVisible && isFirstVisible) {
+        if ((isUIVisible && isFirstVisible) || type == SEARCH) {
             //marketPresenter.showGoodsList(type, false);
             lRecyclerView.forceToRefresh();
             isFirstVisible = false;
@@ -134,7 +154,6 @@ public class MarketFragment extends BaseFragment implements IMarketView {
 
     @Override
     protected void visibleToUser(boolean isVisible, boolean isFirstVisible) {
-        LogUtils.d(TAG, "xxx " + isVisible + " " + isFirstVisible);
         if (isFirstVisible) {
             //marketPresenter.showGoodsList(type, false);
             lRecyclerView.forceToRefresh();

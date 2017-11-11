@@ -39,4 +39,6 @@
     <color name="new_grty">#cacaca</color>
 
     <color name="bg_black_shadow">#80000000</color>
+
+    <color name="translucent_1">#3F000000</color>
 </resources>

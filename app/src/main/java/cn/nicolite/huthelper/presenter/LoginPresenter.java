@@ -62,7 +62,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                                 editor.putString("userId", userHttpResult.getData().getUser_id());
                                 editor.apply();
 
-                                UserDao userDao = getDaoSession().getUserDao();
+                                UserDao userDao = daoSession.getUserDao();
                                 List<User> userList = userDao.queryBuilder().where(UserDao.Properties.User_id.eq(userHttpResult.getData().getUser_id())).list();
                                 if (ListUtils.isEmpty(userList)) {
                                     userDao.insert(userHttpResult.getData());
@@ -73,7 +73,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                                 Configure configure = new Configure();
                                 configure.setAppRememberCode(userHttpResult.getRemember_code_app());
                                 configure.setUserId(userHttpResult.getData().getUser_id());
-                                ConfigureDao configureDao = getDaoSession().getConfigureDao();
+                                ConfigureDao configureDao = daoSession.getConfigureDao();
 
                                 List<Configure> configureList = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userHttpResult.getData().getUser_id())).list();
 
@@ -125,7 +125,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                     @Override
                     public void onNext(@NonNull Token token) {
 
-                        ConfigureDao configureDao = getDaoSession().getConfigureDao();
+                        ConfigureDao configureDao = daoSession.getConfigureDao();
                         List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
                         if (!ListUtils.isEmpty(list)) {
                             Configure configure = list.get(0);

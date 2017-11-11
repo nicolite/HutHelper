@@ -13,6 +13,7 @@ import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.model.bean.Configure;
+import cn.nicolite.huthelper.presenter.SearchPresenter;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.LogUtils;
 import io.rong.imkit.RongIM;
@@ -99,6 +100,9 @@ public class ConversationListActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.toolbar_search:
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", SearchPresenter.TYPE_USER);
+                startActivity(SearchActivity.class, bundle);
                 break;
         }
     }

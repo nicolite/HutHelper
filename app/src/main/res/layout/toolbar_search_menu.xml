@@ -31,6 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="标题"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             android:textColor="@color/black"
             android:textSize="16sp" />
 
@@ -39,11 +41,11 @@
             android:layout_width="50dp"
             android:layout_height="match_parent"
             android:layout_gravity="end|center_vertical"
+            android:layout_marginEnd="50dp"
             android:paddingBottom="5dp"
             android:paddingEnd="10dp"
             android:paddingStart="10dp"
             android:paddingTop="5dp"
-            android:layout_marginEnd="50dp"
             android:src="@drawable/ic_search_new" />
 
         <ImageView

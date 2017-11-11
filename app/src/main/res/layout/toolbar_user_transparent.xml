@@ -10,19 +10,19 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_gravity="center"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
 
         <ImageView
             android:id="@+id/toolbar_back"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_gravity="start|center_vertical"
-            android:paddingStart="5dp"
-            android:paddingEnd="23dp"
-            android:paddingTop="5dp"
             android:paddingBottom="5dp"
-            android:src="@drawable/toolbar_back_icon2"/>
+            android:paddingEnd="23dp"
+            android:paddingStart="5dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/toolbar_back_icon2" />
 
         <TextView
             android:id="@+id/toolbar_title"
@@ -30,6 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center|center_vertical"
             android:text="标题"
+            android:ellipsize="marquee"
+            android:singleLine="true"
             android:textColor="#ffffff"
             android:textSize="16sp" />
 
@@ -42,6 +44,6 @@
             android:paddingEnd="16dp"
             android:paddingStart="14dp"
             android:paddingTop="10dp"
-            android:src="@drawable/user111"/>
+            android:src="@drawable/user111" />
     </FrameLayout>
 </android.support.design.widget.AppBarLayout>
