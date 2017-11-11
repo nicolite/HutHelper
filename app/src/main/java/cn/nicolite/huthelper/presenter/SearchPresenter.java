@@ -18,8 +18,9 @@ import cn.nicolite.huthelper.view.iview.ISearchView;
 public class SearchPresenter extends BasePresenter<ISearchView, SearchActivity> {
 
     public static final int TYPE_USER = 0;
-    public static final int TYPE_MARKET = 1;
+    public static final int TYPE_MARKET_SEARCH = 1;
     public static final int TYPE_LOST = 2;
+    public static final int TYPE_MARKET_MYGOODS = 3;
 
     public SearchPresenter(ISearchView view, SearchActivity activity) {
         super(view, activity);

@@ -45,6 +45,8 @@ public class MarketFragment extends BaseFragment implements IMarketView {
     public static final int SOLD = 1;
     public static final int BUY = 2;
     public static final int SEARCH = 3;
+    public static final int MYGOODS = 4;
+
     private int type = ALL;
     private LRecyclerViewAdapter lRecyclerViewAdapter;
     private MarketPresenter marketPresenter;
@@ -57,7 +59,7 @@ public class MarketFragment extends BaseFragment implements IMarketView {
         Bundle args = new Bundle();
 
         args.putInt("type", type);
-        if (!TextUtils.isEmpty(searchText)){
+        if (!TextUtils.isEmpty(searchText)) {
             args.putString("searchText", searchText);
         }
         MarketFragment fragment = new MarketFragment();
@@ -74,7 +76,7 @@ public class MarketFragment extends BaseFragment implements IMarketView {
     protected void initArguments(Bundle arguments) {
         if (arguments != null) {
             type = arguments.getInt("type", ALL);
-            if (type == SEARCH) {
+            if (type == SEARCH || type == MYGOODS) {
                 searchText = arguments.getString("searchText", "");
             }
         }
@@ -97,10 +99,15 @@ public class MarketFragment extends BaseFragment implements IMarketView {
             @Override
             public void onRefresh() {
                 currentPage = 1;
-                if (type == SEARCH) {
-                    marketPresenter.searchGoods(searchText, currentPage, false);
-                } else {
-                    marketPresenter.showGoodsList(type, true);
+                switch (type) {
+                    case SEARCH:
+                        marketPresenter.searchGoods(searchText, 1, false);
+                        break;
+                    case MYGOODS:
+                        marketPresenter.showGoodsByUserId(1, searchText, false);
+                        break;
+                    default:
+                        marketPresenter.showGoodsList(type, true);
                 }
             }
         });
@@ -109,10 +116,15 @@ public class MarketFragment extends BaseFragment implements IMarketView {
             @Override
             public void onLoadMore() {
                 if (!isNoMore) {
-                    if (type == SEARCH) {
-                        marketPresenter.searchGoods(searchText, ++currentPage, true);
-                    } else {
-                        marketPresenter.loadMore(++currentPage, type);
+                    switch (type) {
+                        case SEARCH:
+                            marketPresenter.searchGoods(searchText, ++currentPage, true);
+                            break;
+                        case MYGOODS:
+                            marketPresenter.showGoodsByUserId(++currentPage, searchText, true);
+                            break;
+                        default:
+                            marketPresenter.loadMore(++currentPage, type);
                     }
                 }
             }
@@ -122,10 +134,15 @@ public class MarketFragment extends BaseFragment implements IMarketView {
             @Override
             public void reload() {
                 if (!isNoMore) {
-                    if (type == SEARCH) {
-                        marketPresenter.searchGoods(searchText, currentPage, true);
-                    } else {
-                        marketPresenter.loadMore(currentPage, type);
+                    switch (type) {
+                        case SEARCH:
+                            marketPresenter.searchGoods(searchText, currentPage, true);
+                            break;
+                        case MYGOODS:
+                            marketPresenter.showGoodsByUserId(currentPage, searchText, true);
+                            break;
+                        default:
+                            marketPresenter.loadMore(currentPage, type);
                     }
                 }
             }
@@ -138,14 +155,18 @@ public class MarketFragment extends BaseFragment implements IMarketView {
                 Bundle bundle = new Bundle();
                 bundle.putString("goodsId", goods.getId());
                 bundle.putString("userId", goods.getUser_id());
-                bundle.putBoolean("delete", false);
+                if (type == MYGOODS && userId.equals(goods.getUser_id())) {
+                    bundle.putBoolean("delete", true);
+                } else {
+                    bundle.putBoolean("delete", false);
+                }
                 Bundle options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, "goodsTransition").toBundle();
                 startActivity(GoodsInfoActivity.class, bundle, options);
             }
         });
 
         //第一次打开Activity时不会回调visibleToUser，会导致第一个Fragment页面不加载数据，在这里进行处理
-        if ((isUIVisible && isFirstVisible) || type == SEARCH) {
+        if ((isUIVisible && isFirstVisible) || type == SEARCH || type == MYGOODS) {
             //marketPresenter.showGoodsList(type, false);
             lRecyclerView.forceToRefresh();
             isFirstVisible = false;

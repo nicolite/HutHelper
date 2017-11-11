@@ -24,6 +24,7 @@ import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.GoodsItem;
 import cn.nicolite.huthelper.presenter.GoodsInfoPresenter;
+import cn.nicolite.huthelper.presenter.SearchPresenter;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.utils.ToastUtil;
@@ -66,13 +67,14 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
     ImageView ivBgimage;
     @BindView(R.id.rv_goods_images)
     RecyclerView recyclerView;
-    private String userId;
+    private String mUserId;
     private boolean delete;
     private GoodsInfoPresenter goodsInfoPresenter;
     private String goodsId;
     private String phone;
     private List<String> imageList = new ArrayList<>();
     private ImageAdapter adapter;
+    private String username;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -85,9 +87,9 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
     protected void initBundleData(Bundle bundle) {
         if (bundle != null) {
             goodsId = bundle.getString("goodsId", null);
-            userId = bundle.getString("userId", null);
+            mUserId = bundle.getString("userId", null);
             delete = bundle.getBoolean("delete", false);
-            if (TextUtils.isEmpty(userId) || TextUtils.isEmpty(goodsId)) {
+            if (TextUtils.isEmpty(mUserId) || TextUtils.isEmpty(goodsId)) {
                 ToastUtil.showToastShort("获取信息失败！");
                 finish();
             }
@@ -130,6 +132,11 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
                 finish();
                 break;
             case R.id.toolbar_user:
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", SearchPresenter.TYPE_MARKET_MYGOODS);
+                bundle.putString("searchText", mUserId);
+                bundle.putString("extras", username);
+                startActivity(SearchResultActivity.class, bundle);
                 break;
             case R.id.toolbar_delete:
                 break;
@@ -162,6 +169,7 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
     @Override
     public void showGoodsInfo(GoodsItem goodsItem) {
         phone = goodsItem.getPhone();
+        username = goodsItem.getUsername();
         imageList.clear();
         imageList.addAll(goodsItem.getPics());
         tvSendtimeLost.setText(goodsItem.getCreated_on());

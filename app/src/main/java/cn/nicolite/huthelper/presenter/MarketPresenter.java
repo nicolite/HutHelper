@@ -26,11 +26,6 @@ import io.reactivex.schedulers.Schedulers;
 
 public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> {
 
-    public static final int All = 0;
-    public static final int SOLD = 1;
-    public static final int BUY = 2;
-    public static final int SEARCH = 3;
-
     public MarketPresenter(IMarketView view, MarketFragment activity) {
         super(view, activity);
     }
@@ -38,30 +33,32 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
 
     public void showGoodsList(int type, boolean isManual) {
         switch (type) {
-            case All:
+            case MarketFragment.ALL:
                 loadMoreAll(1, isManual, false);
                 break;
-            case SOLD:
+            case MarketFragment.SOLD:
                 loadMoreSold(1, isManual, false);
                 break;
-            case BUY:
+            case MarketFragment.BUY:
                 loadMoreBuy(1, isManual, false);
+                break;
+            case MarketFragment.MYGOODS:
                 break;
         }
     }
 
     public void loadMore(int page, int type) {
         switch (type) {
-            case All:
+            case MarketFragment.ALL:
                 loadMoreAll(page, true, true);
                 break;
-            case SOLD:
+            case MarketFragment.SOLD:
                 loadMoreSold(page, true, true);
                 break;
-            case BUY:
+            case MarketFragment.BUY:
                 loadMoreBuy(page, true, true);
                 break;
-            case SEARCH:
+            case MarketFragment.MYGOODS:
                 break;
         }
     }
@@ -136,7 +133,7 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
     }
 
     public void searchGoods(String searchText, final int page, final boolean isLoadMore) {
-        if (TextUtils.isEmpty(searchText)){
+        if (TextUtils.isEmpty(searchText)) {
             searchText = "";
         }
 
@@ -207,4 +204,72 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                 });
     }
 
+    public void showGoodsByUserId(final int page, String userId, final boolean isLoadMore) {
+
+        if (TextUtils.isEmpty(userId)) {
+            getView().showMessage("获取用户信息失败！");
+            return;
+        }
+        List<Configure> configureList = getConfigureList();
+
+        if (ListUtils.isEmpty(configureList)) {
+            getView().showMessage("获取用户信息失败！");
+            return;
+        }
+
+        Configure configure = configureList.get(0);
+        User user = configure.getUser();
+
+        APIUtils
+                .getMarketAPI()
+                .getGoodsListByUserId(user.getStudentKH(), configure.getAppRememberCode(), page, userId)
+                .compose(getActivity().<GoodsResult<List<Goods>>>bindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<GoodsResult<List<Goods>>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        if (getView() != null) {
+                            getView().showLoading();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(GoodsResult<List<Goods>> listGoodsResult) {
+                        if (getView() != null) {
+                            getView().closeLoading();
+                            if (listGoodsResult.getCode() == 200 && !ListUtils.isEmpty(listGoodsResult.getData())) {
+                                if (isLoadMore) {
+                                    if (page <= listGoodsResult.getPageination()) {
+                                        getView().showLoadMoreList(listGoodsResult.getData());
+                                    } else {
+                                        getView().noMoreData();
+                                    }
+                                } else {
+                                    getView().showGoodsList(listGoodsResult.getData());
+                                }
+                            } else {
+                                if (listGoodsResult.getCode() == 200) {
+                                    getView().showMessage("暂时没有相关内容！");
+                                } else {
+                                    getView().showMessage("获取数据失败，" + listGoodsResult.getCode());
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (getView() != null) {
+                            getView().closeLoading();
+                            getView().showMessage(ExceptionEngine.handleException(e).getMsg());
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
 }

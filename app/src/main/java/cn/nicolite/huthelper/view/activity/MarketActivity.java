@@ -46,6 +46,7 @@ public class MarketActivity extends BaseActivity {
     LinearLayout rootView;
     @BindView(R.id.toolbar_menu)
     ImageView toolbarMenu;
+
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar(true);
@@ -82,7 +83,7 @@ public class MarketActivity extends BaseActivity {
                 break;
             case R.id.toolbar_search:
                 Bundle bundle = new Bundle();
-                bundle.putInt("type", SearchPresenter.TYPE_MARKET);
+                bundle.putInt("type", SearchPresenter.TYPE_MARKET_SEARCH);
                 startActivity(SearchActivity.class, bundle);
                 break;
         }
@@ -146,9 +147,10 @@ public class MarketActivity extends BaseActivity {
                 public void onClick(View v) {
                     weekListWindow.dismiss();
                     Bundle bundle = new Bundle();
-                    bundle.putString("user_id", user.getUser_id());
-                    bundle.putString("username", user.getUsername());
-                    // startActivity(MyGoodsActivity.class, bundle);
+                    bundle.putInt("type", SearchPresenter.TYPE_MARKET_MYGOODS);
+                    bundle.putString("searchText", user.getUser_id());
+                    bundle.putString("extras", user.getUsername());
+                    startActivity(SearchResultActivity.class, bundle);
                 }
             });
 

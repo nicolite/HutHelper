@@ -31,6 +31,7 @@ public class SearchResultActivity extends BaseActivity {
 
     private int type;
     private String searchText;
+    private String extras;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -44,6 +45,7 @@ public class SearchResultActivity extends BaseActivity {
         if (bundle != null) {
             type = bundle.getInt("type", -1);
             searchText = bundle.getString("searchText", "");
+            extras = bundle.getString("extras", "");
             if (type == -1) {
                 ToastUtil.showToastShort("获取类型异常！");
                 finish();
@@ -60,6 +62,12 @@ public class SearchResultActivity extends BaseActivity {
     protected void doBusiness() {
         if (TextUtils.isEmpty(searchText)) {
             toolbarTitle.setText("搜索结果");
+        } else if (type == SearchPresenter.TYPE_MARKET_MYGOODS) {
+            if (userId.equals(searchText)) {
+                toolbarTitle.setText("我的商品");
+            } else {
+                toolbarTitle.setText(String.valueOf(extras + "的商品"));
+            }
         } else {
             toolbarTitle.setText(searchText);
         }
@@ -75,9 +83,13 @@ public class SearchResultActivity extends BaseActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
         switch (type) {
-            case SearchPresenter.TYPE_MARKET:
+            case SearchPresenter.TYPE_MARKET_SEARCH:
                 transaction.replace(R.id.fragment_content,
                         MarketFragment.newInstance(MarketFragment.SEARCH, searchText));
+                break;
+            case SearchPresenter.TYPE_MARKET_MYGOODS:
+                transaction.replace(R.id.fragment_content,
+                        MarketFragment.newInstance(MarketFragment.MYGOODS, searchText));
                 break;
             case SearchPresenter.TYPE_LOST:
                 break;
