@@ -21,7 +21,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
                 android:orientation="vertical"
                 android:paddingEnd="15dp"
@@ -31,12 +31,12 @@
                     android:id="@+id/tv_text_title"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:layout_marginTop="10dp"
                     android:background="@color/transparent"
                     android:hint="请添加标题"
                     android:lineSpacingExtra="3dp"
                     android:maxLines="1"
                     android:minLines="1"
+                    android:maxLength="24"
                     android:scrollHorizontally="true"
                     android:singleLine="true"
                     android:textColor="#ffffff"
@@ -87,15 +87,13 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="310dp"
-                    android:layout_below="@id/imgandtext"
+                    android:layout_height="314dp"
                     android:background="@color/bg_grey" />
 
                 <LinearLayout
                     android:id="@+id/ll_content1"
                     android:layout_width="match_parent"
                     android:layout_height="130dp"
-                    android:layout_below="@id/imgandtext"
                     android:background="@color/white"
                     android:orientation="horizontal">
 

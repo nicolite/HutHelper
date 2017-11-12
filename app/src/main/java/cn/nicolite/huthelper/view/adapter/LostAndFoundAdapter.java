@@ -47,7 +47,7 @@ public class LostAndFoundAdapter extends RecyclerView.Adapter<LostAndFoundAdapte
         List<String> images = lostAndFound.getPics();
         holder.gvItemLoseImg.setVisibility(View.GONE);
 
-        int num = (int) (Math.random() * 4);
+        int num = lostAndFound.getContent().length() % 4;
         holder.rootView.setBackgroundResource(bg[num]);
 
         if (images != null && images.size() != 0) {

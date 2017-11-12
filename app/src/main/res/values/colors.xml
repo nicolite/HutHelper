@@ -41,4 +41,7 @@
     <color name="bg_black_shadow">#80000000</color>
 
     <color name="translucent_1">#3F000000</color>
+
+    <color name="purple_light_1">#acc4e1</color>
+    <color name="purple_light_2">#8dcddf</color>
 </resources>

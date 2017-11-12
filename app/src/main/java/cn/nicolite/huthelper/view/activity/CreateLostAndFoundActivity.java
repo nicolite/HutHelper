@@ -1,7 +1,7 @@
 package cn.nicolite.huthelper.view.activity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -9,71 +9,77 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 
-import butterknife.BindArray;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
-import cn.nicolite.huthelper.presenter.CreateGoodsPresenter;
+import cn.nicolite.huthelper.presenter.CreateLostAndFoundPresenter;
 import cn.nicolite.huthelper.utils.ButtonUtils;
 import cn.nicolite.huthelper.utils.KeyBoardUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.ImageAdapter;
-import cn.nicolite.huthelper.view.iview.ICreateGoodsView;
+import cn.nicolite.huthelper.view.iview.ICreateLostAndFoundView;
 import cn.nicolite.huthelper.view.widget.CommonDialog;
 
 /**
- * Created by nicolite on 17-11-11.
+ * Created by nicolite on 17-11-12.
  */
 
-public class CreateGoodsActivity extends BaseActivity implements ICreateGoodsView {
-
-    @BindView(R.id.rv_goods_images)
-    RecyclerView rvGoodsImages;
-    @BindView(R.id.tv_text_title)
-    EditText tvTextLostTitle;
-    @BindView(R.id.tv_text_content)
-    EditText tvTextLost;
-    @BindView(R.id.tv_goods_price)
-    EditText tvGoodsPrice;
-    @BindView(R.id.tv_goods_quality)
-    TextView tvGoodsQuality;
-    @BindView(R.id.tv_goods_tel)
-    EditText tvGoodsTel;
-    @BindView(R.id.tv_goods_location)
-    EditText tvGoodsLocation;
-    @BindView(R.id.rootView)
-    LinearLayout rootView;
-    private static final int SOLD = 1;
-    private static final int BUY = 2;
+public class CreateLostAndFoundActivity extends BaseActivity implements ICreateLostAndFoundView {
     @BindView(R.id.toolbar_select_1)
     RadioButton toolbarSelect1;
     @BindView(R.id.toolbar_select_2)
     RadioButton toolbarSelect2;
-
-    private int type = SOLD;
-    private CreateGoodsPresenter createGoodsPresenter;
+    @BindView(R.id.et_text_content)
+    EditText etTextContent;
+    @BindView(R.id.add_pic)
+    ImageView addPic;
+    @BindView(R.id.recyclerView)
+    RecyclerView recyclerView;
+    @BindView(R.id.tv_thing)
+    TextView tvThing;
+    @BindView(R.id.ed_thing)
+    EditText edThing;
+    @BindView(R.id.tv_time)
+    TextView tvTime;
+    @BindView(R.id.ed_time)
+    EditText edTime;
+    @BindView(R.id.tv_location)
+    TextView tvLocation;
+    @BindView(R.id.ed_location)
+    EditText edLocation;
+    @BindView(R.id.tv_phone)
+    TextView tvPhone;
+    @BindView(R.id.ed_phone)
+    EditText edPhone;
+    @BindView(R.id.rootView)
+    LinearLayout rootView;
+    private static final int FOUND = 1;
+    private static final int LOST = 2;
+    private int type = FOUND;
     private final int REQUEST_CODE_CHOOSE = 111;
     private List<Uri> uriList = new ArrayList<>();
-    @BindArray(R.array.goodsqu)
-    String[] goodsQuality;
-    private int goodsQuaSelected = 0;
     private ImageAdapter adapter;
+    private CreateLostAndFoundPresenter createLostAndFoundPresenter;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -88,16 +94,16 @@ public class CreateGoodsActivity extends BaseActivity implements ICreateGoodsVie
 
     @Override
     protected int setLayoutId() {
-        return R.layout.activity_create_goods;
+        return R.layout.activity_create_lost_and_found;
     }
 
     @Override
     protected void doBusiness() {
-        toolbarSelect1.setText("出售");
-        toolbarSelect2.setText("求购");
-        rvGoodsImages.setLayoutManager(new LinearLayoutManager(context, OrientationHelper.HORIZONTAL, false));
+        toolbarSelect1.setText("招领");
+        toolbarSelect2.setText("寻物");
+        recyclerView.setLayoutManager(new LinearLayoutManager(context, OrientationHelper.HORIZONTAL, false));
         adapter = new ImageAdapter(context, uriList, ImageAdapter.URI);
-        rvGoodsImages.setAdapter(adapter);
+        recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new ImageAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, final int position, long itemId) {
@@ -118,65 +124,65 @@ public class CreateGoodsActivity extends BaseActivity implements ICreateGoodsVie
             }
         });
 
-        createGoodsPresenter = new CreateGoodsPresenter(this, this);
+        createLostAndFoundPresenter = new CreateLostAndFoundPresenter(this, this);
     }
 
-    @OnClick({R.id.toolbar_back, R.id.toolbar_select_1, R.id.toolbar_select_2,
-            R.id.toolbar_ok, R.id.tv_goods_quality, R.id.add_pic})
+    @OnClick({R.id.toolbar_back, R.id.toolbar_select_1, R.id.toolbar_select_2, R.id.toolbar_ok,
+            R.id.ed_time, R.id.add_pic})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_back:
                 finish();
                 break;
             case R.id.toolbar_select_1:
-                type = SOLD;
+                type = FOUND;
+                rootView.setBackgroundColor(getResources().getColor(R.color.purple_light_1));
+                tvThing.setText("拾到物品");
+                tvTime.setText("拾到时间");
+                tvLocation.setText("拾到地点");
+                edThing.setHint("请输入拾到物品名称");
+                edTime.setHint("请选择拾到时间");
+                edLocation.setHint("请输入拾到地点");
                 break;
             case R.id.toolbar_select_2:
-                type = BUY;
+                type = LOST;
+                rootView.setBackgroundColor(getResources().getColor(R.color.purple_light_2));
+                tvThing.setText("丢失物品");
+                tvTime.setText("丢失时间");
+                tvLocation.setText("丢失地点");
+                edThing.setHint("请输入丢失物品名称");
+                edTime.setHint("请选择丢失时间");
+                edLocation.setHint("请输入丢失地点");
                 break;
             case R.id.toolbar_ok:
                 KeyBoardUtils.hideSoftInput(context, getWindow());
                 if (!ButtonUtils.isFastDoubleClick()) {
-                    if (TextUtils.isEmpty(tvTextLostTitle.getText().toString())) {
-                        showMessage("没有填写标题");
-                    } else if (TextUtils.isEmpty(tvTextLost.getText().toString())) {
-                        showMessage("没有填写描述");
-                    } else if (TextUtils.isEmpty(tvGoodsTel.getText().toString())) {
-                        showMessage("没有填联系方式");
-                    } else if (TextUtils.isEmpty(tvGoodsQuality.getText().toString())) {
-                        showMessage("没有选商品成色");
-                    } else if (TextUtils.isEmpty(tvGoodsLocation.getText().toString())) {
-                        showMessage("没有填发布区域");
+                    if (!ListUtils.isEmpty(uriList)) {
+                        createLostAndFoundPresenter.createGoods(activity, uriList);
                     } else {
-                        if (!ListUtils.isEmpty(uriList)) {
-                            createGoodsPresenter.createGoods(activity, uriList);
-                        } else {
-                            showMessage("至少选择一张图片！");
-                        }
+                        showMessage("至少选择一张图片！");
                     }
                 }
-
                 break;
-            case R.id.tv_goods_quality:
-                new AlertDialog.Builder(this)
-                        .setTitle("请选择成色")
-                        .setSingleChoiceItems(goodsQuality, goodsQuaSelected, new DialogInterface.OnClickListener() {
+            case R.id.ed_time:
+                final Calendar calendar = Calendar.getInstance(Locale.CHINA);
+                new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        final String date = i + "-" + i1 + "-" + i2;
+                        new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                             @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                goodsQuaSelected = i;
+                            public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                                edTime.setText(String.valueOf(date + " " + i + ":" + i1));
                             }
-                        })
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                tvGoodsQuality.setText(goodsQuality[goodsQuaSelected]);
-                            }
-                        })
-                        .setNegativeButton("取消", null)
+                        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true)
+                                .show();
+                    }
+                }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
                         .show();
                 break;
             case R.id.add_pic:
-                createGoodsPresenter.selectImages();
+                createLostAndFoundPresenter.selectImages();
                 break;
         }
     }
@@ -208,12 +214,12 @@ public class CreateGoodsActivity extends BaseActivity implements ICreateGoodsVie
                 .forResult(REQUEST_CODE_CHOOSE);
     }
 
-
     @Override
-    public void uploadGoodsInfo(String imagesInfo) {
-        createGoodsPresenter.uploadGoodsInfo(type, tvTextLostTitle.getText().toString(),
-                tvTextLost.getText().toString(), tvGoodsPrice.getText().toString(), goodsQuaSelected + 1,
-                tvGoodsTel.getText().toString(), tvGoodsLocation.getText().toString(), imagesInfo);
+    public void uploadLostAndFoundInfo(String hidden) {
+        createLostAndFoundPresenter.uploadLostAndFoundInfo(edThing.getText().toString(),
+                tvLocation.getText().toString(), tvTime.getText().toString(), tvPhone.getText().toString(),
+                hidden, edPhone.getText().toString(), type);
+
     }
 
     @Override
@@ -233,5 +239,4 @@ public class CreateGoodsActivity extends BaseActivity implements ICreateGoodsVie
             adapter.notifyDataSetChanged();
         }
     }
-
 }

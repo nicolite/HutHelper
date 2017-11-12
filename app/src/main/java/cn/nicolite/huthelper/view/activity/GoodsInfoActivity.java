@@ -103,8 +103,8 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
 
     @Override
     protected void doBusiness() {
-        toolbarTitle.setText("商品详情");
-        if (delete) {
+        toolbarTitle.setText("详情");
+        if (delete || mUserId.equals(userId)) {
             toolbarUser.setVisibility(View.GONE);
             toolbarDelete.setVisibility(View.VISIBLE);
         }
@@ -185,6 +185,7 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
         imageList.addAll(goodsItem.getPics());
         tvSendtimeLost.setText(goodsItem.getCreated_on());
         tvTextLostTitle.setText(goodsItem.getTit());
+        tvTextLost.setText(goodsItem.getContent());
         tvGoodsQuality.setText(goodsItem.getAttr());
         ivNumLost.setText(goodsItem.getUsername());
         tvGoodsPrice.setText(String.valueOf("￥" + goodsItem.getPrize()));

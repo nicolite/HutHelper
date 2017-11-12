@@ -33,7 +33,7 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="match_parent">
 
                 <LinearLayout
                     android:id="@+id/imgandtext"
@@ -41,8 +41,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:orientation="vertical"
-                    android:paddingLeft="25dp"
-                    android:paddingRight="25dp">
+                    android:paddingEnd="15dp"
+                    android:paddingStart="15dp">
 
                     <android.support.v7.widget.RecyclerView
                         android:id="@+id/rv_goods_images"
@@ -58,7 +58,6 @@
                         android:lineSpacingExtra="3dp"
                         android:minLines="1"
                         android:scrollHorizontally="true"
-                        android:singleLine="true"
                         android:textColor="#ffffff"
                         android:textSize="14sp" />
 
@@ -67,6 +66,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="3dp"
+                        android:layout_marginTop="5dp"
                         android:lineSpacingExtra="3dp"
                         android:minLines="4"
                         android:textColor="#ffffff"
@@ -75,9 +75,8 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="290dp"
+                    android:layout_height="match_parent"
                     android:layout_below="@id/imgandtext"
-                    android:layout_marginTop="20dp"
                     android:background="#efefef" />
 
                 <LinearLayout
@@ -95,8 +94,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingEnd="0dp"
-                        android:paddingStart="25dp">
+                        android:paddingEnd="15dp"
+                        android:paddingStart="15dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -127,8 +126,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingLeft="25dp"
-                        android:paddingRight="25dp">
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -170,8 +169,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingEnd="25dp"
-                        android:paddingStart="25dp">
+                        android:paddingEnd="15dp"
+                        android:paddingStart="15dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -202,8 +201,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingEnd="25dp"
-                        android:paddingStart="25dp">
+                        android:paddingEnd="15dp"
+                        android:paddingStart="15dp">
 
                         <TextView
                             android:layout_width="wrap_content"

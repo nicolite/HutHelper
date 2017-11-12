@@ -138,7 +138,7 @@ public class LostAndFoundActivity extends BaseActivity {
             tvAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    startActivity(CreateLostAndFoundActivity.class);
                 }
             });
             tvMime.setOnClickListener(new View.OnClickListener() {

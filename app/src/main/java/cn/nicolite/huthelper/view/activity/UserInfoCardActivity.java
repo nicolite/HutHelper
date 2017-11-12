@@ -69,7 +69,7 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
 
     @Override
     protected void doBusiness() {
-        toolbarTitle.setText("");
+        toolbarTitle.setText(username);
         tvUserName.setText(username);
         userInfoCardPresenter = new UserInfoCardPresenter(this, this);
         userInfoCardPresenter.showInfo(mUserId);

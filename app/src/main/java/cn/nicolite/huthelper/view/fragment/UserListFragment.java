@@ -23,6 +23,7 @@ import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.presenter.UserListPresenter;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
+import cn.nicolite.huthelper.view.activity.UserInfoCardActivity;
 import cn.nicolite.huthelper.view.adapter.UserListAdapter;
 import cn.nicolite.huthelper.view.iview.IUserListView;
 import io.rong.imkit.RongIM;
@@ -59,7 +60,7 @@ public class UserListFragment extends BaseFragment implements IUserListView {
 
     @Override
     protected void initArguments(Bundle arguments) {
-        if (arguments != null){
+        if (arguments != null) {
             searchText = arguments.getString("searchText", "");
         }
     }
@@ -105,12 +106,10 @@ public class UserListFragment extends BaseFragment implements IUserListView {
                 //  RongIM.getInstance().startPrivateChat(context, user.getId(),
                 //          user.getTrueName());
 
-                //  Intent userInfoCard = new Intent(context, UserInfoCardActivity.class);
-                //  Bundle bundle = new Bundle();
-                //  bundle.putString("user_id", user.getUser_id());
-                //  bundle.putString("username", user.getTrueName());
-                //  userInfoCard.putExtras(bundle);
-                //  context.startActivity(userInfoCard);
+                Bundle bundle = new Bundle();
+                bundle.putString("userId", user.getUser_id());
+                bundle.putString("username", user.getTrueName());
+                startActivity(UserInfoCardActivity.class, bundle);
             }
         });
 

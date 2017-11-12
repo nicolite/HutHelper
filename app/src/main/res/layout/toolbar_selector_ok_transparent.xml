@@ -38,7 +38,7 @@
                 android:background="@drawable/btn_select"
                 android:button="@null"
                 android:checked="true"
-                android:text="出售" />
+                android:text="选项1" />
 
             <RadioButton
                 android:id="@+id/toolbar_select_2"
@@ -47,7 +47,7 @@
                 android:gravity="center"
                 android:button="@null"
                 android:background="@drawable/btn_select"
-                android:text="求购" />
+                android:text="选项2" />
         </RadioGroup>
 
 

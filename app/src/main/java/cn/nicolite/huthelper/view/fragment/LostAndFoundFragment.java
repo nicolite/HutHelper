@@ -24,6 +24,7 @@ import cn.nicolite.huthelper.base.fragment.BaseFragment;
 import cn.nicolite.huthelper.model.bean.LostAndFound;
 import cn.nicolite.huthelper.presenter.LostAndFoundPresenter;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
+import cn.nicolite.huthelper.view.activity.LostAndFoundInfoActivity;
 import cn.nicolite.huthelper.view.adapter.LostAndFoundAdapter;
 import cn.nicolite.huthelper.view.iview.ILostAndFoundView;
 
@@ -70,7 +71,7 @@ public class LostAndFoundFragment extends BaseFragment implements ILostAndFoundV
     @Override
     protected void initArguments(Bundle arguments) {
         if (arguments != null) {
-            type = arguments.getInt("type", FOUND);
+            type = arguments.getInt("type", ALL);
             if (type == SEARCH || type == MYLOSTANDFOUND) {
                 searchText = arguments.getString("searchText", "");
             }
@@ -148,15 +149,14 @@ public class LostAndFoundFragment extends BaseFragment implements ILostAndFoundV
             public void onItemClick(View view, int position) {
                 LostAndFound lostAndFound = lostAndFoundList.get(position);
                 Bundle bundle = new Bundle();
-                bundle.putString("lostId", lostAndFound.getId());
-                bundle.putString("userId", lostAndFound.getUser_id());
+                bundle.putSerializable("data", lostAndFound);
                 if (type == MYLOSTANDFOUND && userId.equals(lostAndFound.getUser_id())) {
                     bundle.putBoolean("delete", true);
                 } else {
                     bundle.putBoolean("delete", false);
                 }
-                Bundle options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, "goodsTransition").toBundle();
-                // startActivity(GoodsInfoActivity.class, bundle, options);
+                Bundle options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, "lostAndFoundTransition").toBundle();
+                startActivity(LostAndFoundInfoActivity.class, bundle, options);
             }
         });
 

@@ -29,8 +29,8 @@ import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.utils.CommUtil;
 import cn.nicolite.huthelper.utils.EncryptUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
-import cn.nicolite.huthelper.view.activity.CreateGoodsActivity;
-import cn.nicolite.huthelper.view.iview.ICreateGoodsView;
+import cn.nicolite.huthelper.view.activity.CreateLostAndFoundActivity;
+import cn.nicolite.huthelper.view.iview.ICreateLostAndFoundView;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
@@ -42,91 +42,38 @@ import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
 /**
- * Created by nicolite on 17-11-11.
+ * Created by nicolite on 17-11-12.
  */
 
-public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, CreateGoodsActivity> {
-    public CreateGoodsPresenter(ICreateGoodsView view, CreateGoodsActivity activity) {
+public class CreateLostAndFoundPresenter extends BasePresenter<ICreateLostAndFoundView, CreateLostAndFoundActivity> {
+    public CreateLostAndFoundPresenter(ICreateLostAndFoundView view, CreateLostAndFoundActivity activity) {
         super(view, activity);
     }
 
-    public void uploadGoodsInfo(int type, String title, String content, String price, int attr, String phone, String address, String hidden) {
-
-        if (getView() != null) {
-            if (TextUtils.isEmpty(phone)) {
-                getView().showMessage("联系方式必须填写");
-                return;
-            } else if (TextUtils.isEmpty(String.valueOf(attr))) {
-                getView().showMessage("请选择商品成色");
-                return;
-            } else if (TextUtils.isEmpty(address)) {
-                getView().showMessage("请填写发布区域");
-                return;
-            }
-        }
-
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
-        List<Configure> configureList = getConfigureList();
-
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
-        Configure configure = configureList.get(0);
-        User user = configure.getUser();
-
-        APIUtils
-                .getMarketAPI()
-                .createGoods(user.getStudentKH(), configure.getAppRememberCode(),
-                        title, content, price, attr, phone, address, type, hidden)
-                .compose(getActivity().<HttpResult<String>>bindToLifecycle())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<HttpResult<String>>() {
+    public void selectImages() {
+        AndPermission
+                .with(getActivity())
+                .requestCode(100)
+                .permission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .callback(new PermissionListener() {
                     @Override
-                    public void onSubscribe(Disposable d) {
+                    public void onSucceed(int requestCode, @NonNull List<String> grantPermissions) {
                         if (getView() != null) {
-                            getView().showLoading();
-                        }
-                    }
-
-                    @Override
-                    public void onNext(HttpResult<String> stringHttpResult) {
-                        if (getView() != null) {
-                            getView().closeLoading();
-                            if (stringHttpResult.getCode() == 200) {
-                                getView().showMessage("发布成功！");
-                                getView().publishSuccess();
-                            } else {
-                                getView().showMessage("发布失败，" + stringHttpResult.getCode());
+                            if (requestCode == 100) {
+                                getView().selectImages();
                             }
                         }
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onFailed(int requestCode, @NonNull List<String> deniedPermissions) {
                         if (getView() != null) {
-                            getView().closeLoading();
-                            getView().showMessage("发布失败，" + ExceptionEngine.handleException(e).getMsg());
+                            getView().showMessage("获取权限失败，请授予文件读写权限！");
                         }
                     }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });
+                })
+                .start();
     }
-
 
     private StringBuilder stringBuilder = new StringBuilder();
 
@@ -172,7 +119,7 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
 
         APIUtils
                 .getUploadAPI()
-                .uploadImages(user.getStudentKH(), configure.getAppRememberCode(), env, 1, file)
+                .uploadImages(user.getStudentKH(), configure.getAppRememberCode(), env, 2, file)
                 .compose(getActivity().<UploadImages>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -193,7 +140,7 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
                                     String string = stringBuilder.toString();
                                     stringBuilder.delete(0, stringBuilder.length());
                                     if (!TextUtils.isEmpty(string)) {
-                                        getView().uploadGoodsInfo(string);
+                                        getView().uploadLostAndFoundInfo(string);
                                     } else {
                                         getView().showMessage("获取上传图片信息失败！");
                                     }
@@ -217,32 +164,6 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
                     }
                 });
     }
-
-    public void selectImages() {
-        AndPermission
-                .with(getActivity())
-                .requestCode(100)
-                .permission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                .callback(new PermissionListener() {
-                    @Override
-                    public void onSucceed(int requestCode, @NonNull List<String> grantPermissions) {
-                        if (getView() != null) {
-                            if (requestCode == 100) {
-                                getView().selectImages();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailed(int requestCode, @NonNull List<String> deniedPermissions) {
-                        if (getView() != null) {
-                            getView().showMessage("获取权限失败，请授予文件读写权限！");
-                        }
-                    }
-                })
-                .start();
-    }
-
 
     List<File> fileList = new ArrayList<>();
 
@@ -292,5 +213,69 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
                     }).launch();
         }
 
+    }
+
+    public void uploadLostAndFoundInfo(String title, String location, String time, String content,
+                                       String hidden, String phone ,int type){
+        if (TextUtils.isEmpty(userId)) {
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
+            }
+            return;
+        }
+
+        List<Configure> configureList = getConfigureList();
+
+        if (ListUtils.isEmpty(configureList)) {
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
+            }
+            return;
+        }
+
+        Configure configure = configureList.get(0);
+        User user = configure.getUser();
+
+        APIUtils
+                .getLostAndFoundAPI()
+                .createLostAndFound(user.getStudentKH(), configure.getAppRememberCode(), title, location,
+                        time, content, hidden, phone, type)
+                .compose(getActivity().<HttpResult<String>>bindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<HttpResult<String>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        if (getView() != null) {
+                            getView().showLoading();
+                        }
+                    }
+
+                    @Override
+                    public void onNext(HttpResult<String> stringHttpResult) {
+                        if (getView() != null) {
+                            getView().closeLoading();
+                            if (stringHttpResult.getCode() == 200) {
+                                getView().showMessage("发布成功！");
+                                getView().publishSuccess();
+                            } else {
+                                getView().showMessage("发布失败，" + stringHttpResult.getCode());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (getView() != null) {
+                            getView().closeLoading();
+                            getView().showMessage("发布失败，" + ExceptionEngine.handleException(e).getMsg());
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 }

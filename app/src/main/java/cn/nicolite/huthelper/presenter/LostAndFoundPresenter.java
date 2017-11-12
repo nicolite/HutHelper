@@ -13,7 +13,6 @@ import cn.nicolite.huthelper.network.api.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.view.fragment.LostAndFoundFragment;
-import cn.nicolite.huthelper.view.fragment.MarketFragment;
 import cn.nicolite.huthelper.view.iview.ILostAndFoundView;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -46,13 +45,13 @@ public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, Lost
 
     public void loadMore(int page, int type) {
         switch (type) {
-            case MarketFragment.ALL:
+            case LostAndFoundFragment.ALL:
                 loadMoreAll(page, true, true);
                 break;
-            case MarketFragment.SOLD:
+            case LostAndFoundFragment.FOUND:
                 loadMoreFound(page, true, true);
                 break;
-            case MarketFragment.BUY:
+            case LostAndFoundFragment.LOST:
                 loadMoreLost(page, true, true);
                 break;
         }
