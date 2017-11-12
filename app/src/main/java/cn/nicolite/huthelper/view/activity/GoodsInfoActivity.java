@@ -24,12 +24,12 @@ import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.GoodsItem;
 import cn.nicolite.huthelper.presenter.GoodsInfoPresenter;
-import cn.nicolite.huthelper.presenter.SearchPresenter;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.utils.ToastUtil;
 import cn.nicolite.huthelper.view.adapter.ImageAdapter;
 import cn.nicolite.huthelper.view.iview.IGoodsInfoView;
+import cn.nicolite.huthelper.view.widget.CommonDialog;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.ColorFilterTransformation;
 
@@ -133,12 +133,23 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
                 break;
             case R.id.toolbar_user:
                 Bundle bundle = new Bundle();
-                bundle.putInt("type", SearchPresenter.TYPE_MARKET_MYGOODS);
-                bundle.putString("searchText", mUserId);
-                bundle.putString("extras", username);
-                startActivity(SearchResultActivity.class, bundle);
+                bundle.putString("userId", mUserId);
+                bundle.putString("username", username);
+                startActivity(UserInfoCardActivity.class, bundle);
                 break;
             case R.id.toolbar_delete:
+                final CommonDialog commonDialog = new CommonDialog(context);
+                commonDialog
+                        .setMessage("确认删除？")
+                        .setPositiveButton("确认", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                goodsInfoPresenter.deleteGoods(goodsId);
+                                commonDialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton("不了", null)
+                        .show();
                 break;
             case R.id.tv_goods_tel:
                 if (!TextUtils.isEmpty(phone) && TextUtils.isDigitsOnly(tvGoodsTel.getText().toString())) {
@@ -192,6 +203,11 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
                     .into(ivBgimage);
             adapter.notifyDataSetChanged();
         }
+    }
+
+    @Override
+    public void deleteSuccess() {
+        finish();
     }
 
 }

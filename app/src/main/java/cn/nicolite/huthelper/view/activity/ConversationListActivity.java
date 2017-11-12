@@ -101,7 +101,7 @@ public class ConversationListActivity extends BaseActivity {
                 break;
             case R.id.toolbar_search:
                 Bundle bundle = new Bundle();
-                bundle.putInt("type", SearchPresenter.TYPE_USER);
+                bundle.putInt("type", SearchPresenter.TYPE_USER_SEARCH);
                 startActivity(SearchActivity.class, bundle);
                 break;
         }

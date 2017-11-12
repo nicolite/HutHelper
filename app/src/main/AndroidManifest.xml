@@ -38,7 +38,7 @@
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:largeHeap="true"
+        android:largeHeap="false"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppSplash"
@@ -52,6 +52,7 @@
 
         <activity
             android:name=".view.activity.MainActivity"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme" />
 
         <activity
@@ -168,6 +169,14 @@
 
         <activity
             android:name=".view.activity.CreateGoodsActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".view.activity.UserInfoCardActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".view.activity.LostAndFoundActivity"
             android:theme="@style/AppTheme" />
 
         <service android:name=".services.LoginService" />

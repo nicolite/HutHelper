@@ -27,25 +27,25 @@ import cn.nicolite.huthelper.utils.DensityUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.ToastUtil;
 import cn.nicolite.huthelper.view.adapter.TabAdapter;
-import cn.nicolite.huthelper.view.fragment.MarketFragment;
+import cn.nicolite.huthelper.view.fragment.LostAndFoundFragment;
 
 /**
- * 二手市场页面
- * Created by nicolite on 17-11-6.
+ * 失物招领页面
+ * Created by nicolite on 17-11-12.
  */
 
-public class MarketActivity extends BaseActivity {
+public class LostAndFoundActivity extends BaseActivity {
 
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
+    @BindView(R.id.toolbar_menu)
+    ImageView toolbarMenu;
     @BindView(R.id.tab)
     TabLayout tab;
     @BindView(R.id.viewpager)
     ViewPager viewpager;
     @BindView(R.id.rootView)
     LinearLayout rootView;
-    @BindView(R.id.toolbar_menu)
-    ImageView toolbarMenu;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -61,53 +61,53 @@ public class MarketActivity extends BaseActivity {
 
     @Override
     protected int setLayoutId() {
-        return R.layout.activity_market;
+        return R.layout.activity_lost_and_found;
     }
 
     @Override
     protected void doBusiness() {
-        toolbarTitle.setText("二手市场");
+        toolbarTitle.setText("失物招领");
         viewpager.setAdapter(new TabAdapter(getSupportFragmentManager(), getTitleList(), getFragmentList()));
         tab.setupWithViewPager(viewpager);
         viewpager.setOffscreenPageLimit(2);
     }
 
-    @OnClick({R.id.toolbar_back, R.id.toolbar_menu, R.id.toolbar_search})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.toolbar_back:
-                finish();
-                break;
-            case R.id.toolbar_menu:
-                showMenuWindows(toolbarMenu);
-                break;
-            case R.id.toolbar_search:
-                Bundle bundle = new Bundle();
-                bundle.putInt("type", SearchPresenter.TYPE_MARKET_SEARCH);
-                startActivity(SearchActivity.class, bundle);
-                break;
-        }
-    }
-
     private List<Fragment> getFragmentList() {
         List<Fragment> fragmentList = new ArrayList<>();
-        fragmentList.add(MarketFragment.newInstance(MarketFragment.ALL, null));
-        fragmentList.add(MarketFragment.newInstance(MarketFragment.SOLD, null));
-        fragmentList.add(MarketFragment.newInstance(MarketFragment.BUY, null));
+        fragmentList.add(LostAndFoundFragment.newInstance(LostAndFoundFragment.ALL, null));
+        fragmentList.add(LostAndFoundFragment.newInstance(LostAndFoundFragment.FOUND, null));
+        fragmentList.add(LostAndFoundFragment.newInstance(LostAndFoundFragment.LOST, null));
         return fragmentList;
     }
 
     private List<String> getTitleList() {
         List<String> titleList = new ArrayList<>();
         titleList.add("全部");
-        titleList.add("出售");
-        titleList.add("求购");
+        titleList.add("招领");
+        titleList.add("寻物");
         return titleList;
+    }
+
+
+    @OnClick({R.id.toolbar_back, R.id.toolbar_search, R.id.toolbar_menu})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.toolbar_back:
+                finish();
+                break;
+            case R.id.toolbar_search:
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", SearchPresenter.TYPE_LOSTANDFOUND_SERACH);
+                startActivity(SearchActivity.class, bundle);
+                break;
+            case R.id.toolbar_menu:
+                showMenuWindows(toolbarMenu);
+                break;
+        }
     }
 
     protected PopupWindow weekListWindow;
     protected View popupWindowLayout;
-
 
     private void showMenuWindows(View parent) {
         if (TextUtils.isEmpty(userId)) {
@@ -133,13 +133,12 @@ public class MarketActivity extends BaseActivity {
 
             TextView tvMime = (TextView) popupWindowLayout.findViewById(R.id.tv_popmenu_mime);
             TextView tvAdd = (TextView) popupWindowLayout.findViewById(R.id.tv_popmenu_add);
-            tvAdd.setText("发布商品");
+            tvAdd.setText("添加失物");
             tvMime.setText("我的发布");
             tvAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    startActivity(CreateGoodsActivity.class);
                 }
             });
             tvMime.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +146,7 @@ public class MarketActivity extends BaseActivity {
                 public void onClick(View v) {
                     weekListWindow.dismiss();
                     Bundle bundle = new Bundle();
-                    bundle.putInt("type", SearchPresenter.TYPE_MARKET_MYGOODS);
+                    bundle.putInt("type", SearchPresenter.TYPE_MYLOSTANDFOUND);
                     bundle.putString("searchText", user.getUser_id());
                     bundle.putString("extras", user.getUsername());
                     startActivity(SearchResultActivity.class, bundle);

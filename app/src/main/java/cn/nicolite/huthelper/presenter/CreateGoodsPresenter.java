@@ -105,6 +105,7 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
                             getView().closeLoading();
                             if (stringHttpResult.getCode() == 200) {
                                 getView().showMessage("发布成功！");
+                                getView().publishSuccess();
                             } else {
                                 getView().showMessage("发不失败，" + stringHttpResult.getCode());
                             }
@@ -134,7 +135,7 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
      * @param i      现在上传的是第几个
      * @param count  总共需要上传的图片个数
      */
-    public void uploadImages(Bitmap bitmap, int count, final int i) {
+    public void uploadImages(Bitmap bitmap, final int count, final int i) {
 
         if (TextUtils.isEmpty(userId)) {
             if (getView() != null) {
@@ -188,6 +189,15 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
                                 stringBuilder.append("//");
                                 stringBuilder.append(uploadImages.getData());
                                 getView().showMessage(String.valueOf("成功正在上传第" + i + "张图片！"));
+                                if (getView() != null && i == count) {
+                                    String string = stringBuilder.toString();
+                                    stringBuilder.delete(0, stringBuilder.length());
+                                    if (!TextUtils.isEmpty(string)) {
+                                        getView().uploadGoodsInfo(string);
+                                    } else {
+                                        getView().showMessage("获取上传图片信息失败！");
+                                    }
+                                }
                             } else {
                                 getView().showMessage(String.valueOf("正在上传第" + i + "张图片失败！"));
                             }
@@ -206,15 +216,6 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
 
                     }
                 });
-
-        if (getView() != null && i == count) {
-            String string = stringBuilder.toString();
-            if (!TextUtils.isEmpty(string)) {
-                getView().uploadGoodsInfo(string);
-            } else {
-                getView().showMessage("获取上传图片信息失败！");
-            }
-        }
     }
 
     public void selectImages() {
@@ -245,12 +246,16 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
 
     List<File> fileList = new ArrayList<>();
 
-    public void createGoods(Activity activity, List<Uri> uriList) {
+    public void createGoods(Activity activity, final List<Uri> uriList) {
         if (ListUtils.isEmpty(uriList)) {
             if (getView() != null) {
                 getView().showMessage("未选择图片！");
             }
             return;
+        }
+
+        if (getView() != null) {
+            getView().showMessage("正在发布，请勿关闭页面！");
         }
 
         for (int i = 0; i < uriList.size(); i++) {
@@ -269,6 +274,13 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
                         @Override
                         public void onSuccess(File file) {
                             fileList.add(file);
+                            if (!ListUtils.isEmpty(fileList) && fileList.size() == uriList.size()) {
+                                for (int i = 0; i < fileList.size(); i++) {
+                                    Bitmap bitmap = BitmapFactory.decodeFile(fileList.get(i).getPath());
+                                    uploadImages(bitmap, fileList.size(), i + 1);
+                                }
+                                fileList.clear();
+                            }
                         }
 
                         @Override
@@ -278,13 +290,6 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
                             }
                         }
                     }).launch();
-        }
-
-        if (!ListUtils.isEmpty(fileList)) {
-            for (int i = 0; i < fileList.size(); i++) {
-                Bitmap bitmap = BitmapFactory.decodeFile(fileList.get(i).getPath());
-                uploadImages(bitmap, fileList.size(), i + 1);
-            }
         }
 
     }

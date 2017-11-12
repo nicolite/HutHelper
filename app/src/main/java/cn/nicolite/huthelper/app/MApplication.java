@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.squareup.leakcanary.LeakCanary;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.stat.MtaSDkException;
@@ -32,6 +33,10 @@ public class MApplication extends Application {
         super.onCreate();
         AppContext = getApplicationContext();
         application = this;
+
+        if (!LeakCanary.isInAnalyzerProcess(this)) {
+            LeakCanary.install(this);
+        }
 
         //注册融云小米push
         RongPushClient.registerMiPush(this, Constants.XIAOMI_APPID, Constants.XIAOMI_APPKEY);

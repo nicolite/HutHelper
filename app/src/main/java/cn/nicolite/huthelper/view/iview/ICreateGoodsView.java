@@ -10,4 +10,5 @@ public interface ICreateGoodsView extends IBaseView {
     void selectImages();
 
     void uploadGoodsInfo(String imagesInfo);
+    void publishSuccess();
 }

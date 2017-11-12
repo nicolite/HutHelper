@@ -14,6 +14,7 @@ import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.presenter.SearchPresenter;
 import cn.nicolite.huthelper.utils.ToastUtil;
+import cn.nicolite.huthelper.view.fragment.LostAndFoundFragment;
 import cn.nicolite.huthelper.view.fragment.MarketFragment;
 import cn.nicolite.huthelper.view.fragment.UserListFragment;
 
@@ -60,17 +61,32 @@ public class SearchResultActivity extends BaseActivity {
 
     @Override
     protected void doBusiness() {
+
+        switch (type) {
+            case SearchPresenter.TYPE_MARKET_MYGOODS:
+                if (userId.equals(searchText)) {
+                    toolbarTitle.setText("我的商品");
+                } else {
+                    toolbarTitle.setText(String.valueOf(extras + "的商品"));
+                }
+                break;
+            case SearchPresenter.TYPE_MYLOSTANDFOUND:
+                if (userId.equals(searchText)) {
+                    toolbarTitle.setText("我的失物招领");
+                } else {
+                    toolbarTitle.setText(String.valueOf(extras + "的失物招领"));
+                }
+                break;
+            default:
+                toolbarTitle.setText(searchText);
+                break;
+
+        }
+
         if (TextUtils.isEmpty(searchText)) {
             toolbarTitle.setText("搜索结果");
-        } else if (type == SearchPresenter.TYPE_MARKET_MYGOODS) {
-            if (userId.equals(searchText)) {
-                toolbarTitle.setText("我的商品");
-            } else {
-                toolbarTitle.setText(String.valueOf(extras + "的商品"));
-            }
-        } else {
-            toolbarTitle.setText(searchText);
         }
+
         loadFragment(type);
     }
 
@@ -91,9 +107,15 @@ public class SearchResultActivity extends BaseActivity {
                 transaction.replace(R.id.fragment_content,
                         MarketFragment.newInstance(MarketFragment.MYGOODS, searchText));
                 break;
-            case SearchPresenter.TYPE_LOST:
+            case SearchPresenter.TYPE_LOSTANDFOUND_SERACH:
+                transaction.replace(R.id.fragment_content,
+                        LostAndFoundFragment.newInstance(LostAndFoundFragment.SEARCH, searchText));
                 break;
-            case SearchPresenter.TYPE_USER:
+            case SearchPresenter.TYPE_MYLOSTANDFOUND:
+                transaction.replace(R.id.fragment_content,
+                        LostAndFoundFragment.newInstance(LostAndFoundFragment.MYLOSTANDFOUND, searchText));
+                break;
+            case SearchPresenter.TYPE_USER_SEARCH:
                 transaction.replace(R.id.fragment_content, UserListFragment.newInstance(searchText));
                 break;
             default:

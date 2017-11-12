@@ -6,41 +6,40 @@ import java.util.List;
 
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.model.bean.Configure;
-import cn.nicolite.huthelper.model.bean.Goods;
 import cn.nicolite.huthelper.model.bean.GoodsResult;
+import cn.nicolite.huthelper.model.bean.LostAndFound;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.network.api.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.utils.ListUtils;
+import cn.nicolite.huthelper.view.fragment.LostAndFoundFragment;
 import cn.nicolite.huthelper.view.fragment.MarketFragment;
-import cn.nicolite.huthelper.view.iview.IMarketView;
+import cn.nicolite.huthelper.view.iview.ILostAndFoundView;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
 /**
- * MarketPresenter
- * Created by nicolite on 17-11-6.
+ * Created by nicolite on 17-11-12.
  */
 
-public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> {
-
-    public MarketPresenter(IMarketView view, MarketFragment activity) {
+public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, LostAndFoundFragment> {
+    public LostAndFoundPresenter(ILostAndFoundView view, LostAndFoundFragment activity) {
         super(view, activity);
     }
 
 
-    public void showGoodsList(int type, boolean isManual) {
+    public void showLostAndFoundList(int type, boolean isManual) {
         switch (type) {
-            case MarketFragment.ALL:
+            case LostAndFoundFragment.ALL:
                 loadMoreAll(1, isManual, false);
                 break;
-            case MarketFragment.SOLD:
-                loadMoreSold(1, isManual, false);
+            case LostAndFoundFragment.FOUND:
+                loadMoreFound(1, isManual, false);
                 break;
-            case MarketFragment.BUY:
-                loadMoreBuy(1, isManual, false);
+            case LostAndFoundFragment.LOST:
+                loadMoreLost(1, isManual, false);
                 break;
         }
     }
@@ -51,37 +50,34 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                 loadMoreAll(page, true, true);
                 break;
             case MarketFragment.SOLD:
-                loadMoreSold(page, true, true);
+                loadMoreFound(page, true, true);
                 break;
             case MarketFragment.BUY:
-                loadMoreBuy(page, true, true);
+                loadMoreLost(page, true, true);
                 break;
-
         }
     }
 
     public void loadMoreAll(int page, boolean isManual, boolean isLoadMore) {
-        loadGoodsList(page, "", isManual, isLoadMore);
+        loadLostAndFoundList(page, 0, isManual, isLoadMore);
     }
 
-    public void loadMoreSold(int page, boolean isManual, boolean isLoadMore) {
-        loadGoodsList(page, "1", isManual, isLoadMore);
+    public void loadMoreFound(int page, boolean isManual, boolean isLoadMore) {
+        loadLostAndFoundList(page, 1, isManual, isLoadMore);
     }
 
-    public void loadMoreBuy(int page, boolean isManual, boolean isLoadMore) {
-        loadGoodsList(page, "2", isManual, isLoadMore);
+    public void loadMoreLost(int page, boolean isManual, boolean isLoadMore) {
+        loadLostAndFoundList(page, 2, isManual, isLoadMore);
     }
 
-
-    public void loadGoodsList(final int page, String type, final boolean isManual, final boolean isLoadMore) {
-
+    public void loadLostAndFoundList(final int page, int type, final boolean isManual, final boolean isLoadMore) {
         APIUtils
-                .getMarketAPI()
-                .getGoodsList(page, type)
-                .compose(getActivity().<GoodsResult<List<Goods>>>bindToLifecycle())
+                .getLostAndFoundAPI()
+                .getLostAndFoundList(page, type)
+                .compose(getActivity().<GoodsResult<List<LostAndFound>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<GoodsResult<List<Goods>>>() {
+                .subscribe(new Observer<GoodsResult<List<LostAndFound>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         if (getView() != null && !isManual) {
@@ -90,7 +86,7 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                     }
 
                     @Override
-                    public void onNext(GoodsResult<List<Goods>> listGoodsResult) {
+                    public void onNext(GoodsResult<List<LostAndFound>> listGoodsResult) {
                         if (getView() != null) {
                             getView().closeLoading();
                             if (listGoodsResult.getCode() == 200) {
@@ -101,7 +97,7 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                                         getView().noMoreData();
                                     }
                                 } else {
-                                    getView().showGoodsList(listGoodsResult.getData());
+                                    getView().showLostAndFoundList(listGoodsResult.getData());
                                     if (ListUtils.isEmpty(listGoodsResult.getData())) {
                                         getView().showMessage("暂时没有相关内容！");
                                     }
@@ -126,9 +122,10 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
 
                     }
                 });
+
     }
 
-    public void searchGoods(String searchText, final int page, final boolean isLoadMore) {
+    public void searchLostAndFound(String searchText, final int page, final boolean isLoadMore) {
         if (TextUtils.isEmpty(searchText)) {
             searchText = "";
         }
@@ -148,12 +145,12 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
         User user = configure.getUser();
 
         APIUtils
-                .getMarketAPI()
-                .searchGoods(user.getStudentKH(), configure.getAppRememberCode(), page, searchText)
-                .compose(getActivity().<GoodsResult<List<Goods>>>bindToLifecycle())
+                .getLostAndFoundAPI()
+                .searchLostAndFound(user.getStudentKH(), configure.getAppRememberCode(), page, searchText)
+                .compose(getActivity().<GoodsResult<List<LostAndFound>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<GoodsResult<List<Goods>>>() {
+                .subscribe(new Observer<GoodsResult<List<LostAndFound>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         if (getView() != null) {
@@ -162,7 +159,7 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                     }
 
                     @Override
-                    public void onNext(GoodsResult<List<Goods>> listGoodsResult) {
+                    public void onNext(GoodsResult<List<LostAndFound>> listGoodsResult) {
                         if (getView() != null) {
                             getView().closeLoading();
                             if (listGoodsResult.getCode() == 200) {
@@ -173,7 +170,7 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                                         getView().noMoreData();
                                     }
                                 } else {
-                                    getView().showGoodsList(listGoodsResult.getData());
+                                    getView().showLostAndFoundList(listGoodsResult.getData());
                                     if (ListUtils.isEmpty(listGoodsResult.getData())) {
                                         getView().showMessage("暂时没有相关内容！");
                                     }
@@ -199,8 +196,7 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                 });
     }
 
-    public void showGoodsByUserId(final int page, String userId, final boolean isLoadMore) {
-
+    public void showLostAndFoundByUserId(final int page, String userId, final boolean isLoadMore) {
         if (TextUtils.isEmpty(userId)) {
             getView().showMessage("获取用户信息失败！");
             return;
@@ -216,12 +212,12 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
         User user = configure.getUser();
 
         APIUtils
-                .getMarketAPI()
-                .getGoodsListByUserId(user.getStudentKH(), configure.getAppRememberCode(), page, userId)
-                .compose(getActivity().<GoodsResult<List<Goods>>>bindToLifecycle())
+                .getLostAndFoundAPI()
+                .getLostAndFoundListByUserId(user.getStudentKH(), configure.getAppRememberCode(), page, userId)
+                .compose(getActivity().<GoodsResult<List<LostAndFound>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<GoodsResult<List<Goods>>>() {
+                .subscribe(new Observer<GoodsResult<List<LostAndFound>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         if (getView() != null) {
@@ -230,7 +226,7 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                     }
 
                     @Override
-                    public void onNext(GoodsResult<List<Goods>> listGoodsResult) {
+                    public void onNext(GoodsResult<List<LostAndFound>> listGoodsResult) {
                         if (getView() != null) {
                             getView().closeLoading();
                             if (listGoodsResult.getCode() == 200) {
@@ -241,7 +237,7 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                                         getView().noMoreData();
                                     }
                                 } else {
-                                    getView().showGoodsList(listGoodsResult.getData());
+                                    getView().showLostAndFoundList(listGoodsResult.getData());
                                     if (ListUtils.isEmpty(listGoodsResult.getData())) {
                                         getView().showMessage("暂时没有相关内容！");
                                     }

@@ -135,13 +135,13 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         LogUtils.d(TAG, TAG + "-->onDestroy()");
+        ActivityStackManager.getManager().remove(this);
         if (lifeCycleListener != null) {
             lifeCycleListener.onDestroy();
         }
         if (unbinder != null) {
             unbinder.unbind();
         }
-        ActivityStackManager.getManager().remove(this);
     }
 
     @Override

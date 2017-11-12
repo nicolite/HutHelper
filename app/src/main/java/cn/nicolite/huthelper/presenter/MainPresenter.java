@@ -217,7 +217,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             menuItems.add(item);
             item = new Menu((long) 11, 10, 10, 0, "校历", "cn.nicolite.huthelper.view.activity.CalendarActivity", false);
             menuItems.add(item);
-            item = new Menu((long) 12, 11, 11, 0, "失物招领", "cn.nicolite.huthelper.view.activity.LoseListActivity", true);
+            item = new Menu((long) 12, 11, 11, 0, "失物招领", "cn.nicolite.huthelper.view.activity.LostAndFoundActivity", true);
             menuItems.add(item);
             item = new Menu((long) 13, 12, 12, 0, "宣讲会", "cn.nicolite.huthelper.view.activity.CareerTalkActivity", true);
             menuItems.add(item);

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bcg_min"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/toolbar_nomenu_transparent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="274dp"
+            android:layout_marginEnd="27dp"
+            android:layout_marginStart="27dp"
+            android:layout_marginTop="151dp"
+            android:background="@color/white" />
+
+        <ImageView
+            android:id="@+id/iv_user_avatar"
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:layout_gravity="top|center"
+            android:layout_marginTop="90dp"
+            android:src="@drawable/head_girl" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="27dp"
+            android:layout_marginStart="27dp"
+            android:layout_marginTop="151dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="26.5dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="80dp"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="加载中..."
+                android:textColor="#FF1DCBDB"
+                android:textSize="19sp" />
+
+            <TextView
+                android:id="@+id/tv_user_bio"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:ellipsize="marquee"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="加载中..."
+                android:textColor="#FFADADAD"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_user_class"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="加载中..."
+                android:textColor="#FFADADAD"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_user_department"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="0.5dp"
+                android:gravity="center"
+                android:text="加载中..."
+                android:textColor="#FFADADAD"
+                android:textSize="12sp" />
+
+            <Button
+                android:id="@+id/bt_user_chat"
+                android:layout_width="207dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/bt_user_info_card"
+                android:text="发起聊天"
+                android:textColor="#FF1DCBDB"
+                android:textSize="13sp" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <ImageView
+                    android:id="@+id/iv_user_shiwu"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="start"
+                    android:layout_marginStart="35dp"
+                    android:src="@drawable/user_shiwu" />
+
+                <ImageView
+                    android:id="@+id/iv_user_shuoshuo"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/user_shuoshuo" />
+
+                <ImageView
+                    android:id="@+id/iv_user_ershou"
+                    android:layout_width="55dp"
+                    android:layout_height="55dp"
+                    android:layout_gravity="end"
+                    android:layout_marginEnd="35dp"
+                    android:src="@drawable/user_ershou" />
+            </FrameLayout>
+        </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

@@ -9,4 +9,5 @@ import cn.nicolite.huthelper.model.bean.GoodsItem;
 
 public interface IGoodsInfoView extends IBaseView {
     void showGoodsInfo(GoodsItem goodsItem);
+    void deleteSuccess();
 }

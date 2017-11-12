@@ -29,6 +29,7 @@ import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.presenter.CreateGoodsPresenter;
 import cn.nicolite.huthelper.utils.ButtonUtils;
+import cn.nicolite.huthelper.utils.KeyBoardUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.ImageAdapter;
@@ -126,6 +127,7 @@ public class CreateGoodsActivity extends BaseActivity implements ICreateGoodsVie
                 type = BUY;
                 break;
             case R.id.toolbar_ok:
+                KeyBoardUtils.hideSoftInput(context, getWindow());
                 if (!ButtonUtils.isFastDoubleClick()) {
                     if (TextUtils.isEmpty(tvTextLostTitle.getText().toString())) {
                         showMessage("没有填写标题");
@@ -204,6 +206,11 @@ public class CreateGoodsActivity extends BaseActivity implements ICreateGoodsVie
         createGoodsPresenter.uploadGoodsInfo(type, tvTextLostTitle.getText().toString(),
                 tvTextLost.getText().toString(), tvGoodsPrice.getText().toString(), goodsQuaSelected + 1,
                 tvGoodsTel.getText().toString(), tvGoodsLocation.getText().toString(), imagesInfo);
+    }
+
+    @Override
+    public void publishSuccess() {
+        //finish();
     }
 
     @Override

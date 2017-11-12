@@ -24,28 +24,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:orientation="vertical"
-                android:paddingLeft="25dp"
-                android:paddingRight="25dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/add_pic"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_marginEnd="5dp"
-                        android:layout_marginStart="5dp"
-                        android:src="@drawable/ic_addpic" />
-
-                    <android.support.v7.widget.RecyclerView
-                        android:id="@+id/rv_goods_images"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:minHeight="100dp" />
-                </LinearLayout>
+                android:paddingEnd="15dp"
+                android:paddingStart="15dp">
 
                 <EditText
                     android:id="@+id/tv_text_title"
@@ -77,6 +57,28 @@
                     android:textSize="14sp" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:paddingEnd="15dp"
+                android:paddingStart="15dp">
+
+                <ImageView
+                    android:id="@+id/add_pic"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginEnd="5dp"
+                    android:src="@drawable/ic_addpic" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_goods_images"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="100dp" />
+            </LinearLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -85,7 +87,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="314dp"
+                    android:layout_height="310dp"
                     android:layout_below="@id/imgandtext"
                     android:background="@color/bg_grey" />
 
@@ -103,8 +105,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingEnd="0dp"
-                        android:paddingStart="25dp">
+                        android:paddingEnd="15dp"
+                        android:paddingStart="15dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -142,8 +144,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingLeft="25dp"
-                        android:paddingRight="25dp">
+                        android:paddingEnd="15dp"
+                        android:paddingStart="15dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -188,8 +190,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingEnd="0dp"
-                        android:paddingStart="25dp">
+                        android:paddingEnd="15dp"
+                        android:paddingStart="15dp">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -228,8 +230,8 @@
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
                         android:orientation="vertical"
-                        android:paddingLeft="25dp"
-                        android:paddingRight="25dp">
+                        android:paddingEnd="15dp"
+                        android:paddingStart="15dp">
 
                         <TextView
                             android:layout_width="wrap_content"
