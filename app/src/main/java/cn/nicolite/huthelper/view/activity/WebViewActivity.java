@@ -17,15 +17,29 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.injection.JsInject;
+import cn.nicolite.huthelper.model.Constants;
+import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.utils.CommUtil;
 import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.utils.ToastUtil;
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 通用webView
@@ -54,8 +68,8 @@ public class WebViewActivity extends BaseActivity {
     public static final int TYPE_PERMISSION = 545;
     public static final int TYPE_LIBRARY = 278;
     public static final int TYPE_HOMEWORK = 576;
-    public static final int TYPE_FRESHMAN_HELPER = 685;
     public static final int TYPE_NOTICE = 174;
+    public static final int TYPE_FRESHMAN_GUIDE = 519;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -158,7 +172,7 @@ public class WebViewActivity extends BaseActivity {
     }
 
     private void loadHtml(int type, String title, String url) {
-        LogUtils.d(TAG,"webView " + url);
+        LogUtils.d(TAG, "webView " + url);
         switch (type) {
             case TYPE_CHANGE_PWD:
                 toolbarTitle.setText(title);
@@ -166,11 +180,11 @@ public class WebViewActivity extends BaseActivity {
                 break;
             case TYPE_HELP:
                 toolbarTitle.setText(title);
-                webView.loadUrl(url);
+                loadContent(url);
                 break;
             case TYPE_PERMISSION:
                 toolbarTitle.setText(title);
-                webView.loadUrl(url);
+                loadContent(url);
                 break;
             case TYPE_LIBRARY:
                 toolbarTitle.setText(title);
@@ -180,9 +194,9 @@ public class WebViewActivity extends BaseActivity {
                 toolbarTitle.setText(title);
                 webView.loadUrl(url);
                 break;
-            case TYPE_FRESHMAN_HELPER:
+            case TYPE_FRESHMAN_GUIDE:
                 toolbarTitle.setText(title);
-                webView.loadUrl(url);
+                loadContent(url);
                 break;
             case TYPE_NOTICE:
                 toolbarTitle.setText(title);
@@ -293,4 +307,148 @@ public class WebViewActivity extends BaseActivity {
         webParentView.addView(webView, 1, lp);
     }
 
+
+    public void loadContent(final String url) {
+        settings.setSupportZoom(true);
+        settings.setDisplayZoomControls(false);
+        settings.setBuiltInZoomControls(true);
+
+        Observable.create(new ObservableOnSubscribe<String>() {
+            @Override
+            public void subscribe(ObservableEmitter<String> e) throws Exception {
+                Document document = Jsoup.connect(url)
+                        .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko)Chrome/50.0.2661.102 Safari/537.36")
+                        .get();
+                Element head = document.head();
+                Element body = document.body();
+
+                Elements content = document.getElementsByClass("content");
+                Elements p = content.select("p");
+                p.first().remove();
+                Elements span = content.select("span");
+
+                for (Element element : p) {
+                    element.removeAttr("style");
+                }
+
+                for (Element element : span) {
+                    element.removeAttr("style");
+                }
+
+                content.select("br").remove();
+                Elements img = content.select("img[src]");
+                for (Element element : img) {
+                    String src = element.attr("abs:src");
+                    src = src.replace("http://172.16.10.210", Constants.PICTURE_URL);
+                    src = src.replace("http://love.zengheng.top:8888", Constants.PICTURE_URL);
+
+                    element.attr("src", src);
+                    element.removeAttr("_src");
+                    element.removeAttr("style");
+                }
+
+                for (Element element : content.select("a")) {
+                    if (element.text().equals("<< 返回首页")) {
+                        element.remove();
+                    }
+                }
+
+                for (Element element : content.select("pre")) {
+                    element.removeAttr("style");
+                }
+
+                Elements a = content.select("a");
+                for (Element element : a) {
+                    if (element.attr("href").startsWith("http://shang.qq.com/wpa/qunwpa?idkey=")) {
+                        element.remove();
+                    }
+                }
+
+                Elements h1 = content.select("h1");
+
+                for (Element element : h1) {
+                    element.removeAttr("style");
+                }
+
+                Elements h2 = content.select("h2");
+                for (Element element : h2) {
+                    element.removeAttr("style");
+                }
+
+                Elements h3 = content.select("h3");
+                for (Element element : h3) {
+                    element.removeAttr("style");
+                }
+
+                Elements h4 = content.select("h4");
+                for (Element element : h4) {
+                    element.removeAttr("style");
+                }
+
+                Elements h5 = content.select("h5");
+                for (Element element : h5) {
+                    element.removeAttr("style");
+                }
+
+                Elements h6 = content.select("h6");
+                for (Element element : h6) {
+                    element.removeAttr("style");
+                }
+
+                if (type == TYPE_FRESHMAN_GUIDE && title.equals("开篇")) {
+                    for (Element element : p) {
+                        if (element.text().equals("目录直达链接（持续更新）：")
+                                || element.text().equals("新生攻略手册--转专业篇不可抗力下架")
+                                || element.text().equals("新生攻略手册--素拓篇不可抗力下架")
+                                || element.text().contains("严禁抄袭!")
+                                ) {
+                            element.remove();
+                        }
+                    }
+                    a.remove();
+                }
+                //head.empty();
+                //head.append("<meta charset=\"utf-8\">" +
+                //        "<script src=\"http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js\""+
+                //        " type=\"text/javascript\"></script>");
+                body.empty();
+                body.append(content.toString());
+                String html = document.toString()
+                        .replace("::selection{background:#f4645f;}", "")
+                        .replace("::-moz-selection { background:#f4645f; }", "img{width: 100%; height: 100%; object-fit: contain}")
+                        .replace("background: #333;", "margin: 0px 15px 0px 15px;")
+                        .replace("<p><span>&nbsp;</span></p>", "")
+                        .replace("<p><strong><span>&nbsp;</span></strong></p>", "");
+
+                e.onNext(html);
+            }
+        })
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<String>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                    }
+
+                    @Override
+                    public void onNext(String s) {
+                        if (TextUtils.isEmpty(s)) {
+                            SnackbarUtils.showShortSnackbar(rootView, "获取数据失败！");
+                            return;
+                        }
+                        webView.loadDataWithBaseURL(null, s, "text/html", "UTF-8", null);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        SnackbarUtils.showShortSnackbar(rootView, ExceptionEngine.handleException(e).getMsg());
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+
+    }
 }

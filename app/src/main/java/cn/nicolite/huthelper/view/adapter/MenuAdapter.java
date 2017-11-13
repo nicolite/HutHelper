@@ -138,12 +138,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         notifyItemRemoved(position);
     }
 
-    public void setOnEditClickListenter(EditClickLister listenter) {
-        editClickListener = listenter;
+    public void setOnEditClickListener(EditClickLister listener) {
+        editClickListener = listener;
     }
 
     public interface EditClickLister {
-        void onEditClick(View v, int postion);
+        void onEditClick(View v, int position);
     }
 
     public AdapterView.OnItemClickListener getOnItemClickListener() {

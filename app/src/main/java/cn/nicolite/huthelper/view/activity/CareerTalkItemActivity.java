@@ -1,6 +1,7 @@
 package cn.nicolite.huthelper.view.activity;
 
 import android.os.Bundle;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
@@ -117,7 +118,11 @@ public class CareerTalkItemActivity extends BaseActivity implements ICareerTalkI
                 .crossFade()
                 .into(ivCareertalkLogo);
 
-        webView.getSettings().setJavaScriptEnabled(true);
+        WebSettings settings = webView.getSettings();
+        settings.setSupportZoom(true);
+        settings.setJavaScriptEnabled(true);
+        settings.setDisplayZoomControls(false);
+        settings.setBuiltInZoomControls(true);
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView webView, String s) {

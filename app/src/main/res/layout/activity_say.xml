@@ -7,22 +7,12 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <include layout="@layout/toolbar_right_text" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:background="@color/bg_grey" />
-
-    <include
-        layout="@layout/all_empty"
-        android:visibility="gone" />
+    <include layout="@layout/toolbar_menu" />
 
     <com.github.jdsjlzx.recyclerview.LRecyclerView
-        android:id="@+id/lRecyclerView"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/bg_grey" />
+        android:background="@color/bg_grey"/>
 
 </LinearLayout>
-

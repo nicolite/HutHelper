@@ -9,100 +9,84 @@
 
     <include layout="@layout/toolbar_nomenu" />
 
-    <android.support.v4.widget.NestedScrollView
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp">
+
+        <ImageView
+            android:id="@+id/iv_careertalk_logo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/au_hut" />
+
+        <TextView
+            android:id="@+id/careertalk_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:layout_toEndOf="@+id/iv_careertalk_logo"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="xx地点某某公司有限公司招聘标题"
+            android:textColor="@color/dull_grey"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/careertalk_item_from"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/careertalk_item_title"
+            android:layout_marginTop="5dp"
+            android:layout_toEndOf="@+id/iv_careertalk_logo"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:text="来源：xx学校就业信息网"
+            android:textColor="@color/medium_grey"
+            android:textSize="13sp" />
+
+        <TextView
+            android:id="@+id/careertalk_item_holdtime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/careertalk_item_from"
+            android:layout_toEndOf="@+id/iv_careertalk_logo"
+            android:maxLines="1"
+            android:paddingTop="2dp"
+            android:singleLine="true"
+            android:text="2017-04-21 09:00:00"
+            android:textColor="@color/medium_grey"
+            android:textSize="13sp" />
+
+
+        <TextView
+            android:id="@+id/careertalk_item_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/careertalk_item_holdtime"
+            android:layout_toEndOf="@+id/iv_careertalk_logo"
+            android:maxLines="1"
+            android:paddingTop="2dp"
+            android:singleLine="true"
+            android:text="世纪楼D101"
+            android:textColor="@color/medium_grey"
+            android:textSize="13sp" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/bg_grey" />
+
+    <WebView
+        android:id="@+id/careertalk_item_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:descendantFocusability="blocksDescendants"
-        android:scrollbars="none">
+        android:paddingTop="10dp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white"
-            android:orientation="vertical">
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="15dp">
-
-                <ImageView
-                    android:id="@+id/iv_careertalk_logo"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="15dp"
-                    android:src="@drawable/au_hut" />
-
-                <TextView
-                    android:id="@+id/careertalk_item_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="15dp"
-                    android:layout_toEndOf="@+id/iv_careertalk_logo"
-                    android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="xx地点某某公司有限公司招聘标题"
-                    android:textColor="@color/dull_grey"
-                    android:textSize="15sp" />
-
-                <TextView
-                    android:id="@+id/careertalk_item_from"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/careertalk_item_title"
-                    android:layout_marginTop="5dp"
-                    android:layout_toEndOf="@+id/iv_careertalk_logo"
-                    android:gravity="center_vertical"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="来源：xx学校就业信息网"
-                    android:textColor="@color/medium_grey"
-                    android:textSize="13sp" />
-
-                <TextView
-                    android:id="@+id/careertalk_item_holdtime"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/careertalk_item_from"
-                    android:layout_toEndOf="@+id/iv_careertalk_logo"
-                    android:maxLines="1"
-                    android:paddingTop="2dp"
-                    android:singleLine="true"
-                    android:text="2017-04-21 09:00:00"
-                    android:textColor="@color/medium_grey"
-                    android:textSize="13sp" />
-
-
-                <TextView
-                    android:id="@+id/careertalk_item_address"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_below="@+id/careertalk_item_holdtime"
-                    android:layout_toEndOf="@+id/iv_careertalk_logo"
-                    android:maxLines="1"
-                    android:paddingTop="2dp"
-                    android:singleLine="true"
-                    android:text="世纪楼D101"
-                    android:textColor="@color/medium_grey"
-                    android:textSize="13sp" />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/bg_grey" />
-
-            <WebView
-                android:id="@+id/careertalk_item_webview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="10dp" />
-
-        </LinearLayout>
-
-    </android.support.v4.widget.NestedScrollView>
 </LinearLayout>

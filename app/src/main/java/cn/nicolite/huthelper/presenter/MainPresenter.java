@@ -197,7 +197,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             List<Menu> menuItems = new ArrayList<>();
             Menu item = new Menu((long) 1, 0, 0, WebViewActivity.TYPE_LIBRARY, "图书馆", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
             menuItems.add(item);
-            item = new Menu((long) 2, 1, 1, 0, "课程表", "cn.nicolite.huthelper.view.activity.CourseTableActivity", true);
+            item = new Menu((long) 2, 1, 1, 0, "课程表", "cn.nicolite.huthelper.view.activity.SyllabusActivity", true);
             menuItems.add(item);
             item = new Menu((long) 3, 2, 2, 0, "考试查询", "cn.nicolite.huthelper.view.activity.ExamActivity", true);
             menuItems.add(item);
@@ -225,11 +225,11 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             menuItems.add(item);
             item = new Menu((long) 15, 14, 14, 0, "视频专栏", "cn.nicolite.huthelper.view.activity.VideoListActivity", false);
             menuItems.add(item);
-            item = new Menu((long) 16, 15, 15, 0, "新生攻略", "cn.nicolite.huthelper.view.activity.FreshmanHelpActivity", false);
+            item = new Menu((long) 16, 15, 15, 0, "新生攻略", "cn.nicolite.huthelper.view.activity.FreshmanGuideActivity", false);
             menuItems.add(item);
 
             for (Menu menu : menuItems) {
-                menu.setUserId(getLoginUser());
+                menu.setUserId(userId);
                 List<Menu> list = menuDao.queryBuilder().where(MenuDao.Properties.Id.eq(menu.getId())).list();
                 if (!ListUtils.isEmpty(list)) {
                     menuDao.update(menu);
@@ -240,7 +240,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
         }
 
         List<Menu> menuList = menuDao.queryBuilder()
-                .where(MenuDao.Properties.UserId.eq(getLoginUser()), MenuDao.Properties.IsMain.eq(true))
+                .where(MenuDao.Properties.UserId.eq(userId), MenuDao.Properties.IsMain.eq(true))
                 .orderAsc(MenuDao.Properties.Index)
                 .list();
 

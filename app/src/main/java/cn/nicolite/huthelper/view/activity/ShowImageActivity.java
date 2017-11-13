@@ -15,6 +15,7 @@ import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.utils.ButtonUtils;
 import cn.nicolite.huthelper.utils.CommUtil;
 import cn.nicolite.huthelper.utils.ListUtils;
+import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.utils.ToastUtil;
 import cn.nicolite.huthelper.view.adapter.ShowImageAdapter;
 
@@ -90,6 +91,8 @@ public class ShowImageActivity extends BaseActivity {
             case R.id.toolbar_download:
                 if (!ButtonUtils.isFastDoubleClick()) {
                     CommUtil.downloadBitmap(context, images.get(currentPosition));
+                }else {
+                    SnackbarUtils.showShortSnackbar(rootView, "你点的太快了！");
                 }
                 break;
         }

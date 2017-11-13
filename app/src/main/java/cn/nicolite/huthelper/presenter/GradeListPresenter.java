@@ -8,6 +8,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
+import cn.nicolite.huthelper.db.dao.GradeDao;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.Grade;
 import cn.nicolite.huthelper.model.bean.HttpResult;
@@ -50,8 +51,18 @@ public class GradeListPresenter extends BasePresenter<IGradeListView, GradeListA
         Configure configure = configureList.get(0);
         User user = configure.getUser();
 
+        final GradeDao gradeDao = daoSession.getGradeDao();
+
+        final List<Grade> gradeList = gradeDao.queryBuilder()
+                .where(GradeDao.Properties.UserId.eq(userId))
+                .list();
+
         if (getView() != null) {
-            getView().showLoading();
+            if (!ListUtils.isEmpty(gradeList)) {
+                getView().showGradeList(gradeList);
+            }else {
+                getView().showLoading();
+            }
         }
 
         APIUtils
@@ -63,6 +74,7 @@ public class GradeListPresenter extends BasePresenter<IGradeListView, GradeListA
                     @Override
                     public List<Grade> apply(HttpResult<List<Grade>> listHttpResult) throws Exception {
                         List<Grade> list = listHttpResult.getData();
+
                         Collections.sort(list, new Comparator<Grade>() {
                             @Override
                             public int compare(Grade grade, Grade t1) {
@@ -71,6 +83,17 @@ public class GradeListPresenter extends BasePresenter<IGradeListView, GradeListA
                                 return temp2 - temp1;
                             }
                         });
+
+                        if (!ListUtils.isEmpty(gradeList)) {
+                            for (Grade grade : gradeList) {
+                                gradeDao.delete(grade);
+                            }
+                        }
+
+                        for (Grade grade : list) {
+                            grade.setUserId(userId);
+                            gradeDao.insert(grade);
+                        }
                         return list;
                     }
                 })
@@ -107,7 +130,7 @@ public class GradeListPresenter extends BasePresenter<IGradeListView, GradeListA
 
     public void changeGradeList(final List<Grade> gradeList, final String xuenian, final String xueqi) {
         if (getView() != null) {
-            if (TextUtils.isEmpty(xuenian) || TextUtils.isEmpty(xueqi)){
+            if (TextUtils.isEmpty(xuenian) || TextUtils.isEmpty(xueqi)) {
                 getView().changeGradeList(gradeList);
                 return;
             }

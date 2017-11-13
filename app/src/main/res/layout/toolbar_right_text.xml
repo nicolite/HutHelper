@@ -1,0 +1,47 @@
+<android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    app:elevation="0dp">
+
+    <FrameLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
+
+        <ImageView
+            android:id="@+id/toolbar_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:paddingBottom="5dp"
+            android:paddingEnd="14dp"
+            android:paddingStart="5dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/toolbar_back_icon" />
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="标题"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/toolbar_left_text"
+            android:layout_width="wrap_content"
+            android:layout_height="24dp"
+            android:layout_gravity="end|center"
+            android:layout_marginEnd="12dp"
+            android:gravity="center"
+            android:text="右标题"
+            android:textColor="@color/colorPrimary"
+            android:textSize="13sp" />
+    </FrameLayout>
+</android.support.design.widget.AppBarLayout>

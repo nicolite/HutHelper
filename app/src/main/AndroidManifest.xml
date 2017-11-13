@@ -195,6 +195,26 @@
             android:name=".view.activity.GradeListActivity"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".view.activity.AllActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".view.activity.CalendarActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".view.activity.FreshmanGuideActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".view.activity.SyllabusActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".view.activity.SayActivity"
+            android:theme="@style/AppTheme" />
+
         <service android:name=".services.LoginService" />
 
         <!-- 融云-->
