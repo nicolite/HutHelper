@@ -113,7 +113,7 @@ android {
     }
 
     packagingOptions {
-        //rxjava1和自己的rxjava2冲突
+        //rxjava1和rxjava2冲突
         exclude 'META-INF/rxjava.properties'
     }
 

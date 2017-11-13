@@ -161,7 +161,7 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
         String env = EncryptUtils.SHA1(user.getStudentKH() + configure.getAppRememberCode() + date);
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
         byte[] bytes = outputStream.toByteArray();
         RequestBody requestBody = RequestBody.create(MediaType.parse("img/jpeg"), bytes);
         MultipartBody.Part file = MultipartBody.Part.createFormData("file", "01.jpg", requestBody);
@@ -278,6 +278,9 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
                                 for (int i = 0; i < fileList.size(); i++) {
                                     Bitmap bitmap = BitmapFactory.decodeFile(fileList.get(i).getPath());
                                     uploadImages(bitmap, fileList.size(), i + 1);
+                                    //释放bitmap占用的内存
+                                    bitmap.recycle();
+                                    bitmap = null;
                                 }
                                 fileList.clear();
                             }

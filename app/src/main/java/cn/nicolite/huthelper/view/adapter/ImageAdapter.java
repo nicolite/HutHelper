@@ -16,6 +16,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.Constants;
+import cn.nicolite.huthelper.utils.DensityUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 
 /**
@@ -51,11 +52,13 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
 
     @Override
     public void onBindViewHolder(final ImageViewHolder holder, int position) {
-
+        int width = DensityUtils.dp2px(context, 100);
+        int height = width;
         if (flag == STRING) {
             Glide
                     .with(context)
                     .load(Constants.PICTURE_URL + list.get(position))
+                    .override(width, height)
                     .placeholder(R.drawable.img_loading)
                     .error(R.drawable.img_error)
                     .skipMemoryCache(true)
@@ -66,6 +69,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
             Glide
                     .with(context)
                     .load(uriList.get(position))
+                    .override(width, height)
                     .placeholder(R.drawable.img_loading)
                     .error(R.drawable.img_error)
                     .skipMemoryCache(true)

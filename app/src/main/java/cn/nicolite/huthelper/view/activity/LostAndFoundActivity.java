@@ -8,8 +8,8 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
@@ -45,7 +45,7 @@ public class LostAndFoundActivity extends BaseActivity {
     @BindView(R.id.viewpager)
     ViewPager viewpager;
     @BindView(R.id.rootView)
-    LinearLayout rootView;
+    FrameLayout rootView;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -107,7 +107,6 @@ public class LostAndFoundActivity extends BaseActivity {
     }
 
     protected PopupWindow weekListWindow;
-    protected View popupWindowLayout;
 
     private void showMenuWindows(View parent) {
         if (TextUtils.isEmpty(userId)) {
@@ -125,7 +124,7 @@ public class LostAndFoundActivity extends BaseActivity {
 
         if (weekListWindow == null) {
             LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            popupWindowLayout = layoutInflater.inflate(R.layout.popup_list_choose, null);
+            View popupWindowLayout = layoutInflater.inflate(R.layout.popup_list_choose, null);
 
             weekListWindow = new PopupWindow(popupWindowLayout,
                     DensityUtils.dp2px(context, 170),
@@ -138,6 +137,7 @@ public class LostAndFoundActivity extends BaseActivity {
             tvAdd.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    weekListWindow.dismiss();
                     startActivity(CreateLostAndFoundActivity.class);
                 }
             });
@@ -155,6 +155,14 @@ public class LostAndFoundActivity extends BaseActivity {
 
         }
 
+        rootView.setForeground(getResources().getDrawable(R.color.bg_black_shadow));
+
+        weekListWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                rootView.setForeground(getResources().getDrawable(R.color.transparent));
+            }
+        });
         weekListWindow.setFocusable(true);
         //设置点击外部可消失
         weekListWindow.setOutsideTouchable(true);

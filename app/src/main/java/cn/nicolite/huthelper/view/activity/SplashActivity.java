@@ -82,7 +82,7 @@ public class SplashActivity extends BaseActivity {
                 .centerCrop()
                 .crossFade()
                 .into(imageView);
-        handler.sendEmptyMessageDelayed(what, 2000);
+        handler.sendEmptyMessageDelayed(what, 1500);
     }
 
     public boolean isLogin() {

@@ -39,7 +39,7 @@
             android:textSize="16sp" />
 
         <ImageView
-            android:id="@+id/toolbar_menu"
+            android:id="@+id/toolbar_refresh"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_gravity="end|center_vertical"
@@ -50,4 +50,8 @@
             android:src="@drawable/new_refresh" />
     </FrameLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="@color/bg_grey" />
 </android.support.design.widget.AppBarLayout>

@@ -203,7 +203,7 @@ public class CreateGoodsActivity extends BaseActivity implements ICreateGoodsVie
                 .countable(true)
                 .maxSelectable(4 - uriList.size())
                 .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                .thumbnailScale(0.85f)
+                .thumbnailScale(0.80f)
                 .imageEngine(new GlideEngine())
                 .forResult(REQUEST_CODE_CHOOSE);
     }

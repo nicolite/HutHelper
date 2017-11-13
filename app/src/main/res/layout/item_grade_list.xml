@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_grade_lesson"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        android:text="产品专题设计1"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tv_grade_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_grade_lesson"
+        android:layout_marginEnd="80dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:text="2016-2017第二学期"
+        android:textColor="#adadad"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_grade_jidian"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_grade_time"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:text="学分&amp;绩点"
+        android:textColor="#adadad"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/tv_grade_score"
+        android:layout_width="66dp"
+        android:layout_height="22dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/tv_grade_time"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/bcg_fenshu"
+        android:gravity="center"
+        android:text="82分"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_below="@id/tv_grade_jidian"
+        android:layout_marginTop="15dp"
+        android:background="@color/bg_grey" />
+</RelativeLayout>

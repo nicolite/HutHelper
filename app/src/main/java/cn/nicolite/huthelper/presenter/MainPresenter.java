@@ -201,7 +201,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             menuItems.add(item);
             item = new Menu((long) 3, 2, 2, 0, "考试查询", "cn.nicolite.huthelper.view.activity.ExamActivity", true);
             menuItems.add(item);
-            item = new Menu((long) 4, 3, 3, 0, "成绩查询", "cn.nicolite.huthelper.view.activity.GradeActivity", true);
+            item = new Menu((long) 4, 3, 3, 0, "成绩查询", "cn.nicolite.huthelper.view.activity.GradeRankActivity", true);
             menuItems.add(item);
             item = new Menu((long) 5, 4, 4, WebViewActivity.TYPE_HOMEWORK, "网上作业", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
             menuItems.add(item);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,21 +16,23 @@
         android:scaleType="centerCrop"
         android:src="@drawable/blur_plac_min" />
 
-    <android.support.v4.widget.NestedScrollView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="18dp" />
+
+        <include layout="@layout/toolbar_delete_transparent" />
+
+
+        <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <android.support.v4.widget.Space
-                android:layout_width="match_parent"
-                android:layout_height="18dp" />
-
-            <include layout="@layout/toolbar_delete_transparent" />
+            android:scrollbars="none"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -257,9 +260,8 @@
                         android:textSize="12sp" />
                 </LinearLayout>
             </RelativeLayout>
-        </LinearLayout>
 
-    </android.support.v4.widget.NestedScrollView>
-
+        </android.support.v4.widget.NestedScrollView>
+    </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>
