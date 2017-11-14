@@ -22,7 +22,7 @@ public class SearchPresenter extends BasePresenter<ISearchView, SearchActivity> 
     public static final int TYPE_LOSTANDFOUND_SERACH = 2;
     public static final int TYPE_MARKET_MYGOODS = 3;
     public static final int TYPE_MYLOSTANDFOUND = 4;
-
+    public static final int TYPE_MYSAY = 586;
     public SearchPresenter(ISearchView view, SearchActivity activity) {
         super(view, activity);
     }

@@ -7,7 +7,7 @@ import java.util.List;
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.GoodsItem;
-import cn.nicolite.huthelper.model.bean.GoodsResult;
+import cn.nicolite.huthelper.model.bean.HttpPageResult;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.network.api.APIUtils;
@@ -52,10 +52,10 @@ public class GoodsInfoPresenter extends BasePresenter<IGoodsInfoView, GoodsInfoA
         APIUtils
                 .getMarketAPI()
                 .getGoodsInfo(user.getStudentKH(), configure.getAppRememberCode(), goodsId)
-                .compose(getActivity().<GoodsResult<GoodsItem>>bindToLifecycle())
+                .compose(getActivity().<HttpPageResult<GoodsItem>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<GoodsResult<GoodsItem>>() {
+                .subscribe(new Observer<HttpPageResult<GoodsItem>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         if (getView() != null) {
@@ -64,7 +64,7 @@ public class GoodsInfoPresenter extends BasePresenter<IGoodsInfoView, GoodsInfoA
                     }
 
                     @Override
-                    public void onNext(GoodsResult<GoodsItem> goodsItemGoodsResult) {
+                    public void onNext(HttpPageResult<GoodsItem> goodsItemGoodsResult) {
                         if (getView() != null) {
                             if (goodsItemGoodsResult.getCode() == 200) {
                                 if (goodsItemGoodsResult.getData() != null) {

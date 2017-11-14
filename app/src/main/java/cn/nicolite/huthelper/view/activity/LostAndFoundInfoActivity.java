@@ -96,7 +96,7 @@ public class LostAndFoundInfoActivity extends BaseActivity implements ILostAndFo
 
     @Override
     protected void doBusiness() {
-        toolbarTitle.setText("详情");
+        toolbarTitle.setText("失物详情");
         if (delete || lostAndFound.getUser_id().equals(userId)) {
             toolbarUser.setVisibility(View.GONE);
             toolbarDelete.setVisibility(View.VISIBLE);

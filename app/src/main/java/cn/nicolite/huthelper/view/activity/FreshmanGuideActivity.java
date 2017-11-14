@@ -20,6 +20,7 @@ import cn.nicolite.huthelper.presenter.FreshmanGuidePresenter;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.FreshmanGuideAdapter;
 import cn.nicolite.huthelper.view.iview.IFreshmanGuideView;
+import cn.nicolite.huthelper.view.widget.LoadingDialog;
 
 
 /**
@@ -36,6 +37,7 @@ public class FreshmanGuideActivity extends BaseActivity implements IFreshmanGuid
     private List<FreshmanGuide> dataList = new ArrayList<>();
     private FreshmanGuideAdapter adapter;
     private FreshmanGuidePresenter freshmanGuidePresenter;
+    private LoadingDialog loadingDialog;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -72,12 +74,16 @@ public class FreshmanGuideActivity extends BaseActivity implements IFreshmanGuid
 
     @Override
     public void showLoading() {
-
+        loadingDialog = new LoadingDialog(context)
+                .setLoadingText("加载中...");
+        loadingDialog.show();
     }
 
     @Override
     public void closeLoading() {
-
+        if (loadingDialog != null){
+            loadingDialog.dismiss();
+        }
     }
 
     @Override

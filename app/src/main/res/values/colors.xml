@@ -42,6 +42,9 @@
 
     <color name="translucent_1">#3F000000</color>
 
-    <color name="purple_light_1">#acc4e1</color>
-    <color name="purple_light_2">#8dcddf</color>
+    <color name="bg_list_1">#acc4e1</color>
+    <color name="bg_list_2">#96c8ab</color>
+    <color name="bg_list_3">#8dcddf</color>
+    <color name="bg_list_4">#bfbbe2</color>
+
 </resources>

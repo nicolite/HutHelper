@@ -80,6 +80,7 @@ public class CreateLostAndFoundActivity extends BaseActivity implements ICreateL
     private List<Uri> uriList = new ArrayList<>();
     private ImageAdapter adapter;
     private CreateLostAndFoundPresenter createLostAndFoundPresenter;
+    private final int[] bg = {R.color.bg_list_1, R.color.bg_list_2, R.color.bg_list_3, R.color.bg_list_4};
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -101,6 +102,7 @@ public class CreateLostAndFoundActivity extends BaseActivity implements ICreateL
     protected void doBusiness() {
         toolbarSelect1.setText("招领");
         toolbarSelect2.setText("寻物");
+        rootView.setBackgroundColor(getResources().getColor(bg[(int) (Math.random() * 100 % 4)]));
         recyclerView.setLayoutManager(new LinearLayoutManager(context, OrientationHelper.HORIZONTAL, false));
         adapter = new ImageAdapter(context, uriList, ImageAdapter.URI);
         recyclerView.setAdapter(adapter);
@@ -136,7 +138,7 @@ public class CreateLostAndFoundActivity extends BaseActivity implements ICreateL
                 break;
             case R.id.toolbar_select_1:
                 type = FOUND;
-                rootView.setBackgroundColor(getResources().getColor(R.color.purple_light_1));
+                rootView.setBackgroundColor(getResources().getColor(bg[(int) (Math.random() * 100 % 4)]));
                 tvThing.setText("拾到物品");
                 tvTime.setText("拾到时间");
                 tvLocation.setText("拾到地点");
@@ -146,7 +148,7 @@ public class CreateLostAndFoundActivity extends BaseActivity implements ICreateL
                 break;
             case R.id.toolbar_select_2:
                 type = LOST;
-                rootView.setBackgroundColor(getResources().getColor(R.color.purple_light_2));
+                rootView.setBackgroundColor(getResources().getColor(bg[(int) (Math.random() * 100 % 4)]));
                 tvThing.setText("丢失物品");
                 tvTime.setText("丢失时间");
                 tvLocation.setText("丢失地点");

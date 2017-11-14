@@ -16,6 +16,7 @@ import cn.nicolite.huthelper.presenter.SearchPresenter;
 import cn.nicolite.huthelper.utils.ToastUtil;
 import cn.nicolite.huthelper.view.fragment.LostAndFoundFragment;
 import cn.nicolite.huthelper.view.fragment.MarketFragment;
+import cn.nicolite.huthelper.view.fragment.SayFragment;
 import cn.nicolite.huthelper.view.fragment.UserListFragment;
 
 /**
@@ -77,6 +78,13 @@ public class SearchResultActivity extends BaseActivity {
                     toolbarTitle.setText(String.valueOf(extras + "的失物招领"));
                 }
                 break;
+            case SearchPresenter.TYPE_MYSAY:
+                if (userId.equals(searchText)) {
+                    toolbarTitle.setText("我的说说");
+                } else {
+                    toolbarTitle.setText(String.valueOf(extras + "的说说"));
+                }
+                break;
             default:
                 toolbarTitle.setText(searchText);
                 break;
@@ -117,6 +125,9 @@ public class SearchResultActivity extends BaseActivity {
                 break;
             case SearchPresenter.TYPE_USER_SEARCH:
                 transaction.replace(R.id.fragment_content, UserListFragment.newInstance(searchText));
+                break;
+            case SearchPresenter.TYPE_MYSAY:
+                transaction.replace(R.id.fragment_content, SayFragment.newInstance(SayFragment.MYSAY, searchText));
                 break;
             default:
                 ToastUtil.showToastShort("未知类型！");

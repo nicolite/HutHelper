@@ -7,7 +7,7 @@ import java.util.List;
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.Goods;
-import cn.nicolite.huthelper.model.bean.GoodsResult;
+import cn.nicolite.huthelper.model.bean.HttpPageResult;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.network.api.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
@@ -78,10 +78,10 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
         APIUtils
                 .getMarketAPI()
                 .getGoodsList(page, type)
-                .compose(getActivity().<GoodsResult<List<Goods>>>bindToLifecycle())
+                .compose(getActivity().<HttpPageResult<List<Goods>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<GoodsResult<List<Goods>>>() {
+                .subscribe(new Observer<HttpPageResult<List<Goods>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         if (getView() != null && !isManual) {
@@ -90,7 +90,7 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                     }
 
                     @Override
-                    public void onNext(GoodsResult<List<Goods>> listGoodsResult) {
+                    public void onNext(HttpPageResult<List<Goods>> listGoodsResult) {
                         if (getView() != null) {
                             getView().closeLoading();
                             if (listGoodsResult.getCode() == 200) {
@@ -150,10 +150,10 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
         APIUtils
                 .getMarketAPI()
                 .searchGoods(user.getStudentKH(), configure.getAppRememberCode(), page, searchText)
-                .compose(getActivity().<GoodsResult<List<Goods>>>bindToLifecycle())
+                .compose(getActivity().<HttpPageResult<List<Goods>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<GoodsResult<List<Goods>>>() {
+                .subscribe(new Observer<HttpPageResult<List<Goods>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         if (getView() != null) {
@@ -162,7 +162,7 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                     }
 
                     @Override
-                    public void onNext(GoodsResult<List<Goods>> listGoodsResult) {
+                    public void onNext(HttpPageResult<List<Goods>> listGoodsResult) {
                         if (getView() != null) {
                             getView().closeLoading();
                             if (listGoodsResult.getCode() == 200) {
@@ -218,10 +218,10 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
         APIUtils
                 .getMarketAPI()
                 .getGoodsListByUserId(user.getStudentKH(), configure.getAppRememberCode(), page, userId)
-                .compose(getActivity().<GoodsResult<List<Goods>>>bindToLifecycle())
+                .compose(getActivity().<HttpPageResult<List<Goods>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<GoodsResult<List<Goods>>>() {
+                .subscribe(new Observer<HttpPageResult<List<Goods>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         if (getView() != null) {
@@ -230,7 +230,7 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                     }
 
                     @Override
-                    public void onNext(GoodsResult<List<Goods>> listGoodsResult) {
+                    public void onNext(HttpPageResult<List<Goods>> listGoodsResult) {
                         if (getView() != null) {
                             getView().closeLoading();
                             if (listGoodsResult.getCode() == 200) {

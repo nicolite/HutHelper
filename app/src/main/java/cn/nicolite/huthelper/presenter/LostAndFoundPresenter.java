@@ -6,7 +6,7 @@ import java.util.List;
 
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.model.bean.Configure;
-import cn.nicolite.huthelper.model.bean.GoodsResult;
+import cn.nicolite.huthelper.model.bean.HttpPageResult;
 import cn.nicolite.huthelper.model.bean.LostAndFound;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.network.api.APIUtils;
@@ -73,10 +73,10 @@ public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, Lost
         APIUtils
                 .getLostAndFoundAPI()
                 .getLostAndFoundList(page, type)
-                .compose(getActivity().<GoodsResult<List<LostAndFound>>>bindToLifecycle())
+                .compose(getActivity().<HttpPageResult<List<LostAndFound>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<GoodsResult<List<LostAndFound>>>() {
+                .subscribe(new Observer<HttpPageResult<List<LostAndFound>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         if (getView() != null && !isManual) {
@@ -85,7 +85,7 @@ public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, Lost
                     }
 
                     @Override
-                    public void onNext(GoodsResult<List<LostAndFound>> listGoodsResult) {
+                    public void onNext(HttpPageResult<List<LostAndFound>> listGoodsResult) {
                         if (getView() != null) {
                             getView().closeLoading();
                             if (listGoodsResult.getCode() == 200) {
@@ -146,10 +146,10 @@ public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, Lost
         APIUtils
                 .getLostAndFoundAPI()
                 .searchLostAndFound(user.getStudentKH(), configure.getAppRememberCode(), page, searchText)
-                .compose(getActivity().<GoodsResult<List<LostAndFound>>>bindToLifecycle())
+                .compose(getActivity().<HttpPageResult<List<LostAndFound>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<GoodsResult<List<LostAndFound>>>() {
+                .subscribe(new Observer<HttpPageResult<List<LostAndFound>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         if (getView() != null) {
@@ -158,7 +158,7 @@ public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, Lost
                     }
 
                     @Override
-                    public void onNext(GoodsResult<List<LostAndFound>> listGoodsResult) {
+                    public void onNext(HttpPageResult<List<LostAndFound>> listGoodsResult) {
                         if (getView() != null) {
                             getView().closeLoading();
                             if (listGoodsResult.getCode() == 200) {
@@ -213,10 +213,10 @@ public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, Lost
         APIUtils
                 .getLostAndFoundAPI()
                 .getLostAndFoundListByUserId(user.getStudentKH(), configure.getAppRememberCode(), page, userId)
-                .compose(getActivity().<GoodsResult<List<LostAndFound>>>bindToLifecycle())
+                .compose(getActivity().<HttpPageResult<List<LostAndFound>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<GoodsResult<List<LostAndFound>>>() {
+                .subscribe(new Observer<HttpPageResult<List<LostAndFound>>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         if (getView() != null) {
@@ -225,7 +225,7 @@ public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, Lost
                     }
 
                     @Override
-                    public void onNext(GoodsResult<List<LostAndFound>> listGoodsResult) {
+                    public void onNext(HttpPageResult<List<LostAndFound>> listGoodsResult) {
                         if (getView() != null) {
                             getView().closeLoading();
                             if (listGoodsResult.getCode() == 200) {

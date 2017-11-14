@@ -103,7 +103,7 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
 
     @Override
     protected void doBusiness() {
-        toolbarTitle.setText("详情");
+        toolbarTitle.setText("商品详情");
         if (delete || mUserId.equals(userId)) {
             toolbarUser.setVisibility(View.GONE);
             toolbarDelete.setVisibility(View.VISIBLE);
