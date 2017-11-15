@@ -105,7 +105,7 @@ public class SayActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     menuListWindow.dismiss();
-                    //startActivityForResult(AddSayActivity.class, 201);
+                    startActivityForResult(CreateSayActivity.class, 201);
                 }
             });
 
@@ -140,6 +140,5 @@ public class SayActivity extends BaseActivity {
         menuListWindow.setOutsideTouchable(true);
         menuListWindow.setBackgroundDrawable(new BitmapDrawable());
         menuListWindow.showAsDropDown(parent, -DensityUtils.dp2px(SayActivity.this, 115), 20);
-
     }
 }

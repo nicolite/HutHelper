@@ -2,7 +2,6 @@ package cn.nicolite.huthelper.view.adapter;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +13,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -27,6 +25,7 @@ import cn.nicolite.huthelper.model.bean.SayLikedCache;
 import cn.nicolite.huthelper.utils.AnimationTools;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.view.widget.NinePictureLayout;
+import cn.nicolite.huthelper.view.widget.ScrollLinearLayoutManager;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -38,7 +37,6 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
     private Context context;
     private List<Say> sayList;
     private OnItemClickListener onItemClickListener;
-    private List<Say.CommentsBean> commentsBeanList = new ArrayList<>();
     private String userId;
 
     public SayAdapter(Context context, List<Say> sayList) {
@@ -114,7 +112,7 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.onDeleteClick(say.getId());
+                    onItemClickListener.onDeleteClick(say, holder.getAdapterPosition());
                 }
             }
         });
@@ -122,43 +120,29 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
         final List<String> pics = say.getPics();
         holder.rvItemSayimg.setUrlList(pics);
 
-        commentsBeanList.clear();
-        commentsBeanList.addAll(say.getComments());
-        if (ListUtils.isEmpty(commentsBeanList)) {
+        int num = say.getComments().size();
+        if (num == 0) {
             holder.rvSayComments.setVisibility(View.GONE);
             holder.ivItemSay.setVisibility(View.GONE);
             holder.tvSayItemCommitnum.setText("0");
         } else {
             holder.rvSayComments.setVisibility(View.VISIBLE);
-            holder.tvSayItemCommitnum.setText(String.valueOf(commentsBeanList.size()));
+            holder.tvSayItemCommitnum.setText(String.valueOf(say.getComments().size()));
             holder.ivItemSay.setVisibility(View.VISIBLE);
-        }
-
-        holder.rvSayComments.setLayoutManager(new LinearLayoutManager(context, OrientationHelper.VERTICAL, false) {
-            @Override
-            public boolean canScrollVertically() {
-                //禁止垂直滑动
-                return false;
-            }
-
-            @Override
-            public boolean canScrollHorizontally() {
-                //禁止水平滑动
-                return false;
-            }
-        });
-
-        final CommentAdapter commentAdapter = new CommentAdapter(context, commentsBeanList);
-        holder.rvSayComments.setAdapter(commentAdapter);
-        commentAdapter.setOnItemClickListener(new CommentAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(RecyclerView.Adapter adapter, int position, long itemId, String userId, String username) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onUserClick(userId, username);
+            ScrollLinearLayoutManager layout = new ScrollLinearLayoutManager(context, OrientationHelper.VERTICAL, false);
+            layout.setScrollEnabled(false);
+            holder.rvSayComments.setLayoutManager(layout);
+            CommentAdapter commentAdapter = new CommentAdapter(context, say.getComments());
+            holder.rvSayComments.setAdapter(commentAdapter);
+            commentAdapter.setOnItemClickListener(new CommentAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(RecyclerView.Adapter adapter, int position, long itemId, String userId, String username) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onUserClick(userId, username);
+                    }
                 }
-            }
-        });
-
+            });
+        }
 
         holder.ivItemSayAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,8 +167,7 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.onAddCommentClick(commentAdapter, commentsBeanList, holder.tvSayItemCommitnum,
-                            commentsBeanList.size(), holder.getAdapterPosition(), holder.getItemId(), say.getId());
+                    onItemClickListener.onAddCommentClick(holder.getAdapterPosition(), say.getId());
                 }
             }
         });
@@ -234,18 +217,17 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
     public interface OnItemClickListener {
         void onItemClick(RecyclerView.Adapter adapter, int position, long itemId);
 
-        void onAddCommentClick(RecyclerView.Adapter adapter, List<Say.CommentsBean> commentsBeans,
-                               TextView commentNumView, int commentNum, int position, long itemId,
-                               String sayId);
+        void onAddCommentClick(int position, String sayId);
 
         void onUserClick(String userId, String username);
 
         void onLikeClick(String sayId);
 
-        void onDeleteClick(String sayId);
+        void onDeleteClick(Say say, int position);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
+
 }

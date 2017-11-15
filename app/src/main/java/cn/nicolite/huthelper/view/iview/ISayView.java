@@ -13,4 +13,6 @@ public interface ISayView extends IBaseView {
     void showSayList(List<Say> list);
     void loadMore(List<Say> list);
     void noMoreData();
+    void deleteSuccess(Say say);
+    void commentSuccess(String comment, int position, String userId, String username);
 }

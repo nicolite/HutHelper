@@ -92,6 +92,11 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
                 startActivity(SearchResultActivity.class, sBundle);
                 break;
             case R.id.iv_user_shuoshuo:
+                Bundle oBundle = new Bundle();
+                oBundle.putInt("type", SearchPresenter.TYPE_MYSAY);
+                oBundle.putString("searchText", mUserId);
+                oBundle.putString("extras", username);
+                startActivity(SearchResultActivity.class, oBundle);
                 break;
             case R.id.iv_user_ershou:
                 Bundle eBundle = new Bundle();

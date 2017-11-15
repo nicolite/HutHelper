@@ -52,7 +52,7 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
         }
     }
 
-    public void deleteSay(String sayId) {
+    public void deleteSay(final Say say) {
         if (TextUtils.isEmpty(userId)) {
             if (getView() != null) {
                 getView().showMessage("获取当前登录用户失败，请重新登录！");
@@ -73,7 +73,7 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
 
         APIUtils
                 .getSayAPI()
-                .deleteSay(user.getStudentKH(), configure.getAppRememberCode(), sayId)
+                .deleteSay(user.getStudentKH(), configure.getAppRememberCode(), say.getId())
                 .compose(getActivity().<HttpResult<String>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -85,12 +85,17 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
 
                     @Override
                     public void onNext(HttpResult<String> stringHttpResult) {
-
+                        if (getView() != null) {
+                            getView().deleteSuccess(say);
+                        }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        if (getView() != null) {
+                            getView().closeLoading();
+                            getView().showMessage("删除失败，" + ExceptionEngine.handleException(e).getMsg());
+                        }
                     }
 
                     @Override
@@ -138,7 +143,10 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
 
                     @Override
                     public void onError(Throwable e) {
-
+                        if (getView() != null) {
+                            getView().closeLoading();
+                            getView().showMessage(ExceptionEngine.handleException(e).getMsg());
+                        }
                     }
 
                     @Override
@@ -148,10 +156,29 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
                 });
     }
 
-    public void addComment(String comment, String sayId) {
+    public void addComment(final String comment, String sayId, final int position) {
+        if (TextUtils.isEmpty(userId)) {
+            if (getView() != null) {
+                getView().showMessage("获取当前登录用户失败，请重新登录！");
+            }
+            return;
+        }
+
+        List<Configure> configureList = getConfigureList();
+        if (ListUtils.isEmpty(configureList)) {
+            if (getView() != null) {
+                getView().showMessage("获取当前登录用户失败，请重新登录！");
+            }
+            return;
+        }
+
+        Configure configure = configureList.get(0);
+        final User user = configure.getUser();
+
+
         APIUtils
                 .getSayAPI()
-                .createComment(comment, sayId)
+                .createComment(user.getStudentKH(), configure.getAppRememberCode(), comment, sayId)
                 .compose(getActivity().<HttpResult<String>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -163,12 +190,23 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
 
                     @Override
                     public void onNext(HttpResult<String> stringHttpResult) {
+                        if (getView() != null) {
+                            if (stringHttpResult.getCode() == 200) {
+                                getView().commentSuccess(comment, position, userId, user.getUsername());
+                                getView().showMessage("评论成功！");
+                            }
+                        } else {
+                            getView().showMessage("评论失败！");
+                        }
 
                     }
 
                     @Override
                     public void onError(Throwable e) {
-
+                        if (getView() != null) {
+                            getView().closeLoading();
+                            getView().showMessage("评论失败，" + ExceptionEngine.handleException(e).getMsg());
+                        }
                     }
 
                     @Override

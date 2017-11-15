@@ -215,6 +215,10 @@
             android:name=".view.activity.SayActivity"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name=".view.activity.CreateSayActivity"
+            android:theme="@style/AppTheme" />
+
         <service android:name=".services.LoginService" />
 
         <!-- 融云-->
