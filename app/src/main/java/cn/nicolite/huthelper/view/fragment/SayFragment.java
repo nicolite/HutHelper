@@ -251,8 +251,9 @@ public class SayFragment extends BaseFragment implements ISayView {
         commentsBean.setUser_id(userId);
         commentsBean.setUsername(username);
         sayList.get(position).getComments().add(commentsBean);
-        lRecyclerView.refreshComplete(1);
-        adapter.notifyItemChanged(position);
+        //lRecyclerView.refreshComplete(1);
+        //adapter.notifyItemChanged(position);
+        sayAdapter.notifyItemChanged(position);
     }
 
     private PopupWindow addCommitWindow;

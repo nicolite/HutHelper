@@ -24,6 +24,7 @@ import cn.nicolite.huthelper.model.bean.Say;
 import cn.nicolite.huthelper.model.bean.SayLikedCache;
 import cn.nicolite.huthelper.utils.AnimationTools;
 import cn.nicolite.huthelper.utils.ListUtils;
+import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.view.widget.NinePictureLayout;
 import cn.nicolite.huthelper.view.widget.ScrollLinearLayoutManager;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -53,7 +54,7 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(final SayViewHolder holder, int position) {
+    public void onBindViewHolder(final SayViewHolder holder, final int position) {
         final Say say = sayList.get(position);
 
         Glide
@@ -85,6 +86,8 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
         } else {
             holder.ivSayItemLike.setImageResource(R.drawable.ic_unlike);
         }
+        holder.ivSayItemLike.setFocusable(false);
+        holder.ivSayItemLike.setFocusableInTouchMode(false);
 
         holder.ivSayItemLike.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,6 +124,7 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
         holder.rvItemSayimg.setUrlList(pics);
 
         int num = say.getComments().size();
+        LogUtils.d("xxx", "xxx：" + num);
         if (num == 0) {
             holder.rvSayComments.setVisibility(View.GONE);
             holder.ivItemSay.setVisibility(View.GONE);
@@ -129,6 +133,8 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
             holder.rvSayComments.setVisibility(View.VISIBLE);
             holder.tvSayItemCommitnum.setText(String.valueOf(say.getComments().size()));
             holder.ivItemSay.setVisibility(View.VISIBLE);
+            holder.rvSayComments.setFocusable(false);
+            holder.rvSayComments.setFocusableInTouchMode(false);
             ScrollLinearLayoutManager layout = new ScrollLinearLayoutManager(context, OrientationHelper.VERTICAL, false);
             layout.setScrollEnabled(false);
             holder.rvSayComments.setLayoutManager(layout);
@@ -167,7 +173,7 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.onAddCommentClick(holder.getAdapterPosition(), say.getId());
+                    onItemClickListener.onAddCommentClick(position, say.getId());
                 }
             }
         });
