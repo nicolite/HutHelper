@@ -175,6 +175,9 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
         Configure configure = configureList.get(0);
         final User user = configure.getUser();
 
+        if (getView() != null) {
+            getView().showMessage("正在评论...！");
+        }
 
         APIUtils
                 .getSayAPI()
@@ -252,6 +255,11 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
                         loadSayList(page, isLoadMore);
                     } else {
                         getView().showMessage("加载失败!");
+                        if (isLoadMore) {
+                            getView().loadMoreFailure();
+                        } else {
+                            getView().loadFailure();
+                        }
                     }
                 }
             }
@@ -261,6 +269,11 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
                 if (getView() != null) {
                     getView().closeLoading();
                     getView().showMessage("加载失败，" + ExceptionEngine.handleException(e).getMsg());
+                    if (isLoadMore) {
+                        getView().loadMoreFailure();
+                    } else {
+                        getView().loadFailure();
+                    }
                 }
             }
 
@@ -298,10 +311,18 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
                                     }
                                     return;
                                 }
+                                if (ListUtils.isEmpty(listHttpPageResult.getData())) {
+                                    getView().showMessage("暂时没有相关内容！");
+                                }
                                 getView().showSayList(listHttpPageResult.getData());
                             } else {
                                 getView().closeLoading();
                                 getView().showMessage("加载失败!");
+                                if (isLoadMore) {
+                                    getView().loadMoreFailure();
+                                } else {
+                                    getView().loadFailure();
+                                }
                             }
                         }
                     }
@@ -311,6 +332,11 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
                         if (getView() != null) {
                             getView().closeLoading();
                             getView().showMessage("加载失败，" + ExceptionEngine.handleException(e).getMsg());
+                            if (isLoadMore) {
+                                getView().loadMoreFailure();
+                            } else {
+                                getView().loadFailure();
+                            }
                         }
                     }
 
@@ -413,6 +439,11 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
                     } else {
                         getView().closeLoading();
                         getView().showMessage("加载失败!");
+                        if (isLoadMore) {
+                            getView().loadMoreFailure();
+                        } else {
+                            getView().loadFailure();
+                        }
                     }
                 }
             }
@@ -422,6 +453,11 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
                 if (getView() != null) {
                     getView().closeLoading();
                     getView().showMessage("加载失败，" + ExceptionEngine.handleException(e).getMsg());
+                    if (isLoadMore) {
+                        getView().loadMoreFailure();
+                    } else {
+                        getView().loadFailure();
+                    }
                 }
             }
 
@@ -459,9 +495,17 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
                                     }
                                     return;
                                 }
+                                if (ListUtils.isEmpty(listHttpPageResult.getData())) {
+                                    getView().showMessage("暂时没有相关内容！");
+                                }
                                 getView().showSayList(listHttpPageResult.getData());
                             } else {
                                 getView().showMessage("加载失败!");
+                                if (isLoadMore) {
+                                    getView().loadMoreFailure();
+                                } else {
+                                    getView().loadFailure();
+                                }
                             }
                         }
                     }
@@ -471,6 +515,11 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
                         if (getView() != null) {
                             getView().closeLoading();
                             getView().showMessage("加载失败，" + ExceptionEngine.handleException(e).getMsg());
+                            if (isLoadMore) {
+                                getView().loadMoreFailure();
+                            } else {
+                                getView().loadFailure();
+                            }
                         }
                     }
 

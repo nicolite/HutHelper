@@ -96,13 +96,20 @@ public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, Lost
                                         getView().noMoreData();
                                     }
                                 } else {
-                                    getView().showLostAndFoundList(listGoodsResult.getData());
                                     if (ListUtils.isEmpty(listGoodsResult.getData())) {
                                         getView().showMessage("暂时没有相关内容！");
                                     }
+                                    getView().showLostAndFoundList(listGoodsResult.getData());
                                 }
                             } else {
+
                                 getView().showMessage("获取数据失败，" + listGoodsResult.getCode());
+
+                                if (isLoadMore) {
+                                    getView().loadMoreFailure();
+                                } else {
+                                    getView().loadFailure();
+                                }
                             }
                         }
                     }
@@ -111,8 +118,12 @@ public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, Lost
                     public void onError(Throwable e) {
                         if (getView() != null) {
                             getView().closeLoading();
-                            getView().loadMoreFailure();
                             getView().showMessage(ExceptionEngine.handleException(e).getMsg());
+                            if (isLoadMore) {
+                                getView().loadMoreFailure();
+                            } else {
+                                getView().loadFailure();
+                            }
                         }
                     }
 
@@ -169,13 +180,19 @@ public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, Lost
                                         getView().noMoreData();
                                     }
                                 } else {
-                                    getView().showLostAndFoundList(listGoodsResult.getData());
                                     if (ListUtils.isEmpty(listGoodsResult.getData())) {
                                         getView().showMessage("暂时没有相关内容！");
                                     }
+                                    getView().showLostAndFoundList(listGoodsResult.getData());
                                 }
                             } else {
+
                                 getView().showMessage("获取数据失败，" + listGoodsResult.getCode());
+                                if (isLoadMore) {
+                                    getView().loadMoreFailure();
+                                } else {
+                                    getView().loadFailure();
+                                }
                             }
                         }
                     }
@@ -184,6 +201,11 @@ public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, Lost
                     public void onError(Throwable e) {
                         if (getView() != null) {
                             getView().closeLoading();
+                            if (isLoadMore) {
+                                getView().loadMoreFailure();
+                            } else {
+                                getView().loadFailure();
+                            }
                             getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
                     }
@@ -243,6 +265,11 @@ public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, Lost
                                 }
                             } else {
                                 getView().showMessage("获取数据失败，" + listGoodsResult.getCode());
+                                if (isLoadMore) {
+                                    getView().loadMoreFailure();
+                                } else {
+                                    getView().loadFailure();
+                                }
                             }
                         }
                     }
@@ -251,6 +278,11 @@ public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, Lost
                     public void onError(Throwable e) {
                         if (getView() != null) {
                             getView().closeLoading();
+                            if (isLoadMore) {
+                                getView().loadMoreFailure();
+                            } else {
+                                getView().loadFailure();
+                            }
                             getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
                     }

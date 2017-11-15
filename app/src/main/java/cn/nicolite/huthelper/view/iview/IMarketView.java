@@ -14,4 +14,5 @@ public interface IMarketView extends IBaseView {
     void showLoadMoreList(List<Goods> goodsBeanList);
     void noMoreData();
     void loadMoreFailure();
+    void loadFailure();
 }

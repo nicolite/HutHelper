@@ -101,13 +101,20 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                                         getView().noMoreData();
                                     }
                                 } else {
-                                    getView().showGoodsList(listGoodsResult.getData());
                                     if (ListUtils.isEmpty(listGoodsResult.getData())) {
                                         getView().showMessage("暂时没有相关内容！");
                                     }
+                                    getView().showGoodsList(listGoodsResult.getData());
                                 }
                             } else {
+                                if (isLoadMore) {
+                                    getView().loadMoreFailure();
+                                } else {
+                                    getView().loadFailure();
+                                }
+
                                 getView().showMessage("获取数据失败，" + listGoodsResult.getCode());
+
                             }
                         }
                     }
@@ -116,7 +123,11 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                     public void onError(Throwable e) {
                         if (getView() != null) {
                             getView().closeLoading();
-                            getView().loadMoreFailure();
+                            if (isLoadMore) {
+                                getView().loadMoreFailure();
+                            } else {
+                                getView().loadFailure();
+                            }
                             getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
                     }
@@ -173,13 +184,20 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                                         getView().noMoreData();
                                     }
                                 } else {
-                                    getView().showGoodsList(listGoodsResult.getData());
                                     if (ListUtils.isEmpty(listGoodsResult.getData())) {
                                         getView().showMessage("暂时没有相关内容！");
                                     }
+                                    getView().showGoodsList(listGoodsResult.getData());
                                 }
                             } else {
+                                if (isLoadMore) {
+                                    getView().loadMoreFailure();
+                                } else {
+                                    getView().loadFailure();
+                                }
+
                                 getView().showMessage("获取数据失败，" + listGoodsResult.getCode());
+
                             }
                         }
                     }
@@ -188,6 +206,11 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                     public void onError(Throwable e) {
                         if (getView() != null) {
                             getView().closeLoading();
+                            if (isLoadMore) {
+                                getView().loadMoreFailure();
+                            } else {
+                                getView().loadFailure();
+                            }
                             getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
                     }
@@ -241,13 +264,20 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                                         getView().noMoreData();
                                     }
                                 } else {
-                                    getView().showGoodsList(listGoodsResult.getData());
                                     if (ListUtils.isEmpty(listGoodsResult.getData())) {
                                         getView().showMessage("暂时没有相关内容！");
                                     }
+                                    getView().showGoodsList(listGoodsResult.getData());
                                 }
                             } else {
+                                if (isLoadMore) {
+                                    getView().loadMoreFailure();
+                                } else {
+                                    getView().loadFailure();
+                                }
+
                                 getView().showMessage("获取数据失败，" + listGoodsResult.getCode());
+
                             }
                         }
                     }
@@ -256,6 +286,11 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
                     public void onError(Throwable e) {
                         if (getView() != null) {
                             getView().closeLoading();
+                            if (isLoadMore) {
+                                getView().loadMoreFailure();
+                            } else {
+                                getView().loadFailure();
+                            }
                             getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
                     }

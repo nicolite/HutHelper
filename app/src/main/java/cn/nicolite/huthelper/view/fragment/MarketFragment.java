@@ -226,4 +226,9 @@ public class MarketFragment extends BaseFragment implements IMarketView {
     public void loadMoreFailure() {
         --currentPage;
     }
+
+    @Override
+    public void loadFailure() {
+        lRecyclerView.refreshComplete(0);
+    }
 }

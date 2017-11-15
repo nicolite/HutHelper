@@ -42,6 +42,7 @@ public class LoginService extends IntentService {
     private Timer timer;
 
     private DaoSession daoSession = DaoHelper.getDaoHelper(MApplication.AppContext).getDaoSession();
+    private Intent intent;
 
     public LoginService() {
         super("LoginService");
@@ -61,6 +62,7 @@ public class LoginService extends IntentService {
 
     @Override
     protected void onHandleIntent(@Nullable Intent intent) {
+        this.intent = intent;
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
@@ -74,6 +76,7 @@ public class LoginService extends IntentService {
         String userId = getSharedPreferences("login_user", Context.MODE_PRIVATE).getString("userId", null);
         if (userId == null || userId.equals("*")) {
             LogUtils.d(TAG, "没有找到登录用户");
+            stop();
             return;
         }
 
@@ -81,6 +84,7 @@ public class LoginService extends IntentService {
 
         if (ListUtils.isEmpty(list)) {
             LogUtils.d(TAG, "没有找到登录用户");
+            stop();
             return;
         }
 
@@ -125,12 +129,17 @@ public class LoginService extends IntentService {
         intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
 
+        stop();
+    }
+
+    private void stop(){
         if (timer != null) {
             timer.cancel();
         }
-        stopService(intent);
+        if (intent != null){
+            stopService(intent);
+        }
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();

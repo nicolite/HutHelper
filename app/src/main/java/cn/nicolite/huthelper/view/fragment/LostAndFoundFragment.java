@@ -219,4 +219,9 @@ public class LostAndFoundFragment extends BaseFragment implements ILostAndFoundV
     public void loadMoreFailure() {
         --currentPage;
     }
+
+    @Override
+    public void loadFailure() {
+        lRecyclerView.refreshComplete(0);
+    }
 }

@@ -124,7 +124,6 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
         holder.rvItemSayimg.setUrlList(pics);
 
         int num = say.getComments().size();
-        LogUtils.d("xxx", "xxx：" + num);
         if (num == 0) {
             holder.rvSayComments.setVisibility(View.GONE);
             holder.ivItemSay.setVisibility(View.GONE);

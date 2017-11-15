@@ -251,9 +251,17 @@ public class SayFragment extends BaseFragment implements ISayView {
         commentsBean.setUser_id(userId);
         commentsBean.setUsername(username);
         sayList.get(position).getComments().add(commentsBean);
-        //lRecyclerView.refreshComplete(1);
-        //adapter.notifyItemChanged(position);
         sayAdapter.notifyItemChanged(position);
+    }
+
+    @Override
+    public void loadFailure() {
+        lRecyclerView.refreshComplete(0);
+    }
+
+    @Override
+    public void loadMoreFailure() {
+        --currentPage;
     }
 
     private PopupWindow addCommitWindow;
@@ -269,14 +277,16 @@ public class SayFragment extends BaseFragment implements ISayView {
             editText = (EditText) popupWindowLayout.findViewById(R.id.et_addcomment_content);
             addCommitWindow = new PopupWindow(popupWindowLayout, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         }
-        if (editText != null) {
-            CommUtil.toggleSoftInput(context, editText);
+        if (editText != null){
+            CommUtil.showSoftInput(context, editText);
         }
         if (button != null) {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (!ButtonUtils.isFastDoubleClick()) {
+                        KeyBoardUtils.hideSoftInput(context, activity.getWindow());
+
                         String comment = editText.getText().toString();
 
                         if (addCommitWindow.isShowing())

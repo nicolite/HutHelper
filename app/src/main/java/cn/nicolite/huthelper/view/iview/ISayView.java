@@ -15,4 +15,6 @@ public interface ISayView extends IBaseView {
     void noMoreData();
     void deleteSuccess(Say say);
     void commentSuccess(String comment, int position, String userId, String username);
+    void loadFailure();
+    void loadMoreFailure();
 }

@@ -17,4 +17,6 @@ public interface ILostAndFoundView extends IBaseView {
     void noMoreData();
 
     void loadMoreFailure();
+
+    void loadFailure();
 }
