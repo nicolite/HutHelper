@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
@@ -58,6 +57,8 @@ public class SayFragment extends BaseFragment implements ISayView {
     public static final int MYSAY = 1;
     private SayPresenter sayPresenter;
     private boolean isNoMore = false;
+    private int currentPage = 1;
+
     public static SayFragment newInstance(int type, String searchText) {
 
         Bundle args = new Bundle();
@@ -97,14 +98,43 @@ public class SayFragment extends BaseFragment implements ISayView {
         adapter = new LRecyclerViewAdapter(sayAdapter);
         lRecyclerView.setAdapter(adapter);
         sayPresenter = new SayPresenter(this, this);
+        sayAdapter.setOnItemClickListener(new SayAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(RecyclerView.Adapter adapter, int position, long itemId) {
+
+            }
+
+            @Override
+            public void onAddCommentClick(RecyclerView.Adapter adapter, List<Say.CommentsBean> commentsBeans, TextView commentNumView, int commentNum, int position, long itemId, String sayId) {
+
+            }
+
+            @Override
+            public void onUserClick(String userId, String username) {
+
+            }
+
+            @Override
+            public void onLikeClick(String sayId) {
+                sayPresenter.likeSay(sayId);
+            }
+
+            @Override
+            public void onDeleteClick(String sayId) {
+                sayPresenter.deleteSay(sayId);
+            }
+        });
 
         lRecyclerView.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                switch (type){
+                currentPage = 1;
+                switch (type) {
                     case SayFragment.ALLSAY:
+                        sayPresenter.showSayList(type, true);
                         break;
                     case SayFragment.MYSAY:
+                        sayPresenter.loadSayListByUserId(searchText, 1, true, false);
                         break;
                 }
             }
@@ -113,11 +143,13 @@ public class SayFragment extends BaseFragment implements ISayView {
         lRecyclerView.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
-                if (!isNoMore){
-                    switch (type){
+                if (!isNoMore) {
+                    switch (type) {
                         case SayFragment.ALLSAY:
+                            sayPresenter.loadMore(type, ++currentPage);
                             break;
                         case SayFragment.MYSAY:
+                            sayPresenter.loadSayListByUserId(searchText, ++currentPage, true, true);
                             break;
                     }
                 }
@@ -127,46 +159,28 @@ public class SayFragment extends BaseFragment implements ISayView {
         lRecyclerView.setOnNetWorkErrorListener(new OnNetWorkErrorListener() {
             @Override
             public void reload() {
-                if (!isNoMore){
-                    switch (type){
+                if (!isNoMore) {
+                    switch (type) {
                         case SayFragment.ALLSAY:
+                            sayPresenter.loadMore(type, currentPage);
                             break;
                         case SayFragment.MYSAY:
+                            sayPresenter.loadSayListByUserId(searchText, currentPage, true, true);
                             break;
                     }
                 }
             }
         });
 
-        sayAdapter.setOnItemClickListener(new SayAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(RecyclerView.Adapter adapter, int position, long itemId) {
 
-            }
-
-            @Override
-            public void onAddCommentClick(RecyclerView.Adapter adapter, List<Say.CommentsBean> commentsBeans, TextView commentNumView, int commentNum, int position, long itemId, String sayId) {
-                showCommiteView(position, sayId);
-            }
-
-
-            @Override
-            public void onLikeClick(RecyclerView.Adapter adapter, ImageView likeView, TextView likeNumView, int likeNum, int position, long itemId, String sayId) {
-                likeView.setImageResource(R.drawable.ic_like);
-                likeNumView.setText(String.valueOf(++likeNum));
-            }
-
-            @Override
-            public void onDeleteClick(RecyclerView.Adapter adapter, int position, long itemId, String sayId) {
-
-            }
-
-            @Override
-            public void onUserClick(RecyclerView.Adapter adapter, int position, long itemId, String userId, String username) {
-
-            }
-        });
-        sayPresenter.showSayList(type, false);
+        switch (type) {
+            case SayFragment.ALLSAY:
+                sayPresenter.showSayList(type, false);
+                break;
+            case SayFragment.MYSAY:
+                sayPresenter.loadSayListByUserId(searchText, 1, false, false);
+                break;
+        }
     }
 
     @Override
@@ -215,7 +229,8 @@ public class SayFragment extends BaseFragment implements ISayView {
     private EditText editText;
     private Button button;
 
-    private void showCommiteView(int position, String sayId) {
+    private void showCommitView(RecyclerView.Adapter adapter, List<Say.CommentsBean> commentsBeans,
+                                TextView commentNumView, int commentNum, int position, String sayId) {
 
         if (addCommitWindow == null || button == null || editText == null) {
             LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -241,7 +256,6 @@ public class SayFragment extends BaseFragment implements ISayView {
                             ToastUtil.showToastShort("请填写评论内容！");
                             return;
                         }
-                        sayPresenter.addComment();
                     }
                 }
             });

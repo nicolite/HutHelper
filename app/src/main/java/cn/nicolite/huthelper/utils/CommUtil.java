@@ -79,12 +79,17 @@ public class CommUtil {
         }
         // 通知图库更新
         context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + path)));
-        ToastUtil.showToastShort("图片已成功保存至:"+appDir.toString()+"/"+fileName);
+        ToastUtil.showToastShort("图片已成功保存至:" + appDir.toString() + "/" + fileName);
     }
 
     public static void downloadBitmap(final Context context, String url) {
-        if (!TextUtils.isEmpty(url) && !url.startsWith("http")){
-            url = Constants.BASE_URL + url;
+        if (!TextUtils.isEmpty(url)) {
+            if (!url.startsWith("http") || url.startsWith("https")) {
+                url = Constants.PICTURE_URL + url;
+            }
+        } else {
+            ToastUtil.showToastShort("获取下载链接失败！");
+            return;
         }
 
         Glide
@@ -95,7 +100,7 @@ public class CommUtil {
                 .into(new SimpleTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
-                        saveImageToGallery(context,resource);
+                        saveImageToGallery(context, resource);
                     }
 
                     @Override
@@ -105,14 +110,16 @@ public class CommUtil {
                     }
                 });
     }
+
     /**
      * 保存图片
+     *
      * @param bm
      * @param picName
      */
 
-    public void saveBitmap(Bitmap bm,String picName) {
-       // Log.e(TAG, "保存图片");
+    public void saveBitmap(Bitmap bm, String picName) {
+        // Log.e(TAG, "保存图片");
         File f = new File("/sdcard/namecard/", picName);
         if (f.exists()) {
             f.delete();
@@ -140,14 +147,12 @@ public class CommUtil {
         ConnectivityManager manager = (ConnectivityManager) context
                 .getSystemService(Activity.CONNECTIVITY_SERVICE);
         NetworkInfo info = manager.getActiveNetworkInfo();
-        if (info != null && info.isConnected()) {
-            return true;
-        }
-        return false;
+        return info != null && info.isConnected();
     }
 
     /**
      * 是否wifi
+     *
      * @param context
      * @return
      */
@@ -156,12 +161,8 @@ public class CommUtil {
                 .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiNetworkInfo = connectivityManager
                 .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (wifiNetworkInfo.isConnected()) {
-            return true;
-        }
-        return false;
+        return wifiNetworkInfo.isConnected();
     }
-
 
 
     /***
@@ -209,6 +210,7 @@ public class CommUtil {
 
     /**
      * 动态软键盘
+     *
      * @param context
      * @param edit
      */
@@ -221,6 +223,7 @@ public class CommUtil {
                 .getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
     }
+
     @TargetApi(Build.VERSION_CODES.CUPCAKE)
     public static void showSoftInput(Context context, EditText edit) {
 //
@@ -327,6 +330,7 @@ public class CommUtil {
 
     /**
      * 图片高斯模糊
+     *
      * @param context
      * @param bitmap
      * @return
@@ -353,6 +357,7 @@ public class CommUtil {
 
     /**
      * 给图片蒙上阴影
+     *
      * @param bitmap
      * @param color
      * @return
@@ -366,6 +371,7 @@ public class CommUtil {
         return bitmap;
 
     }
+
     /**
      * 删除文件
      *

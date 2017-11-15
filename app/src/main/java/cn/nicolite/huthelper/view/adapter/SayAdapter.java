@@ -1,12 +1,10 @@
 package cn.nicolite.huthelper.view.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
+import android.content.SharedPreferences;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,10 +20,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
+import cn.nicolite.huthelper.app.MApplication;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Say;
+import cn.nicolite.huthelper.model.bean.SayLikedCache;
+import cn.nicolite.huthelper.utils.AnimationTools;
 import cn.nicolite.huthelper.utils.ListUtils;
-import cn.nicolite.huthelper.view.activity.ShowImageActivity;
+import cn.nicolite.huthelper.view.widget.NinePictureLayout;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -37,13 +38,14 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
     private Context context;
     private List<Say> sayList;
     private OnItemClickListener onItemClickListener;
-    private SayAdapter sayAdapter;
     private List<Say.CommentsBean> commentsBeanList = new ArrayList<>();
+    private String userId;
 
     public SayAdapter(Context context, List<Say> sayList) {
         this.context = context;
         this.sayList = sayList;
-        sayAdapter = this;
+        SharedPreferences preferences = MApplication.AppContext.getSharedPreferences("login_user", Context.MODE_PRIVATE);
+        userId = preferences.getString("userId", "");
     }
 
     @Override
@@ -72,22 +74,53 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
         holder.tvSayItemLikenum.setText(say.getLikes());
         holder.tvItemSaycontent.setText(say.getContent());
 
-        final List<String> pics = say.getPics();
-        holder.rvItemSayimg.setLayoutManager(new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL));
-        ImageAdapter imageAdapter = new ImageAdapter(context, pics);
-        holder.rvItemSayimg.setAdapter(imageAdapter);
+        if (say.getUser_id().equals(userId)) {
+            holder.ivItemDeletesay.setVisibility(View.VISIBLE);
+        } else {
+            holder.ivItemDeletesay.setVisibility(View.GONE);
+        }
 
-        imageAdapter.setOnItemClickListener(new ImageAdapter.OnItemClickListener() {
+        say.setLike(SayLikedCache.isHave(say.getId()));
+        // 取出bean中当记录状态是否为true，是的话则给img设置focus点赞图片
+        if (say.isLike()) {
+            holder.ivSayItemLike.setImageResource(R.drawable.ic_like);
+        } else {
+            holder.ivSayItemLike.setImageResource(R.drawable.ic_unlike);
+        }
+
+        holder.ivSayItemLike.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemClick(View view, int position, long itemId) {
-                Bundle bundle = new Bundle();
-                bundle.putStringArrayList("images", (ArrayList<String>) pics);
-                bundle.putInt("curr", position);
-                Intent intent = new Intent(context, ShowImageActivity.class);
-                intent.putExtras(bundle);
-                context.startActivity(intent);
+            public void onClick(View view) {
+                if (onItemClickListener != null) {
+                    if (say.isLike()) {
+                        ((ImageView) view).setImageResource(R.drawable.ic_unlike);
+                        say.setLike(false);
+                        say.setLikes(String.valueOf(Integer.parseInt(say.getLikes()) - 1));
+                        SayLikedCache.removeLike(say.getId());
+                    } else {
+                        ((ImageView) view).setImageResource(R.drawable.ic_like);
+                        say.setLike(true);
+                        say.setLikes(String.valueOf(Integer.parseInt(say.getLikes()) + 1));
+                        SayLikedCache.addLike(say.getId());
+                    }
+                    holder.tvSayItemLikenum.setText(say.getLikes());
+                    AnimationTools.scale(view);
+                    onItemClickListener.onLikeClick(say.getId());
+                }
             }
         });
+
+        holder.ivItemDeletesay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onDeleteClick(say.getId());
+                }
+            }
+        });
+
+        final List<String> pics = say.getPics();
+        holder.rvItemSayimg.setUrlList(pics);
 
         commentsBeanList.clear();
         commentsBeanList.addAll(say.getComments());
@@ -101,14 +134,27 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
             holder.ivItemSay.setVisibility(View.VISIBLE);
         }
 
-        holder.rvSayComments.setLayoutManager(new LinearLayoutManager(context, OrientationHelper.VERTICAL, false));
+        holder.rvSayComments.setLayoutManager(new LinearLayoutManager(context, OrientationHelper.VERTICAL, false) {
+            @Override
+            public boolean canScrollVertically() {
+                //禁止垂直滑动
+                return false;
+            }
+
+            @Override
+            public boolean canScrollHorizontally() {
+                //禁止水平滑动
+                return false;
+            }
+        });
+
         final CommentAdapter commentAdapter = new CommentAdapter(context, commentsBeanList);
         holder.rvSayComments.setAdapter(commentAdapter);
         commentAdapter.setOnItemClickListener(new CommentAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(RecyclerView.Adapter adapter, int position, long itemId, String userId, String username) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.onUserClick(adapter, position, itemId, userId, username);
+                    onItemClickListener.onUserClick(userId, username);
                 }
             }
         });
@@ -118,8 +164,7 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.onUserClick(sayAdapter, holder.getAdapterPosition(), holder.getItemId(),
-                            say.getUser_id(), say.getUsername());
+                    onItemClickListener.onUserClick(say.getUser_id(), say.getUsername());
                 }
             }
         });
@@ -128,32 +173,11 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.onUserClick(sayAdapter, holder.getAdapterPosition(), holder.getItemId(),
-                            say.getUser_id(), say.getUsername());
+                    onItemClickListener.onUserClick(say.getUser_id(), say.getUsername());
                 }
             }
         });
 
-        holder.ivItemDeletesay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onDeleteClick(sayAdapter, holder.getAdapterPosition(), holder.getItemId(),
-                            say.getId());
-                }
-            }
-        });
-
-        holder.ivSayItemLike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onLikeClick(sayAdapter, holder.ivSayItemLike, holder.tvSayItemLikenum,
-                            Integer.parseInt(say.getLikes()), holder.getAdapterPosition(), holder.getItemId(),
-                            say.getId());
-                }
-            }
-        });
 
         holder.ivSayItemAddcommit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -181,7 +205,7 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
         @BindView(R.id.tv_item_saycontent)
         TextView tvItemSaycontent;
         @BindView(R.id.rv_item_sayimg)
-        RecyclerView rvItemSayimg;
+        NinePictureLayout rvItemSayimg;
         @BindView(R.id.tv_item_say_xy)
         TextView tvItemSayXy;
         @BindView(R.id.iv_say_item_addcommit)
@@ -214,12 +238,11 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
                                TextView commentNumView, int commentNum, int position, long itemId,
                                String sayId);
 
-        void onLikeClick(RecyclerView.Adapter adapter, ImageView likeView, TextView likeNumView,
-                         int likeNum, int position, long itemId, String sayId);
+        void onUserClick(String userId, String username);
 
-        void onDeleteClick(RecyclerView.Adapter adapter, int position, long itemId, String sayId);
+        void onLikeClick(String sayId);
 
-        void onUserClick(RecyclerView.Adapter adapter, int position, long itemId, String userId, String username);
+        void onDeleteClick(String sayId);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
