@@ -1,5 +1,6 @@
 package cn.nicolite.huthelper.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.OrientationHelper;
@@ -21,6 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.fragment.BaseFragment;
+import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Goods;
 import cn.nicolite.huthelper.presenter.MarketPresenter;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
@@ -155,13 +157,14 @@ public class MarketFragment extends BaseFragment implements IMarketView {
                 Bundle bundle = new Bundle();
                 bundle.putString("goodsId", goods.getId());
                 bundle.putString("userId", goods.getUser_id());
+                bundle.putInt("position", position);
                 if (type == MYGOODS && userId.equals(goods.getUser_id())) {
                     bundle.putBoolean("delete", true);
                 } else {
                     bundle.putBoolean("delete", false);
                 }
                 Bundle options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, "goodsTransition").toBundle();
-                startActivity(GoodsInfoActivity.class, bundle, options);
+                startActivityForResult(GoodsInfoActivity.class, Constants.REQUEST, bundle, options);
             }
         });
 
@@ -231,4 +234,41 @@ public class MarketFragment extends BaseFragment implements IMarketView {
     public void loadFailure() {
         lRecyclerView.refreshComplete(0);
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.REQUEST) {
+            switch (resultCode) {
+                case Constants.DELETE:
+                    int position = data.getIntExtra("position", -1);
+                    if (position != -1) {
+                        deleteItem(position);
+                    }
+                    break;
+                case Constants.PUBLISH:
+                    refreshData();
+                    break;
+                case Constants.CHANGE:
+                    break;
+            }
+        }
+    }
+
+    public void refreshData() {
+        lRecyclerView.forceToRefresh();
+    }
+
+    public void deleteItem(int position) {
+        goodsList.remove(position);
+        lRecyclerViewAdapter.notifyItemRemoved(position);
+    }
+
+    public void changetItem(int position, Goods good) {
+        goodsList.remove(position);
+        goodsList.add(position, good);
+        lRecyclerViewAdapter.notifyItemChanged(position);
+    }
+
+
 }

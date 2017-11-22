@@ -28,8 +28,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.presenter.CreateGoodsPresenter;
-import cn.nicolite.huthelper.utils.ButtonUtils;
 import cn.nicolite.huthelper.utils.KeyBoardUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
@@ -136,26 +136,34 @@ public class CreateGoodsActivity extends BaseActivity implements ICreateGoodsVie
                 break;
             case R.id.toolbar_ok:
                 KeyBoardUtils.hideSoftInput(context, getWindow());
-                if (!ButtonUtils.isFastDoubleClick()) {
-                    if (TextUtils.isEmpty(tvTextLostTitle.getText().toString())) {
-                        showMessage("没有填写标题");
-                    } else if (TextUtils.isEmpty(tvTextLost.getText().toString())) {
-                        showMessage("没有填写描述");
-                    } else if (TextUtils.isEmpty(tvGoodsTel.getText().toString())) {
-                        showMessage("没有填联系方式");
-                    } else if (TextUtils.isEmpty(tvGoodsQuality.getText().toString())) {
-                        showMessage("没有选商品成色");
-                    } else if (TextUtils.isEmpty(tvGoodsLocation.getText().toString())) {
-                        showMessage("没有填发布区域");
-                    } else {
-                        if (!ListUtils.isEmpty(uriList)) {
-                            createGoodsPresenter.createGoods(activity, uriList);
-                        } else {
-                            showMessage("至少选择一张图片！");
-                        }
-                    }
-                }
-
+                final CommonDialog commonDialog = new CommonDialog(context);
+                commonDialog
+                        .setMessage("确认提交？")
+                        .setPositiveButton("确认", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                commonDialog.dismiss();
+                                if (TextUtils.isEmpty(tvTextLostTitle.getText().toString())) {
+                                    showMessage("没有填写标题");
+                                } else if (TextUtils.isEmpty(tvTextLost.getText().toString())) {
+                                    showMessage("没有填写描述");
+                                } else if (TextUtils.isEmpty(tvGoodsTel.getText().toString())) {
+                                    showMessage("没有填联系方式");
+                                } else if (TextUtils.isEmpty(tvGoodsQuality.getText().toString())) {
+                                    showMessage("没有选商品成色");
+                                } else if (TextUtils.isEmpty(tvGoodsLocation.getText().toString())) {
+                                    showMessage("没有填发布区域");
+                                } else {
+                                    if (!ListUtils.isEmpty(uriList)) {
+                                        createGoodsPresenter.createGoods(activity, uriList);
+                                    } else {
+                                        showMessage("至少选择一张图片！");
+                                    }
+                                }
+                            }
+                        })
+                        .setNegativeButton("再改改", null)
+                        .show();
                 break;
             case R.id.tv_goods_quality:
                 new AlertDialog.Builder(this)
@@ -219,10 +227,8 @@ public class CreateGoodsActivity extends BaseActivity implements ICreateGoodsVie
     @Override
     public void publishSuccess() {
         //finish();
-        new CommonDialog(context)
-                .setMessage("发布成功！")
-                .setPositiveButton("确认", null)
-                .show();
+        setResult(Constants.PUBLISH);
+        finish();
     }
 
     @Override

@@ -2,7 +2,6 @@ package cn.nicolite.huthelper.view.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,31 +43,16 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     @Override
     public void onBindViewHolder(UserListViewHolder holder, final int position) {
         final User user = userList.get(position);
-        if (!TextUtils.isEmpty(user.getHead_pic())) {
-            Glide
-                    .with(context)
-                    .load(Constants.PICTURE_URL + user.getHead_pic_thumb())
-                    .bitmapTransform(new CropCircleTransformation(context))
-                    .skipMemoryCache(true)
-                    .crossFade()
-                    .into(holder.headIcon);
-        } else if (user.getSex().equals("男")) {
-            Glide
-                    .with(context)
-                    .load(R.drawable.head_boy)
-                    .bitmapTransform(new CropCircleTransformation(context))
-                    .skipMemoryCache(true)
-                    .crossFade()
-                    .into(holder.headIcon);
-        } else {
-            Glide
-                    .with(context)
-                    .load(R.drawable.head_girl)
-                    .bitmapTransform(new CropCircleTransformation(context))
-                    .skipMemoryCache(true)
-                    .crossFade()
-                    .into(holder.headIcon);
-        }
+
+        Glide
+                .with(context)
+                .load(Constants.PICTURE_URL + user.getHead_pic_thumb())
+                .error(R.drawable.img_error)
+                .placeholder(R.drawable.img_loading)
+                .bitmapTransform(new CropCircleTransformation(context))
+                .skipMemoryCache(true)
+                .crossFade()
+                .into(holder.headIcon);
 
         holder.name.setText(user.getTrueName());
         holder.clazz.setText(user.getClass_name());

@@ -7,4 +7,9 @@ import cn.nicolite.huthelper.base.iview.IBaseView;
  */
 
 public interface ICreateSayView extends IBaseView {
+    void selectImages();
+
+    void uploadSayInfo(String imagesInfo);
+
+    void publishSuccess();
 }

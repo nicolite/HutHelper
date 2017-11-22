@@ -75,6 +75,7 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
     private List<String> imageList = new ArrayList<>();
     private ImageAdapter adapter;
     private String username;
+    private int position;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -89,7 +90,8 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
             goodsId = bundle.getString("goodsId", null);
             mUserId = bundle.getString("userId", null);
             delete = bundle.getBoolean("delete", false);
-            if (TextUtils.isEmpty(mUserId) || TextUtils.isEmpty(goodsId)) {
+            position = bundle.getInt("position", -1);
+            if (TextUtils.isEmpty(mUserId) || TextUtils.isEmpty(goodsId) || position == -1) {
                 ToastUtil.showToastShort("获取信息失败！");
                 finish();
             }
@@ -208,6 +210,9 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
 
     @Override
     public void deleteSuccess() {
+        Intent intent = new Intent();
+        intent.putExtra("position", position);
+        setResult(Constants.DELETE, intent);
         finish();
     }
 

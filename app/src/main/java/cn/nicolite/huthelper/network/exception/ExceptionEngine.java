@@ -25,6 +25,8 @@ public class ExceptionEngine {
     public static final int CONNECT_TIME_OUT_ERROR = 1004;//网络连接超时
 
     public static APIException handleException(Throwable throwable){
+        throwable.printStackTrace();
+
         APIException apiException;
         if (throwable instanceof HttpException){
             HttpException httpException = (HttpException) throwable;

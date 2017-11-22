@@ -1,7 +1,6 @@
 package cn.nicolite.huthelper.view.activity;
 
 import android.app.DatePickerDialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -16,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -31,8 +29,8 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.presenter.CreateLostAndFoundPresenter;
-import cn.nicolite.huthelper.utils.ButtonUtils;
 import cn.nicolite.huthelper.utils.KeyBoardUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
@@ -158,27 +156,29 @@ public class CreateLostAndFoundActivity extends BaseActivity implements ICreateL
                 break;
             case R.id.toolbar_ok:
                 KeyBoardUtils.hideSoftInput(context, getWindow());
-                if (!ButtonUtils.isFastDoubleClick()) {
-                    if (!ListUtils.isEmpty(uriList)) {
-                        createLostAndFoundPresenter.createGoods(activity, uriList);
-                    } else {
-                        showMessage("至少选择一张图片！");
-                    }
-                }
+                final CommonDialog commonDialog = new CommonDialog(context);
+                commonDialog
+                        .setMessage("确认提交？")
+                        .setPositiveButton("确认", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                commonDialog.dismiss();
+                                if (!ListUtils.isEmpty(uriList)) {
+                                    createLostAndFoundPresenter.createGoods(activity, uriList);
+                                } else {
+                                    showMessage("至少选择一张图片！");
+                                }
+                            }
+                        })
+                        .setNegativeButton("再改改", null)
+                        .show();
                 break;
             case R.id.ed_time:
                 final Calendar calendar = Calendar.getInstance(Locale.CHINA);
                 new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        final String date = i + "-" + i1 + "-" + i2;
-                        new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker timePicker, int i, int i1) {
-                                edTime.setText(String.valueOf(date + " " + i + ":" + i1));
-                            }
-                        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true)
-                                .show();
+                        edTime.setText(String.valueOf(i + "-" + i1 + "-" + i2));
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
                         .show();
@@ -219,7 +219,7 @@ public class CreateLostAndFoundActivity extends BaseActivity implements ICreateL
     @Override
     public void uploadLostAndFoundInfo(String hidden) {
         createLostAndFoundPresenter.uploadLostAndFoundInfo(edThing.getText().toString(),
-                tvLocation.getText().toString(), tvTime.getText().toString(), tvPhone.getText().toString(),
+                edLocation.getText().toString(), edTime.getText().toString(), edPhone.getText().toString(),
                 hidden, edPhone.getText().toString(), type);
 
     }
@@ -227,10 +227,8 @@ public class CreateLostAndFoundActivity extends BaseActivity implements ICreateL
     @Override
     public void publishSuccess() {
         //finish();
-        new CommonDialog(context)
-                .setMessage("发布成功！")
-                .setPositiveButton("确认", null)
-                .show();
+        setResult(Constants.PUBLISH);
+        finish();
     }
 
     @Override

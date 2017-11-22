@@ -72,7 +72,11 @@ public class UserListPresenter extends BasePresenter<IUserListView, UserListFrag
                     public void onNext(HttpResult<List<User>> listHttpResult) {
                         if (getView() != null) {
                             getView().closeLoading();
-                            getView().showUsers(listHttpResult.getData());
+                            if (listHttpResult.getCode() == 200){
+                                getView().showUsers(listHttpResult.getData());
+                            }else {
+                                getView().loadFailure();
+                            }
                         }
                     }
 
@@ -80,6 +84,7 @@ public class UserListPresenter extends BasePresenter<IUserListView, UserListFrag
                     public void onError(Throwable e) {
                         if (getView() != null) {
                             getView().closeLoading();
+                            getView().loadFailure();
                             getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
                     }

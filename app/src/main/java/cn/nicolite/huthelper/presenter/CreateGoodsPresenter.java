@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.model.bean.Configure;
@@ -129,6 +130,8 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
 
 
     private StringBuilder stringBuilder = new StringBuilder();
+    private AtomicInteger uploadCount = new AtomicInteger(0);
+
 
     /**
      * @param bitmap
@@ -137,10 +140,13 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
      */
     public void uploadImages(Bitmap bitmap, final int count, final int i) {
 
+
         if (TextUtils.isEmpty(userId)) {
             if (getView() != null) {
                 getView().showMessage("获取用户信息失败！");
             }
+            stringBuilder.delete(0, stringBuilder.length());
+            uploadCount.set(0);
             return;
         }
 
@@ -150,6 +156,8 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
             if (getView() != null) {
                 getView().showMessage("获取用户信息失败！");
             }
+            stringBuilder.delete(0, stringBuilder.length());
+            uploadCount.set(0);
             return;
         }
 
@@ -179,7 +187,6 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
                 .subscribe(new Observer<UploadImages>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-
                     }
 
                     @Override
@@ -188,17 +195,19 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
                             if (uploadImages.getCode() == 200) {
                                 stringBuilder.append("//");
                                 stringBuilder.append(uploadImages.getData());
-                                getView().showMessage(String.valueOf("成功正在上传第" + i + "张图片！"));
-                                if (getView() != null && i == count) {
+                                if (getView() != null && uploadCount.get() == count) {
                                     String string = stringBuilder.toString();
                                     stringBuilder.delete(0, stringBuilder.length());
                                     if (!TextUtils.isEmpty(string)) {
                                         getView().uploadGoodsInfo(string);
                                     } else {
                                         getView().showMessage("获取上传图片信息失败！");
+                                        //check = true;
                                     }
                                 }
                             } else {
+                                stringBuilder.delete(0, stringBuilder.length());
+                                uploadCount.set(0);
                                 getView().showMessage(String.valueOf("正在上传第" + i + "张图片失败！"));
                             }
                         }
@@ -207,6 +216,8 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
                     @Override
                     public void onError(Throwable e) {
                         if (getView() == null) {
+                            stringBuilder.delete(0, stringBuilder.length());
+                            uploadCount.set(0);
                             getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
                     }
@@ -278,9 +289,6 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
                                 for (int i = 0; i < fileList.size(); i++) {
                                     Bitmap bitmap = BitmapFactory.decodeFile(fileList.get(i).getPath());
                                     uploadImages(bitmap, fileList.size(), i + 1);
-                                    //释放bitmap占用的内存
-                                    bitmap.recycle();
-                                    bitmap = null;
                                 }
                                 fileList.clear();
                             }

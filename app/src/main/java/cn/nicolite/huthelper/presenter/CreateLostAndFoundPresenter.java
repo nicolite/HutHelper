@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.model.bean.Configure;
@@ -76,6 +77,7 @@ public class CreateLostAndFoundPresenter extends BasePresenter<ICreateLostAndFou
     }
 
     private StringBuilder stringBuilder = new StringBuilder();
+    private AtomicInteger uploadCount = new AtomicInteger(0);
 
     /**
      * @param bitmap
@@ -88,6 +90,8 @@ public class CreateLostAndFoundPresenter extends BasePresenter<ICreateLostAndFou
             if (getView() != null) {
                 getView().showMessage("获取用户信息失败！");
             }
+            stringBuilder.delete(0, stringBuilder.length());
+            uploadCount.set(0);
             return;
         }
 
@@ -97,6 +101,8 @@ public class CreateLostAndFoundPresenter extends BasePresenter<ICreateLostAndFou
             if (getView() != null) {
                 getView().showMessage("获取用户信息失败！");
             }
+            stringBuilder.delete(0, stringBuilder.length());
+            uploadCount.set(0);
             return;
         }
 
@@ -133,19 +139,23 @@ public class CreateLostAndFoundPresenter extends BasePresenter<ICreateLostAndFou
                     public void onNext(UploadImages uploadImages) {
                         if (getView() != null) {
                             if (uploadImages.getCode() == 200) {
+                                uploadCount.incrementAndGet();
                                 stringBuilder.append("//");
                                 stringBuilder.append(uploadImages.getData());
-                                getView().showMessage(String.valueOf("成功正在上传第" + i + "张图片！"));
-                                if (getView() != null && i == count) {
+                                if (getView() != null && uploadCount.get() == count) {
                                     String string = stringBuilder.toString();
                                     stringBuilder.delete(0, stringBuilder.length());
                                     if (!TextUtils.isEmpty(string)) {
                                         getView().uploadLostAndFoundInfo(string);
                                     } else {
+                                        stringBuilder.delete(0, stringBuilder.length());
+                                        uploadCount.set(0);
                                         getView().showMessage("获取上传图片信息失败！");
                                     }
                                 }
                             } else {
+                                stringBuilder.delete(0, stringBuilder.length());
+                                uploadCount.set(0);
                                 getView().showMessage(String.valueOf("正在上传第" + i + "张图片失败！"));
                             }
                         }
@@ -154,6 +164,8 @@ public class CreateLostAndFoundPresenter extends BasePresenter<ICreateLostAndFou
                     @Override
                     public void onError(Throwable e) {
                         if (getView() == null) {
+                            stringBuilder.delete(0, stringBuilder.length());
+                            uploadCount.set(0);
                             getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
                     }
@@ -199,8 +211,6 @@ public class CreateLostAndFoundPresenter extends BasePresenter<ICreateLostAndFou
                                 for (int i = 0; i < fileList.size(); i++) {
                                     Bitmap bitmap = BitmapFactory.decodeFile(fileList.get(i).getPath());
                                     uploadImages(bitmap, fileList.size(), i + 1);
-                                    bitmap.recycle();
-                                    bitmap = null;
                                 }
                                 fileList.clear();
                             }
@@ -218,7 +228,7 @@ public class CreateLostAndFoundPresenter extends BasePresenter<ICreateLostAndFou
     }
 
     public void uploadLostAndFoundInfo(String title, String location, String time, String content,
-                                       String hidden, String phone ,int type){
+                                       String hidden, String phone, int type) {
         if (TextUtils.isEmpty(userId)) {
             if (getView() != null) {
                 getView().showMessage("获取用户信息失败！");
@@ -261,7 +271,7 @@ public class CreateLostAndFoundPresenter extends BasePresenter<ICreateLostAndFou
                                 getView().showMessage("发布成功！");
                                 getView().publishSuccess();
                             } else {
-                                getView().showMessage("发布失败，" + stringHttpResult.getCode());
+                                getView().showMessage("发布失败，" + stringHttpResult.getCode() + " msg：" + stringHttpResult.getMsg());
                             }
                         }
                     }

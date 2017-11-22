@@ -1,5 +1,6 @@
 package cn.nicolite.huthelper.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.OrientationHelper;
@@ -21,6 +22,7 @@ import java.util.List;
 import butterknife.BindView;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.fragment.BaseFragment;
+import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.LostAndFound;
 import cn.nicolite.huthelper.presenter.LostAndFoundPresenter;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
@@ -150,6 +152,7 @@ public class LostAndFoundFragment extends BaseFragment implements ILostAndFoundV
                 LostAndFound lostAndFound = lostAndFoundList.get(position);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("data", lostAndFound);
+                bundle.putInt("position", position);
                 if (type == MYLOSTANDFOUND && userId.equals(lostAndFound.getUser_id())) {
                     bundle.putBoolean("delete", true);
                 } else {
@@ -223,5 +226,40 @@ public class LostAndFoundFragment extends BaseFragment implements ILostAndFoundV
     @Override
     public void loadFailure() {
         lRecyclerView.refreshComplete(0);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.REQUEST) {
+            switch (resultCode) {
+                case Constants.DELETE:
+                    int position = data.getIntExtra("position", -1);
+                    if (position != -1) {
+                        deleteItem(position);
+                    }
+                    break;
+                case Constants.PUBLISH:
+                    refreshData();
+                    break;
+                case Constants.CHANGE:
+                    break;
+            }
+        }
+    }
+
+    public void refreshData() {
+        lRecyclerView.forceToRefresh();
+    }
+
+    public void deleteItem(int position) {
+        lostAndFoundList.remove(position);
+        lRecyclerViewAdapter.notifyItemRemoved(position);
+    }
+
+    public void changetItem(int position, LostAndFound lostAndFound) {
+        lostAndFoundList.remove(position);
+        lostAndFoundList.add(position, lostAndFound);
+        lRecyclerViewAdapter.notifyItemChanged(position);
     }
 }

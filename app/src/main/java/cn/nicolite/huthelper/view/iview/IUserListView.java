@@ -11,4 +11,5 @@ import cn.nicolite.huthelper.model.bean.User;
 
 public interface IUserListView extends IBaseView {
     void showUsers(List<User> users);
+    void loadFailure();
 }

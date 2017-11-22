@@ -19,6 +19,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.LostAndFound;
 import cn.nicolite.huthelper.presenter.LostAndFoundInfoPresenter;
 import cn.nicolite.huthelper.utils.ListUtils;
@@ -70,6 +71,7 @@ public class LostAndFoundInfoActivity extends BaseActivity implements ILostAndFo
     private LostAndFound lostAndFound;
     private final int[] bg = {R.drawable.bg_list, R.drawable.bg2_list, R.drawable.bg3_list, R.drawable.bg4_list};
     private LostAndFoundInfoPresenter lostAndFoundInfoPresenter;
+    private int position;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -81,8 +83,9 @@ public class LostAndFoundInfoActivity extends BaseActivity implements ILostAndFo
     protected void initBundleData(Bundle bundle) {
         if (bundle != null) {
             delete = bundle.getBoolean("delete", false);
+            position = bundle.getInt("position", -1);
             lostAndFound = (LostAndFound) bundle.getSerializable("data");
-            if (lostAndFound == null) {
+            if (lostAndFound == null || position == -1) {
                 ToastUtil.showToastShort("获取信息失败！");
                 finish();
             }
@@ -198,6 +201,9 @@ public class LostAndFoundInfoActivity extends BaseActivity implements ILostAndFo
 
     @Override
     public void deleteSuccess() {
+        Intent intent = new Intent();
+        intent.putExtra("position", position);
+        setResult(Constants.DELETE, intent);
         finish();
     }
 }

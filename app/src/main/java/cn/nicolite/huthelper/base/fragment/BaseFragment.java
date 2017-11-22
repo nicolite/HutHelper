@@ -294,6 +294,21 @@ public abstract class BaseFragment extends RxFragment {
         startActivityForResult(intent, requestCode);
     }
 
+    /**
+     * 包含回调和数据的页面跳转
+     *
+     * @param clazz
+     * @param bundle
+     * @param requestCode
+     */
+    public void startActivityForResult(Class<?> clazz, int requestCode, Bundle bundle, Bundle options) {
+        Intent intent = new Intent();
+        intent.setClass(context, clazz);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        startActivityForResult(intent, requestCode, options);
+    }
 
     /**
      * 带动画的页面跳转

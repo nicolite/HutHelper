@@ -47,6 +47,10 @@ public class LostAndFoundInfoPresenter extends BasePresenter<ILostAndFoundInfoVi
         Configure configure = configureList.get(0);
         User user = configure.getUser();
 
+        if (getView() != null) {
+            getView().showMessage("正在删除！");
+        }
+
         APIUtils
                 .getLostAndFoundAPI()
                 .deleteLostAndFound(user.getStudentKH(), configure.getAppRememberCode(), lostId)

@@ -1,6 +1,7 @@
 package cn.nicolite.huthelper.view.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -28,6 +29,7 @@ import java.util.List;
 import butterknife.BindView;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.fragment.BaseFragment;
+import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Say;
 import cn.nicolite.huthelper.presenter.SayPresenter;
 import cn.nicolite.huthelper.utils.ButtonUtils;
@@ -52,7 +54,7 @@ public class SayFragment extends BaseFragment implements ISayView {
 
     private int type = ALLSAY;
     private String searchText = "";
-    private LRecyclerViewAdapter adapter;
+    private LRecyclerViewAdapter lRecyclerViewAdapter;
     private List<Say> sayList = new ArrayList<>();
     public static final int ALLSAY = 0;
     public static final int MYSAY = 1;
@@ -97,8 +99,8 @@ public class SayFragment extends BaseFragment implements ISayView {
     protected void doBusiness() {
         lRecyclerView.setLayoutManager(new LinearLayoutManager(context, OrientationHelper.VERTICAL, false));
         sayAdapter = new SayAdapter(context, sayList);
-        adapter = new LRecyclerViewAdapter(sayAdapter);
-        lRecyclerView.setAdapter(adapter);
+        lRecyclerViewAdapter = new LRecyclerViewAdapter(sayAdapter);
+        lRecyclerView.setAdapter(lRecyclerViewAdapter);
         sayPresenter = new SayPresenter(this, this);
         sayAdapter.setOnItemClickListener(new SayAdapter.OnItemClickListener() {
             @Override
@@ -221,14 +223,14 @@ public class SayFragment extends BaseFragment implements ISayView {
         sayList.clear();
         sayList.addAll(list);
         lRecyclerView.refreshComplete(list.size());
-        adapter.notifyDataSetChanged();
+        lRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void loadMore(List<Say> list) {
         sayList.addAll(list);
         lRecyclerView.refreshComplete(list.size());
-        adapter.notifyDataSetChanged();
+        lRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -241,7 +243,7 @@ public class SayFragment extends BaseFragment implements ISayView {
     @Override
     public void deleteSuccess(Say say) {
         sayList.remove(say);
-        adapter.notifyDataSetChanged();
+        lRecyclerViewAdapter.notifyDataSetChanged();
     }
 
     @Override
@@ -277,7 +279,7 @@ public class SayFragment extends BaseFragment implements ISayView {
             editText = (EditText) popupWindowLayout.findViewById(R.id.et_addcomment_content);
             addCommitWindow = new PopupWindow(popupWindowLayout, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
         }
-        if (editText != null){
+        if (editText != null) {
             CommUtil.showSoftInput(context, editText);
         }
         if (button != null) {
@@ -316,5 +318,40 @@ public class SayFragment extends BaseFragment implements ISayView {
 
         addCommitWindow.showAtLocation(rootView,
                 Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.REQUEST) {
+            switch (resultCode) {
+                case Constants.DELETE:
+                    int position = data.getIntExtra("position", -1);
+                    if (position != -1) {
+                        deleteItem(position);
+                    }
+                    break;
+                case Constants.PUBLISH:
+                    refreshData();
+                    break;
+                case Constants.CHANGE:
+                    break;
+            }
+        }
+    }
+
+    public void refreshData() {
+        lRecyclerView.forceToRefresh();
+    }
+
+    public void deleteItem(int position) {
+        sayList.remove(position);
+        lRecyclerViewAdapter.notifyItemRemoved(position);
+    }
+
+    public void changetItem(int position, Say say) {
+        sayList.remove(position);
+        sayList.add(position, say);
+        lRecyclerViewAdapter.notifyItemChanged(position);
     }
 }

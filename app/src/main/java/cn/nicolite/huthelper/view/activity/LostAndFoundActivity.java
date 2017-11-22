@@ -1,5 +1,6 @@
 package cn.nicolite.huthelper.view.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -46,6 +47,9 @@ public class LostAndFoundActivity extends BaseActivity {
     ViewPager viewpager;
     @BindView(R.id.rootView)
     FrameLayout rootView;
+    private LostAndFoundFragment lostAndFoundFragmentAll;
+    private LostAndFoundFragment lostAndFoundFragmentFound;
+    private LostAndFoundFragment lostAndFoundFragmentLost;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -74,9 +78,18 @@ public class LostAndFoundActivity extends BaseActivity {
 
     private List<Fragment> getFragmentList() {
         List<Fragment> fragmentList = new ArrayList<>();
-        fragmentList.add(LostAndFoundFragment.newInstance(LostAndFoundFragment.ALL, null));
-        fragmentList.add(LostAndFoundFragment.newInstance(LostAndFoundFragment.FOUND, null));
-        fragmentList.add(LostAndFoundFragment.newInstance(LostAndFoundFragment.LOST, null));
+        if (lostAndFoundFragmentAll == null) {
+            lostAndFoundFragmentAll = LostAndFoundFragment.newInstance(LostAndFoundFragment.ALL, null);
+        }
+        if (lostAndFoundFragmentFound == null) {
+            lostAndFoundFragmentFound = LostAndFoundFragment.newInstance(LostAndFoundFragment.FOUND, null);
+        }
+        if (lostAndFoundFragmentLost == null) {
+            lostAndFoundFragmentLost = LostAndFoundFragment.newInstance(LostAndFoundFragment.LOST, null);
+        }
+        fragmentList.add(lostAndFoundFragmentAll);
+        fragmentList.add(lostAndFoundFragmentFound);
+        fragmentList.add(lostAndFoundFragmentLost);
         return fragmentList;
     }
 
@@ -168,5 +181,21 @@ public class LostAndFoundActivity extends BaseActivity {
         weekListWindow.setOutsideTouchable(true);
         weekListWindow.setBackgroundDrawable(new BitmapDrawable());
         weekListWindow.showAsDropDown(parent, -DensityUtils.dp2px(context, 115), 20);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (lostAndFoundFragmentAll != null) {
+            lostAndFoundFragmentAll.onActivityResult(requestCode, resultCode, data);
+        }
+
+        if (lostAndFoundFragmentFound != null) {
+            lostAndFoundFragmentFound.onActivityResult(requestCode, resultCode, data);
+        }
+
+        if (lostAndFoundFragmentLost != null) {
+            lostAndFoundFragmentLost.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

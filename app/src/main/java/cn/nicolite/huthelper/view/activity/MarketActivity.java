@@ -1,5 +1,6 @@
 package cn.nicolite.huthelper.view.activity;
 
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -46,6 +47,9 @@ public class MarketActivity extends BaseActivity {
     FrameLayout rootView;
     @BindView(R.id.toolbar_menu)
     ImageView toolbarMenu;
+    private MarketFragment marketFragmentAll;
+    private MarketFragment marketFragmentSold;
+    private MarketFragment marketFragmentBuy;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -91,9 +95,20 @@ public class MarketActivity extends BaseActivity {
 
     private List<Fragment> getFragmentList() {
         List<Fragment> fragmentList = new ArrayList<>();
-        fragmentList.add(MarketFragment.newInstance(MarketFragment.ALL, null));
-        fragmentList.add(MarketFragment.newInstance(MarketFragment.SOLD, null));
-        fragmentList.add(MarketFragment.newInstance(MarketFragment.BUY, null));
+
+        if (marketFragmentAll == null) {
+            marketFragmentAll = MarketFragment.newInstance(MarketFragment.ALL, null);
+        }
+        if (marketFragmentSold == null) {
+            marketFragmentSold = MarketFragment.newInstance(MarketFragment.SOLD, null);
+        }
+        if (marketFragmentBuy == null) {
+            marketFragmentBuy = MarketFragment.newInstance(MarketFragment.BUY, null);
+        }
+
+        fragmentList.add(marketFragmentAll);
+        fragmentList.add(marketFragmentSold);
+        fragmentList.add(marketFragmentBuy);
         return fragmentList;
     }
 
@@ -167,5 +182,21 @@ public class MarketActivity extends BaseActivity {
         weekListWindow.setOutsideTouchable(true);
         weekListWindow.setBackgroundDrawable(new BitmapDrawable());
         weekListWindow.showAsDropDown(parent, -DensityUtils.dp2px(context, 115), 20);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (marketFragmentAll != null) {
+            marketFragmentAll.onActivityResult(requestCode, resultCode, data);
+        }
+
+        if (marketFragmentSold != null) {
+            marketFragmentSold.onActivityResult(requestCode, resultCode, data);
+        }
+
+        if (marketFragmentBuy != null) {
+            marketFragmentBuy.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

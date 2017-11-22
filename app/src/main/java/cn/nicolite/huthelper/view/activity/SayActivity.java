@@ -1,6 +1,7 @@
 package cn.nicolite.huthelper.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
@@ -18,6 +19,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.presenter.SearchPresenter;
@@ -39,6 +41,7 @@ public class SayActivity extends BaseActivity {
     ImageView toolBarMenu;
     @BindView(R.id.fragment_content)
     FrameLayout fragmentContent;
+    private SayFragment fragment;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -61,7 +64,8 @@ public class SayActivity extends BaseActivity {
     protected void doBusiness() {
         toolbarTitle.setText("说说");
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_content, SayFragment.newInstance(SayFragment.ALLSAY, null));
+        fragment = SayFragment.newInstance(SayFragment.ALLSAY, null);
+        transaction.replace(R.id.fragment_content, fragment);
         transaction.commit();
     }
 
@@ -105,7 +109,7 @@ public class SayActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     menuListWindow.dismiss();
-                    startActivityForResult(CreateSayActivity.class, 201);
+                    startActivityForResult(CreateSayActivity.class, Constants.REQUEST);
                 }
             });
 
@@ -140,5 +144,13 @@ public class SayActivity extends BaseActivity {
         menuListWindow.setOutsideTouchable(true);
         menuListWindow.setBackgroundDrawable(new BitmapDrawable());
         menuListWindow.showAsDropDown(parent, -DensityUtils.dp2px(SayActivity.this, 115), 20);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (fragment != null) {
+            fragment.onActivityResult(requestCode, resultCode, data);
+        }
     }
 }

@@ -143,4 +143,24 @@ public class UserListFragment extends BaseFragment implements IUserListView {
         lRecyclerView.refreshComplete(users.size());
         lRecyclerViewAdapter.notifyDataSetChanged();
     }
+
+    @Override
+    public void loadFailure() {
+        lRecyclerView.refreshComplete(0);
+    }
+
+    public void refreshData() {
+        lRecyclerView.forceToRefresh();
+    }
+
+    public void deleteItem(int position) {
+        userList.remove(position);
+        lRecyclerViewAdapter.notifyItemRemoved(position);
+    }
+
+    public void changetItem(int position, User user) {
+        userList.remove(position);
+        userList.add(position, user);
+        lRecyclerViewAdapter.notifyItemChanged(position);
+    }
 }

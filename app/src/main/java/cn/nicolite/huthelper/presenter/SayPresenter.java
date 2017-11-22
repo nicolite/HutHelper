@@ -71,6 +71,9 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
         Configure configure = configureList.get(0);
         User user = configure.getUser();
 
+        if (getView() != null) {
+            getView().showMessage("正在删除！");
+        }
         APIUtils
                 .getSayAPI()
                 .deleteSay(user.getStudentKH(), configure.getAppRememberCode(), say.getId())
