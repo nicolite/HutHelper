@@ -21,6 +21,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.presenter.SearchPresenter;
@@ -151,7 +152,7 @@ public class LostAndFoundActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     weekListWindow.dismiss();
-                    startActivity(CreateLostAndFoundActivity.class);
+                    startActivityForResult(CreateLostAndFoundActivity.class, Constants.REQUEST);
                 }
             });
             tvMime.setOnClickListener(new View.OnClickListener() {

@@ -78,6 +78,7 @@ public class CreateSayPresenter extends BasePresenter<ICreateSayView, CreateSayA
 
     private StringBuilder stringBuilder = new StringBuilder();
     private AtomicInteger uploadCount = new AtomicInteger(0);
+
     /**
      * @param bitmap
      * @param i      现在上传的是第几个

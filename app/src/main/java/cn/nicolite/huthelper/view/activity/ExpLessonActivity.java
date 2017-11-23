@@ -163,7 +163,7 @@ public class ExpLessonActivity extends BaseActivity implements IExplessonView{
         List<ExpLesson> finish = new ArrayList<>();
 
         for (ExpLesson explesson : expLessonList) {
-            if (Integer.parseInt(explesson.getWeeks_no()) > nowWeek){
+            if (Integer.parseInt(explesson.getWeeks_no()) >= nowWeek){
                 unfinish.add(explesson);
             }else {
                 finish.add(explesson);

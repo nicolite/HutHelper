@@ -193,6 +193,7 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
                     public void onNext(UploadImages uploadImages) {
                         if (getView() != null) {
                             if (uploadImages.getCode() == 200) {
+                                uploadCount.incrementAndGet();
                                 stringBuilder.append("//");
                                 stringBuilder.append(uploadImages.getData());
                                 if (getView() != null && uploadCount.get() == count) {
@@ -201,14 +202,15 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
                                     if (!TextUtils.isEmpty(string)) {
                                         getView().uploadGoodsInfo(string);
                                     } else {
+                                        stringBuilder.delete(0, stringBuilder.length());
+                                        uploadCount.set(0);
                                         getView().showMessage("获取上传图片信息失败！");
-                                        //check = true;
                                     }
                                 }
                             } else {
                                 stringBuilder.delete(0, stringBuilder.length());
                                 uploadCount.set(0);
-                                getView().showMessage(String.valueOf("正在上传第" + i + "张图片失败！"));
+                                getView().showMessage(String.valueOf("上传第" + i + "张图片失败！"));
                             }
                         }
                     }

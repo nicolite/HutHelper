@@ -156,7 +156,7 @@ public class CreateLostAndFoundPresenter extends BasePresenter<ICreateLostAndFou
                             } else {
                                 stringBuilder.delete(0, stringBuilder.length());
                                 uploadCount.set(0);
-                                getView().showMessage(String.valueOf("正在上传第" + i + "张图片失败！"));
+                                getView().showMessage(String.valueOf("上传第" + i + "张图片失败！"));
                             }
                         }
                     }
