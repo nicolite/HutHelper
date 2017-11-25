@@ -6,10 +6,6 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.manager.ActivityStackManager;
@@ -46,14 +42,13 @@ public class OffsiteLoginDialogActivity extends BaseActivity {
         editor.putString("userId", "*");
         editor.apply();
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.CHINA);
-
-        String date = simpleDateFormat.format(new Date());
+       //SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm", Locale.CHINA);
+       //String date = simpleDateFormat.format(new Date());
 
         commonDialog = new CommonDialog(context);
         commonDialog
                 .setTitle("下线通知")
-                .setMessage("你的帐号于"+ date + "在另一台设备登录。如非本人操作，则密码可能已泄露，建议修改密码。")
+                .setMessage("你的帐号已在另一台设备登录。如非本人操作，则密码可能已泄露，建议修改密码。")
                 .setMessageGravity(Gravity.START | Gravity.CENTER_VERTICAL)
                 .setCancelable(false)
                 .setPositiveButton("重新登录", new View.OnClickListener() {

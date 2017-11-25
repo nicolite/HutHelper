@@ -156,9 +156,6 @@ public class WebViewActivity extends BaseActivity {
             public void onProgressChanged(WebView webView, int i) {
                 super.onProgressChanged(webView, i);
 
-                if (progressBar == null) {
-                    return;
-                }
                 if (i == 100) {
                     if (type != TYPE_CHANGE_PWD) {
                         addImgClickListener();
@@ -280,9 +277,6 @@ public class WebViewActivity extends BaseActivity {
      * 显示自定义错误提示页面，用一个View覆盖在WebView
      */
     protected void showErrorPage() {
-        if (webView == null) {
-            return;
-        }
         LinearLayout webParentView = (LinearLayout) webView.getParent();
         if (webParentView != null) {
             initErrorPage();

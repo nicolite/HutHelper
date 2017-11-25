@@ -4,7 +4,6 @@ import android.support.annotation.NonNull;
 
 import java.util.concurrent.TimeUnit;
 
-import cn.nicolite.huthelper.BuildConfig;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.utils.LogUtils;
 import okhttp3.OkHttpClient;
@@ -69,9 +68,9 @@ public class RetrofitUtils {
      * @return Retrofit
      */
     public Retrofit retrofit() {
-        if (BuildConfig.LOG_DEBUG){
-            BASE_URL = Constants.TEST_BASE_URL;
-        }
+       //if (BuildConfig.LOG_DEBUG){
+       //    BASE_URL = Constants.TEST_BASE_URL;
+       //}
 
         return new Retrofit.Builder()
                 .client(okHttpClient())

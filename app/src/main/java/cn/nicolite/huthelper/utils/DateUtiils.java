@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -35,5 +36,19 @@ public class DateUtiils {
         }
 
         return (int) (be / 7 + 1);
+    }
+
+    /**
+     * 计算星期几
+     */
+    public static int getWeekOfToday() {
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date(System.currentTimeMillis()));
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK);
+        dayOfWeek--;
+        if (dayOfWeek == 0)
+            return 7;
+        else
+            return dayOfWeek;
     }
 }

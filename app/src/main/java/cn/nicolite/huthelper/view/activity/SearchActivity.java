@@ -85,6 +85,27 @@ public class SearchActivity extends BaseActivity implements ISearchView {
         searchPresenter = new SearchPresenter(this, this);
         searchPresenter.showHistory(type);
 
+        adapter.setOnItemLongClickListener(new SearchAdapter.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(View view, final int position, long itemId) {
+                final CommonDialog commonDialog = new CommonDialog(context);
+                commonDialog
+                        .setMessage("确定删除该条记录？")
+                        .setPositiveButton("确认", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                searchPresenter.deleteHistoryItem(searchHistorys.get(position));
+                                searchHistorys.remove(position);
+                                adapter.notifyItemRemoved(position);
+                                commonDialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton("取消", null)
+                        .show();
+                return true;
+            }
+        });
+
         toolbarSearchEdit.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View view, int i, KeyEvent keyEvent) {

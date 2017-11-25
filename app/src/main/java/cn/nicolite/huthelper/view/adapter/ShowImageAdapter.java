@@ -56,7 +56,7 @@ public class ShowImageAdapter extends PagerAdapter{
         final PhotoViewAttacher attacher = new PhotoViewAttacher(imageView);
         String url = images.get(position);
 
-        if (!url.startsWith("http") || !url.startsWith("https")){
+        if (!url.startsWith("http") && !url.startsWith("https")){
             url = Constants.PICTURE_URL + url;
         }
 

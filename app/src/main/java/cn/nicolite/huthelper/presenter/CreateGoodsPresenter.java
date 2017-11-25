@@ -291,6 +291,8 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
                                 for (int i = 0; i < fileList.size(); i++) {
                                     Bitmap bitmap = BitmapFactory.decodeFile(fileList.get(i).getPath());
                                     uploadImages(bitmap, fileList.size(), i + 1);
+                                    bitmap.recycle();
+                                    bitmap = null;
                                 }
                                 fileList.clear();
                             }

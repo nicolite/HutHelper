@@ -1,6 +1,7 @@
 package cn.nicolite.huthelper.view.activity;
 
 import android.os.Bundle;
+import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -15,6 +16,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.injection.JsInject;
 import cn.nicolite.huthelper.model.bean.CareerTalkItem;
 import cn.nicolite.huthelper.presenter.CareerTalkItemPresenter;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
@@ -62,13 +64,13 @@ public class CareerTalkItemActivity extends BaseActivity implements ICareerTalkI
 
     @Override
     protected void initBundleData(Bundle bundle) {
-        if (bundle != null){
+        if (bundle != null) {
             id = bundle.getInt("id", -1);
-            if (id == -1){
+            if (id == -1) {
                 ToastUtil.showToastShort("获取参数异常！");
                 finish();
             }
-        }else {
+        } else {
             ToastUtil.showToastShort("获取参数异常！");
             finish();
         }
@@ -95,7 +97,7 @@ public class CareerTalkItemActivity extends BaseActivity implements ICareerTalkI
 
     @Override
     public void closeLoading() {
-        if (loadingDialog != null){
+        if (loadingDialog != null) {
             loadingDialog.dismiss();
         }
     }
@@ -123,11 +125,26 @@ public class CareerTalkItemActivity extends BaseActivity implements ICareerTalkI
         settings.setJavaScriptEnabled(true);
         settings.setDisplayZoomControls(false);
         settings.setBuiltInZoomControls(true);
+        webView.addJavascriptInterface(new JsInject(this), "imageListener");
+
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView webView, String s) {
-                webView.loadUrl(s);
+                if (s.startsWith("http") || s.startsWith("https")) {
+                    webView.loadUrl(s);
+                }
                 return true;
+            }
+        });
+
+
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public void onProgressChanged(WebView webView, int i) {
+                super.onProgressChanged(webView, i);
+                if (i == 100) {
+                    addImgClickListener();
+                }
             }
         });
 
@@ -145,7 +162,7 @@ public class CareerTalkItemActivity extends BaseActivity implements ICareerTalkI
     protected void onDestroy() {
         super.onDestroy();
         //防止webview内存泄漏
-        if (webView != null){
+        if (webView != null) {
             webView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             webView.clearHistory();
             webView.clearCache(true);
@@ -155,5 +172,16 @@ public class CareerTalkItemActivity extends BaseActivity implements ICareerTalkI
             webView.destroy();
             webView = null;
         }
+    }
+
+    private void addImgClickListener() {
+        webView.loadUrl("javascript:(function(){" +
+                "var objs = document.getElementsByTagName(\"img\"); " +
+                "for(var i=0;i<objs.length;i++){"
+                + "objs[i].onclick=function(){ "
+                + "window.imageListener.showImage(this.src);" +
+                "}" +
+                "}" +
+                "})()");
     }
 }

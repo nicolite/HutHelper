@@ -24,6 +24,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     private Context context;
     private List<SearchHistory> searchHistoryList;
     private OnItemClickListener onItemClickListener;
+    private OnItemLongClickListener onItemLongClickListener;
 
     public SearchAdapter(Context context, List<SearchHistory> searchHistoryList) {
         this.context = context;
@@ -48,6 +49,13 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
                 }
             }
         });
+
+        holder.text.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                return onItemLongClickListener != null && onItemLongClickListener.onItemLongClick(view, holder.getAdapterPosition(), holder.getItemId());
+            }
+        });
     }
 
     @Override
@@ -67,6 +75,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
     public interface OnItemClickListener {
         void onItemClick(View view, int position, long itemId);
+    }
+
+    public interface OnItemLongClickListener {
+        boolean onItemLongClick(View view, int position, long itemId);
+    }
+
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener){
+        this.onItemLongClickListener = onItemLongClickListener;
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {

@@ -34,7 +34,7 @@ import cn.nicolite.huthelper.view.widget.LoadingDialog;
  * Created by nicolite on 17-11-4.
  */
 
-public class ExpLessonActivity extends BaseActivity implements IExplessonView{
+public class ExpLessonActivity extends BaseActivity implements IExplessonView {
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
     @BindView(R.id.tab)
@@ -88,14 +88,14 @@ public class ExpLessonActivity extends BaseActivity implements IExplessonView{
         }
     }
 
-    private List<Fragment> getFragmentList(){
+    private List<Fragment> getFragmentList() {
         List<Fragment> fragmentList = new ArrayList<>();
 
-        if (expLessonFragmentUnfinish == null){
+        if (expLessonFragmentUnfinish == null) {
             expLessonFragmentUnfinish = ExpLessonFragment.newInstance(ExpLessonFragment.FINISHED);
         }
 
-        if (expLessonFragmentFinish == null){
+        if (expLessonFragmentFinish == null) {
             expLessonFragmentFinish = ExpLessonFragment.newInstance(ExpLessonFragment.FINISHED);
         }
 
@@ -105,7 +105,7 @@ public class ExpLessonActivity extends BaseActivity implements IExplessonView{
         return fragmentList;
     }
 
-    private List<String> getTitleList(){
+    private List<String> getTitleList() {
         List<String> titleList = new ArrayList<>();
         titleList.add("未完成");
         titleList.add("已完成");
@@ -143,29 +143,32 @@ public class ExpLessonActivity extends BaseActivity implements IExplessonView{
 
         String userId = getLoginUser();
 
-        if (TextUtils.isEmpty(userId)){
+        if (TextUtils.isEmpty(userId)) {
             showMessage("获取用户信息失败！");
             return;
         }
 
         List<Configure> configureList = getConfigureList();
 
-        if (ListUtils.isEmpty(configureList)){
+        if (ListUtils.isEmpty(configureList)) {
             showMessage("获取用户信息失败！");
             return;
         }
 
         Configure configure = configureList.get(0);
 
-        int nowWeek = DateUtiils.getNowWeek(configure.getNewTermDate());
+        int nowWeek = Integer.parseInt(String.valueOf(DateUtiils.getNowWeek(configure.getNewTermDate()))
+                + String.valueOf(DateUtiils.getWeekOfToday()));
 
         List<ExpLesson> unfinish = new ArrayList<>();
         List<ExpLesson> finish = new ArrayList<>();
 
         for (ExpLesson explesson : expLessonList) {
-            if (Integer.parseInt(explesson.getWeeks_no()) >= nowWeek){
+            int week = Integer.parseInt(explesson.getWeeks_no() + explesson.getWeek());
+
+            if (week >= nowWeek) {
                 unfinish.add(explesson);
-            }else {
+            } else {
                 finish.add(explesson);
             }
         }

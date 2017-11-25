@@ -126,12 +126,11 @@ public class CommUtil {
         }
         try {
             FileOutputStream out = new FileOutputStream(f);
-            bm.compress(Bitmap.CompressFormat.PNG, 90, out);
+            bm.compress(Bitmap.CompressFormat.PNG, 100, out);
             out.flush();
             out.close();
             //Log.i(TAG, "已经保存");
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

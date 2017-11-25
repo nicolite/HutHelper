@@ -86,4 +86,9 @@ public class SearchPresenter extends BasePresenter<ISearchView, SearchActivity> 
         showHistory(type);
     }
 
+    public void deleteHistoryItem(SearchHistory history){
+        SearchHistoryDao searchHistoryDao = daoSession.getSearchHistoryDao();
+        searchHistoryDao.delete(history);
+    }
+
 }
