@@ -37,7 +37,7 @@
             android:gravity="center"
             android:hint="学号"
             android:imeOptions="actionNext"
-            android:inputType="number"
+            android:inputType="text"
             android:textColor="#404040"
             android:textColorHint="#cacaca"
             android:textSize="15sp" />
