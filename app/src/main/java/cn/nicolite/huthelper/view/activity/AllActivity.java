@@ -96,13 +96,18 @@ public class AllActivity extends BaseActivity {
         user = configure.getUser();
 
         menuDao = daoSession.getMenuDao();
+
         mainMenuList.addAll(menuDao.queryBuilder()
                 .where(MenuDao.Properties.UserId.eq(userId), MenuDao.Properties.IsMain.eq(true))
+                .orderAsc(MenuDao.Properties.Index)
                 .list());
-        mainMenuList.remove(mainMenuList.size() - 1); // 移除全部入口
+
+        mainMenuList.removeAll(menuDao.queryBuilder().where(MenuDao.Properties.UserId.eq(userId),
+                MenuDao.Properties.Title.eq("全部")).list());
 
         otherMenuList.addAll(menuDao.queryBuilder()
                 .where(MenuDao.Properties.UserId.eq(userId), MenuDao.Properties.IsMain.eq(false))
+                .orderAsc(MenuDao.Properties.Index)
                 .list());
 
         rvAllMain.setLayoutManager(new GridLayoutManager(context, 4, OrientationHelper.VERTICAL, false));
@@ -185,12 +190,12 @@ public class AllActivity extends BaseActivity {
             public void onEditClick(View v, int position) {
                 Menu item = mainMenuList.remove(position);
                 item.setIsMain(false);
-                item.setIndex(mainMenuList.size() - 1 + otherMenuList.size());
                 otherMenuList.add(otherMenuList.size(), item);
                 adapterMain.notifyItemRemoved(position);
                 adapterOther.notifyItemInserted(otherMenuList.size());
             }
         });
+
         adapterOther.setOnEditClickListener(new MenuAdapter.EditClickLister() {
             @Override
             public void onEditClick(View v, int position) {
@@ -200,8 +205,7 @@ public class AllActivity extends BaseActivity {
                 }
                 Menu item = otherMenuList.remove(position);
                 item.setIsMain(true);
-                item.setIndex(mainMenuList.size() - 1);
-                mainMenuList.add(otherMenuList.size(), item);
+                mainMenuList.add(mainMenuList.size(), item);
                 adapterOther.notifyItemRemoved(position);
                 adapterMain.notifyItemInserted(mainMenuList.size());
             }
@@ -234,13 +238,31 @@ public class AllActivity extends BaseActivity {
         SnackbarUtils.showShortSnackbar(rootView, msg);
     }
 
+
     public void saveChange() {
+        int index = 0;
+        for (Menu m : mainMenuList) {
+            if (index == 12) {
+                index++;
+            }
+            m.setIndex(index++);
+        }
+
+        for (Menu m : otherMenuList) {
+            if (index == 12) {
+                index++;
+            }
+            m.setIndex(index++);
+        }
+
         List<Menu> menuList = new ArrayList<>();
         menuList.addAll(mainMenuList);
-        mainMenuList.addAll(otherMenuList);
+        menuList.addAll(otherMenuList);
 
         for (Menu menu : menuList) {
             menuDao.update(menu);
         }
+
+        setResult(Constants.CHANGE);
     }
 }

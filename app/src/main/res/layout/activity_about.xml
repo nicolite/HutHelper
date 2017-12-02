@@ -162,7 +162,7 @@
                         android:gravity="start|center_vertical"
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
-                        android:text="联系我"
+                        android:text="联系开发者"
                         android:textColor="@color/black"
                         android:textSize="12sp" />
 

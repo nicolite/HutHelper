@@ -192,7 +192,6 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     public void showMenu() {
 
         MenuDao menuDao = daoSession.getMenuDao();
-
         if (menuDao.count() == 0 || menuDao.count() > 15) {
             List<Menu> menuItems = new ArrayList<>();
             Menu item = new Menu((long) 1, 0, 0, WebViewActivity.TYPE_LIBRARY, "图书馆", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
@@ -211,28 +210,34 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             menuItems.add(item);
             item = new Menu((long) 8, 7, 7, 0, "电费查询", "cn.nicolite.huthelper.view.activity.ElectricActivity", true);
             menuItems.add(item);
-            item = new Menu((long) 9, 8, 8, 0, "校招薪水", "cn.nicolite.huthelper.view.activity.OfferActivity", false);
+            item = new Menu((long) 9, 8, 8, 0, "实验课表", "cn.nicolite.huthelper.view.activity.ExpLessonActivity", true);
             menuItems.add(item);
-            item = new Menu((long) 10, 9, 9, 0, "实验课表", "cn.nicolite.huthelper.view.activity.ExpLessonActivity", true);
+            item = new Menu((long) 10, 9, 9, 0, "校历", "cn.nicolite.huthelper.view.activity.CalendarActivity", false);
             menuItems.add(item);
-            item = new Menu((long) 11, 10, 10, 0, "校历", "cn.nicolite.huthelper.view.activity.CalendarActivity", false);
+            item = new Menu((long) 11, 10, 10, 0, "失物招领", "cn.nicolite.huthelper.view.activity.LostAndFoundActivity", true);
             menuItems.add(item);
-            item = new Menu((long) 12, 11, 11, 0, "失物招领", "cn.nicolite.huthelper.view.activity.LostAndFoundActivity", true);
+            item = new Menu((long) 12, 11, 11, 0, "宣讲会", "cn.nicolite.huthelper.view.activity.CareerTalkActivity", true);
             menuItems.add(item);
-            item = new Menu((long) 13, 12, 12, 0, "宣讲会", "cn.nicolite.huthelper.view.activity.CareerTalkActivity", true);
+            item = new Menu((long) 13, 12, 12, 0, "全部", "cn.nicolite.huthelper.view.activity.AllActivity", true);
             menuItems.add(item);
-            item = new Menu((long) 14, 13, 13, 0, "全部", "cn.nicolite.huthelper.view.activity.AllActivity", true);
+            item = new Menu((long) 14, 13, 13, 0, "视频专栏", "cn.nicolite.huthelper.view.activity.VideoActivity", false);
             menuItems.add(item);
-            item = new Menu((long) 15, 14, 14, 0, "视频专栏", "cn.nicolite.huthelper.view.activity.VideoListActivity", false);
-            menuItems.add(item);
-            item = new Menu((long) 16, 15, 15, 0, "新生攻略", "cn.nicolite.huthelper.view.activity.FreshmanGuideActivity", false);
+            item = new Menu((long) 15, 14, 14, 0, "新生攻略", "cn.nicolite.huthelper.view.activity.FreshmanGuideActivity", false);
             menuItems.add(item);
 
             for (Menu menu : menuItems) {
                 menu.setUserId(userId);
                 List<Menu> list = menuDao.queryBuilder().where(MenuDao.Properties.Id.eq(menu.getId())).list();
                 if (!ListUtils.isEmpty(list)) {
-                    menuDao.update(menu);
+                    //更新时保留用户自定义内容
+                    Menu menuOld = list.get(0);
+                    if (!menuOld.getTitle().equals(menu.getTitle())
+                            || !menuOld.getPath().equals(menu.getPath())
+                            || menuOld.getType() != menu.getType()
+                            || menuOld.getImgId() != menu.getImgId()) {
+                        menu.setIsMain(menuOld.getIsMain());
+                        menuDao.update(menu);
+                    }
                     continue;
                 }
                 menuDao.insert(menu);
@@ -242,6 +247,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
         List<Menu> menuList = menuDao.queryBuilder()
                 .where(MenuDao.Properties.UserId.eq(userId), MenuDao.Properties.IsMain.eq(true))
                 .orderAsc(MenuDao.Properties.Index)
+                .limit(12)
                 .list();
 
         if (getView() != null) {

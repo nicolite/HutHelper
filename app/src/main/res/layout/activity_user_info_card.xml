@@ -17,7 +17,7 @@
             android:layout_height="274dp"
             android:layout_marginEnd="27dp"
             android:layout_marginStart="27dp"
-            android:layout_marginTop="151dp"
+            android:layout_marginTop="161dp"
             android:background="@color/white" />
 
         <ImageView
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="27dp"
             android:layout_marginStart="27dp"
-            android:layout_marginTop="151dp"
+            android:layout_marginTop="161dp"
             android:orientation="vertical">
 
             <TextView
@@ -41,7 +41,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="26.5dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="70dp"
                 android:ellipsize="marquee"
                 android:gravity="center"
                 android:singleLine="true"
@@ -89,7 +89,7 @@
                 android:layout_width="207dp"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/bt_user_info_card"
                 android:text="发起聊天"
                 android:textColor="#FF1DCBDB"
@@ -98,7 +98,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal"
                 android:weightSum="3">
 

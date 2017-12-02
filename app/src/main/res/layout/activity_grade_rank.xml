@@ -60,9 +60,20 @@
                     android:id="@+id/tv_grade_nopassnum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_above="@+id/iv_grade_line"
+                    android:layout_above="@+id/tv_grade_avggrade"
+                    android:layout_marginBottom="5dp"
                     android:layout_marginStart="12dp"
                     android:text="总挂科数"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_grade_avggrade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/iv_grade_line"
+                    android:layout_marginStart="12dp"
+                    android:text="平均分"
                     android:textColor="@color/white"
                     android:textSize="12sp" />
 
@@ -81,16 +92,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_gravity="center"
-                android:background="#191dcbdb"
+                android:background="@color/transparent"
                 app:tabBackground="?attr/selectableItemBackground"
+                app:tabIndicatorColor="@color/white"
                 app:tabIndicatorHeight="2dp"
+                app:tabMaxWidth="80dp"
                 app:tabSelectedTextColor="@color/white"
                 app:tabTextColor="@color/light_grey" />
 
-            <android.support.v4.view.ViewPager
+            <cn.nicolite.huthelper.view.widget.WrapContentHeightViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="5dp"
+                android:flipInterval="30"
                 android:persistentDrawingCache="animation" />
 
             <Button

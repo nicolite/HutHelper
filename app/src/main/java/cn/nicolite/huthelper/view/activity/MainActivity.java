@@ -1,5 +1,6 @@
 package cn.nicolite.huthelper.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -167,7 +168,12 @@ public class MainActivity extends BaseActivity implements IMainView {
                         }
                         bundle.putString("title", menu.getTitle());
                         bundle.putInt("type", menu.getType());
-                        startActivity(Class.forName(menu.getPath()), bundle);
+
+                        if (menu.getTitle().equals("全部") && menu.getIndex() == 12){
+                            startActivityForResult(Class.forName(menu.getPath()), bundle, Constants.REQUEST);
+                        }else {
+                            startActivity(Class.forName(menu.getPath()), bundle);
+                        }
                     } catch (ClassNotFoundException e) {
                         showMessage("找不到该页面！");
                         e.printStackTrace();
@@ -361,6 +367,14 @@ public class MainActivity extends BaseActivity implements IMainView {
                         .crossFade()
                         .into(ivNavAvatar);
             }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.REQUEST && resultCode == Constants.CHANGE){
+            mainPresenter.showMenu();
         }
     }
 

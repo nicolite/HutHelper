@@ -21,7 +21,6 @@ import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.presenter.LoginPresenter;
 import cn.nicolite.huthelper.utils.KeyBoardUtils;
-import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.utils.ToastUtil;
 import cn.nicolite.huthelper.view.iview.ILoginView;
@@ -128,8 +127,7 @@ public class LoginActivity extends BaseActivity implements ILoginView{
 
     @Override
     public void showMessage(String msg) {
-        LogUtils.d(TAG, "登录失败：" + msg);
-        SnackbarUtils.showShortSnackbar(rootView, "登录失败：" + msg);
+        SnackbarUtils.showShortSnackbar(rootView, msg);
     }
 
     @Override

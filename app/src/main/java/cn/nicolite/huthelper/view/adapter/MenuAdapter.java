@@ -28,7 +28,7 @@ import cn.nicolite.huthelper.view.widget.CustomItemTouchHelper;
  * Created by nicolite on 17-10-24.
  */
 
-public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder> implements CustomItemTouchHelper.ItemTouchHelperAdapter{
+public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder> implements CustomItemTouchHelper.ItemTouchHelperAdapter {
     private List<Menu> menuList;
     private Context context;
     private boolean isEdit;
@@ -37,13 +37,12 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
     /**
      * 图片索引
-     * 0--图书馆 1--课程表   2--考试   3--成绩   4--作业   5--二手   6--说说   7--电费   8--薪水
-     * 9--实验课  10--校历 11--失物  12--宣讲会  13--全部 14--视频 15--新生攻略
+     * 0--图书馆 1--课程表   2--考试   3--成绩   4--作业   5--二手   6--说说   7--电费
+     * 8--实验课  9--校历 10--失物  11--宣讲会  12--全部 13--视频 14--新生攻略
      */
     private final int[] PIC_INDEX = {R.drawable.tushuguan, R.drawable.kechengbiao, R.drawable.kaoshichaxun, R.drawable.chengjichaxun
             , R.drawable.wangshangzuoye, R.drawable.ershoushichang, R.drawable.xiaoyuanshuoshuo, R.drawable.dianfeichaxun,
-            R.drawable.xiaozhaoxinshui, R.drawable.shiyankebiao, R.drawable.rili, R.drawable.shiwuzhaoling,
-            R.drawable.xuanjianghui, R.drawable.more, R.drawable.shipinzhuanlan, R.drawable.laoxiangxiaoyou};
+            R.drawable.shiyankebiao, R.drawable.rili, R.drawable.shiwuzhaoling, R.drawable.xuanjianghui, R.drawable.more, R.drawable.shipinzhuanlan, R.drawable.laoxiangxiaoyou};
 
     public MenuAdapter(Context context, List<Menu> menuList) {
         this.context = context;
@@ -66,6 +65,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
                 .skipMemoryCache(true)
                 .dontAnimate()
                 .into(holder.ivPic);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,9 +95,8 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
     @Override
     public int getItemCount() {
-        return ListUtils.isEmpty(menuList)? 0 : menuList.size();
+        return ListUtils.isEmpty(menuList) ? 0 : menuList.size();
     }
-
 
 
     /**
@@ -123,6 +122,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
 
     /**
      * 拖拽移动时回调
+     *
      * @param fromPosition
      * @param toPosition
      */
@@ -163,6 +163,7 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
         ImageView ivPic;
         @BindView(R.id.rootView)
         RelativeLayout rootView;
+
         public MenuViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);

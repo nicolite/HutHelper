@@ -64,7 +64,7 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ExamViewHolder
             long rem = (date.getTime() - nowDate.getTime()) / (24 * 60 * 60 * 1000);
             if (rem > 0) {
                 remainder = "剩余" + rem + "天";
-            } else {
+            }else if (rem < 0){
                 remainder = "已结束";
             }
 
