@@ -169,16 +169,12 @@ public class MainActivity extends BaseActivity implements IMainView {
                         bundle.putString("title", menu.getTitle());
                         bundle.putInt("type", menu.getType());
 
-                        if (menu.getTitle().equals("全部") && menu.getIndex() == 12){
-                            startActivityForResult(Class.forName(menu.getPath()), bundle, Constants.REQUEST);
-                        }else {
-                            startActivity(Class.forName(menu.getPath()), bundle);
-                        }
+                        startActivityForResult(Class.forName(menu.getPath()), bundle, Constants.REQUEST);
                     } catch (ClassNotFoundException e) {
                         showMessage("找不到该页面！");
                         e.printStackTrace();
                     }
-                }else {
+                } else {
                     showMessage("你点的太快了！");
                 }
             }
@@ -373,7 +369,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Constants.REQUEST && resultCode == Constants.CHANGE){
+        if (requestCode == Constants.REQUEST && resultCode == Constants.CHANGE) {
             mainPresenter.showMenu();
         }
     }

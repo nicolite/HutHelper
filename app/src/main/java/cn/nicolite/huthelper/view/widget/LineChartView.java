@@ -19,7 +19,6 @@ import java.util.List;
 
 import cn.nicolite.huthelper.model.bean.GradeRank;
 import cn.nicolite.huthelper.utils.DensityUtils;
-import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.utils.ScreenUtils;
 
 /**
@@ -62,8 +61,13 @@ public class LineChartView extends View {
     }
 
     public LineChartView(Context context, @Nullable AttributeSet attrs) {
+        this(context, attrs, 0);
+    }
 
-        super(context, attrs);
+
+    public LineChartView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+
         this.context = context;
         sp10 = DensityUtils.sp2px(context, 10);
         sp14 = DensityUtils.sp2px(context, 14);
@@ -118,7 +122,7 @@ public class LineChartView extends View {
 //        if (hMode == MeasureSpec.EXACTLY) {
 //            mHeight = hSize;
 //        } else {
-        mHeight = (int) (linePadding * 5 + startY + 2 * textHeight + 20);
+        mHeight = (int) (linePadding * 6 + startY + 2 * textHeight + 20);
         //   }
         setMeasuredDimension(mWidth, mHeight);
     }
@@ -179,6 +183,7 @@ public class LineChartView extends View {
             } else {
                 setVisibility(VISIBLE);
             }
+
             fullImage = Bitmap.createBitmap(getWidth(), getHeight(), Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(fullImage);
             canvas.drawColor(Color.TRANSPARENT);
@@ -211,7 +216,6 @@ public class LineChartView extends View {
             for (int i = 0; i < rankList.size(); i++) {
                 int cx = perWidth / 2 + perWidth * i + paddingLeft;
                 float bjy = startY + ((float) (Integer.parseInt(rankList.get(i).getBjrank()) - minNum) / perNum) * linePadding;
-
                 float zyy = startY + ((float) (Integer.parseInt(rankList.get(i).getZyrank()) - minNum) / perNum) * linePadding;
                 if (i == 0) {
                     bjPath.moveTo(cx, bjy);
@@ -266,7 +270,6 @@ public class LineChartView extends View {
     }
 
     public void setRankingData(List<GradeRank> ranks, boolean isXq) {
-        LogUtils.d("xxx", "ranksize " + ranks.size() + " isXq " + isXq);
         this.rankList = ranks;
         this.isXq = isXq;
         shouldUpdate = true;

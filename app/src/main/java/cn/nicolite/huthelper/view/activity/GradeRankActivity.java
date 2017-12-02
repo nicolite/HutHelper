@@ -1,16 +1,20 @@
 package cn.nicolite.huthelper.view.activity;
 
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.BindViews;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
@@ -37,14 +41,14 @@ public class GradeRankActivity extends BaseActivity implements IGradeRankView {
     TextView tvGradeAvgjd;
     @BindView(R.id.tv_grade_nopassnum)
     TextView tvGradeNopassnum;
-    @BindView(R.id.tab)
-    TabLayout tab;
     @BindView(R.id.viewpager)
     ViewPager viewpager;
     @BindView(R.id.rootView)
     LinearLayout rootView;
     @BindView(R.id.tv_grade_avggrade)
     TextView tvGradeAvggrade;
+    @BindViews({R.id.radio_grade_xq, R.id.radio_grade_xn})
+    List<RadioButton> segmentedControls;
 
     private GradeRankPresenter gradeRankPresenter;
     private LoadingDialog loadingDialog;
@@ -71,9 +75,9 @@ public class GradeRankActivity extends BaseActivity implements IGradeRankView {
     @Override
     protected void doBusiness() {
         toolbarTitle.setText("成绩");
-
         gradeRankPresenter = new GradeRankPresenter(this, this);
         gradeRankPresenter.showRank();
+
     }
 
     @OnClick({R.id.toolbar_back, R.id.toolbar_refresh, R.id.btn_grade_showall})
@@ -88,6 +92,14 @@ public class GradeRankActivity extends BaseActivity implements IGradeRankView {
             case R.id.btn_grade_showall:
                 startActivity(GradeListActivity.class);
                 break;
+        }
+    }
+
+    //radio监听
+    @OnCheckedChanged({R.id.radio_grade_xq, R.id.radio_grade_xn})
+    public void setRadioGroupSegmentedControl(RadioButton radioButton, boolean isChecked) {
+        if (isChecked) {
+            viewpager.setCurrentItem(segmentedControls.indexOf(radioButton));
         }
     }
 
@@ -115,26 +127,51 @@ public class GradeRankActivity extends BaseActivity implements IGradeRankView {
         tvGradeAvgjd.setText(String.valueOf("综合绩点  " + gradeRankResult.getZhjd()));
         tvGradeNopassnum.setText(String.valueOf("总挂科数  " + gradeRankResult.getGks()));
         tvGradeAvggrade.setText(String.valueOf("总平均分   " + gradeRankResult.getPjf()));
-        //pieGradeXf.setCurrNum(Float.parseFloat(gradeRankResult.getZxf()), Float.parseFloat(gradeRankResult.getWdxf()));
-
+        pieGradeXf.setCurrNum(Float.parseFloat(gradeRankResult.getZxf()), Float.parseFloat(gradeRankResult.getWdxf()));
         xnRank.clear();
         xnRank.addAll(gradeRankResult.getRank().getXnrank());
+        Collections.sort(xnRank, new Comparator<GradeRank>() {
+            @Override
+            public int compare(GradeRank gradeRank, GradeRank t1) {
+                int temp1 = Integer.parseInt(gradeRank.getXn().split("-")[0]);
+                int temp2 = Integer.parseInt(t1.getXn().split("-")[0]);
+                return temp1 - temp2;
+            }
+        });
+
         xqRank.clear();
         xqRank.addAll(gradeRankResult.getRank().getXqrank());
-        adapter = new GradeRankAdapter(context, getTitleList(), xnRank, xqRank);
-        viewpager.setAdapter(adapter);
-        tab.setupWithViewPager(viewpager);
-        adapter = new GradeRankAdapter(context, getTitleList(), xnRank, xqRank);
-        viewpager.setAdapter(adapter);
-        viewpager.setCurrentItem(0);
-        //adapter.notifyDataSetChanged();
-    }
 
-    private List<String> getTitleList() {
-        List<String> titleList = new ArrayList<>();
-        titleList.add("学期");
-        titleList.add("学年");
-        return titleList;
+        Collections.sort(xqRank, new Comparator<GradeRank>() {
+            @Override
+            public int compare(GradeRank gradeRank, GradeRank t1) {
+                int temp1 = Integer.parseInt(gradeRank.getXn().split("-")[0] + gradeRank.getXq());
+                int temp2 = Integer.parseInt(t1.getXn().split("-")[0] + t1.getXq());
+                return temp1 - temp2;
+            }
+        });
+
+        adapter = new GradeRankAdapter(context, xnRank, xqRank);
+        viewpager.setAdapter(adapter);
+        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                segmentedControls.get(position).setChecked(true);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        viewpager.setCurrentItem(0);
+        segmentedControls.get(0).setChecked(true);
     }
 
 }

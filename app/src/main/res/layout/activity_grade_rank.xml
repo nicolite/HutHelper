@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -85,20 +86,52 @@
                     android:layout_marginTop="15dp"
                     android:background="@color/light_grey" />
 
-            </RelativeLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignTop="@+id/iv_grade_line"
+                    android:background="@color/transparent">
 
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tab"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_gravity="center"
-                android:background="@color/transparent"
-                app:tabBackground="?attr/selectableItemBackground"
-                app:tabIndicatorColor="@color/white"
-                app:tabIndicatorHeight="2dp"
-                app:tabMaxWidth="80dp"
-                app:tabSelectedTextColor="@color/white"
-                app:tabTextColor="@color/light_grey" />
+                    <RadioGroup
+                        android:id="@+id/radio_group_segmented_control"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radio_grade_xq"
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="20dp"
+                            android:button="@null"
+                            android:checked="true"
+                            android:drawableBottom="@drawable/bg_radiobutton_grade"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_horizontal|top"
+                            android:paddingBottom="3dp"
+                            android:text="学期"
+                            android:textColor="@drawable/tvbg_grade_radio"
+                            android:textSize="17sp"
+                            tools:checked="true" />
+
+                        <RadioButton
+                            android:id="@+id/radio_grade_xn"
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:button="@null"
+                            android:drawableBottom="@drawable/bg_radiobutton_grade"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_horizontal|top"
+                            android:text="学年"
+                            android:textColor="@drawable/tvbg_grade_radio"
+                            android:textSize="17sp" />
+                    </RadioGroup>
+                </LinearLayout>
+            </RelativeLayout>
 
             <cn.nicolite.huthelper.view.widget.WrapContentHeightViewPager
                 android:id="@+id/viewpager"

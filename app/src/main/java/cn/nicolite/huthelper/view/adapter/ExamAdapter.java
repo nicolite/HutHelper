@@ -49,11 +49,14 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ExamViewHolder
         holder.tvExamitemTime.setText(String.valueOf("（" + exam.getWeek_Num() + "周 "
                 + startTime[1].substring(0, 5) + "-" + endTime[1].substring(0, 5) + "）"));
 
-        if (!exam.getIsset().equals("0")){
-            holder.tvGradeTime.setText(String.valueOf(exam.getCourseName() + "（重修）"));
-        }else {
-            holder.tvGradeTime.setText(exam.getCourseName());
-        }
+        //isset不确定是不是重修标记
+       // if (!exam.getIsset().equals("0")){
+       //     holder.tvGradeTime.setText(String.valueOf(exam.getCourseName() + "（重修）"));
+       // }else {
+       //     holder.tvGradeTime.setText(exam.getCourseName());
+       // }
+
+        holder.tvGradeTime.setText(exam.getCourseName());
 
         holder.tvGradeJidian.setText(exam.getRoomName());
         String remainder = "今天";
