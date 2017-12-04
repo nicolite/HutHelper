@@ -20,11 +20,13 @@ import cn.nicolite.huthelper.BuildConfig;
 import cn.nicolite.huthelper.app.MApplication;
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.db.dao.MenuDao;
+import cn.nicolite.huthelper.db.dao.NoticeDao;
 import cn.nicolite.huthelper.db.dao.TimeAxisDao;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.Menu;
+import cn.nicolite.huthelper.model.bean.Notice;
 import cn.nicolite.huthelper.model.bean.TimeAxis;
 import cn.nicolite.huthelper.model.bean.Update;
 import cn.nicolite.huthelper.model.bean.User;
@@ -181,7 +183,21 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                 });
     }
 
-    public void showNotification() {
+    public void showNotice(boolean isReceiver) {
+        if (TextUtils.isEmpty(userId)) {
+            getView().showMessage("获取用户信息失败！");
+            return;
+        }
+
+        NoticeDao noticeDao = daoSession.getNoticeDao();
+        List<Notice> list = noticeDao.queryBuilder()
+                .where(NoticeDao.Properties.UserId.eq(userId))
+                .orderDesc(NoticeDao.Properties.Id)
+                .list();
+
+        if (!ListUtils.isEmpty(list) && getView() != null) {
+            getView().showNotice(list.get(0), isReceiver);
+        }
 
     }
 

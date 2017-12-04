@@ -5,6 +5,7 @@ import io.reactivex.processors.FlowableProcessor;
 import io.reactivex.processors.PublishProcessor;
 
 /**
+ * //TODO 未实现，暂时不可用
  * RxBus 事件总线 带背压处理
  * Created by nicolite on 17-10-13.
  */
@@ -48,4 +49,5 @@ public class RxBus {
     private static class Holder{
         private static final RxBus BUS = new RxBus();
     }
+
 }

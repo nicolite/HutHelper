@@ -33,11 +33,6 @@
 -keep class cn.nicolite.huthelper.model.bean.**{*;}
 # Java Bean 结束
 
-#Litepal 开始
--keep class org.litepal.** {*;}
--keep class * extends org.litepal.crud.DataSupport {*;}
-#Litepal 结束
-
 #Slidr 开始
 -dontwarn com.r0adkll.slidr
 -keep class com.r0adkll.slidr.** {*;}
@@ -53,7 +48,15 @@
 
 # for DexGuard only
 #-keepresourcexmlelements manifest/application/meta-data@value=GlideModule
+
 #Glide 结束
+#信鸽推送 开始
+-keep public class * extends android.app.Service
+-keep public class * extends android.content.BroadcastReceiver
+-keep class com.tencent.android.tpush.** {* ;}
+-keep class com.tencent.mid.** {* ;}
+-keep public class * extends com.qq.taf.jce.JceStruct{*;}
+#信鸽推送 结束
 
 #腾讯mat 开始
 -keep class com.tencent.stat.**{*;}
@@ -65,12 +68,6 @@
 -keep public class com.tencent.bugly.**{*;}
 -keep class android.support.**{*;}
 #腾讯bugly 结束
-
-#Litepal 开始
--keep class org.litepal.** {*;}
--keep class * extends org.litepal.crud.DataSupport {*;}
--keep class cn.nicolite.huthelper.model.bean.** {*;}
-#Litepal 结束
 
 #Jsoup 开始
 -keep class org.jsoup.nodes.** {*;}

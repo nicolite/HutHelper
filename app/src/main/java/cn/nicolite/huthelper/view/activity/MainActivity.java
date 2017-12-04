@@ -1,7 +1,11 @@
 package cn.nicolite.huthelper.view.activity;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -29,6 +33,7 @@ import cn.nicolite.huthelper.manager.ActivityStackManager;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.Menu;
+import cn.nicolite.huthelper.model.bean.Notice;
 import cn.nicolite.huthelper.model.bean.TimeAxis;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.presenter.MainPresenter;
@@ -96,6 +101,10 @@ public class MainActivity extends BaseActivity implements IMainView {
     private boolean isOpen;
     private QBadgeView qBadgeView;
     private Configure configure;
+    private Notice notice;
+    private LocalBroadcastManager localBroadcastManager;
+    private IntentFilter intentFilter;
+    private MainReceiver mainReceiver;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -188,6 +197,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         mainPresenter.showWeather();
         mainPresenter.checkPermission();
         mainPresenter.initPush(user.getStudentKH());
+        mainPresenter.showNotice(false);
         mainPresenter.connectRongIM();
         mainPresenter.startLoginService();
         qBadgeView = new QBadgeView(context);
@@ -222,11 +232,36 @@ public class MainActivity extends BaseActivity implements IMainView {
                 }
             }
         }, Conversation.ConversationType.PRIVATE);
+
+        //注册本地广播监听消息
+        localBroadcastManager = LocalBroadcastManager.getInstance(context);
+        mainReceiver = new MainReceiver();
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(Constants.mainBroadcast);
+        localBroadcastManager.registerReceiver(mainReceiver, intentFilter);
+    }
+
+    //主界面监听器
+    class MainReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Bundle bundle = intent.getExtras();
+            if (bundle != null) {
+                int type = bundle.getInt("type");
+                switch (type) {
+                    case Constants.BROADCAST_TYPE_NOTICE:
+                        mainPresenter.showNotice(true);
+                        break;
+                }
+            }
+        }
     }
 
     @OnClick({R.id.iv_nav_avatar, R.id.tv_nav_name, R.id.tv_nav_private_message,
             R.id.tv_nav_update, R.id.tv_nav_share, R.id.tv_nav_logout, R.id.tv_nav_about,
-            R.id.tv_nav_fback, R.id.imgbtn_menusetting, R.id.imgbtn_bell})
+            R.id.tv_nav_fback, R.id.imgbtn_menusetting, R.id.imgbtn_bell,
+            R.id.tv_tongzhi_contont, R.id.tv_tongzhi_title, R.id.tv_notice_maincontent})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_nav_avatar:
@@ -275,6 +310,17 @@ public class MainActivity extends BaseActivity implements IMainView {
             case R.id.imgbtn_bell:
                 mainPresenter.startChat();
                 break;
+            case R.id.tv_tongzhi_title:
+            case R.id.tv_tongzhi_contont:
+                if (notice != null) {
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("noticeId", notice.getId());
+                    startActivity(NoticeItemActivity.class, bundle);
+                }
+                break;
+            case R.id.tv_notice_maincontent:
+                startActivity(NoticeActivity.class);
+                break;
         }
     }
 
@@ -318,8 +364,28 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     @Override
-    public void showNotice() {
+    public void showNotice(final Notice notice, boolean isReceiver) {
+        this.notice = notice;
+        tvTongzhiTitle.setText(notice.getTitle());
+        tvTongzhiContont.setText(notice.getContent());
 
+        if (isReceiver) {
+            final CommonDialog commonDialog = new CommonDialog(MainActivity.this);
+            commonDialog
+                    .setTitle(notice.getTitle())
+                    .setMessage(notice.getContent())
+                    .setPositiveButton("查看", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            commonDialog.dismiss();
+                            Bundle bundle = new Bundle();
+                            bundle.putSerializable("noticeId", notice.getId());
+                            startActivity(NoticeItemActivity.class, bundle);
+                        }
+                    })
+                    .setNegativeButton("取消", null)
+                    .show();
+        }
     }
 
     @Override
@@ -377,6 +443,11 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+
+        if (localBroadcastManager != null) {
+            localBroadcastManager.unregisterReceiver(mainReceiver);
+        }
+
         RongIM.getInstance().removeUnReadMessageCountChangedObserver(new IUnReadMessageObserver() {
             @Override
             public void onCountChanged(int i) {

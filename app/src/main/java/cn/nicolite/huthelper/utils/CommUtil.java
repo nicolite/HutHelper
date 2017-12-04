@@ -44,7 +44,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import cn.nicolite.huthelper.model.Constants;
-import cn.nicolite.huthelper.model.bean.LessonOld;
+import cn.nicolite.huthelper.model.bean.Lesson;
 
 import static android.R.attr.path;
 
@@ -172,8 +172,8 @@ public class CommUtil {
      * @return
      */
 
-    public static boolean ifHaveCourse(LessonOld lesson, int currWeek) {
-        String[] s = lesson.getIndex().split(" ");
+    public static boolean ifHaveCourse(Lesson lesson, int currWeek) {
+        String[] s = lesson.getZs().split(" ");
 
         String curr = String.valueOf(currWeek);
         for (String w : s) {
