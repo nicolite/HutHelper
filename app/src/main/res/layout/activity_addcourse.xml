@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_addcourse" />
+
+    <TextView
+        android:id="@+id/tv_course_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:text="周数"
+        android:textColor="#adadad"
+        android:textSize="12sp" />
+
+    <GridView
+        android:id="@+id/gv_course_weeks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:horizontalSpacing="7.5dp"
+        android:numColumns="5"
+        android:verticalSpacing="7.5dp"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/ll_content1"
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingEnd="0dp"
+            android:paddingStart="18dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="课程名称"
+                android:textColor="#adadad"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_course_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="加载中..."
+                android:textColor="#404040"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_course_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/transparent"
+                android:hint="课程名称"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="#efefef" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingEnd="0dp"
+            android:paddingStart="18dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="时间"
+                android:textColor="#adadad"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_course_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="加载中..."
+                android:textColor="#404040"
+                android:textSize="16sp" />
+
+            <LinearLayout
+                android:id="@+id/ll_course_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/tv_course_week"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:drawableEnd="@drawable/ic_dropdown_3"
+                    android:gravity="center"
+                    android:hint="周一"
+                    android:textColor="#404040"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_course_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:drawableEnd="@drawable/ic_dropdown_3"
+                    android:gravity="center"
+                    android:hint="1 2节"
+                    android:textColor="#404040"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#efefef" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingEnd="0dp"
+            android:paddingStart="18dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="教室"
+                android:textColor="#adadad"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_course_classroom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="加载中..."
+                android:textColor="#404040"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_course_classroom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/transparent"
+                android:hint="上课教室"
+                android:imeOptions="actionNext"
+                android:singleLine="true"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="#efefef" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:paddingEnd="0dp"
+            android:paddingStart="18dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="教师"
+                android:textColor="#adadad"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/tv_course_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="加载中..."
+                android:textColor="#404040"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/et_course_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/transparent"
+                android:hint="教师名"
+                android:singleLine="true"
+                android:textColor="#404040"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

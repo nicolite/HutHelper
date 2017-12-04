@@ -155,7 +155,6 @@ public class WebViewActivity extends BaseActivity {
             @Override
             public void onProgressChanged(WebView webView, int i) {
                 super.onProgressChanged(webView, i);
-
                 if (i == 100) {
                     if (type != TYPE_CHANGE_PWD) {
                         addImgClickListener();
@@ -164,6 +163,7 @@ public class WebViewActivity extends BaseActivity {
                 } else {
                     progressBar.setProgress(i);
                 }
+
             }
         });
     }

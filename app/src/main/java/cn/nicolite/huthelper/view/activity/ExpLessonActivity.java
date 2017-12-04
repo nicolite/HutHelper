@@ -21,7 +21,7 @@ import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.ExpLesson;
 import cn.nicolite.huthelper.presenter.ExplessonPresenter;
-import cn.nicolite.huthelper.utils.DateUtiils;
+import cn.nicolite.huthelper.utils.DateUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.TabAdapter;
@@ -157,8 +157,8 @@ public class ExpLessonActivity extends BaseActivity implements IExplessonView {
 
         Configure configure = configureList.get(0);
 
-        int nowWeek = Integer.parseInt(String.valueOf(DateUtiils.getNowWeek(configure.getNewTermDate()))
-                + String.valueOf(DateUtiils.getWeekOfToday()));
+        int nowWeek = Integer.parseInt(String.valueOf(DateUtils.getNowWeek(configure.getNewTermDate()))
+                + String.valueOf(DateUtils.getWeekOfToday()));
 
         List<ExpLesson> unfinish = new ArrayList<>();
         List<ExpLesson> finish = new ArrayList<>();

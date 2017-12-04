@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <include layout="@layout/line_gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_month"
+            style="@style/courseTableText"
+            android:layout_width="30dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
+
+        <LinearLayout
+            android:id="@+id/ll_layout1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_day1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15" />
+
+            <TextView
+                android:id="@+id/tv_monday_course"
+                style="@style/courseTableText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="周一"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_layout2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_day2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12" />
+
+            <TextView
+                android:id="@+id/tv_tuesday_course"
+                style="@style/courseTableText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="周二"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_layout3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_day3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="13" />
+
+            <TextView
+                android:id="@+id/tv_wednesday_course"
+                style="@style/courseTableText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="周三"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_layout4"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_day4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="14" />
+
+            <TextView
+                android:id="@+id/tv_thursday_course"
+                style="@style/courseTableText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="周四"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_layout5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_day5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15" />
+
+            <TextView
+                android:id="@+id/tv_friday_course"
+                style="@style/courseTableText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="周五"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_layout6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_day6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="16" />
+
+            <TextView
+                android:id="@+id/tv_saturday_course"
+                style="@style/courseTableText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="周六"
+                android:textSize="12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_layout7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_day7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="17" />
+
+            <TextView
+                android:id="@+id/tv_sunday_course"
+                style="@style/courseTableText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="周日"
+                android:textSize="12sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/line_gray" />
+</LinearLayout>

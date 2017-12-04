@@ -64,7 +64,7 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ExamViewHolder
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
             Date date = simpleDateFormat.parse(startTime[0]);
             Date nowDate = new Date();
-            long rem = (date.getTime() - nowDate.getTime()) / (24 * 60 * 60 * 1000);
+            long rem = (date.getTime() - nowDate.getTime()) / (24 * 60 * 60 * 1000) + 1;
             if (rem > 0) {
                 remainder = "剩余" + rem + "天";
             }else if (rem < 0){

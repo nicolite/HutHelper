@@ -13,5 +13,9 @@
 
         <include layout="@layout/toolbar_refresh_drowndown" />
 
+        <FrameLayout
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </LinearLayout>
 </FrameLayout>

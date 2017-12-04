@@ -236,6 +236,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                             || menuOld.getType() != menu.getType()
                             || menuOld.getImgId() != menu.getImgId()) {
                         menu.setIsMain(menuOld.getIsMain());
+                        menu.setIndex(menuOld.getIndex());
                         menuDao.update(menu);
                     }
                     continue;

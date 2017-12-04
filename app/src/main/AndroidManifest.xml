@@ -212,6 +212,10 @@
             android:theme="@style/AppTheme" />
 
         <activity
+            android:name=".view.activity.SyllabusItemActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
             android:name=".view.activity.SayActivity"
             android:theme="@style/AppTheme" />
 
@@ -222,6 +226,17 @@
         <activity
             android:name=".view.activity.VideoActivity"
             android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".view.activity.VideoItemActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".view.activity.VideoViewH5PlayerActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:hardwareAccelerated="true"
+            android:screenOrientation="landscape"
+            android:theme="@style/VideoViewH5" />
 
         <service android:name=".services.LoginService" />
 

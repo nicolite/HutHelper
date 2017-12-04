@@ -44,6 +44,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import cn.nicolite.huthelper.model.Constants;
+import cn.nicolite.huthelper.model.bean.LessonOld;
 
 import static android.R.attr.path;
 
@@ -163,6 +164,25 @@ public class CommUtil {
         return wifiNetworkInfo.isConnected();
     }
 
+    /**
+     * 判断课程有无
+     *
+     * @param lesson   课程
+     * @param currWeek 查询的周
+     * @return
+     */
+
+    public static boolean ifHaveCourse(LessonOld lesson, int currWeek) {
+        String[] s = lesson.getIndex().split(" ");
+
+        String curr = String.valueOf(currWeek);
+        for (String w : s) {
+            if (w.equals(curr)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /***
      * MD5加码 生成32位md5码

@@ -106,7 +106,7 @@ public class GradeRankActivity extends BaseActivity implements IGradeRankView {
     @Override
     public void showLoading() {
         loadingDialog = new LoadingDialog(context)
-                .setLoadingText("加载中...");
+                .setLoadingText("查询中...");
         loadingDialog.show();
     }
 
