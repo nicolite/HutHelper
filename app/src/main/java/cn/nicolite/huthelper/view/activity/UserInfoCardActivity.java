@@ -8,6 +8,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
@@ -16,6 +19,7 @@ import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.presenter.SearchPresenter;
 import cn.nicolite.huthelper.presenter.UserInfoCardPresenter;
+import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.ToastUtil;
 import cn.nicolite.huthelper.view.iview.IUserInfoCardView;
 import io.rong.imkit.RongIM;
@@ -41,7 +45,7 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
     private UserInfoCardPresenter userInfoCardPresenter;
     private String mUserId;
     private String username;
-
+    private List<String> avatarUrlList = new ArrayList<>();
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -75,7 +79,8 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
         userInfoCardPresenter.showInfo(mUserId);
     }
 
-    @OnClick({R.id.toolbar_back, R.id.bt_user_chat, R.id.iv_user_shiwu, R.id.iv_user_shuoshuo, R.id.iv_user_ershou})
+    @OnClick({R.id.toolbar_back, R.id.bt_user_chat, R.id.iv_user_shiwu,
+            R.id.iv_user_shuoshuo, R.id.iv_user_ershou, R.id.iv_user_avatar})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_back:
@@ -105,6 +110,14 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
                 eBundle.putString("extras", username);
                 startActivity(SearchResultActivity.class, eBundle);
                 break;
+            case R.id.iv_user_avatar:
+                if (!ListUtils.isEmpty(avatarUrlList)) {
+                    Bundle bundle = new Bundle();
+                    bundle.putStringArrayList("images", (ArrayList<String>) avatarUrlList);
+                    bundle.putInt("curr", 0);
+                    startActivity(ShowImageActivity.class, bundle);
+                }
+                break;
         }
     }
 
@@ -125,6 +138,8 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
 
     @Override
     public void showInfo(User user) {
+        avatarUrlList.clear();
+        avatarUrlList.add(user.getHead_pic_thumb());
         Glide
                 .with(activity)
                 .load(Constants.PICTURE_URL + user.getHead_pic_thumb())
@@ -134,7 +149,7 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
                 .into(ivUserAvatar);
 
         tvUserName.setText(username);
-        tvUserBio.setText("");
+        tvUserBio.setText(TextUtils.isEmpty(user.getBio()) ? "没有签名" : user.getBio());
         tvUserClass.setText(user.getClass_name().replaceAll("\\d+", ""));
         tvUserDepartment.setText(user.getDep_name());
     }

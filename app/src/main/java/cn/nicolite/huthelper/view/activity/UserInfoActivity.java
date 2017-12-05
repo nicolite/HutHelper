@@ -93,7 +93,8 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
         userInfoPresenter.showUserData();
     }
 
-    @OnClick({R.id.toolbar_back, R.id.rl_user_headview, R.id.rl_user_nickname, R.id.rl_user_password, R.id.user_logout})
+    @OnClick({R.id.toolbar_back, R.id.rl_user_headview, R.id.rl_user_nickname,
+            R.id.rl_user_password, R.id.user_logout, R.id.rl_user_bio})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_back:
@@ -137,6 +138,24 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
                 startActivity(LoginActivity.class);
                 finish();
                 break;
+
+            case R.id.rl_user_bio:
+                final CommonDialog commonDialog2 = new CommonDialog(context);
+                commonDialog2
+                        .setTitle("请输入新的签名")
+                        .setInput()
+                        .setPositiveButton("确认", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String inputText = commonDialog2.getInputText();
+                                userInfoPresenter.changeBio(inputText);
+                                tvUserBio.setText(inputText);
+                                commonDialog2.dismiss();
+                            }
+                        })
+                        .setNegativeButton("取消", null)
+                        .show();
+                break;
         }
     }
 
@@ -163,7 +182,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
         tvUserSchool.setText(user.getDep_name());
         tvUserNum.setText(user.getStudentKH());
         tvUserClass.setText(user.getClass_name());
-
+        tvUserBio.setText(TextUtils.isEmpty(user.getBio()) ? "没有签名" : user.getBio());
         if (!TextUtils.isEmpty(user.getHead_pic_thumb())) {
             int width = DensityUtils.dp2px(context, 40);
             Glide

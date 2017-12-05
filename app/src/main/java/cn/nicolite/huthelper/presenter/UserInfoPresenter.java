@@ -92,7 +92,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
         final Configure configure = list.get(0);
         final User user = configure.getUser();
 
-        if (getView() != null){
+        if (getView() != null) {
             getView().showMessage("头像上传中！");
         }
 
@@ -115,7 +115,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                             switch (stringHttpResult.getMsg()) {
                                 case "ok":
                                     msg = "修改成功!";
-                                    getActivity().changeAvatarSuccess(bitmap);
+                                    getView().changeAvatarSuccess(bitmap);
                                     user.setHead_pic_thumb(stringHttpResult.getData());
                                     user.setHead_pic(stringHttpResult.getData());
 
@@ -194,10 +194,9 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
         Configure configure = list.get(0);
         User user = configure.getUser();
 
-        if (getView() == null) {
-            return;
+        if (getView() != null) {
+            getView().showMessage("昵称修改中！");
         }
-        getView().showMessage("昵称修改中！");
 
         APIUtils
                 .getUserAPI()
@@ -213,16 +212,11 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
 
                     @Override
                     public void onNext(HttpResult httpResult) {
-                        String msg;
-                        switch (httpResult.getMsg()) {
-                            case "ok":
-                                msg = "修改成功！";
+                        if (getView() != null) {
+                            if (httpResult.getCode() == 200) {
                                 String userId = getLoginUser();
-
                                 if (TextUtils.isEmpty(userId)) {
-                                    if (getView() != null) {
-                                        getView().showMessage("获取当前登录用户失败，请重新登录！");
-                                    }
+                                    getView().showMessage("获取当前登录用户失败，请重新登录！");
                                     return;
                                 }
 
@@ -230,9 +224,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                                 List<User> userList = userDao.queryBuilder().where(UserDao.Properties.User_id.eq(userId)).list();
 
                                 if (ListUtils.isEmpty(userList)) {
-                                    if (getView() != null) {
-                                        getView().showMessage("获取用户信息失败！");
-                                    }
+                                    getView().showMessage("获取用户信息失败！");
                                     return;
                                 }
 
@@ -240,15 +232,86 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                                 user.setUsername(userName);
                                 userDao.update(user);
 
-                                break;
-                            case "令牌错误":
-                                msg = "令牌错误，请重新登录！";
-                                break;
-                            default:
-                                msg = httpResult.getMsg();
+                                getView().showMessage("修改成功!");
+                            } else {
+                                getView().showMessage("修改失败，" + httpResult.getCode());
+                            }
                         }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
                         if (getView() != null) {
-                            getView().showMessage(msg);
+                            getView().showMessage(ExceptionEngine.handleException(e).getMsg());
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
+    }
+
+    //更换个人签名
+    public void changeBio(final String bio) {
+
+        if (TextUtils.isEmpty(userId)) {
+            if (getView() != null) {
+                getView().showMessage("获取当前登录用户失败，请重新登录！");
+            }
+            return;
+        }
+
+        List<Configure> list = getConfigureList();
+        if (ListUtils.isEmpty(list)) {
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
+            }
+            return;
+        }
+
+        Configure configure = list.get(0);
+        User user = configure.getUser();
+
+        APIUtils
+                .getUserAPI()
+                .changeBio(user.getStudentKH(), configure.getAppRememberCode(), bio)
+                .compose(getActivity().<HttpResult>bindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<HttpResult>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+
+                    }
+
+                    @Override
+                    public void onNext(HttpResult httpResult) {
+                        if (getView() != null) {
+                            if (httpResult.getCode() == 200) {
+                                String userId = getLoginUser();
+                                if (TextUtils.isEmpty(userId)) {
+                                    getView().showMessage("获取当前登录用户失败，请重新登录！");
+                                    return;
+                                }
+
+                                UserDao userDao = daoSession.getUserDao();
+                                List<User> userList = userDao.queryBuilder().where(UserDao.Properties.User_id.eq(userId)).list();
+
+                                if (ListUtils.isEmpty(userList)) {
+                                    getView().showMessage("获取用户信息失败！");
+                                    return;
+                                }
+
+                                User user = userList.get(0);
+                                user.setBio(bio);
+                                userDao.update(user);
+
+                                getView().showMessage("修改成功!");
+                            } else {
+                                getView().showMessage("修改失败，" + httpResult.getCode());
+                            }
                         }
                     }
 

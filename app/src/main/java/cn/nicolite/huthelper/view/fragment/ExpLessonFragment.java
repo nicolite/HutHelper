@@ -72,7 +72,7 @@ public class ExpLessonFragment extends BaseFragment {
 
     }
 
-    public void updateDate(List<ExpLesson> expLessonList){
+    public void updateData(List<ExpLesson> expLessonList){
 
         this.expLessonList.clear();
         this.expLessonList.addAll(expLessonList);

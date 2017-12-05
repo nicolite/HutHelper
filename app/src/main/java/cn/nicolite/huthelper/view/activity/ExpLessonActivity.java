@@ -160,20 +160,20 @@ public class ExpLessonActivity extends BaseActivity implements IExplessonView {
         int nowWeek = Integer.parseInt(String.valueOf(DateUtils.getNowWeek(configure.getNewTermDate()))
                 + String.valueOf(DateUtils.getWeekOfToday()));
 
-        List<ExpLesson> unfinish = new ArrayList<>();
+        List<ExpLesson> unFinish = new ArrayList<>();
         List<ExpLesson> finish = new ArrayList<>();
 
         for (ExpLesson explesson : expLessonList) {
             int week = Integer.parseInt(explesson.getWeeks_no() + explesson.getWeek());
 
             if (week >= nowWeek) {
-                unfinish.add(explesson);
+                unFinish.add(explesson);
             } else {
                 finish.add(explesson);
             }
         }
 
-        expLessonFragmentUnfinish.updateDate(unfinish);
-        expLessonFragmentFinish.updateDate(finish);
+        expLessonFragmentUnfinish.updateData(unFinish);
+        expLessonFragmentFinish.updateData(finish);
     }
 }
