@@ -260,8 +260,9 @@ public class MarketFragment extends BaseFragment implements IMarketView {
     }
 
     public void deleteItem(int position) {
-        goodsList.remove(position);
-        lRecyclerViewAdapter.notifyItemRemoved(position);
+        //goodsList.remove(position);
+        //lRecyclerViewAdapter.notifyItemRemoved(position);
+        refreshData();
     }
 
     public void changetItem(int position, Goods good) {

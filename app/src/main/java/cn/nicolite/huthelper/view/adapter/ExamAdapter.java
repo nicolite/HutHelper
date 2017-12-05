@@ -50,24 +50,31 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ExamViewHolder
                 + startTime[1].substring(0, 5) + "-" + endTime[1].substring(0, 5) + "）"));
 
         //isset不确定是不是重修标记
-       // if (!exam.getIsset().equals("0")){
-       //     holder.tvGradeTime.setText(String.valueOf(exam.getCourseName() + "（重修）"));
-       // }else {
-       //     holder.tvGradeTime.setText(exam.getCourseName());
-       // }
+        // if (!exam.getIsset().equals("0")){
+        //     holder.tvGradeTime.setText(String.valueOf(exam.getCourseName() + "（重修）"));
+        // }else {
+        //     holder.tvGradeTime.setText(exam.getCourseName());
+        // }
 
         holder.tvGradeTime.setText(exam.getCourseName());
 
         holder.tvGradeJidian.setText(exam.getRoomName());
         String remainder = "今天";
         try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
-            Date date = simpleDateFormat.parse(startTime[0]);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+            Date date = simpleDateFormat.parse(exam.getStarttime());
             Date nowDate = new Date();
-            long rem = (date.getTime() - nowDate.getTime()) / (24 * 60 * 60 * 1000) + 1;
-            if (rem > 0) {
-                remainder = "剩余" + rem + "天";
-            }else if (rem < 0){
+
+            long rem = (date.getTime() - nowDate.getTime()) / (60 * 60 * 1000); //获得剩余小时
+            if (rem >= 24) {
+                long day = rem / 24;
+                if (rem % 24 > 0) {
+                    day++;
+                }
+                remainder = "剩余" + day + "天";
+            } else if (rem > 0 && rem < 24) {
+                remainder = "剩余" + rem + "小时";
+            } else if (rem < 0) {
                 remainder = "已结束";
             }
 

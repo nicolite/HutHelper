@@ -19,12 +19,14 @@ import java.util.Map;
 import cn.nicolite.huthelper.BuildConfig;
 import cn.nicolite.huthelper.app.MApplication;
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
+import cn.nicolite.huthelper.db.dao.LessonDao;
 import cn.nicolite.huthelper.db.dao.MenuDao;
 import cn.nicolite.huthelper.db.dao.NoticeDao;
 import cn.nicolite.huthelper.db.dao.TimeAxisDao;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.HttpResult;
+import cn.nicolite.huthelper.model.bean.Lesson;
 import cn.nicolite.huthelper.model.bean.Menu;
 import cn.nicolite.huthelper.model.bean.Notice;
 import cn.nicolite.huthelper.model.bean.TimeAxis;
@@ -34,6 +36,7 @@ import cn.nicolite.huthelper.model.bean.Weather;
 import cn.nicolite.huthelper.network.api.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.services.LoginService;
+import cn.nicolite.huthelper.utils.CommUtil;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.view.activity.MainActivity;
@@ -202,7 +205,11 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     }
 
     public void showSyllabus() {
-
+        LessonDao lessonDao = daoSession.getLessonDao();
+        List<Lesson> list = lessonDao.queryBuilder()
+                .where(LessonDao.Properties.UserId.eq(userId))
+                .list();
+        getView().showSyllabus(CommUtil.getData(), CommUtil.getNextClass(list));
     }
 
     public void showMenu() {
@@ -409,10 +416,6 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             }
         });
         XGPushConfig.enableDebug(getActivity().getApplicationContext(), BuildConfig.LOG_DEBUG);
-    }
-
-    public void initNotice() {
-
     }
 
     public void initUser() {

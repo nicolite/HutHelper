@@ -16,7 +16,7 @@ public interface IMainView extends IBaseView {
     void showWeather(String city, String tmp, String content);
     void showTimeAxis(List<TimeAxis> timeAxisList);
     void showNotice(Notice notice, boolean isReceiver);
-    void showSyllabus();
+    void showSyllabus(String date, String nextClass);
     void showMenu(List<Menu> menuList);
     void showUser(User user);
 }

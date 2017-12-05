@@ -1,14 +1,12 @@
 package cn.nicolite.huthelper.utils;
 
-import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
 /**
  * Created by 高沛 on 2016/7/10.
  */
-public class CustomDate implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class CustomDate {
     public int year;
     public int month;
     public int day;

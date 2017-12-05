@@ -2,9 +2,25 @@ package cn.nicolite.huthelper.utils;
 
 import android.util.Base64;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.security.InvalidKeyException;
+import java.security.KeyFactory;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.Provider;
+import java.security.Security;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 /**
  * 加密工具类
@@ -80,10 +96,61 @@ public class EncryptUtils {
         return null;
     }
 
-    //TODO 实现RSA
-    public static String RSA(String env, String publicKey) {
 
+    /**
+     * RSA公钥加密
+     *
+     * @param env       加密数据
+     * @param publicKey 公钥字符串
+     * @return
+     */
+    public static String RSAPublicKeyEncrypt(String env, InputStream publicKey) {
 
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(publicKey));
+            StringBuilder stringBuilder = new StringBuilder();
+            String readLine;
+            while ((readLine = bufferedReader.readLine()) != null) {
+                if (readLine.charAt(0) != '-') {
+                    stringBuilder.append(readLine);
+                    stringBuilder.append('\n');
+                }
+            }
+            bufferedReader.close();
+            publicKey.close();
+
+            //从字符串中获取公钥证书
+            byte[] decode = Base64.decode(stringBuilder.toString(), Base64.DEFAULT);
+            KeyFactory rsa = KeyFactory.getInstance("RSA");
+            X509EncodedKeySpec keySpec = new X509EncodedKeySpec(decode);
+            RSAPublicKey key = (RSAPublicKey) rsa.generatePublic(keySpec);
+
+            //加密后 base64转码
+            Provider provider = Security.getProvider("BC");
+            Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding", provider);
+            cipher.init(Cipher.ENCRYPT_MODE, key);
+            byte[] doFinal = cipher.doFinal(env.getBytes("utf-8"));
+            byte[] encode = Base64.encode(doFinal, Base64.DEFAULT);
+            return Base64.encodeToString(encode, Base64.DEFAULT);
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeySpecException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return null;
     }
+
 }

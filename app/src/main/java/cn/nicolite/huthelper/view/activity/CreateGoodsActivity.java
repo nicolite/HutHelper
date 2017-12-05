@@ -153,7 +153,9 @@ public class CreateGoodsActivity extends BaseActivity implements ICreateGoodsVie
                                     showMessage("没有选商品成色");
                                 } else if (TextUtils.isEmpty(tvGoodsLocation.getText().toString())) {
                                     showMessage("没有填发布区域");
-                                } else {
+                                } else if (TextUtils.isEmpty(tvGoodsPrice.getText().toString())){
+                                    showMessage("没有填写价格");
+                                }else {
                                     if (!ListUtils.isEmpty(uriList)) {
                                         createGoodsPresenter.createGoods(activity, uriList);
                                     } else {

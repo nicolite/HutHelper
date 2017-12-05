@@ -36,6 +36,16 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
     }
 
     public void login(final String username, String password) {
+        /*String env = "";
+        try {
+            InputStream inputStream = getActivity().getResources().getAssets().open("rsa_public_key.pem");
+            env = EncryptUtils.RSAPublicKeyEncrypt(password, inputStream);
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        LogUtils.d(TAG, "xx " + env); */
 
         APIUtils
                 .getLoginAPI()
@@ -87,9 +97,12 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
 
                                 getToken(userHttpResult.getData().getUser_id(), userHttpResult.getData().getUsername());
 
+                            } else if (userHttpResult.getCode() == 304) {
+                                getView().closeLoading();
+                                getView().showMessage("登录失败，密码错误!");
                             } else {
                                 getView().closeLoading();
-                                getView().showMessage(userHttpResult.getMsg());
+                                getView().showMessage("登录失败，" + userHttpResult.getMsg() + "，" + userHttpResult.getCode());
                             }
                         }
                     }
@@ -98,7 +111,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                     public void onError(@NonNull Throwable e) {
                         if (getView() != null) {
                             getView().closeLoading();
-                            getView().showMessage(ExceptionEngine.handleException(e).getMsg());
+                            getView().showMessage("登录失败，" + ExceptionEngine.handleException(e).getMsg());
                         }
                     }
 
@@ -143,7 +156,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        if (getView() == null){
+                        if (getView() == null) {
                             return;
                         }
                         getView().closeLoading();

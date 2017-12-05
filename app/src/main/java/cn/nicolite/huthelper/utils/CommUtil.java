@@ -26,6 +26,7 @@ import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.text.TextUtils;
 import android.util.Base64;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -42,6 +43,10 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
+import java.util.TimeZone;
 
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Lesson;
@@ -53,6 +58,95 @@ import static android.R.attr.path;
  * Created by gaop1 on 2016/7/15.
  */
 public class CommUtil {
+
+    /**
+     * 获取日期周数
+     */
+    public static String getData() {
+        final Calendar c = Calendar.getInstance();
+        c.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+        String mWay = String.valueOf(c.get(Calendar.DAY_OF_WEEK));
+        if ("1".equals(mWay)) {
+            mWay = "天";
+        } else if ("2".equals(mWay)) {
+            mWay = "一";
+        } else if ("3".equals(mWay)) {
+            mWay = "二";
+        } else if ("4".equals(mWay)) {
+            mWay = "三";
+        } else if ("5".equals(mWay)) {
+            mWay = "四";
+        } else if ("6".equals(mWay)) {
+            mWay = "五";
+        } else if ("7".equals(mWay)) {
+            mWay = "六";
+        }
+        //return new StringBuilder().append(mYear).append(".").append(mMonth).append(".").append(mDay).append("  星期").append(mWay);
+        return "第" + DateUtils.getNowWeek() + "周  星期" + mWay;
+    }
+
+    /**
+     * 返回下一节课
+     *
+     * @param
+     * @return
+     */
+    public static String getNextClass(List<Lesson> lessonList) {
+        if (ListUtils.isEmpty(lessonList)) {
+            return "暂未导入课表";
+        }
+        final Calendar c = Calendar.getInstance();
+        int mWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
+        if (mWeek == 0) {
+            mWeek = 7;
+        }
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int num;
+        if (hour >= 0 && hour < 8)
+            num = 1;
+        else if (hour >= 8 && hour < 10)
+            num = 3;
+        else if (hour >= 10 && hour < 14)
+            num = 5;
+        else if (hour >= 14 && hour < 16)
+            num = 7;
+        else if (hour >= 16 && hour < 19)
+            num = 9;
+        else
+            return "今天没课了";
+
+        List<Lesson> courseList = new ArrayList<>();
+        for (Lesson lesson : lessonList) {
+            if (lesson.getXqj().equals(String.valueOf(mWeek))) {
+                courseList.add(lesson);
+            }
+        }
+
+        if (ListUtils.isEmpty(courseList))
+            return "今天没课了";
+
+        SparseArray<Lesson> lessonSparseArray = new SparseArray<>();
+        for (Lesson lesson : courseList) {
+            if (CommUtil.ifHaveCourse(lesson, DateUtils.getNowWeek())) {
+                if (Integer.parseInt(lesson.getDjj()) == num) {
+                    return "第" + num + "," + (num + 1) + "节" + lesson.getName() + " " + lesson.getRoom();
+                } else {
+                    lessonSparseArray.put(Integer.parseInt(lesson.getDjj()), lesson);
+                }
+            }
+        }
+
+        do {
+            num += 2;
+            if (num > 9)
+                return "今天没课了";
+            if (lessonSparseArray.get(num) != null) {
+                return "第" + num + "," + (num + 1) + "节" + lessonSparseArray.get(num).getName() + "　" + lessonSparseArray.get(num).getRoom();
+            }
+        } while (num <= 9);
+
+        return "获取失败 点击重试";
+    }
 
     public static void saveImageToGallery(Context context, Bitmap bmp) {
         // 保存图片
@@ -173,7 +267,7 @@ public class CommUtil {
      */
 
     public static boolean ifHaveCourse(Lesson lesson, int currWeek) {
-        String[] s = lesson.getZs().split(" ");
+        String[] s = lesson.getZs().split(",");
 
         String curr = String.valueOf(currWeek);
         for (String w : s) {

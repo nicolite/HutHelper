@@ -253,8 +253,11 @@ public class LostAndFoundFragment extends BaseFragment implements ILostAndFoundV
     }
 
     public void deleteItem(int position) {
-        lostAndFoundList.remove(position);
-        lRecyclerViewAdapter.notifyItemRemoved(position);
+       // lostAndFoundList.remove(position);
+       // lRecyclerViewAdapter.notifyItemRemoved(position);
+
+        //TODO 同样的写法居然在二手市场能用，这里不能用
+        refreshData();
     }
 
     public void changetItem(int position, LostAndFound lostAndFound) {

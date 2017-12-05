@@ -1,5 +1,6 @@
 package cn.nicolite.huthelper.view.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -19,6 +21,7 @@ import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.db.dao.LessonDao;
+import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Lesson;
 import cn.nicolite.huthelper.presenter.SyllabusPresenter;
 import cn.nicolite.huthelper.utils.DateUtils;
@@ -46,7 +49,7 @@ public class SyllabusActivity extends BaseActivity implements ISyllabusView {
     private SyllabusFragment syllabusFragment;
     int CurrWeek = 0;
     int chooseNum;
-    private List<Lesson> lessonList;
+    private List<Lesson> lessonList = new ArrayList<>();
     private SyllabusPresenter syllabusPresenter;
 
     @Override
@@ -69,28 +72,23 @@ public class SyllabusActivity extends BaseActivity implements ISyllabusView {
     @Override
     protected void doBusiness() {
         CurrWeek = DateUtils.getNowWeek();
-        toolbarTitle.setText(String.valueOf("第" + CurrWeek + "周(本周)"));
+        toolbarTitle.setText(String.valueOf("第" + CurrWeek + "周"));
         chooseNum = CurrWeek - 1;
 
         SharedPreferences.Editor edit = getSharedPreferences("choose", MODE_PRIVATE).edit();
         edit.putInt("position", chooseNum);
         edit.apply();
 
-        lessonList = daoSession.getLessonDao()
+        lessonList.addAll(daoSession.getLessonDao()
                 .queryBuilder()
                 .where(LessonDao.Properties.UserId.eq(userId))
-                .list();
-
-        if (ListUtils.isEmpty(lessonList)) {
-            showMessage("暂未导入课表");
-           // content.setVisibility(View.GONE);
-        }
+                .list());
 
         syllabusFragment = SyllabusFragment.newInstance();
         getSupportFragmentManager().beginTransaction().replace(R.id.content, syllabusFragment).commit();
 
         syllabusPresenter = new SyllabusPresenter(this, this);
-        syllabusPresenter.showSyllabus();
+        syllabusPresenter.showSyllabus(false);
     }
 
     @OnClick({R.id.toolbar_back, R.id.toolbar_title, R.id.toolbar_refresh})
@@ -103,7 +101,7 @@ public class SyllabusActivity extends BaseActivity implements ISyllabusView {
                 showWeekListWindows(toolbarTitle);
                 break;
             case R.id.toolbar_refresh:
-                syllabusPresenter.showSyllabus();
+                syllabusPresenter.showSyllabus(true);
                 break;
         }
     }
@@ -147,8 +145,7 @@ public class SyllabusActivity extends BaseActivity implements ISyllabusView {
                     edit.apply();
                     toolbarTitle.setText(weekList.get(position));
                     chooseNum = position;
-                    syllabusFragment.changeWeek(position + 1);
-                    //TODO courseTable.changeWeek(position + 1, DateUtils.getNextSunday(DateUtils.addDate(new Date(), (position + 1 - CurrWeek) * 7)));
+                    syllabusFragment.changeWeek(position + 1, DateUtils.getNextSunday(DateUtils.addDate(new Date(), (position + 1 - CurrWeek) * 7)));
                 }
             });
             weekListWindow = new PopupWindow(popupWindowLayout, width, width + 100);
@@ -201,7 +198,28 @@ public class SyllabusActivity extends BaseActivity implements ISyllabusView {
     public void showSyllabus(List<Lesson> lessonList) {
         this.lessonList.clear();
         this.lessonList.addAll(lessonList);
+
+        CurrWeek = DateUtils.getNowWeek();
+        toolbarTitle.setText(String.valueOf("第" + CurrWeek + "周"));
+        chooseNum = CurrWeek - 1;
+
+        SharedPreferences.Editor edit = getSharedPreferences("choose", MODE_PRIVATE).edit();
+        edit.putInt("position", chooseNum);
+        edit.apply();
+
         content.setVisibility(View.VISIBLE);
-        syllabusFragment.updateData(lessonList);
+        syllabusFragment.updateData();
+        setResult(Constants.REFRESH);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constants.REQUEST) {
+            if (syllabusFragment != null) {
+                syllabusFragment.onActivityResult(requestCode, resultCode, data);
+            }
+        }
+
     }
 }

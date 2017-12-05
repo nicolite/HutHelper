@@ -194,6 +194,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         mainPresenter.checkUpdate(user.getStudentKH());
         mainPresenter.initUser();
         mainPresenter.showTimeAxis();
+        mainPresenter.showSyllabus();
         mainPresenter.showWeather();
         mainPresenter.checkPermission();
         mainPresenter.initPush(user.getStudentKH());
@@ -389,8 +390,9 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
     @Override
-    public void showSyllabus() {
-
+    public void showSyllabus(String date, String nextClass) {
+        tvDateMaincontent.setText(date);
+        tvCourseMaincontent.setText(nextClass);
     }
 
     @Override
@@ -407,7 +409,7 @@ public class MainActivity extends BaseActivity implements IMainView {
             Glide
                     .with(MainActivity.this)
                     .load(Constants.PICTURE_URL + user.getHead_pic_thumb())
-                    .bitmapTransform(new CropCircleTransformation(MainActivity.this))
+                    .bitmapTransform(new CropCircleTransformation(context))
                     .skipMemoryCache(true)
                     .crossFade()
                     .into(ivNavAvatar);
@@ -416,7 +418,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                 Glide
                         .with(this)
                         .load(R.drawable.head_boy)
-                        .bitmapTransform(new CropCircleTransformation(MainActivity.this))
+                        .bitmapTransform(new CropCircleTransformation(context))
                         .skipMemoryCache(true)
                         .crossFade()
                         .into(ivNavAvatar);
@@ -424,7 +426,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                 Glide
                         .with(this)
                         .load(R.drawable.head_girl)
-                        .bitmapTransform(new CropCircleTransformation(MainActivity.this))
+                        .bitmapTransform(new CropCircleTransformation(context))
                         .skipMemoryCache(true)
                         .crossFade()
                         .into(ivNavAvatar);
@@ -435,8 +437,15 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Constants.REQUEST && resultCode == Constants.CHANGE) {
-            mainPresenter.showMenu();
+        if (requestCode == Constants.REQUEST) {
+            switch (resultCode) {
+                case Constants.CHANGE:
+                    mainPresenter.showMenu();
+                    break;
+                case Constants.REFRESH:
+                    mainPresenter.showSyllabus();
+                    break;
+            }
         }
     }
 

@@ -31,12 +31,26 @@ public class SyllabusPresenter extends BasePresenter<ISyllabusView, SyllabusActi
         super(view, activity);
     }
 
-    public void showSyllabus() {
+    public void showSyllabus(boolean isForceRefresh) {
+
         if (TextUtils.isEmpty(userId)) {
             if (getView() != null) {
                 getView().showMessage("获取用户信息失败！");
             }
             return;
+        }
+
+        //不是强制刷新， 如果数据库中已经有数据，不进行数据请求
+        if (!isForceRefresh) {
+            List<Lesson> list = daoSession.getLessonDao().queryBuilder()
+                    .where(LessonDao.Properties.UserId.eq(userId))
+                    .list();
+            if (!ListUtils.isEmpty(list)) {
+                if (getView() != null) {
+                    getView().showSyllabus(list);
+                }
+                return;
+            }
         }
 
         List<Configure> configureList = getConfigureList();
