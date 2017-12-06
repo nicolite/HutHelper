@@ -140,12 +140,12 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:27.0.1'
+    compile 'com.android.support:appcompat-v7:27.0.2'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:design:27.0.1'
-    compile 'com.android.support:cardview-v7:27.0.1'
-    compile 'com.android.support:recyclerview-v7:27.0.1'
-    compile 'com.android.support:support-annotations:27.0.1'
+    compile 'com.android.support:design:27.0.2'
+    compile 'com.android.support:cardview-v7:27.0.2'
+    compile 'com.android.support:recyclerview-v7:27.0.2'
+    compile 'com.android.support:support-annotations:27.0.2'
     testCompile 'junit:junit:4.12'
 
     //多dex配置,解决dex超过64k
@@ -209,9 +209,6 @@ dependencies {
 
     //网页抓取
     compile 'org.jsoup:jsoup:1.10.3'
-
-    //图表
-    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
 
     //LRecyclerView
     compile 'com.github.jdsjlzx:LRecyclerView:1.4.3'
