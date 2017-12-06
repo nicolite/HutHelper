@@ -7,7 +7,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -19,7 +18,7 @@ import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.model.bean.GradeRank;
-import cn.nicolite.huthelper.model.bean.GradeRankResult;
+import cn.nicolite.huthelper.model.bean.GradeSum;
 import cn.nicolite.huthelper.presenter.GradeRankPresenter;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.GradeRankAdapter;
@@ -52,9 +51,6 @@ public class GradeRankActivity extends BaseActivity implements IGradeRankView {
 
     private GradeRankPresenter gradeRankPresenter;
     private LoadingDialog loadingDialog;
-    private List<GradeRank> xnRank = new ArrayList<>();
-    private List<GradeRank> xqRank = new ArrayList<>();
-    private GradeRankAdapter adapter;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -76,7 +72,7 @@ public class GradeRankActivity extends BaseActivity implements IGradeRankView {
     protected void doBusiness() {
         toolbarTitle.setText("成绩");
         gradeRankPresenter = new GradeRankPresenter(this, this);
-        gradeRankPresenter.showRank();
+        gradeRankPresenter.showRank(false);
 
     }
 
@@ -87,7 +83,7 @@ public class GradeRankActivity extends BaseActivity implements IGradeRankView {
                 finish();
                 break;
             case R.id.toolbar_refresh:
-                gradeRankPresenter.showRank();
+                gradeRankPresenter.showRank(true);
                 break;
             case R.id.btn_grade_showall:
                 startActivity(GradeListActivity.class);
@@ -123,13 +119,12 @@ public class GradeRankActivity extends BaseActivity implements IGradeRankView {
     }
 
     @Override
-    public void showRank(GradeRankResult gradeRankResult) {
-        tvGradeAvgjd.setText(String.valueOf("综合绩点  " + gradeRankResult.getZhjd()));
-        tvGradeNopassnum.setText(String.valueOf("总挂科数  " + gradeRankResult.getGks()));
-        tvGradeAvggrade.setText(String.valueOf("总平均分   " + gradeRankResult.getPjf()));
-        //pieGradeXf.setCurrNum(Float.parseFloat(gradeRankResult.getZxf()), Float.parseFloat(gradeRankResult.getWdxf()));
-        xnRank.clear();
-        xnRank.addAll(gradeRankResult.getRank().getXnrank());
+    public void showRank(GradeSum gradeSum, List<GradeRank> xnRank, List<GradeRank> xqRank) {
+        tvGradeAvgjd.setText(String.valueOf("综合绩点  " + gradeSum.getZhjd()));
+        tvGradeNopassnum.setText(String.valueOf("总挂科数  " + gradeSum.getGks()));
+        tvGradeAvggrade.setText(String.valueOf("总平均分   " + gradeSum.getPjf()));
+        //pieGradeXf.setCurrNum(Float.parseFloat(gradeSum.getZxf()), Float.parseFloat(gradeSum.getWdxf()));
+
         Collections.sort(xnRank, new Comparator<GradeRank>() {
             @Override
             public int compare(GradeRank gradeRank, GradeRank t1) {
@@ -139,8 +134,6 @@ public class GradeRankActivity extends BaseActivity implements IGradeRankView {
             }
         });
 
-        xqRank.clear();
-        xqRank.addAll(gradeRankResult.getRank().getXqrank());
 
         Collections.sort(xqRank, new Comparator<GradeRank>() {
             @Override
@@ -151,7 +144,7 @@ public class GradeRankActivity extends BaseActivity implements IGradeRankView {
             }
         });
 
-        adapter = new GradeRankAdapter(context, xnRank, xqRank);
+        GradeRankAdapter adapter = new GradeRankAdapter(context, xnRank, xqRank);
         viewpager.setAdapter(adapter);
         viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -173,5 +166,4 @@ public class GradeRankActivity extends BaseActivity implements IGradeRankView {
         viewpager.setCurrentItem(0);
         segmentedControls.get(0).setChecked(true);
     }
-
 }

@@ -13,13 +13,14 @@ import cn.nicolite.huthelper.model.Constants;
 
 public class DaoHelper {
     private static DaoHelper instance;
-    private DaoMaster.DevOpenHelper helper;
+    private DaoMaster.OpenHelper helper;
     private SQLiteDatabase db;
     private DaoMaster daoMaster;
     private DaoSession daoSession;
 
     private DaoHelper(Context context) {
-        helper = new DaoMaster.DevOpenHelper(context, Constants.DBNAME);
+        //helper = new DaoMaster.DevOpenHelper(context, Constants.DBNAME);
+        helper = new DaoUpgradeHelper(context, Constants.DBNAME);
         db = helper.getWritableDatabase();
         daoMaster = new DaoMaster(db);
         daoSession = daoMaster.newSession();
