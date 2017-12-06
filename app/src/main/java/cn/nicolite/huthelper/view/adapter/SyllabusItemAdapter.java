@@ -14,12 +14,12 @@ import cn.nicolite.huthelper.utils.ScreenUtils;
 
 /**
  * Created by nicolite on 17-12-5.
- * TODO 暂时不能用
  */
 
 public class SyllabusItemAdapter extends BaseAdapter {
     private Context context;
     private boolean[] weeklist;
+    private OnItemClickListener onItemClickListener;
 
     public SyllabusItemAdapter(Context context, boolean[] list) {
         this.context = context;
@@ -42,7 +42,7 @@ public class SyllabusItemAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, final View view, ViewGroup viewGroup) {
         final Button img = new Button(context);
         int width = ScreenUtils.getScreenWidth(context) - DensityUtils.dp2px(context, 45);// 获取屏幕宽度
         int height = 0;
@@ -57,20 +57,23 @@ public class SyllabusItemAdapter extends BaseAdapter {
         img.setTextColor(Color.WHITE);
         AbsListView.LayoutParams layout = new AbsListView.LayoutParams(width, height);
         img.setLayoutParams(layout);
+
         img.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               //if (type == SHOW_COURSE)
-               //    return;
-                if (weeklist[i]) {
-                    img.setBackgroundResource(R.color.new_grty);
-                    weeklist[i] = false;
-                } else if (!weeklist[i]) {
-                    img.setBackgroundResource(R.color.colorPrimary);
-                    weeklist[i] = true;
+                if (onItemClickListener != null) {
+                    onItemClickListener.onItemClick(v, i, view.getId());
                 }
             }
         });
         return img;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view, int position, long itemId);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 }

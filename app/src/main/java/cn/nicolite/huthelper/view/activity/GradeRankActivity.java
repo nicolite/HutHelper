@@ -127,7 +127,7 @@ public class GradeRankActivity extends BaseActivity implements IGradeRankView {
         tvGradeAvgjd.setText(String.valueOf("综合绩点  " + gradeRankResult.getZhjd()));
         tvGradeNopassnum.setText(String.valueOf("总挂科数  " + gradeRankResult.getGks()));
         tvGradeAvggrade.setText(String.valueOf("总平均分   " + gradeRankResult.getPjf()));
-        pieGradeXf.setCurrNum(Float.parseFloat(gradeRankResult.getZxf()), Float.parseFloat(gradeRankResult.getWdxf()));
+        //pieGradeXf.setCurrNum(Float.parseFloat(gradeRankResult.getZxf()), Float.parseFloat(gradeRankResult.getWdxf()));
         xnRank.clear();
         xnRank.addAll(gradeRankResult.getRank().getXnrank());
         Collections.sort(xnRank, new Comparator<GradeRank>() {

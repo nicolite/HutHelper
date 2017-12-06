@@ -106,9 +106,32 @@ public class SyllabusPresenter extends BasePresenter<ISyllabusView, SyllabusActi
                             }
                         }
 
+                        //合并相同时间相同的课程
+                        List<Lesson> newLessonList = new ArrayList<>();
+                        int size = lessonList.size();
+                        for (int i = 0; i < size; i++) {
+                            Lesson lesson1 = lessonList.get(i);
+                            for (int j = 0; j < size; j++) {
+                                Lesson lesson2 = lessonList.get(j);
+                                if (lesson1.getXqj().equals(lesson2.getXqj())
+                                        && lesson1.getDjj().equals(lesson2.getDjj())
+                                        && lesson1.getName().equals(lesson2.getName())
+                                        && lesson1.getRoom().equals(lesson2.getRoom())
+                                        && lesson1.getTeacher().equals(lesson2.getTeacher())
+                                        && !lesson1.getZs().equals(lesson2.getZs())) {
+                                    lesson1.setZs(lesson1.getZs() + "," + lesson2.getZs());
+                                    lessonList.remove(lesson2);
+                                    size = lessonList.size();
+                                }
+                            }
+                            newLessonList.add(lesson1);
+                        }
+
+
+                        //写入数据库
                         LessonDao lessonDao = daoSession.getLessonDao();
 
-                        if (!ListUtils.isEmpty(lessonList)) {
+                        if (!ListUtils.isEmpty(newLessonList)) {
 
                             List<Lesson> list1 = lessonDao.queryBuilder()
                                     .where(LessonDao.Properties.UserId.eq(userId), LessonDao.Properties.AddByUser.eq(false))
@@ -118,12 +141,12 @@ public class SyllabusPresenter extends BasePresenter<ISyllabusView, SyllabusActi
                                 lessonDao.delete(oldLesson);
                             }
 
-                            for (Lesson newLesson : lessonList) {
+                            for (Lesson newLesson : newLessonList) {
                                 lessonDao.insert(newLesson);
                             }
                         }
 
-                        return lessonList;
+                        return newLessonList;
                     }
                 })
                 .subscribe(new Observer<List<Lesson>>() {

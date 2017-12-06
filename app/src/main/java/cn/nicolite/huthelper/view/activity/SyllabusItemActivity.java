@@ -29,8 +29,10 @@ import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Lesson;
 import cn.nicolite.huthelper.utils.DensityUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
+import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.utils.ScreenUtils;
 import cn.nicolite.huthelper.utils.ToastUtil;
+import cn.nicolite.huthelper.view.adapter.SyllabusItemAdapter;
 import cn.nicolite.huthelper.view.widget.CommonDialog;
 
 /**
@@ -89,6 +91,7 @@ public class SyllabusItemActivity extends BaseActivity {
     private int courseNumSelected = 0;
     private boolean[] weeklist = new boolean[20];
     private LessonDao lessonDao;
+    private SyllabusItemAdapter adapter;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -136,7 +139,22 @@ public class SyllabusItemActivity extends BaseActivity {
         }
         lessonDao = daoSession.getLessonDao();
 
-        gvCourseWeeks.setAdapter(new MyGridViewAdapter(context));
+        adapter = new SyllabusItemAdapter(context, weeklist);
+        gvCourseWeeks.setAdapter(adapter);
+        adapter.setOnItemClickListener(new SyllabusItemAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, int position, long itemId) {
+                if (type == SHOW_COURSE)
+                    return;
+                if (weeklist[position]) {
+                    view.setBackgroundResource(R.color.new_grty);
+                    weeklist[position] = false;
+                } else if (!weeklist[position]) {
+                    view.setBackgroundResource(R.color.colorPrimary);
+                    weeklist[position] = true;
+                }
+            }
+        });
     }
 
     @OnClick({R.id.toolbar_back, R.id.toolbar_ok, R.id.toolbar_edit, R.id.toolbar_delete,
@@ -244,7 +262,7 @@ public class SyllabusItemActivity extends BaseActivity {
         }
 
         tvCourseName.setText(lesson.getName());
-        tvCourseTime.setText(String.valueOf("周" + lesson.getXqj() + "  " + lesson.getDjj() + " " + (lesson.getDjj() + 1) + "节"));
+        tvCourseTime.setText(String.valueOf("周" + lesson.getXqj() + "  " + lesson.getDjj() + " " + (Integer.parseInt(lesson.getDjj()) + 1) + "节"));
         tvCourseTeacher.setText(lesson.getTeacher());
         tvCourseClassroom.setText(lesson.getRoom());
 
@@ -254,9 +272,10 @@ public class SyllabusItemActivity extends BaseActivity {
         String[] ws = lesson.getZs().split(",");
         for (String s : ws) {
             if (!TextUtils.isEmpty(s)) {
-                int num = Integer.valueOf(s);
+                int num = Integer.parseInt(s);
                 if (num <= 20) {
                     weeklist[num - 1] = true;
+                    LogUtils.d(TAG, "lesson zs: " + weeklist[num - 1] + " " + num);
                 }
 
             }

@@ -123,7 +123,6 @@ public class SyllabusFragment extends BaseFragment {
     private static final int TOTAL_ROW = 1;
 
     private CustomDate mShowDate;//自定义的日期  包括year month day
-    private boolean isInit;
     private CourseInfoInitMessageHandler courseInfoInitMessageHandler = new CourseInfoInitMessageHandler(this);
     private int what = 111;
 
@@ -153,18 +152,14 @@ public class SyllabusFragment extends BaseFragment {
 
     @Override
     protected void doBusiness() {
-        if (!isInit) {
-            isInit = true;
-            firstGridWidth = DensityUtils.dp2px(context, 30 + 2);
-            aveWidth = (ScreenUtils.getScreenWidth(context) - firstGridWidth) / 7;
-            gridHeight = ScreenUtils.getScreenHeight(context) / 12;
-        }
+        firstGridWidth = DensityUtils.dp2px(context, 30 + 2);
+        aveWidth = (ScreenUtils.getScreenWidth(context) - firstGridWidth) / 7;
+        gridHeight = (ScreenUtils.getScreenHeight(context) - DensityUtils.dp2px(context, 3) * 4) / 12;
         CurrWeek = DateUtils.getNowWeek();
         //初始化24小时view
         initTwentyFourHourViews();
         //导入日期
         initDate();
-
     }
 
     @Override
@@ -173,13 +168,21 @@ public class SyllabusFragment extends BaseFragment {
     }
 
     public void updateData() {
+        courseTextViewList.clear();
+        textviewLessonSparseArray.clear();
         CurrWeek = DateUtils.getNowWeek();
+
+        //更新数据前 移除view
+        if (mUserCourseLayout != null){
+            mUserCourseLayout.removeAllViews();
+        }
+
         courseInfoInitMessageHandler.sendEmptyMessage(what);
     }
 
     public void changeWeek(int weekNo, CustomDate date) {
-        courseTextViewList = new ArrayList<>();
-        textviewLessonSparseArray = new SparseArray<>();
+        courseTextViewList.clear();
+        textviewLessonSparseArray.clear();
         CurrWeek = weekNo;
         mShowDate = date;
         fillDate();
@@ -237,12 +240,6 @@ public class SyllabusFragment extends BaseFragment {
                     tx.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            //num--1357   week 1234567
-                            int num = (v.getId() - 2) / 7;
-                            int weekofday = (v.getId() - 1) % 7;
-                            if (weekofday == 0) {
-                                weekofday = 7;
-                            }
                             //莫忘了计算点击的时间时 加上开始时间
                             if (curClickView != null) {
                                 curClickView.setBackground(null);
@@ -251,7 +248,6 @@ public class SyllabusFragment extends BaseFragment {
                                     Bundle bundle = new Bundle();
                                     bundle.putInt("type", SyllabusItemActivity.ADD_COURSE);
                                     bundle.putLong("lessonId", -3);
-                                    //Toast.makeText(mContext, "节" + num + "xin" + weekofday, Toast.LENGTH_SHORT).show();
                                     //跳转到添加课程界面
                                     startActivityForResult(SyllabusItemActivity.class, bundle, Constants.REQUEST);
                                     return;
