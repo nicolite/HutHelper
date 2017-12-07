@@ -16,6 +16,7 @@ import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.network.api.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.utils.ListUtils;
+import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.view.activity.LoginActivity;
 import cn.nicolite.huthelper.view.iview.ILoginView;
 import io.reactivex.Observer;
@@ -36,7 +37,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
     }
 
     public void login(final String username, String password) {
-        /*String env = "";
+       /* String env = "";
         try {
             InputStream inputStream = getActivity().getResources().getAssets().open("rsa_public_key.pem");
             env = EncryptUtils.RSAPublicKeyEncrypt(password, inputStream);
@@ -45,7 +46,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
             e.printStackTrace();
         }
 
-        LogUtils.d(TAG, "xx " + env); */
+        LogUtils.d(TAG, "xx " + env);*/
 
         APIUtils
                 .getLoginAPI()
@@ -56,10 +57,9 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                 .subscribe(new Observer<HttpResult<User>>() {
                     @Override
                     public void onSubscribe(@NonNull Disposable d) {
-                        if (getView() == null) {
-                            return;
+                        if (getView() != null) {
+                            getView().showLoading();
                         }
-                        getView().showLoading();
                     }
 
                     @Override
@@ -72,6 +72,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                                 editor.putString("userId", userHttpResult.getData().getUser_id());
                                 editor.apply();
 
+                                LogUtils.d(TAG, " xx: " + userHttpResult.getRemember_code_app());
                                 UserDao userDao = daoSession.getUserDao();
                                 List<User> userList = userDao.queryBuilder().where(UserDao.Properties.User_id.eq(userHttpResult.getData().getUser_id())).list();
                                 if (ListUtils.isEmpty(userList)) {

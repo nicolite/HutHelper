@@ -101,7 +101,7 @@ android {
     //                  def outputFile = output.outputFile
     //                  if (outputFile != null && outputFile.name.endsWith(".apk")) {
     //                      def dirName = outputFile.parent
-    //                      def fileName = "huthelper-${variant.flavorName}-${variant.versionName}(${variant.versionCode}).apk"
+    //                      def fileName = "huthelper-${variant.flavgoogle()orName}-${variant.versionName}(${variant.versionCode}).apk"
     //                      output.outputFile = new File(dirName, fileName)
     //                  }
     //          }

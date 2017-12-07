@@ -24,7 +24,7 @@ import cn.nicolite.huthelper.db.dao.UserDao;
 
 /**
  * Created by nicolite on 17-12-6.
- * greenDao升级类
+ * greenDao升级类, 防止数据库升级数据被清空
  * TODO 每次创建新的表都需要在这里添加
  */
 

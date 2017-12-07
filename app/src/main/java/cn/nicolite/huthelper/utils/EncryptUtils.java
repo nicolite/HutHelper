@@ -2,6 +2,8 @@ package cn.nicolite.huthelper.utils;
 
 import android.util.Base64;
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -12,7 +14,6 @@ import java.security.KeyFactory;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.Provider;
-import java.security.Security;
 import java.security.interfaces.RSAPublicKey;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
@@ -21,6 +22,8 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+
+import cn.nicolite.huthelper.model.Constants;
 
 /**
  * 加密工具类
@@ -113,24 +116,25 @@ public class EncryptUtils {
             while ((readLine = bufferedReader.readLine()) != null) {
                 if (readLine.charAt(0) != '-') {
                     stringBuilder.append(readLine);
-                    stringBuilder.append('\n');
+                    stringBuilder.append('\r');
                 }
             }
             bufferedReader.close();
             publicKey.close();
 
             //从字符串中获取公钥证书
-            byte[] decode = Base64.decode(stringBuilder.toString(), Base64.DEFAULT);
-            KeyFactory rsa = KeyFactory.getInstance("RSA");
+            Provider provider = new BouncyCastleProvider();
+            byte[] decode = Base64.decode(Constants.PUBLIC_KEY, Base64.DEFAULT);
+            KeyFactory rsa = KeyFactory.getInstance("RSA", provider);
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(decode);
             RSAPublicKey key = (RSAPublicKey) rsa.generatePublic(keySpec);
 
             //加密后 base64转码
-            Provider provider = Security.getProvider("BC");
             Cipher cipher = Cipher.getInstance("RSA/ECB/PKCS1Padding", provider);
             cipher.init(Cipher.ENCRYPT_MODE, key);
             byte[] doFinal = cipher.doFinal(env.getBytes("utf-8"));
             byte[] encode = Base64.encode(doFinal, Base64.DEFAULT);
+
             return Base64.encodeToString(encode, Base64.DEFAULT);
 
         } catch (NoSuchAlgorithmException e) {

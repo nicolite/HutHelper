@@ -54,9 +54,9 @@ public class ConversationActivity extends BaseActivity {
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
+        setImmersiveStatusBar(true);
         setDeepColorStatusBar(true);
         setSlideExit(true);
-        setImmersiveStatusBar(true);
     }
 
     @Override

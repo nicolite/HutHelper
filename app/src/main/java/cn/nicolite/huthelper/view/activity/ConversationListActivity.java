@@ -32,8 +32,8 @@ public class ConversationListActivity extends BaseActivity {
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        setDeepColorStatusBar(true);
         setImmersiveStatusBar(true);
+        setDeepColorStatusBar(true);
         setSlideExit(true);
     }
 

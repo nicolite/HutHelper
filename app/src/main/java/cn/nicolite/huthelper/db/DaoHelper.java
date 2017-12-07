@@ -28,7 +28,6 @@ public class DaoHelper {
 
     public static DaoHelper getDaoHelper(Context context) {
         if (instance == null) {
-            //加上同步锁后频繁出现ANR
             synchronized (DaoHelper.class) {
                 if (instance == null) {
                     instance = new DaoHelper(context);
