@@ -6,7 +6,7 @@ import cn.nicolite.huthelper.BuildConfig;
 
 /**
  * Created by nicolite on 17-6-24.
- * 用来控制Log输出，当发布正式版时讲LEVEL设置为NOTHING就不会输出任何日志，防止被他人看到重要信息，也可以设置为其他
+ * 用来控制Log输出，、、
  */
 
 public class LogUtils {
@@ -17,7 +17,7 @@ public class LogUtils {
     private static final int WARN = 4;
     private static final int  ERROR = 5;
     private static final int NOTHING = 6;
-    private static final int LEVEL = VERBOSE;
+    private static final int LEVEL = VERBOSE; //将LEVEL设置为NOTHING就不会输出任何日志
 
     public static void v(String tag, String msg) {
         if (BuildConfig.LOG_DEBUG && LEVEL <= VERBOSE) {

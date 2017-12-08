@@ -370,7 +370,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
     /**
      * 是否设置滑动退出
-     * 需要在主题中设置<item name="android:windowIsTranslucent">true</item>，否则将显示异常
+     * 注意：需要在主题中设置<item name="android:windowIsTranslucent">true</item>，否则将显示异常
      *
      * @param isSlideExit
      */

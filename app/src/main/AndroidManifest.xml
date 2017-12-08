@@ -246,6 +246,11 @@
             android:name=".view.activity.NoticeItemActivity"
             android:theme="@style/AppTheme" />
 
+        <activity
+            android:name="com.tencent.bugly.beta.ui.BetaActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|locale"
+            android:theme="@android:style/Theme.Translucent" />
+
         <service android:name=".services.LoginService" />
 
         <!-- 融云-->

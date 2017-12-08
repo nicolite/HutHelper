@@ -92,6 +92,7 @@ public class MApplication extends Application {
         Beta.canShowUpgradeActs.add(MainActivity.class);
         //初始化腾讯Bugly
         Bugly.init(this, Constants.BUGLY_APPID, BuildConfig.LOG_DEBUG);
+        Bugly.setIsDevelopmentDevice(this, BuildConfig.LOG_DEBUG);
     }
 
     @Override
@@ -99,6 +100,7 @@ public class MApplication extends Application {
         super.attachBaseContext(base);
         //初始化多dex配置
         MultiDex.install(this);
+        Beta.installTinker();
     }
 
     /**

@@ -19,3 +19,6 @@ Ubuntu 16.04 LTS 、Android Studio 3.0 、JDK1.8
 
 # 数据库
 [greenDAO](http://greenrobot.org/greendao/)
+
+# 热修复
+[Bugly_Tinker](https://bugly.qq.com/docs/user-guide/instruction-manual-android-hotfix/?v=20170912151050)
