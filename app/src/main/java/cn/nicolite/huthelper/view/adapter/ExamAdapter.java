@@ -2,6 +2,7 @@ package cn.nicolite.huthelper.view.adapter;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,12 +43,49 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ExamViewHolder
     @Override
     public void onBindViewHolder(ExamViewHolder holder, int position) {
         Exam exam = examList.get(position);
-        String[] startTime = exam.getStarttime().split(" ");
-        String[] endTime = exam.getEndTime().split(" ");
+        //坑，居然还会返回null
+        if (!TextUtils.isEmpty(exam.getStarttime()) && !TextUtils.isEmpty(exam.getEndTime())) {
+            String[] startTime = exam.getStarttime().split(" ");
+            String[] endTime = exam.getEndTime().split(" ");
 
-        holder.tvGradeLesson.setText(startTime[0]);
-        holder.tvExamitemTime.setText(String.valueOf("（" + exam.getWeek_Num() + "周 "
-                + startTime[1].substring(0, 5) + "-" + endTime[1].substring(0, 5) + "）"));
+            holder.tvGradeLesson.setText(startTime[0]);
+            holder.tvExamitemTime.setText(String.valueOf("（" + exam.getWeek_Num() + "周 "
+                    + startTime[1].substring(0, 5) + "-" + endTime[1].substring(0, 5) + "）"));
+
+            String remainder = "今天";
+            try {
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+                Date startDate = simpleDateFormat.parse(exam.getStarttime());
+                Date endDate = simpleDateFormat.parse(exam.getEndTime());
+                Date nowDate = new Date();
+
+                long startHours = (startDate.getTime() - nowDate.getTime()) / (60 * 60 * 1000); //获得剩余小时
+                long endHours = (endDate.getTime() - nowDate.getTime()) / (60 * 60 * 1000);
+
+                if (startHours >= 24) {
+                    long day = startHours / 24;
+                    if (startHours % 24 > 0) {
+                        day++;
+                    }
+                    remainder = "剩余" + day + "天";
+                } else if (startHours > 0 && startHours < 24) {
+                    remainder = "剩余" + (startHours + 1) + "小时";
+                } else if (startHours <= 0 && endHours > 0) {
+                    remainder = "正在进行";
+                } else if (endHours <= 0) {
+                    remainder = "已结束";
+                }
+
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            holder.tvGradeScore.setText(remainder);
+        } else {
+            holder.tvGradeLesson.setText("未知");
+            holder.tvGradeTime.setText("未知");
+            holder.tvExamitemTime.setText(String.valueOf("（" + exam.getWeek_Num() + "周" + "）"));
+            holder.tvGradeScore.setText("未知");
+        }
 
         //isset不确定是不是重修标记
         // if (!exam.getIsset().equals("0")){
@@ -58,36 +96,9 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ExamViewHolder
 
         holder.tvGradeTime.setText(exam.getCourseName());
 
-        holder.tvGradeJidian.setText(exam.getRoomName());
+        String roomName = exam.getRoomName();
+        holder.tvGradeJidian.setText(TextUtils.isEmpty(roomName) ? "未知" : roomName);
 
-        String remainder = "今天";
-        try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
-            Date startDate = simpleDateFormat.parse(exam.getStarttime());
-            Date endDate = simpleDateFormat.parse(exam.getEndTime());
-            Date nowDate = new Date();
-
-            long startHours = (startDate.getTime() - nowDate.getTime()) / (60 * 60 * 1000); //获得剩余小时
-            long endHours = (endDate.getTime() - nowDate.getTime()) / (60 * 60 * 1000);
-
-            if (startHours >= 24) {
-                long day = startHours / 24;
-                if (startHours % 24 > 0) {
-                    day++;
-                }
-                remainder = "剩余" + day + "天";
-            } else if (startHours > 0 && startHours < 24) {
-                remainder = "剩余" + (startHours + 1 ) + "小时";
-            }else if(startHours <= 0 && endHours > 0){
-                remainder = "正在进行";
-            }else if (endHours <= 0) {
-                remainder = "已结束";
-            }
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        holder.tvGradeScore.setText(remainder);
     }
 
     @Override

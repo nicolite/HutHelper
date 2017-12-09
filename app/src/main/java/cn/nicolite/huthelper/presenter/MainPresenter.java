@@ -214,56 +214,68 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
     public void showMenu() {
 
+        if (TextUtils.isEmpty(userId)) {
+            if (getView() != null) {
+                getView().showMessage("获取用户数据失败，请重新登录！");
+            }
+            return;
+        }
+
         MenuDao menuDao = daoSession.getMenuDao();
-        if (menuDao.count() == 0 || menuDao.count() > 15) {
+        List<Menu> menus = menuDao.queryBuilder()
+                .where(MenuDao.Properties.UserId.eq(userId))
+                .list();
+
+        if (ListUtils.isEmpty(menus) || menus.size() > 15) {
             List<Menu> menuItems = new ArrayList<>();
-            Menu item = new Menu((long) 1, 0, 0, WebViewActivity.TYPE_LIBRARY, "图书馆", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
+            Menu item = new Menu(0, 0, WebViewActivity.TYPE_LIBRARY, "图书馆", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
             menuItems.add(item);
-            item = new Menu((long) 2, 1, 1, 0, "课程表", "cn.nicolite.huthelper.view.activity.SyllabusActivity", true);
+            item = new Menu(1, 1, 0, "课程表", "cn.nicolite.huthelper.view.activity.SyllabusActivity", true);
             menuItems.add(item);
-            item = new Menu((long) 3, 2, 2, 0, "考试查询", "cn.nicolite.huthelper.view.activity.ExamActivity", true);
+            item = new Menu(2, 2, 0, "考试计划", "cn.nicolite.huthelper.view.activity.ExamActivity", true);
             menuItems.add(item);
-            item = new Menu((long) 4, 3, 3, 0, "成绩查询", "cn.nicolite.huthelper.view.activity.GradeRankActivity", true);
+            item = new Menu(3, 3, 0, "成绩查询", "cn.nicolite.huthelper.view.activity.GradeRankActivity", true);
             menuItems.add(item);
-            item = new Menu((long) 5, 4, 4, WebViewActivity.TYPE_HOMEWORK, "网上作业", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
+            item = new Menu(4, 4, WebViewActivity.TYPE_HOMEWORK, "网上作业", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
             menuItems.add(item);
-            item = new Menu((long) 6, 5, 5, 0, "二手市场", "cn.nicolite.huthelper.view.activity.MarketActivity", true);
+            item = new Menu(5, 5, 0, "二手市场", "cn.nicolite.huthelper.view.activity.MarketActivity", true);
             menuItems.add(item);
-            item = new Menu((long) 7, 6, 6, 0, "校园说说", "cn.nicolite.huthelper.view.activity.SayActivity", true);
+            item = new Menu(6, 6, 0, "校园说说", "cn.nicolite.huthelper.view.activity.SayActivity", true);
             menuItems.add(item);
-            item = new Menu((long) 8, 7, 7, 0, "电费查询", "cn.nicolite.huthelper.view.activity.ElectricActivity", true);
+            item = new Menu(7, 7, 0, "电费查询", "cn.nicolite.huthelper.view.activity.ElectricActivity", true);
             menuItems.add(item);
-            item = new Menu((long) 9, 8, 8, 0, "实验课表", "cn.nicolite.huthelper.view.activity.ExpLessonActivity", true);
+            item = new Menu(8, 8, 0, "实验课表", "cn.nicolite.huthelper.view.activity.ExpLessonActivity", true);
             menuItems.add(item);
-            item = new Menu((long) 10, 9, 9, 0, "校历", "cn.nicolite.huthelper.view.activity.CalendarActivity", false);
+            item = new Menu(9, 9, 0, "校历", "cn.nicolite.huthelper.view.activity.CalendarActivity", false);
             menuItems.add(item);
-            item = new Menu((long) 11, 10, 10, 0, "失物招领", "cn.nicolite.huthelper.view.activity.LostAndFoundActivity", true);
+            item = new Menu(10, 10, 0, "失物招领", "cn.nicolite.huthelper.view.activity.LostAndFoundActivity", true);
             menuItems.add(item);
-            item = new Menu((long) 12, 11, 11, 0, "宣讲会", "cn.nicolite.huthelper.view.activity.CareerTalkActivity", true);
+            item = new Menu(11, 11, 0, "宣讲会", "cn.nicolite.huthelper.view.activity.CareerTalkActivity", true);
             menuItems.add(item);
-            item = new Menu((long) 13, 12, 12, 0, "全部", "cn.nicolite.huthelper.view.activity.AllActivity", true);
+            item = new Menu(12, 12, 0, "全部", "cn.nicolite.huthelper.view.activity.AllActivity", true);
             menuItems.add(item);
-            item = new Menu((long) 14, 13, 13, 0, "视频专栏", "cn.nicolite.huthelper.view.activity.VideoActivity", false);
+            item = new Menu(13, 13, 0, "视频专栏", "cn.nicolite.huthelper.view.activity.VideoActivity", false);
             menuItems.add(item);
-            item = new Menu((long) 15, 14, 14, 0, "新生攻略", "cn.nicolite.huthelper.view.activity.FreshmanGuideActivity", false);
+            item = new Menu(14, 14, 0, "新生攻略", "cn.nicolite.huthelper.view.activity.FreshmanGuideActivity", false);
             menuItems.add(item);
 
             for (Menu menu : menuItems) {
-                menu.setUserId(userId);
-                List<Menu> list = menuDao.queryBuilder().where(MenuDao.Properties.Id.eq(menu.getId())).list();
-                if (!ListUtils.isEmpty(list)) {
+                if (!ListUtils.isEmpty(menus)) {
                     //更新时保留用户自定义内容
-                    Menu menuOld = list.get(0);
+                    Menu menuOld = menus.get(0);
                     if (!menuOld.getTitle().equals(menu.getTitle())
                             || !menuOld.getPath().equals(menu.getPath())
                             || menuOld.getType() != menu.getType()
                             || menuOld.getImgId() != menu.getImgId()) {
-                        menu.setIsMain(menuOld.getIsMain());
-                        menu.setIndex(menuOld.getIndex());
-                        menuDao.update(menu);
+                        menuOld.setTitle(menu.getTitle());
+                        menuOld.setPath(menu.getPath());
+                        menuOld.setType(menu.getType());
+                        menuOld.setImgId(menu.getImgId());
+                        menuDao.update(menuOld);
                     }
                     continue;
                 }
+                menu.setUserId(userId);
                 menuDao.insert(menu);
             }
         }
