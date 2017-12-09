@@ -59,22 +59,28 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ExamViewHolder
         holder.tvGradeTime.setText(exam.getCourseName());
 
         holder.tvGradeJidian.setText(exam.getRoomName());
+
         String remainder = "今天";
         try {
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
-            Date date = simpleDateFormat.parse(exam.getStarttime());
+            Date startDate = simpleDateFormat.parse(exam.getStarttime());
+            Date endDate = simpleDateFormat.parse(exam.getEndTime());
             Date nowDate = new Date();
 
-            long rem = (date.getTime() - nowDate.getTime()) / (60 * 60 * 1000); //获得剩余小时
-            if (rem >= 24) {
-                long day = rem / 24;
-                if (rem % 24 > 0) {
+            long startHours = (startDate.getTime() - nowDate.getTime()) / (60 * 60 * 1000); //获得剩余小时
+            long endHours = (endDate.getTime() - nowDate.getTime()) / (60 * 60 * 1000);
+
+            if (startHours >= 24) {
+                long day = startHours / 24;
+                if (startHours % 24 > 0) {
                     day++;
                 }
                 remainder = "剩余" + day + "天";
-            } else if (rem > 0 && rem < 24) {
-                remainder = "剩余" + rem + "小时";
-            } else if (rem < 0) {
+            } else if (startHours > 0 && startHours < 24) {
+                remainder = "剩余" + (startHours + 1 ) + "小时";
+            }else if(startHours <= 0 && endHours > 0){
+                remainder = "正在进行";
+            }else if (endHours <= 0) {
                 remainder = "已结束";
             }
 
