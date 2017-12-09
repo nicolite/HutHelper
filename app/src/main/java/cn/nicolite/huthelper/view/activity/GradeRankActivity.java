@@ -2,6 +2,7 @@ package cn.nicolite.huthelper.view.activity;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -123,7 +124,9 @@ public class GradeRankActivity extends BaseActivity implements IGradeRankView {
         tvGradeAvgjd.setText(String.valueOf("综合绩点  " + gradeSum.getZhjd()));
         tvGradeNopassnum.setText(String.valueOf("总挂科数  " + gradeSum.getGks()));
         tvGradeAvggrade.setText(String.valueOf("总平均分   " + gradeSum.getPjf()));
-        pieGradeXf.setCurrNum(Float.parseFloat(gradeSum.getZxf()), Float.parseFloat(gradeSum.getWdxf()));
+        if (!TextUtils.isEmpty(gradeSum.getWdxf())){
+            pieGradeXf.setCurrNum(Float.parseFloat(gradeSum.getZxf()), Float.parseFloat(gradeSum.getWdxf()));
+        }
 
         Collections.sort(xnRank, new Comparator<GradeRank>() {
             @Override

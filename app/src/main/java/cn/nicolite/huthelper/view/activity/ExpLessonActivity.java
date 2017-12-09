@@ -134,13 +134,6 @@ public class ExpLessonActivity extends BaseActivity implements IExplessonView {
     @Override
     public void showExpLesson(List<ExpLesson> expLessonList) {
 
-        Collections.sort(expLessonList, new Comparator<ExpLesson>() {
-            @Override
-            public int compare(ExpLesson expLesson, ExpLesson t1) {
-                return Integer.parseInt(expLesson.getWeeks_no()) - Integer.parseInt(t1.getWeeks_no());
-            }
-        });
-
         String userId = getLoginUser();
 
         if (TextUtils.isEmpty(userId)) {
@@ -172,6 +165,22 @@ public class ExpLessonActivity extends BaseActivity implements IExplessonView {
                 finish.add(explesson);
             }
         }
+
+        Collections.sort(unFinish, new Comparator<ExpLesson>() {
+            @Override
+            public int compare(ExpLesson expLesson, ExpLesson t1) {
+                return Integer.parseInt(expLesson.getWeeks_no() + expLesson.getWeek())
+                        - Integer.parseInt(t1.getWeeks_no() + t1.getWeek());
+            }
+        });
+
+        Collections.sort(finish, new Comparator<ExpLesson>() {
+            @Override
+            public int compare(ExpLesson expLesson, ExpLesson t1) {
+                return Integer.parseInt(t1.getWeeks_no() + t1.getWeek())
+                        - Integer.parseInt(expLesson.getWeeks_no() + expLesson.getWeek());
+            }
+        });
 
         expLessonFragmentUnfinish.updateData(unFinish);
         expLessonFragmentFinish.updateData(finish);

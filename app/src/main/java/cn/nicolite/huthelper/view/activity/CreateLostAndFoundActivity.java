@@ -1,6 +1,7 @@
 package cn.nicolite.huthelper.view.activity;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
@@ -178,7 +180,26 @@ public class CreateLostAndFoundActivity extends BaseActivity implements ICreateL
                 new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        edTime.setText(String.valueOf(i + "-" + i1 + "-" + i2));
+                        final String date = i + "-" + i1 + "-" + i2;
+                        new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker timePicker, int i, int i1) {
+                                String hours = String.valueOf(i);
+                                if (hours.length() < 2){
+                                    hours = "0" + hours;
+                                }
+                                String minutes = String.valueOf(i1);
+                                if (minutes.length() < 2){
+                                    minutes = "0" + minutes;
+                                }
+                                String second = String.valueOf(calendar.get(Calendar.SECOND));
+                                if (second.length() < 2) {
+                                    second = "0" + second;
+                                }
+                                edTime.setText(String.valueOf(date + " " + hours + ":" + minutes + ":" + second));
+                            }
+                        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true)
+                                .show();
                     }
                 }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
                         .show();

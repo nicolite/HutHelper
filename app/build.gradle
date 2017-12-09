@@ -120,6 +120,13 @@ android {
     }
 
     productFlavors {
+        //测试版
+        beta{
+            flavorDimensions "beta"
+            manifestPlaceholders = [
+                    MTA_CHANNEL: "测试"
+            ]
+        }
         //酷安
         kuan {
             flavorDimensions "kuan"
