@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tencent.android.tpush.XGPushManager;
 import com.tencent.bugly.beta.Beta;
+import com.tencent.stat.StatConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -233,6 +234,9 @@ public class MainActivity extends BaseActivity implements IMainView {
                 }
             }
         }, Conversation.ConversationType.PRIVATE);
+
+        //上传帐号信息到腾讯MTA
+        StatConfig.setCustomUserId(this, user.getStudentKH());
 
         //注册本地广播监听消息
         localBroadcastManager = LocalBroadcastManager.getInstance(context);

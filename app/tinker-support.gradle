@@ -5,7 +5,7 @@ def bakPath = file("${buildDir}/bakApk/")
 /**
  * 此处填写每次构建生成的基准包目录
  */
-def baseApkDir = "app-22556"
+def baseApkDir = "app-1209-21-05-21"
 
 /**
  * 对于插件各参数的详细解析请参考
@@ -14,6 +14,8 @@ tinkerSupport {
 
     // 开启tinker-support插件，默认值true
     enable = true
+
+    tinkerEnable = true
 
     // 指定归档目录，默认值当前module的子目录tinker
     autoBackupApkDir = "${bakPath}"

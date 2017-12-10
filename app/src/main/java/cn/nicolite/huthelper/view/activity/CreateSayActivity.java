@@ -25,6 +25,7 @@ import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.presenter.CreateSayPresenter;
+import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.ImageAdapter;
 import cn.nicolite.huthelper.view.iview.ICreateSayView;
@@ -104,7 +105,11 @@ public class CreateSayActivity extends BaseActivity implements ICreateSayView {
                         .setPositiveButton("确认", new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                createSayPresenter.createSay(activity, uriList);
+                                if (ListUtils.isEmpty(uriList)) {
+                                    createSayPresenter.uploadSayInfo(etAddSayContent.getText().toString(), "");
+                                } else {
+                                    createSayPresenter.createSay(activity, uriList);
+                                }
                                 commonDialog.dismiss();
                             }
                         })

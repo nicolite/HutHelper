@@ -23,12 +23,13 @@ android {
         appKeyProperties.load(appKeyStream)
 
         manifestPlaceholders = [
-                XG_ACCESS_ID  : appKeyProperties.get("XG_ACCESS_ID"),
-                XG_ACCESS_KEY : appKeyProperties.get("XG_ACCESS_KEY"),
-                MTA_APPKEY    : appKeyProperties.get("MTA_APPKEY"),
-                MTA_CHANNEL   : appKeyProperties.get("MTA_CHANNEL"),
-                RONG_CLOUD_KEY: appKeyProperties.get("RONG_CLOUD_KEY"),
-                GAODE_APIKEY  : appKeyProperties.get("GAODE_APIKEY")
+                XG_ACCESS_ID     : appKeyProperties.get("XG_ACCESS_ID"),
+                XG_ACCESS_KEY    : appKeyProperties.get("XG_ACCESS_KEY"),
+                MTA_APPKEY       : appKeyProperties.get("MTA_APPKEY"),
+                MTA_CHANNEL      : appKeyProperties.get("MTA_CHANNEL"),
+                RONG_CLOUD_KEY   : appKeyProperties.get("RONG_CLOUD_KEY"),
+                GAODE_APIKEY     : appKeyProperties.get("GAODE_APIKEY"),
+                BUGLY_APP_CHANNEL: appKeyProperties.get("BUGLY_APP_CHANNEL")
         ]
     }
 
@@ -121,24 +122,27 @@ android {
 
     productFlavors {
         //测试版
-        beta{
+        beta {
             flavorDimensions "beta"
             manifestPlaceholders = [
-                    MTA_CHANNEL: "测试"
+                    MTA_CHANNEL      : "测试",
+                    BUGLY_APP_CHANNEL: "测试"
             ]
         }
         //酷安
         kuan {
             flavorDimensions "kuan"
             manifestPlaceholders = [
-                    MTA_CHANNEL: "酷安"
+                    MTA_CHANNEL      : "酷安",
+                    BUGLY_APP_CHANNEL: "酷安"
             ]
         }
         //小米
         xiaomi {
             flavorDimensions "xiaomi"
             manifestPlaceholders = [
-                    MTA_CHANNEL: "小米应用商店"
+                    MTA_CHANNEL      : "小米应用商店",
+                    BUGLY_APP_CHANNEL: "小米应用商店"
             ]
         }
     }
