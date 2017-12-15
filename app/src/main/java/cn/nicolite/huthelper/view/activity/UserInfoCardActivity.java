@@ -87,7 +87,7 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
                 finish();
                 break;
             case R.id.bt_user_chat:
-                RongIM.getInstance().startPrivateChat(this, userId, username);
+                RongIM.getInstance().startPrivateChat(this, mUserId, username);
                 break;
             case R.id.iv_user_shiwu:
                 Bundle sBundle = new Bundle();

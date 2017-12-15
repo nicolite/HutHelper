@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_widget_1"
+    android:orientation="vertical"
+    android:padding="6dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_widget_weeknum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="50dp"
+            android:paddingTop="4dp"
+            android:text="第几周"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/bg_widget_2"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp">
+
+            <ImageButton
+                android:layout_gravity="center"
+                android:id="@+id/btn_widget_previous"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_widget_previous"
+                 android:background="@color/transparent"/>
+
+            <TextView
+                android:layout_gravity="center"
+                android:textSize="16sp"
+                android:id="@+id/tv_widget_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="星期几" />
+
+            <ImageButton
+                android:src="@drawable/ic_widget_next"
+                android:layout_gravity="center"
+                android:id="@+id/btn_widget_next"
+                android:layout_width="40dp"
+                android:layout_height="wrap_content"
+                android:background="@color/transparent"
+                 />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_widget_content"
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:background="@drawable/bg_widget_2"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:weightSum="6"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:id="@+id/ll_widget_course1"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_widget_course_num1"
+                android:padding="6dp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="1 - 2"
+                android:textColor="@color/black2"
+                android:textSize="16sp" />
+            <ImageView
+                android:layout_width="0.1dp"
+                android:layout_weight="0"
+                android:layout_height="match_parent"
+                android:background="#7F6969"/>
+
+            <LinearLayout
+                android:id="@+id/ll_widget_coursecontent1"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:layout_width="0dp"
+                android:layout_weight="4"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_widget_course_name1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="无数据"
+                    android:textColor="@color/black1"
+                    android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/tv_widget_course_classroom1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="无数据"
+                    android:textColor="@color/black2"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
+            <ImageView
+                android:layout_width="0.1dp"
+                android:layout_weight="0"
+                android:layout_height="match_parent"
+                android:background="#7F6969"/>
+            <ImageButton
+                android:layout_weight="1"
+                android:id="@+id/btn_widget_up"
+                android:src="@drawable/ic_widget_up"
+                android:padding="8dp"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+               android:background="@color/transparent"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+        <ImageView
+            android:id="@+id/iv_widget_line"
+            android:layout_width="match_parent"
+            android:layout_height="0.1dp"
+            android:background="#7F6969"/>
+        <LinearLayout
+            android:weightSum="6"
+            android:id="@+id/ll_widget_course2"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_weight="1"
+                android:id="@+id/tv_widget_course_num2"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="1 - 2"
+                android:padding="6dp"
+                android:textColor="@color/black2"
+                android:textSize="16sp" />
+            <ImageView
+                android:layout_weight="0"
+                android:layout_width="0.1dp"
+                android:layout_height="match_parent"
+                android:background="#7F6969"/>
+
+            <LinearLayout
+                android:id="@+id/ll_widget_coursecontent2"
+                android:layout_weight="4"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_widget_course_name2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="无数据"
+                    android:textColor="@color/black1"
+                    android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/tv_widget_course_classroom2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="无数据"
+                    android:textColor="@color/black2"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_horizontal"/>
+            </LinearLayout>
+            <ImageView
+                android:layout_width="0.1dp"
+                android:layout_weight="0"
+                android:layout_height="match_parent"
+                android:background="#7F6969"/>
+            <ImageButton
+                android:layout_weight="1"
+                android:id="@+id/btn_widget_down"
+                android:background="@color/transparent"
+                android:src="@drawable/ic_widget_down"
+                android:padding="8dp"
+                android:layout_gravity="center"
+                android:layout_width="0dp"
+                android:text="下"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tv_widget_coure_empty"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:text="今天没有课呀，好好休息下吧～"/>
+
+    </LinearLayout>
+
+</LinearLayout>

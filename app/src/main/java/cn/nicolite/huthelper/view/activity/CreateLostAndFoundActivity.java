@@ -180,16 +180,28 @@ public class CreateLostAndFoundActivity extends BaseActivity implements ICreateL
                 new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        final String date = i + "-" + i1 + "-" + i2;
+                        String year = String.valueOf(i);
+                        String month = String.valueOf(i1 + 1);
+                        String day = String.valueOf(i2);
+
+                        if (month.length() < 2){
+                            month = "0" + month;
+                        }
+
+                        if (day.length() < 2){
+                            day = "0" + day;
+                        }
+
+                        final String date = year + "-" + month + "-" + day;
                         new TimePickerDialog(context, new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker timePicker, int i, int i1) {
                                 String hours = String.valueOf(i);
-                                if (hours.length() < 2){
+                                if (hours.length() < 2) {
                                     hours = "0" + hours;
                                 }
                                 String minutes = String.valueOf(i1);
-                                if (minutes.length() < 2){
+                                if (minutes.length() < 2) {
                                     minutes = "0" + minutes;
                                 }
                                 String second = String.valueOf(calendar.get(Calendar.SECOND));
