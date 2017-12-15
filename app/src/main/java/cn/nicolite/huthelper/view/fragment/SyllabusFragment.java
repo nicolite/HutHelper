@@ -173,7 +173,7 @@ public class SyllabusFragment extends BaseFragment {
         CurrWeek = DateUtils.getNowWeek();
 
         //更新数据前 移除view
-        if (mUserCourseLayout != null){
+        if (mUserCourseLayout != null) {
             mUserCourseLayout.removeAllViews();
         }
 
@@ -259,7 +259,9 @@ public class SyllabusFragment extends BaseFragment {
                             curClickView.setAlpha((float) 0.5);
                         }
                     });
-                    courseLayout.addView(tx);
+                    if (courseLayout != null) {
+                        courseLayout.addView(tx);
+                    }
                 }
             }
         }
@@ -313,7 +315,10 @@ public class SyllabusFragment extends BaseFragment {
         view.setLayoutParams(params);
         view.setBackgroundColor(getResources().getColor(R.color.week_view_text_date));
 
-        courseLayout.addView(view);
+        if (courseLayout != null) {
+            courseLayout.addView(view);
+        }
+
     }
 
     /**
@@ -524,8 +529,13 @@ public class SyllabusFragment extends BaseFragment {
                         }
                     });
                     //添加布局
-                    mTable.get().mUserCourseLayout.addView(lesson);
-                    mTable.get().courseTextViewList.add(lesson);
+                    if (mTable.get().mUserCourseLayout != null){
+                        mTable.get().mUserCourseLayout.addView(lesson);
+                    }
+
+                    if (mTable.get().courseTextViewList != null) {
+                        mTable.get().courseTextViewList.add(lesson);
+                    }
                     upperCourse = null;
                 }
             } while (lessonList.size() < lastListSize && lessonList.size() != 0);

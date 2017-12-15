@@ -151,21 +151,25 @@ public class WebViewActivity extends BaseActivity {
 
         });
 
+
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView webView, int i) {
                 super.onProgressChanged(webView, i);
-                if (i == 100) {
-                    if (type != TYPE_CHANGE_PWD) {
-                        addImgClickListener();
+                if (progressBar != null) {
+                    if (i == 100) {
+                        if (type != TYPE_CHANGE_PWD) {
+                            addImgClickListener();
+                        }
+                        progressBar.setVisibility(View.GONE);
+                    } else {
+                        progressBar.setProgress(i);
                     }
-                    progressBar.setVisibility(View.GONE);
-                } else {
-                    progressBar.setProgress(i);
                 }
 
             }
         });
+
     }
 
     private void loadHtml(int type, String title, String url) {
@@ -219,6 +223,16 @@ public class WebViewActivity extends BaseActivity {
     protected void onResume() {
         super.onResume();
         settings.setJavaScriptEnabled(true);
+        webView.resumeTimers();
+        webView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        settings.setJavaScriptEnabled(false);
+        webView.onPause();
+        webView.pauseTimers();
     }
 
     @Override
@@ -231,7 +245,7 @@ public class WebViewActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (webView != null) {
-            webView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null); //会导致空指针
+            //webView.loadDataWithBaseURL(null, "about:blank", "text/html", "utf-8", null); //会导致空指针
             webView.clearHistory();
             webView.clearCache(true);
             webView.clearFormData();

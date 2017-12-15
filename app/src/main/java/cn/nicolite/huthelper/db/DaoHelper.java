@@ -12,7 +12,7 @@ import cn.nicolite.huthelper.model.Constants;
  */
 
 public class DaoHelper {
-    private static DaoHelper instance;
+    private volatile static DaoHelper instance;
     private DaoMaster.OpenHelper helper;
     private SQLiteDatabase db;
     private DaoMaster daoMaster;

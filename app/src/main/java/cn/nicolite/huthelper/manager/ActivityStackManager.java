@@ -14,7 +14,7 @@ import java.util.Stack;
  */
 
 public class ActivityStackManager {
-    private static ActivityStackManager instance;
+    private volatile static ActivityStackManager instance;
     private static Stack<Activity> activityStack;
 
     /**

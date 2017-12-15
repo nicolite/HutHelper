@@ -23,8 +23,6 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 
-import cn.nicolite.huthelper.model.Constants;
-
 /**
  * 加密工具类
  * Created by nicolite on 17-10-8.
@@ -124,7 +122,7 @@ public class EncryptUtils {
 
             //从字符串中获取公钥证书
             Provider provider = new BouncyCastleProvider();
-            byte[] decode = Base64.decode(Constants.PUBLIC_KEY, Base64.DEFAULT);
+            byte[] decode = Base64.decode(stringBuilder.toString(), Base64.DEFAULT);
             KeyFactory rsa = KeyFactory.getInstance("RSA", provider);
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(decode);
             RSAPublicKey key = (RSAPublicKey) rsa.generatePublic(keySpec);

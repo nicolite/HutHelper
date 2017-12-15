@@ -163,7 +163,7 @@ public class CareerTalkItemActivity extends BaseActivity implements ICareerTalkI
         super.onDestroy();
         //防止webview内存泄漏
         if (webView != null) {
-            webView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+            //webView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
             webView.clearHistory();
             webView.clearCache(true);
             webView.clearFormData();

@@ -5,7 +5,7 @@ import io.reactivex.processors.FlowableProcessor;
 import io.reactivex.processors.PublishProcessor;
 
 /**
- * //TODO 未实现，暂时不可用
+ * TODO 未实现，暂时不可用
  * RxBus 事件总线 带背压处理
  * Created by nicolite on 17-10-13.
  */
@@ -13,7 +13,7 @@ import io.reactivex.processors.PublishProcessor;
 public class RxBus {
 
     private final FlowableProcessor<Object> bus;
-    private static volatile RxBus instance;
+    private volatile static  RxBus instance;
 
     private RxBus() {
         bus = PublishProcessor.create().toSerialized();

@@ -25,7 +25,7 @@ public class RetrofitUtils {
     public static final int CONNECT_TIME_OUT = 10;//连接超时时长x秒
     public static final int READ_TIME_OUT = 10;//读数据超时时长x秒
     public static final int WRITE_TIME_OUT = 10;//写数据接超时时长x秒
-    private static RetrofitUtils instance;
+    private volatile static RetrofitUtils instance;
 
     private RetrofitUtils() {
     }

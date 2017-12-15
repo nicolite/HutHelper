@@ -9,7 +9,7 @@ android {
         applicationId "cn.nicolite.huthelper"
         minSdkVersion 18
         targetSdkVersion 27
-        versionCode 22565
+        versionCode 22567
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true

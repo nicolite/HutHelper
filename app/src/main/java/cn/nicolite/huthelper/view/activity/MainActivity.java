@@ -21,6 +21,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.tencent.android.tpush.XGPushManager;
 import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.tencent.stat.StatConfig;
 
 import java.util.ArrayList;
@@ -237,6 +238,8 @@ public class MainActivity extends BaseActivity implements IMainView {
 
         //上传帐号信息到腾讯MTA
         StatConfig.setCustomUserId(this, user.getStudentKH());
+        //设置用户ID，已定位到用户级别的Crash记录
+        CrashReport.setUserId(user.getStudentKH());
 
         //注册本地广播监听消息
         localBroadcastManager = LocalBroadcastManager.getInstance(context);
@@ -262,6 +265,7 @@ public class MainActivity extends BaseActivity implements IMainView {
             }
         }
     }
+
 
     @OnClick({R.id.iv_nav_avatar, R.id.tv_nav_name, R.id.tv_nav_private_message,
             R.id.tv_nav_update, R.id.tv_nav_share, R.id.tv_nav_logout, R.id.tv_nav_about,
