@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
     android:background="@color/white"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
     <include layout="@layout/toolbar_nomenu" />
@@ -151,37 +151,37 @@
                     android:layout_marginTop="10dp"
                     android:background="@color/line_grey" />
 
-                <FrameLayout
-                    android:id="@+id/contact"
-                    android:layout_width="match_parent"
-                    android:layout_height="25dp">
+                <!--  <FrameLayout
+                      android:id="@+id/contact"
+                      android:layout_width="match_parent"
+                      android:layout_height="25dp">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:gravity="start|center_vertical"
-                        android:paddingLeft="15dp"
-                        android:paddingRight="15dp"
-                        android:text="联系开发者"
-                        android:textColor="@color/black"
-                        android:textSize="12sp" />
+                      <TextView
+                          android:layout_width="wrap_content"
+                          android:layout_height="match_parent"
+                          android:gravity="start|center_vertical"
+                          android:paddingLeft="15dp"
+                          android:paddingRight="15dp"
+                          android:text="联系开发者"
+                          android:textColor="@color/black"
+                          android:textSize="12sp" />
 
-                    <ImageView
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
-                        android:layout_gravity="end|center_vertical"
-                        android:layout_marginEnd="10dp"
-                        android:src="@drawable/go111" />
+                      <ImageView
+                          android:layout_width="14dp"
+                          android:layout_height="14dp"
+                          android:layout_gravity="end|center_vertical"
+                          android:layout_marginEnd="10dp"
+                          android:src="@drawable/go111" />
 
-                </FrameLayout>
+                  </FrameLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="0.5dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@color/line_grey" />
-
+                  <View
+                      android:layout_width="match_parent"
+                      android:layout_height="0.5dp"
+                      android:layout_marginBottom="10dp"
+                      android:layout_marginTop="10dp"
+                      android:background="@color/line_grey" />
+    -->
                 <FrameLayout
                     android:id="@+id/rating"
                     android:layout_width="match_parent"

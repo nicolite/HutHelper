@@ -19,6 +19,7 @@ import java.util.List;
 
 import cn.nicolite.huthelper.model.bean.GradeRank;
 import cn.nicolite.huthelper.utils.DensityUtils;
+import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.ScreenUtils;
 
 /**
@@ -177,7 +178,7 @@ public class LineChartView extends View {
     @Override
     protected void onDraw(Canvas ca) {
         if (fullImage == null || shouldUpdate) {
-            if (rankList == null || rankList.size() == 0) {
+            if (ListUtils.isEmpty(rankList)) {
                 setVisibility(GONE);
                 return;
             } else {

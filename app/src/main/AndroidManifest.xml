@@ -41,9 +41,11 @@
         android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppSplash"
+        android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-        <activity android:name=".view.activity.SplashActivity">
+        <activity
+            android:name=".view.activity.SplashActivity"
+            android:theme="@style/AppSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -53,11 +55,11 @@
         <activity
             android:name=".view.activity.MainActivity"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/MainActivity" />
 
         <activity
             android:name=".view.activity.LoginActivity"
-            android:theme="@style/AppTheme" />
+            android:theme="@style/MainActivity" />
 
         <activity
             android:name=".view.activity.WebViewActivity"

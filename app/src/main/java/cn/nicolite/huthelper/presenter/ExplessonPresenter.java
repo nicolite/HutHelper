@@ -33,19 +33,17 @@ public class ExplessonPresenter extends BasePresenter<IExplessonView, ExpLessonA
     public void showExplesson(final boolean isManual) {
 
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取当前登录用户失败，请重新登录！");
             }
-            getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
 
         List<Configure> configureList = getConfigureList();
         if (ListUtils.isEmpty(configureList)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
             }
-            getView().showMessage("获取用户信息失败！");
             return;
         }
 
@@ -58,15 +56,16 @@ public class ExplessonPresenter extends BasePresenter<IExplessonView, ExpLessonA
                 .list();
 
         if (!ListUtils.isEmpty(list)) {
-            if (getView() == null) {
+            if (getView() != null) {
+                getView().showExpLesson(list);
                 return;
             }
-            getView().showExpLesson(list);
         }
 
         APIUtils
                 .getExpLessonAPI()
                 .getExpLesson(user.getStudentKH(), configure.getAppRememberCode())
+                .compose(getActivity().<HttpResult<List<ExpLesson>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<HttpResult<List<ExpLesson>>>() {

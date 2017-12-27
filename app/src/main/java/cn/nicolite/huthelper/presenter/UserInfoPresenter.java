@@ -111,14 +111,14 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                     @Override
                     public void onNext(HttpResult<String> stringHttpResult) {
                         if (getView() != null) {
-                            String msg;
-                            switch (stringHttpResult.getMsg()) {
+                            getView().closeLoading();
+                            String msg = stringHttpResult.getMsg();
+                            switch (msg) {
                                 case "ok":
                                     msg = "修改成功!";
                                     getView().changeAvatarSuccess(bitmap);
                                     user.setHead_pic_thumb(stringHttpResult.getData());
                                     user.setHead_pic(stringHttpResult.getData());
-
                                     break;
                                 case "令牌错误":
                                     msg = "修改失败：帐号异地登录，请重新登录！";
@@ -127,7 +127,6 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                                     msg = stringHttpResult.getMsg();
                                     break;
                             }
-                            getView().closeLoading();
                             getView().showMessage(msg);
                         }
                     }
@@ -234,7 +233,8 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
 
                                 getView().showMessage("修改成功!");
                             } else {
-                                getView().showMessage("修改失败，" + httpResult.getCode());
+                                getView().showMessage("修改失败，code：" + httpResult.getCode()
+                                        + "，" + httpResult.getMsg());
                             }
                         }
                     }

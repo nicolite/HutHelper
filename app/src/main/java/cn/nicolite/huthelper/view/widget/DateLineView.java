@@ -57,11 +57,13 @@ public class DateLineView extends View {
 
         //文本
         textPaint = new TextPaint();
+        textPaint.setFlags(Paint.ANTI_ALIAS_FLAG);
         textPaint.setTextSize(DensityUtils.sp2px(context, 10));
         textPaint.setColor(Color.WHITE);
 
         //圆点
         circlePaint = new Paint();
+        circlePaint.setFlags(Paint.ANTI_ALIAS_FLAG);
         circlePaint.setStyle(Paint.Style.FILL);
         circlePaint.setColor(Color.WHITE);
 

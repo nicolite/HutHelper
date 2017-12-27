@@ -66,19 +66,17 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     public void showWeather() {
 
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null) {
-                return;
+            if (getView()!= null) {
+                getView().showMessage("获取当前登录用户失败，请重新登录！");
             }
-            getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
 
         final List<Configure> list = getConfigureList();
         if (ListUtils.isEmpty(list)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
             }
-            getView().showMessage("获取用户信息失败！");
             return;
         }
 

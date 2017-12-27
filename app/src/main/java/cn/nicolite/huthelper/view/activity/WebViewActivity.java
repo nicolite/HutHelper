@@ -249,8 +249,8 @@ public class WebViewActivity extends BaseActivity {
             webView.clearHistory();
             webView.clearCache(true);
             webView.clearFormData();
-            rootView.removeView(webView);
             webView.removeAllViews();
+            rootView.removeView(webView);
             webView.destroy();
             webView = null;
         }
