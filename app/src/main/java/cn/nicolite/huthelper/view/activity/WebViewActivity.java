@@ -70,6 +70,8 @@ public class WebViewActivity extends BaseActivity {
     public static final int TYPE_HOMEWORK = 576;
     public static final int TYPE_NOTICE = 174;
     public static final int TYPE_FRESHMAN_GUIDE = 519;
+    public static final int TYPE_BLOG = 434;
+    public static final int TYPE_OPEN_SOURCE = 886;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -146,9 +148,14 @@ public class WebViewActivity extends BaseActivity {
             @Override
             public void onReceivedError(WebView view, WebResourceRequest request, WebResourceError error) {
                 super.onReceivedError(view, request, error);
-                showErrorPage();
+
             }
 
+            @Override
+            public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                super.onReceivedError(view, errorCode, description, failingUrl);
+                showErrorPage();
+            }
         });
 
 
@@ -200,6 +207,14 @@ public class WebViewActivity extends BaseActivity {
                 loadContent(url);
                 break;
             case TYPE_NOTICE:
+                toolbarTitle.setText(title);
+                webView.loadUrl(url);
+                break;
+            case TYPE_BLOG:
+                toolbarTitle.setText(title);
+                webView.loadUrl(url);
+                break;
+            case TYPE_OPEN_SOURCE:
                 toolbarTitle.setText(title);
                 webView.loadUrl(url);
                 break;

@@ -60,7 +60,7 @@ public class GradeListPresenter extends BasePresenter<IGradeListView, GradeListA
         if (getView() != null) {
             if (!ListUtils.isEmpty(gradeList)) {
                 getView().showGradeList(gradeList);
-            }else {
+            } else {
                 getView().showLoading();
             }
         }
@@ -73,7 +73,13 @@ public class GradeListPresenter extends BasePresenter<IGradeListView, GradeListA
                 .map(new Function<HttpResult<List<Grade>>, List<Grade>>() {
                     @Override
                     public List<Grade> apply(HttpResult<List<Grade>> listHttpResult) throws Exception {
-                        List<Grade> list = listHttpResult.getData();
+                        List<Grade> list = new ArrayList<>();
+
+                        if (listHttpResult.getCode() != 200) {
+                            return list;
+                        }
+
+                        list = listHttpResult.getData();
 
                         Collections.sort(list, new Comparator<Grade>() {
                             @Override
@@ -108,7 +114,12 @@ public class GradeListPresenter extends BasePresenter<IGradeListView, GradeListA
                     public void onNext(List<Grade> gradeList) {
                         if (getView() != null) {
                             getView().closeLoading();
-                            getView().showGradeList(gradeList);
+                            if (!ListUtils.isEmpty(gradeList)) {
+                                getView().showGradeList(gradeList);
+                            } else {
+                                getView().showMessage("没有找到你的成绩");
+                            }
+
                         }
                     }
 

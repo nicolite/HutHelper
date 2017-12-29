@@ -70,7 +70,8 @@ public class AboutActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.toolbar_back, R.id.help, R.id.permission_message, R.id.rating})
+    @OnClick({R.id.toolbar_back, R.id.help, R.id.permission_message, R.id.blog,
+            R.id.openSource, R.id.rating})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.toolbar_back:
@@ -79,7 +80,7 @@ public class AboutActivity extends BaseActivity {
             case R.id.help:
                 Bundle bundle = new Bundle();
                 bundle.putInt("type", WebViewActivity.TYPE_HELP);
-                bundle.putString("url"  , Constants.HELP);
+                bundle.putString("url", Constants.HELP);
                 bundle.putString("title", "帮助");
                 startActivity(WebViewActivity.class, bundle);
                 break;
@@ -89,6 +90,20 @@ public class AboutActivity extends BaseActivity {
                 bundle1.putString("url", Constants.PERMISSON);
                 bundle1.putString("title", "软件许可协议");
                 startActivity(WebViewActivity.class, bundle1);
+                break;
+            case R.id.blog:
+                Bundle bundle2 = new Bundle();
+                bundle2.putInt("type", WebViewActivity.TYPE_BLOG);
+                bundle2.putString("url", Constants.BLOG);
+                bundle2.putString("title", "NICOLITE");
+                startActivity(WebViewActivity.class, bundle2);
+                break;
+            case R.id.openSource:
+                Bundle bundle3 = new Bundle();
+                bundle3.putInt("type", WebViewActivity.TYPE_OPEN_SOURCE);
+                bundle3.putString("url", Constants.OPEN_SOURCE);
+                bundle3.putString("title", "NICOLITE");
+                startActivity(WebViewActivity.class, bundle3);
                 break;
             case R.id.rating:
                 try {

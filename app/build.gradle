@@ -10,7 +10,7 @@ android {
         minSdkVersion 18
         targetSdkVersion 27
         versionCode 22576
-        versionName "1.0"
+        versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         ndk {
@@ -89,7 +89,7 @@ android {
     }
 
     greendao {
-        schemaVersion 1
+        schemaVersion 2
         daoPackage "cn.nicolite.huthelper.db.dao"
         targetGenDir "src/main/java"
         generateTests false
