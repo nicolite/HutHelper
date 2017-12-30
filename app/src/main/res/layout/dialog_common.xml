@@ -43,6 +43,7 @@
             android:paddingEnd="10dp"
             android:paddingStart="10dp"
             android:paddingTop="10dp"
+            android:textIsSelectable="true"
             android:scrollbars="vertical"
             android:text="确定删除这条说说？"
             android:textColor="@color/dull_grey"

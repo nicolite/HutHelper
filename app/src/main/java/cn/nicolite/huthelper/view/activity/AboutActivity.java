@@ -102,7 +102,7 @@ public class AboutActivity extends BaseActivity {
                 Bundle bundle3 = new Bundle();
                 bundle3.putInt("type", WebViewActivity.TYPE_OPEN_SOURCE);
                 bundle3.putString("url", Constants.OPEN_SOURCE);
-                bundle3.putString("title", "NICOLITE");
+                bundle3.putString("title", "HutHelper");
                 startActivity(WebViewActivity.class, bundle3);
                 break;
             case R.id.rating:

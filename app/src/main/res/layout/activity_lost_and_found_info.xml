@@ -42,6 +42,7 @@
                     android:lineSpacingExtra="3dp"
                     android:minLines="4"
                     android:textColor="@color/white"
+                    android:textIsSelectable="true"
                     android:textSize="14sp" />
             </LinearLayout>
 
