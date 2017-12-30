@@ -81,7 +81,6 @@
         <!--会话列表-->
         <activity
             android:name=".view.activity.ConversationListActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
@@ -97,7 +96,6 @@
         <!--聚合会话列表-->
         <activity
             android:name=".view.activity.SubConversationActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
@@ -113,7 +111,6 @@
         <!--会话界面-->
         <activity
             android:name=".view.activity.ConversationActivity"
-            android:screenOrientation="portrait"
             android:theme="@style/AppTheme"
             android:windowSoftInputMode="stateHidden|adjustResize">
             <intent-filter>
