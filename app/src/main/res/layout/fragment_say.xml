@@ -4,10 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/bg_grey"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
     <com.github.jdsjlzx.recyclerview.LRecyclerView
         android:id="@+id/lRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants" />
 </LinearLayout>

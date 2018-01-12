@@ -1,7 +1,10 @@
 package cn.nicolite.huthelper.view.activity;
 
+import android.content.Intent;
+import android.content.pm.ResolveInfo;
 import android.graphics.Bitmap;
 import android.graphics.PixelFormat;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -21,6 +24,9 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
+import java.net.URISyntaxException;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -135,8 +141,33 @@ public class WebViewActivity extends BaseActivity {
             public boolean shouldOverrideUrlLoading(WebView webView, String s) {
                 if (s.startsWith("http") || s.startsWith("https")) {
                     webView.loadUrl(s);
+                } else if (s.startsWith("intent")) {
+                    try {
+                        Intent intent = Intent.parseUri(s, Intent.URI_INTENT_SCHEME);
+                        intent.addCategory("android.intent.category.BROWSABLE");
+                        intent.setComponent(null);
+                        intent.setSelector(null);
+                        List<ResolveInfo> resolves = context.getPackageManager().queryIntentActivities(intent, 0);
+                        if (resolves.size() > 0) {
+                            startActivityIfNeeded(intent, -1);
+                        }
+                        return true;
+                    } catch (URISyntaxException e) {
+                        e.printStackTrace();
+                    }
+
+                } else {
+                    try {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(s));
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    return true;
                 }
-                return true;
+
+                return super.shouldOverrideUrlLoading(webView, s);
             }
 
             @Override

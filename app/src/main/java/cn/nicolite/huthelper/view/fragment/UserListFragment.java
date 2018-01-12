@@ -91,7 +91,7 @@ public class UserListFragment extends BaseFragment implements IUserListView {
             @Override
             public void onItemClick(View view, int position) {
                 final User user = userList.get(position);
-                RongIM.setUserInfoProvider(new io.rong.imkit.RongIM.UserInfoProvider() {
+                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
                     @Override
                     public UserInfo getUserInfo(String s) {
                         return new UserInfo(user.getUser_id(), user.getTrueName(),
@@ -99,7 +99,7 @@ public class UserListFragment extends BaseFragment implements IUserListView {
                     }
                 }, true);
 
-                io.rong.imkit.RongIM.getInstance().refreshUserInfoCache(new UserInfo(user.getUser_id(),
+                RongIM.getInstance().refreshUserInfoCache(new UserInfo(user.getUser_id(),
                         user.getTrueName(),
                         Uri.parse(Constants.PICTURE_URL + user.getHead_pic())));
 
