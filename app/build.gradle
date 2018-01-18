@@ -1,3 +1,5 @@
+import java.text.SimpleDateFormat
+
 apply plugin: 'com.android.application'
 apply plugin: 'org.greenrobot.greendao'
 apply from: 'tinker-support.gradle'
@@ -96,19 +98,14 @@ android {
         targetGenDirTests "src/androidTest/java"
     }
 
-    //升级gradle版本后居然不能用了
-    //  applicationVariants.all {
-    //      variant ->
-    //          variant.outputs.each {
-    //              output ->
-    //                  def outputFile = output.outputFile
-    //                  if (outputFile != null && outputFile.name.endsWith(".apk")) {
-    //                      def dirName = outputFile.parent
-    //                      def fileName = "huthelper-${variant.flavgoogle()orName}-${variant.versionName}(${variant.versionCode}).apk"
-    //                      output.outputFile = new File(dirName, fileName)
-    //                  }
-    //          }
-    //  }
+    applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+                String releaseTime = format.format(new Date());
+                outputFileName = "huthelper-${variant.flavorName}-${variant.versionName}(${variant.versionCode})_${releaseTime}.apk"
+            }
+    }
 
     lintOptions {
         checkReleaseBuilds false

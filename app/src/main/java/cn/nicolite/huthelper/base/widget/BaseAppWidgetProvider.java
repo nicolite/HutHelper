@@ -7,5 +7,5 @@ import android.appwidget.AppWidgetProvider;
  */
 
 public class BaseAppWidgetProvider extends AppWidgetProvider {
-
+    protected final String TAG = getClass().getSimpleName();
 }
