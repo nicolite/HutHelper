@@ -26,7 +26,7 @@ import cn.nicolite.huthelper.presenter.CareerTalkPresenter;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.CareerTalkAdapter;
 import cn.nicolite.huthelper.view.iview.ICareerTalkView;
-import cn.nicolite.huthelper.view.widget.LoadingDialog;
+import cn.nicolite.huthelper.view.customView.LoadingDialog;
 
 /**
  * 宣讲会页面

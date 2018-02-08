@@ -21,7 +21,7 @@
             android:scaleType="centerCrop"
             android:src="@drawable/head_boy" />
 
-        <cn.nicolite.huthelper.view.widget.RichTextView
+        <cn.nicolite.huthelper.view.customView.RichTextView
             android:id="@+id/tv_nav_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -39,7 +39,7 @@
             view:drawable_width="16dp" />
 
 
-        <cn.nicolite.huthelper.view.widget.RichTextView
+        <cn.nicolite.huthelper.view.customView.RichTextView
             android:id="@+id/tv_nav_private_message"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
@@ -57,7 +57,7 @@
             view:drawable_width="30dp" />
 
 
-        <cn.nicolite.huthelper.view.widget.RichTextView
+        <cn.nicolite.huthelper.view.customView.RichTextView
             android:id="@+id/tv_nav_update"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
@@ -74,7 +74,7 @@
             view:drawable_src="@drawable/jianchagengxin"
             view:drawable_width="30dp" />
 
-        <cn.nicolite.huthelper.view.widget.RichTextView
+        <cn.nicolite.huthelper.view.customView.RichTextView
             android:id="@+id/tv_nav_share"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
@@ -91,7 +91,7 @@
             view:drawable_src="@drawable/fenxiang"
             view:drawable_width="30dp" />
 
-        <cn.nicolite.huthelper.view.widget.RichTextView
+        <cn.nicolite.huthelper.view.customView.RichTextView
             android:id="@+id/tv_nav_logout"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
@@ -108,7 +108,7 @@
             view:drawable_src="@drawable/qiehuanzhanghu"
             view:drawable_width="30dp" />
 
-        <cn.nicolite.huthelper.view.widget.RichTextView
+        <cn.nicolite.huthelper.view.customView.RichTextView
             android:id="@+id/tv_nav_about"
             android:layout_width="wrap_content"
             android:layout_height="32dp"
@@ -125,7 +125,7 @@
             view:drawable_src="@drawable/guanyu"
             view:drawable_width="30dp" />
 
-        <cn.nicolite.huthelper.view.widget.RichTextView
+        <cn.nicolite.huthelper.view.customView.RichTextView
             android:id="@+id/tv_nav_fback"
             android:layout_width="wrap_content"
             android:layout_height="32dp"

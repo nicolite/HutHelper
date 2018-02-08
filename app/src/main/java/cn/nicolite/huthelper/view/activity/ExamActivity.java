@@ -21,7 +21,7 @@ import cn.nicolite.huthelper.presenter.ExamPresenter;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.ExamAdapter;
 import cn.nicolite.huthelper.view.iview.IExamView;
-import cn.nicolite.huthelper.view.widget.LoadingDialog;
+import cn.nicolite.huthelper.view.customView.LoadingDialog;
 
 /**
  * 考试查询界面

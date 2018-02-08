@@ -409,7 +409,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
         });
     }
 
-    public void initPush(String studentKH) {
+    public void registerPush(String studentKH) {
         XGPushManager.registerPush(getActivity().getApplicationContext(), studentKH, new XGIOperateCallback() {
             @Override
             public void onSuccess(Object o, int i) {

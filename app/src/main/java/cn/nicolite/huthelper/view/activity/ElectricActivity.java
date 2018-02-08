@@ -21,8 +21,8 @@ import cn.nicolite.huthelper.presenter.ElectricPresenter;
 import cn.nicolite.huthelper.utils.KeyBoardUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.iview.IElectricView;
-import cn.nicolite.huthelper.view.widget.BarListView;
-import cn.nicolite.huthelper.view.widget.ElectricDialog;
+import cn.nicolite.huthelper.view.customView.BarListView;
+import cn.nicolite.huthelper.view.customView.ElectricDialog;
 
 /**
  * 电费查询界面

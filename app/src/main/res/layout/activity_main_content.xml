@@ -115,7 +115,7 @@
                 android:layout_gravity="start|center_vertical"
                 android:src="@drawable/ic_dateline" />
 
-            <cn.nicolite.huthelper.view.widget.DateLineView
+            <cn.nicolite.huthelper.view.customView.DateLineView
                 android:id="@+id/dateLineView"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -156,7 +156,7 @@
             android:textColor="#adadad"
             android:textSize="12sp" />
 
-        <cn.nicolite.huthelper.view.widget.RichTextView
+        <cn.nicolite.huthelper.view.customView.RichTextView
             android:id="@+id/tv_notice_maincontent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

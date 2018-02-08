@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <cn.nicolite.huthelper.view.widget.CourseInfoGallery
+    <cn.nicolite.huthelper.view.customView.CourseInfoGallery
         android:id="@+id/lesson_gallery"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

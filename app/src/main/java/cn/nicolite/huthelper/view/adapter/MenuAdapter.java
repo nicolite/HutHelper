@@ -21,7 +21,7 @@ import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.bean.Menu;
 import cn.nicolite.huthelper.utils.ButtonUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
-import cn.nicolite.huthelper.view.widget.CustomItemTouchHelper;
+import cn.nicolite.huthelper.view.customView.CustomItemTouchHelper;
 
 /**
  * 首页菜单适配器

@@ -32,7 +32,7 @@ import cn.nicolite.huthelper.utils.DensityUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.iview.IUserInfoView;
-import cn.nicolite.huthelper.view.widget.CommonDialog;
+import cn.nicolite.huthelper.view.customView.CommonDialog;
 import io.rong.imkit.RongIM;
 
 /**
@@ -71,8 +71,8 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        setDeepColorStatusBar(true);
         setImmersiveStatusBar(true);
+        setDeepColorStatusBar(true);
         setSlideExit(true);
     }
 

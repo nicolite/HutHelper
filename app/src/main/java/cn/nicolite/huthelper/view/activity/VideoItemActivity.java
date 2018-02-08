@@ -19,7 +19,7 @@ import cn.nicolite.huthelper.model.bean.Video;
 import cn.nicolite.huthelper.utils.CommUtil;
 import cn.nicolite.huthelper.utils.ToastUtil;
 import cn.nicolite.huthelper.view.adapter.VideoItemAdapter;
-import cn.nicolite.huthelper.view.widget.CommonDialog;
+import cn.nicolite.huthelper.view.customView.CommonDialog;
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.ColorFilterTransformation;
 

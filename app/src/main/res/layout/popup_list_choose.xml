@@ -10,7 +10,7 @@
     android:paddingRight="20dp"
     android:paddingTop="24dp">
 
-    <cn.nicolite.huthelper.view.widget.RichTextView
+    <cn.nicolite.huthelper.view.customView.RichTextView
         android:id="@+id/tv_popmenu_add"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         view:drawable_src="@drawable/ic_add_list"
         view:drawable_width="25dp" />
 
-    <cn.nicolite.huthelper.view.widget.RichTextView
+    <cn.nicolite.huthelper.view.customView.RichTextView
         android:id="@+id/tv_popmenu_mime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

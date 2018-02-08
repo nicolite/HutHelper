@@ -13,7 +13,7 @@ import java.util.List;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.bean.Lesson;
 import cn.nicolite.huthelper.utils.CommUtil;
-import cn.nicolite.huthelper.view.widget.CourseInfoGallery;
+import cn.nicolite.huthelper.view.customView.CourseInfoGallery;
 
 /**
  * 课程信息适配器

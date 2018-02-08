@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<cn.nicolite.huthelper.view.widget.DragLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<cn.nicolite.huthelper.view.customView.DragLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rootView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,12 +10,12 @@
 
     <include layout="@layout/main_left_menu" />
 
-    <cn.nicolite.huthelper.view.widget.MyRelativeLayout
+    <cn.nicolite.huthelper.view.customView.MyRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#eeeeee"
         android:orientation="vertical">
         <include layout="@layout/activity_main_content" />
-    </cn.nicolite.huthelper.view.widget.MyRelativeLayout>
+    </cn.nicolite.huthelper.view.customView.MyRelativeLayout>
 
-</cn.nicolite.huthelper.view.widget.DragLayout>
+</cn.nicolite.huthelper.view.customView.DragLayout>

@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import cn.nicolite.huthelper.model.bean.GradeRank;
-import cn.nicolite.huthelper.view.widget.LineChartView;
+import cn.nicolite.huthelper.view.customView.LineChartView;
 
 /**
  * Created by nicolite on 17-11-12.

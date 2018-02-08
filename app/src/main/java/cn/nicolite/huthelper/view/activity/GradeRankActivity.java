@@ -24,8 +24,8 @@ import cn.nicolite.huthelper.presenter.GradeRankPresenter;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.GradeRankAdapter;
 import cn.nicolite.huthelper.view.iview.IGradeRankView;
-import cn.nicolite.huthelper.view.widget.CirclePie;
-import cn.nicolite.huthelper.view.widget.LoadingDialog;
+import cn.nicolite.huthelper.view.customView.CirclePie;
+import cn.nicolite.huthelper.view.customView.LoadingDialog;
 
 /**
  * 成绩排名页面

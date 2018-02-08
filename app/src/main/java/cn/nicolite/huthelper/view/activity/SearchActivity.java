@@ -24,10 +24,10 @@ import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.utils.ToastUtil;
 import cn.nicolite.huthelper.view.adapter.SearchAdapter;
 import cn.nicolite.huthelper.view.iview.ISearchView;
-import cn.nicolite.huthelper.view.widget.CommonDialog;
+import cn.nicolite.huthelper.view.customView.CommonDialog;
 
 /**
- * 商品搜素页面
+ * 搜素页面
  * Created by nicolite on 17-11-10.
  */
 

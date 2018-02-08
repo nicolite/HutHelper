@@ -25,7 +25,7 @@ import cn.nicolite.huthelper.presenter.VideoPresenter;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.VideoAdapter;
 import cn.nicolite.huthelper.view.iview.IVideoView;
-import cn.nicolite.huthelper.view.widget.LoadingDialog;
+import cn.nicolite.huthelper.view.customView.LoadingDialog;
 
 /**
  * 视频专栏

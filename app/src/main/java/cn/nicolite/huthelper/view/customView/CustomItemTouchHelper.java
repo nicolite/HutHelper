@@ -1,4 +1,4 @@
-package cn.nicolite.huthelper.view.widget;
+package cn.nicolite.huthelper.view.customView;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;

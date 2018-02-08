@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.bean.LostAndFound;
 import cn.nicolite.huthelper.utils.ListUtils;
-import cn.nicolite.huthelper.view.widget.PictureGridView;
+import cn.nicolite.huthelper.view.customView.PictureGridView;
 
 /**
  * Created by nicolite on 17-11-12.

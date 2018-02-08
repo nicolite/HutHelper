@@ -32,7 +32,7 @@ import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.ChooseListAdapter;
 import cn.nicolite.huthelper.view.adapter.GradeListAdapter;
 import cn.nicolite.huthelper.view.iview.IGradeListView;
-import cn.nicolite.huthelper.view.widget.LoadingDialog;
+import cn.nicolite.huthelper.view.customView.LoadingDialog;
 
 /**
  * 成绩列表页面

@@ -19,7 +19,7 @@ import cn.nicolite.huthelper.utils.EncryptUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.view.activity.ElectricActivity;
 import cn.nicolite.huthelper.view.iview.IElectricView;
-import cn.nicolite.huthelper.view.widget.CommonDialog;
+import cn.nicolite.huthelper.view.customView.CommonDialog;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;

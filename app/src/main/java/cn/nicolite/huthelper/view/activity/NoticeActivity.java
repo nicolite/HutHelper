@@ -22,7 +22,7 @@ import cn.nicolite.huthelper.db.dao.NoticeDao;
 import cn.nicolite.huthelper.model.bean.Notice;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.view.adapter.NoticeAdapter;
-import cn.nicolite.huthelper.view.widget.CommonDialog;
+import cn.nicolite.huthelper.view.customView.CommonDialog;
 
 /**
  * Created by nicolite on 17-12-4.

@@ -30,7 +30,7 @@
                 android:textColor="#adadad"
                 android:textSize="12sp" />
 
-            <cn.nicolite.huthelper.view.widget.MyGridView
+            <cn.nicolite.huthelper.view.customView.MyGridView
                 android:id="@+id/gv_course_weeks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

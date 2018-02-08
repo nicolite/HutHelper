@@ -6,10 +6,10 @@
 [酷安](https://www.coolapk.com/apk/cn.nicolite.huthelper) [小米应用商店](http://app.mi.com/details?id=cn.nicolite.huthelper&ref=search)
 
 # 运行配置
-Android 4.3 (API 18)以上  
+Android 4.3 (API 18)以上， 2G RAM以上，分辨率1920x1080以上
 
 # 开发环境
-Ubuntu 16.04 LTS 、Android Studio 3.0 、JDK1.8
+Mac 10.13.3 、Android Studio 3.0.1 、JDK1.9
 
 # 项目架构
 [RxJava2](https://github.com/ReactiveX/RxJava) + [Retrofit2](http://square.github.io/retrofit/) + [RxLifecycle2](https://github.com/trello/RxLifecycle) + [MVP](https://github.com/RuffianZhong/Rx-Mvp)

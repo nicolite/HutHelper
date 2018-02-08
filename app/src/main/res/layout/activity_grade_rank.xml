@@ -36,7 +36,7 @@
                     android:textColor="@color/light_grey"
                     android:textSize="14sp" />
 
-                <cn.nicolite.huthelper.view.widget.CirclePie
+                <cn.nicolite.huthelper.view.customView.CirclePie
                     android:id="@+id/pie_grade_xf"
                     android:layout_width="152dp"
                     android:layout_height="152dp"
@@ -132,7 +132,7 @@
                 </LinearLayout>
             </RelativeLayout>
 
-            <cn.nicolite.huthelper.view.widget.WrapContentHeightViewPager
+            <cn.nicolite.huthelper.view.customView.WrapContentHeightViewPager
                 android:id="@+id/viewpager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

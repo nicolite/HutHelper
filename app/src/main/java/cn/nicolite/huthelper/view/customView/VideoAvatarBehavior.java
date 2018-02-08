@@ -1,4 +1,4 @@
-package cn.nicolite.huthelper.view.widget;
+package cn.nicolite.huthelper.view.customView;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;

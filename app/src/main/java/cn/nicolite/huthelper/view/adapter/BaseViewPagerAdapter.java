@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.nicolite.huthelper.view.widget.AutoViewPager;
+import cn.nicolite.huthelper.view.customView.AutoViewPager;
 
 /**
  * Created by gaop on 16-10-31.

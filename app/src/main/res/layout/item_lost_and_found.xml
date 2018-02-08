@@ -24,7 +24,7 @@
         android:textColor="@color/white"
         android:textSize="14sp" />
 
-    <cn.nicolite.huthelper.view.widget.PictureGridView
+    <cn.nicolite.huthelper.view.customView.PictureGridView
         android:id="@+id/gv_item_lose_img"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

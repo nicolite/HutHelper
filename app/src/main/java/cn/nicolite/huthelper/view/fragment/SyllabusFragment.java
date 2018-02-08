@@ -38,7 +38,7 @@ import cn.nicolite.huthelper.utils.DensityUtils;
 import cn.nicolite.huthelper.utils.ScreenUtils;
 import cn.nicolite.huthelper.view.activity.SyllabusItemActivity;
 import cn.nicolite.huthelper.view.adapter.CourseInfoAdapter;
-import cn.nicolite.huthelper.view.widget.CourseInfoGallery;
+import cn.nicolite.huthelper.view.customView.CourseInfoGallery;
 
 /**
  * Created by nicolite on 17-12-4.

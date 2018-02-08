@@ -40,7 +40,7 @@ import cn.nicolite.huthelper.utils.ToastUtil;
 import cn.nicolite.huthelper.view.activity.UserInfoCardActivity;
 import cn.nicolite.huthelper.view.adapter.SayAdapter;
 import cn.nicolite.huthelper.view.iview.ISayView;
-import cn.nicolite.huthelper.view.widget.CommonDialog;
+import cn.nicolite.huthelper.view.customView.CommonDialog;
 
 /**
  * Created by nicolite on 17-11-14.
@@ -97,7 +97,13 @@ public class SayFragment extends BaseFragment implements ISayView {
 
     @Override
     protected void doBusiness() {
-        lRecyclerView.setLayoutManager(new LinearLayoutManager(context, OrientationHelper.VERTICAL, false));
+        lRecyclerView.setLayoutManager(new LinearLayoutManager(context, OrientationHelper.VERTICAL, false) {
+            @Override
+            public boolean canScrollHorizontally() {
+                return false;
+            }
+        });
+
         sayAdapter = new SayAdapter(context, sayList);
         lRecyclerViewAdapter = new LRecyclerViewAdapter(sayAdapter);
         lRecyclerView.setAdapter(lRecyclerViewAdapter);

@@ -24,9 +24,8 @@ import cn.nicolite.huthelper.model.bean.Say;
 import cn.nicolite.huthelper.model.bean.SayLikedCache;
 import cn.nicolite.huthelper.utils.AnimationTools;
 import cn.nicolite.huthelper.utils.ListUtils;
-import cn.nicolite.huthelper.utils.LogUtils;
-import cn.nicolite.huthelper.view.widget.NinePictureLayout;
-import cn.nicolite.huthelper.view.widget.ScrollLinearLayoutManager;
+import cn.nicolite.huthelper.view.customView.NinePictureLayout;
+import cn.nicolite.huthelper.view.customView.NoScrollLinearLayoutManager;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -132,10 +131,7 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
             holder.rvSayComments.setVisibility(View.VISIBLE);
             holder.tvSayItemCommitnum.setText(String.valueOf(say.getComments().size()));
             holder.ivItemSay.setVisibility(View.VISIBLE);
-            holder.rvSayComments.setFocusable(false);
-            holder.rvSayComments.setFocusableInTouchMode(false);
-            ScrollLinearLayoutManager layout = new ScrollLinearLayoutManager(context, OrientationHelper.VERTICAL, false);
-            layout.setScrollEnabled(false);
+            NoScrollLinearLayoutManager layout = new NoScrollLinearLayoutManager(context, OrientationHelper.VERTICAL, false);
             holder.rvSayComments.setLayoutManager(layout);
             CommentAdapter commentAdapter = new CommentAdapter(context, say.getComments());
             holder.rvSayComments.setAdapter(commentAdapter);

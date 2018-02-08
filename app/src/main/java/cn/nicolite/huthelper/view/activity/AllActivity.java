@@ -27,7 +27,7 @@ import cn.nicolite.huthelper.utils.ButtonUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.MenuAdapter;
-import cn.nicolite.huthelper.view.widget.CustomItemTouchHelper;
+import cn.nicolite.huthelper.view.customView.CustomItemTouchHelper;
 
 /**
  * 全部应用页面

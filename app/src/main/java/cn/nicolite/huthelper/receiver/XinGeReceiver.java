@@ -31,6 +31,7 @@ import cn.nicolite.huthelper.utils.LogUtils;
 
 public class XinGeReceiver extends XGPushBaseReceiver {
     private static final String TAG = "XinGeReceiver";
+    private Notice notice;
 
     @Override
     public void onRegisterResult(Context context, int i, XGPushRegisterResult xgPushRegisterResult) {
@@ -59,6 +60,13 @@ public class XinGeReceiver extends XGPushBaseReceiver {
 
     @Override
     public void onNotifactionClickedResult(Context context, XGPushClickedResult xgPushClickedResult) {
+        // 有冲突
+        // if (notice != null) {
+        //     Intent intent = new Intent(context, NoticeItemActivity.class);
+        //     Bundle bundle = new Bundle();
+        //     bundle.putLong("noticeId", notice.getId());
+        //     context.startActivity(intent, bundle);
+        // }
 
     }
 
@@ -67,7 +75,7 @@ public class XinGeReceiver extends XGPushBaseReceiver {
         LogUtils.d(TAG, xgPushShowedResult.toString());
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm:ss", Locale.CHINA);
 
-        Notice notice = new Notice();
+        notice = new Notice();
         notice.setTitle(xgPushShowedResult.getTitle());
         notice.setContent(xgPushShowedResult.getContent());
         notice.setTime(simpleDateFormat.format(new Date()));

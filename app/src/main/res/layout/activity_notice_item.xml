@@ -63,7 +63,7 @@
                     android:paddingStart="20dp"
                     android:paddingTop="15dp">
 
-                    <cn.nicolite.huthelper.view.widget.RichTextView
+                    <cn.nicolite.huthelper.view.customView.RichTextView
                         android:id="@+id/tv_noticeitem_time"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

@@ -33,7 +33,7 @@ import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.utils.ScreenUtils;
 import cn.nicolite.huthelper.utils.ToastUtil;
 import cn.nicolite.huthelper.view.adapter.SyllabusItemAdapter;
-import cn.nicolite.huthelper.view.widget.CommonDialog;
+import cn.nicolite.huthelper.view.customView.CommonDialog;
 
 /**
  * Created by nicolite on 17-12-4.

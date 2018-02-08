@@ -152,7 +152,7 @@
             </RadioGroup>
         </RelativeLayout>
 
-        <cn.nicolite.huthelper.view.widget.BarListView
+        <cn.nicolite.huthelper.view.customView.BarListView
             android:id="@+id/elebar_electric"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

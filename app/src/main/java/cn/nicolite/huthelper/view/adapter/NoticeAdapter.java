@@ -19,7 +19,7 @@ import cn.nicolite.huthelper.model.bean.Notice;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.view.activity.NoticeItemActivity;
 import cn.nicolite.huthelper.view.activity.WebViewActivity;
-import cn.nicolite.huthelper.view.widget.RichTextView;
+import cn.nicolite.huthelper.view.customView.RichTextView;
 
 /**
  * Created by nicolite on 17-12-4.

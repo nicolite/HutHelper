@@ -27,7 +27,7 @@ import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.TabAdapter;
 import cn.nicolite.huthelper.view.fragment.ExpLessonFragment;
 import cn.nicolite.huthelper.view.iview.IExplessonView;
-import cn.nicolite.huthelper.view.widget.LoadingDialog;
+import cn.nicolite.huthelper.view.customView.LoadingDialog;
 
 /**
  * 实验课表部分

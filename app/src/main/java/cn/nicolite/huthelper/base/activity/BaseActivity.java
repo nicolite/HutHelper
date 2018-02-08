@@ -335,7 +335,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
     /**
      * 设置状态栏字体为深色
-     * 注意：如果同时设置了沉浸状态栏，必须在设置沉浸状态栏之后调用
+     * 注意：如果同时设置了沉浸状态栏，如果开启沉浸状态栏，必须在设置沉浸状态栏之后调用
      *
      * @param isDeepColor
      */

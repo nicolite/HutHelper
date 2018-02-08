@@ -44,10 +44,10 @@ import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.MenuAdapter;
 import cn.nicolite.huthelper.view.iview.IMainView;
-import cn.nicolite.huthelper.view.widget.CommonDialog;
-import cn.nicolite.huthelper.view.widget.DateLineView;
-import cn.nicolite.huthelper.view.widget.DragLayout;
-import cn.nicolite.huthelper.view.widget.RichTextView;
+import cn.nicolite.huthelper.view.customView.CommonDialog;
+import cn.nicolite.huthelper.view.customView.DateLineView;
+import cn.nicolite.huthelper.view.customView.DragLayout;
+import cn.nicolite.huthelper.view.customView.RichTextView;
 import io.rong.imkit.RongIM;
 import io.rong.imkit.manager.IUnReadMessageObserver;
 import io.rong.imlib.RongIMClient;
@@ -199,7 +199,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         mainPresenter.showSyllabus();
         mainPresenter.showWeather();
         mainPresenter.checkPermission();
-        mainPresenter.initPush(user.getStudentKH());
+        mainPresenter.registerPush(user.getStudentKH());
         mainPresenter.showNotice(false);
         mainPresenter.connectRongIM();
         mainPresenter.startLoginService();
@@ -388,7 +388,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                         public void onClick(View view) {
                             commonDialog.dismiss();
                             Bundle bundle = new Bundle();
-                            bundle.putSerializable("noticeId", notice.getId());
+                            bundle.putLong("noticeId", notice.getId());
                             startActivity(NoticeItemActivity.class, bundle);
                         }
                     })
