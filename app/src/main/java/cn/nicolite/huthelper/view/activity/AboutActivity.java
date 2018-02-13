@@ -64,7 +64,7 @@ public class AboutActivity extends BaseActivity {
         try {
             PackageManager pm = getPackageManager();
             PackageInfo pi = pm.getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES);
-            version.setText(String.valueOf("V" + pi.versionName + " (" + pi.versionCode + ")"));
+            version.setText(String.valueOf(pi.versionName + " (" + pi.versionCode + ")"));
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
