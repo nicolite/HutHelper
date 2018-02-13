@@ -138,30 +138,29 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
 
                     @Override
                     public void onNext(@NonNull Token token) {
+                        if (getView() != null) {
+                            ConfigureDao configureDao = daoSession.getConfigureDao();
+                            List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
+                            if (!ListUtils.isEmpty(list)) {
+                                Configure configure = list.get(0);
+                                configure.setToken(token.getToken());
+                                configureDao.update(configure);
+                            }
 
-                        ConfigureDao configureDao = daoSession.getConfigureDao();
-                        List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
-                        if (!ListUtils.isEmpty(list)) {
-                            Configure configure = list.get(0);
-                            configure.setToken(token.getToken());
-                            configureDao.update(configure);
+                            getView().onSuccess();
+                            getView().closeLoading();
                         }
 
-                        if (getView() == null) {
-                            return;
-                        }
-                        getView().closeLoading();
-                        getView().onSuccess();
 
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
-                        if (getView() == null) {
-                            return;
+                        if (getView() != null) {
+                            getView().closeLoading();
+                            getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
-                        getView().closeLoading();
-                        getView().showMessage(ExceptionEngine.handleException(e).getMsg());
+
                     }
 
                     @Override

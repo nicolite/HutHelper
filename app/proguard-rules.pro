@@ -185,7 +185,7 @@ public static java.lang.String TABLENAME;
 -keep public class * extends android.content.BroadcastReceiver
 -keep class com.tencent.android.tpush.** {* ;}
 -keep class com.tencent.mid.** {* ;}
--keep public class * extends com.qq.taf.jce.JceStruct{*;}
+-keep class com.qq.taf.jce.** {*;}
 #信鸽推送 结束
 
 #腾讯mat 开始

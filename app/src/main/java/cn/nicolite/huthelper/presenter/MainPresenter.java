@@ -422,7 +422,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                 if (getView() == null) {
                     return;
                 }
-                getView().showMessage("注册推送服务失败：" + s);
+                getView().showMessage("注册推送服务失败：" + s + " code：" + i);
             }
         });
         XGPushConfig.enableDebug(getActivity().getApplicationContext(), BuildConfig.LOG_DEBUG);
