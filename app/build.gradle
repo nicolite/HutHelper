@@ -29,7 +29,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         ndk {
-            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86'//, 'armeabi'//, 'x86_64', "mips"
+            abiFilters 'armeabi-v7a', 'arm64-v8a'//, //'x86', 'armeabi'//, 'x86_64', "mips"
         }
 
         //从appKey.properties文件中拉取信息

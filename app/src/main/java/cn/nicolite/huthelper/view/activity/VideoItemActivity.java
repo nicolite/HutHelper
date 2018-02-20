@@ -115,7 +115,7 @@ public class VideoItemActivity extends BaseActivity {
     private void startPlay(String url) {
         Bundle bundle = new Bundle();
         bundle.putString("video_path", url);
-        startActivity(VideoViewH5PlayerActivity.class, bundle);
+        startActivity(VideoH5PlayerActivity.class, bundle);
     }
 
     private void showDialog(final String url) {

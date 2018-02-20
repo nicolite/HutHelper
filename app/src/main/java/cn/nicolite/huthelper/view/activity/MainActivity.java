@@ -261,6 +261,9 @@ public class MainActivity extends BaseActivity implements IMainView {
                     case Constants.BROADCAST_TYPE_NOTICE:
                         mainPresenter.showNotice(true);
                         break;
+                    case Constants.BROADCAST_TYPE_REFRESH_AVATAR:
+                        showUser(configure.getUser());
+                        break;
                 }
             }
         }

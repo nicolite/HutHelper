@@ -18,7 +18,7 @@ import cn.nicolite.huthelper.base.activity.BaseActivity;
  * Created by nicolite on 17-7-17.
  */
 
-public class VideoViewH5PlayerActivity extends BaseActivity {
+public class VideoH5PlayerActivity extends BaseActivity {
     @BindView(R.id.webview)
     WebView webview;
     @BindView(R.id.rootView)
@@ -111,6 +111,5 @@ public class VideoViewH5PlayerActivity extends BaseActivity {
             webview.destroy();
             webview = null;
         }
-        //Process.killProcess(Process.myPid());
     }
 }

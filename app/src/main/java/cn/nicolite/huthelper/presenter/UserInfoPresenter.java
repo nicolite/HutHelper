@@ -1,8 +1,11 @@
 package cn.nicolite.huthelper.presenter;
 
 import android.Manifest;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 
 import com.yanzhenjie.permission.AndPermission;
@@ -13,6 +16,7 @@ import java.util.List;
 
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.db.dao.UserDao;
+import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.User;
@@ -119,6 +123,11 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                                     getView().changeAvatarSuccess(bitmap);
                                     user.setHead_pic_thumb(stringHttpResult.getData());
                                     user.setHead_pic(stringHttpResult.getData());
+                                    Intent intent = new Intent(Constants.mainBroadcast);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putInt("type", Constants.BROADCAST_TYPE_REFRESH_AVATAR);
+                                    intent.putExtras(bundle);
+                                    LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
                                     break;
                                 case "令牌错误":
                                     msg = "修改失败：帐号异地登录，请重新登录！";

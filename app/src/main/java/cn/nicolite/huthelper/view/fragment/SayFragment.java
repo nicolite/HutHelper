@@ -11,6 +11,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -284,6 +285,8 @@ public class SayFragment extends BaseFragment implements ISayView {
             button = (Button) popupWindowLayout.findViewById(R.id.btn_addcomment_submit);
             editText = (EditText) popupWindowLayout.findViewById(R.id.et_addcomment_content);
             addCommitWindow = new PopupWindow(popupWindowLayout, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+            addCommitWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+            addCommitWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
         }
         if (editText != null) {
             CommUtil.showSoftInput(context, editText);

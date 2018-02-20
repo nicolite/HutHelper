@@ -232,7 +232,7 @@
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".view.activity.VideoViewH5PlayerActivity"
+            android:name=".view.activity.VideoH5PlayerActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:hardwareAccelerated="true"
             android:screenOrientation="landscape"
