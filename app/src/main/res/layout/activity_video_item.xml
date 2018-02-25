@@ -52,7 +52,7 @@
         android:scaleType="centerCrop"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end|right"
-        app:layout_behavior="cn.nicolite.huthelper.view.widget.VideoAvatarBehavior" />
+        app:layout_behavior="cn.nicolite.huthelper.view.customView.VideoAvatarBehavior" />
 
     <include layout="@layout/content_video_item" />
 

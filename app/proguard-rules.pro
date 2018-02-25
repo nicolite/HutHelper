@@ -188,10 +188,10 @@ public static java.lang.String TABLENAME;
 -keep class com.qq.taf.jce.** {*;}
 #信鸽推送 结束
 
-#腾讯mat 开始
--keep class com.tencent.stat.**{*;}
--keep class com.tencent.mid.**{*;}
-#腾讯mat 结束
+#腾讯mta 开始
+-keep class com.tencent.stat.* { ;}
+-keep class com.tencent.mid.* { ;}
+#腾讯mta 结束
 
 #腾讯bugly 开始
 -dontwarn com.tencent.bugly.**
