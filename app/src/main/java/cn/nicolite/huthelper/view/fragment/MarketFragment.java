@@ -1,6 +1,7 @@
 package cn.nicolite.huthelper.view.fragment;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.OrientationHelper;
@@ -163,8 +164,14 @@ public class MarketFragment extends BaseFragment implements IMarketView {
                 } else {
                     bundle.putBoolean("delete", false);
                 }
-                Bundle options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, "goodsTransition").toBundle();
-                startActivityForResult(GoodsInfoActivity.class, Constants.REQUEST, bundle, options);
+
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT){
+                    startActivityForResult(GoodsInfoActivity.class, bundle, Constants.REQUEST);
+                }else {
+                    Bundle options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, "goodsTransition").toBundle();
+                    startActivityForResult(GoodsInfoActivity.class, Constants.REQUEST, bundle, options);
+                }
+
             }
         });
 

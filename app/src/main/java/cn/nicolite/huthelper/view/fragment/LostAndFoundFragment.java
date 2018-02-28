@@ -1,6 +1,7 @@
 package cn.nicolite.huthelper.view.fragment;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.OrientationHelper;
@@ -158,8 +159,13 @@ public class LostAndFoundFragment extends BaseFragment implements ILostAndFoundV
                 } else {
                     bundle.putBoolean("delete", false);
                 }
-                Bundle options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, "lostAndFoundTransition").toBundle();
-                startActivity(LostAndFoundInfoActivity.class, bundle, options);
+                if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT){
+                    startActivityForResult(LostAndFoundInfoActivity.class, bundle, Constants.REQUEST);
+                }else {
+                    Bundle options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, "lostAndFoundTransition").toBundle();
+                    startActivityForResult(LostAndFoundInfoActivity.class, Constants.REQUEST,bundle, options);
+                }
+
             }
         });
 
@@ -256,7 +262,6 @@ public class LostAndFoundFragment extends BaseFragment implements ILostAndFoundV
        // lostAndFoundList.remove(position);
        // lRecyclerViewAdapter.notifyItemRemoved(position);
 
-        //TODO 同样的写法居然在二手市场能用，这里不能用
         refreshData();
     }
 

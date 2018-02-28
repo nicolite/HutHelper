@@ -105,7 +105,7 @@ public class ActivityStackManager {
      * 结束所有Activity
      */
     public void finishAllActivity() {
-        while (activityStack.isEmpty()) {
+        while (!activityStack.isEmpty()) {
             activityStack.pop().finish();
         }
     }
@@ -116,12 +116,19 @@ public class ActivityStackManager {
      * @param context
      */
     public void exitApp(Context context) {
-        finishAllActivity();
+
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
-        activityManager.killBackgroundProcesses(context.getPackageName());
+        if (activityManager != null) {
+            activityManager.killBackgroundProcesses(context.getPackageName());
+        }
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancelAll();
+        if (notificationManager != null) {
+            notificationManager.cancelAll();
+        }
+
+        finishAllActivity();
+
         Process.killProcess(Process.myPid());
     }
 }

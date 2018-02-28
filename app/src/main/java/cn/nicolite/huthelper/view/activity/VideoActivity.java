@@ -1,5 +1,6 @@
 package cn.nicolite.huthelper.view.activity;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.GridLayoutManager;
@@ -76,8 +77,12 @@ public class VideoActivity extends BaseActivity implements IVideoView {
                 Bundle bundle = new Bundle();
                 bundle.putString("url", video.get_$480P());
                 bundle.putSerializable("link", video.getLinks().get(position));
-                Bundle options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, "videoTransition").toBundle();
-                startActivity(VideoItemActivity.class, bundle, options);
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+                    startActivity(VideoItemActivity.class, bundle);
+                } else {
+                    Bundle options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, "videoTransition").toBundle();
+                    startActivity(VideoItemActivity.class, bundle, options);
+                }
             }
         });
 

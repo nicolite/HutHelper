@@ -163,14 +163,15 @@
             android:layout_alignParentEnd="true"
             android:layout_alignTop="@id/mu_tongzhi"
             android:layout_gravity="center_vertical"
-            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:drawablePadding="2dp"
             android:text="查看全部通知"
             android:textColor="#1dcbdb"
             android:textSize="12sp"
-            view:drawable_height="9dp"
+            view:drawable_height="12dp"
             view:drawable_location="right"
             view:drawable_src="@drawable/img_right"
-            view:drawable_width="6dp" />
+            view:drawable_width="12dp" />
 
 
         <TextView
