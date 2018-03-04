@@ -165,10 +165,7 @@ android {
             ]
         }
     }
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
+
 }
 
 dependencies {
@@ -224,11 +221,11 @@ dependencies {
     implementation 'com.zhihu.android:matisse:0.4.3'
 
     //ButterKnife
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.7.0'
-    implementation 'com.jakewharton:butterknife:8.7.0'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.jakewharton:butterknife:8.8.1'
 
     //Gson---json解析
-    implementation 'com.google.code.gson:gson:2.8.1'
+    implementation 'com.google.code.gson:gson:2.8.2'
 
     //动画低版本支持
     implementation 'com.nineoldandroids:library:2.4.0'

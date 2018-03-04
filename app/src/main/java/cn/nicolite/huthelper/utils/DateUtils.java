@@ -9,6 +9,10 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import cn.nicolite.huthelper.app.MApplication;
+import cn.nicolite.huthelper.db.DaoHelper;
+import cn.nicolite.huthelper.db.dao.ConfigureDao;
+
 /**
  * 日期相关工具类
  * Created by nicolite on 17-11-5.
@@ -373,7 +377,8 @@ public class DateUtils {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         long be = 0;
         try {
-            Date begin = df.parse("2017-09-04");
+            //TODO 开学时间，每个学期需修改
+            Date begin = df.parse("2018-03-05");
             Date end = new Date();
             be = (end.getTime() - begin.getTime()) / (1000 * 60 * 60 * 24);
         } catch (ParseException e) {

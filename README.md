@@ -15,7 +15,7 @@
 <image src=http://github-1251831804.coscd.myqcloud.com/huthelper/version_1_2/f10.jpg width=250 height=450> <image src=http://github-1251831804.coscd.myqcloud.com/huthelper/version_1_2/f11.jpg width=250 height=450>
 
 # 运行配置
-Android 4.3 (API 18)以上， 2G RAM以上，分辨率1920x1080以上
+Android 4.4 (API 19)以上， 2G RAM以上，分辨率1920x1080以上
 
 # 开发环境
 Mac 10.13.3 、Android Studio 3.0.1 、JDK1.9
