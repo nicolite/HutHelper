@@ -189,8 +189,8 @@ public static java.lang.String TABLENAME;
 #信鸽推送 结束
 
 #腾讯mta 开始
--keep class com.tencent.stat.* { ;}
--keep class com.tencent.mid.* { ;}
+-keep class com.tencent.stat.* {*;}
+-keep class com.tencent.mid.* {*;}
 #腾讯mta 结束
 
 #腾讯bugly 开始
