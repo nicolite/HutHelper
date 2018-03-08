@@ -113,8 +113,10 @@ public class LoginActivity extends BaseActivity implements ILoginView{
 
     @Override
     public void showLoading() {
-        loadingDialog = new LoadingDialog(context)
-                .setLoadingText("登录中...");
+        if (loadingDialog == null){
+            loadingDialog = new LoadingDialog(context)
+                    .setLoadingText("登录中...");
+        }
         loadingDialog.show();
     }
 

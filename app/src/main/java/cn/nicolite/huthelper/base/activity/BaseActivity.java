@@ -18,6 +18,7 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.nicolite.huthelper.db.DaoHelper;
+import cn.nicolite.huthelper.db.DaoUtils;
 import cn.nicolite.huthelper.db.dao.ConfigureDao;
 import cn.nicolite.huthelper.db.dao.DaoSession;
 import cn.nicolite.huthelper.listener.ActivityLifeCycleListener;
@@ -72,23 +73,21 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * 获取daoSession
      */
     protected DaoSession getDaoSession() {
-        return DaoHelper.getDaoHelper(getApplicationContext()).getDaoSession();
+        return DaoUtils.getDaoSession();
     }
 
     /**
      * 获取配置
      */
     protected List<Configure> getConfigureList() {
-        ConfigureDao configureDao = getDaoSession().getConfigureDao();
-        return configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
+        return DaoUtils.getConfigureList();
     }
 
     /**
      * 获取当前登录用户
      */
     protected String getLoginUser() {
-        SharedPreferences preferences = getApplicationContext().getSharedPreferences("login_user", Context.MODE_PRIVATE);
-        return preferences.getString("userId", null);
+        return DaoUtils.getLoginUser();
     }
 
     @Override

@@ -90,8 +90,10 @@ public class CareerTalkItemActivity extends BaseActivity implements ICareerTalkI
 
     @Override
     public void showLoading() {
-        loadingDialog = new LoadingDialog(context)
-                .setLoadingText("加载中...");
+        if (loadingDialog == null){
+            loadingDialog = new LoadingDialog(context)
+                    .setLoadingText("加载中...");
+        }
         loadingDialog.show();
     }
 

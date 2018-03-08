@@ -1,5 +1,6 @@
 package cn.nicolite.huthelper.view.activity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
@@ -48,6 +49,7 @@ public class CreateSayActivity extends BaseActivity implements ICreateSayView {
     private final int REQUEST_CODE_CHOOSE = 111;
     private List<Uri> uriList = new ArrayList<>();
     private ImageAdapter adapter;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -155,7 +157,30 @@ public class CreateSayActivity extends BaseActivity implements ICreateSayView {
     }
 
     @Override
+    public void uploadProgress(String msg) {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(context);
+            progressDialog.setMessage(msg);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+        progressDialog.setMessage(msg);
+    }
+
+    @Override
+    public void uploadFailure(String msg) {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
     public void publishSuccess() {
+
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+
         setResult(Constants.PUBLISH);
         finish();
     }

@@ -120,7 +120,7 @@ public class CreateSayPresenter extends BasePresenter<ICreateSayView, CreateSayA
         MultipartBody.Part file = MultipartBody.Part.createFormData("file", "01.jpg", requestBody);
 
         if (getView() != null) {
-            getView().showMessage(String.valueOf("正在上传第" + i + "张图片"));
+            getView().uploadProgress(String.valueOf("正在上传图片"));
         }
 
         APIUtils
@@ -149,13 +149,13 @@ public class CreateSayPresenter extends BasePresenter<ICreateSayView, CreateSayA
                                     if (!TextUtils.isEmpty(string)) {
                                         getView().uploadSayInfo(string);
                                     } else {
-                                        getView().showMessage("获取上传图片信息失败！");
+                                        getView().uploadFailure("获取上传图片信息失败！");
                                     }
                                 }
                             } else {
                                 stringBuilder.delete(0, stringBuilder.length());
                                 uploadCount.set(0);
-                                getView().showMessage(String.valueOf("上传第" + i + "张图片失败！"));
+                                getView().uploadFailure(String.valueOf("上传图片失败！"));
                             }
                         }
                     }
@@ -165,6 +165,7 @@ public class CreateSayPresenter extends BasePresenter<ICreateSayView, CreateSayA
                         if (getView() == null) {
                             stringBuilder.delete(0, stringBuilder.length());
                             uploadCount.set(0);
+                            getView().uploadFailure("发布失败！");
                             getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
                     }
@@ -192,7 +193,7 @@ public class CreateSayPresenter extends BasePresenter<ICreateSayView, CreateSayA
 
         for (int i = 0; i < uriList.size(); i++) {
             if (getView() != null) {
-                getView().showMessage(String.valueOf("正在压缩第" + (i + 1) + "图片！"));
+                getView().uploadProgress(String.valueOf("正在压缩图片！"));
             }
 
             Luban
@@ -212,7 +213,6 @@ public class CreateSayPresenter extends BasePresenter<ICreateSayView, CreateSayA
                                     Bitmap bitmap = BitmapFactory.decodeFile(fileList.get(i).getPath());
                                     uploadImages(bitmap, fileList.size(), i + 1);
                                     bitmap.recycle();
-                                    bitmap = null;
                                 }
                                 fileList.clear();
                             }
@@ -221,6 +221,7 @@ public class CreateSayPresenter extends BasePresenter<ICreateSayView, CreateSayA
                         @Override
                         public void onError(Throwable e) {
                             if (getView() != null) {
+                                getView().uploadFailure("压缩图片出现异常！");
                                 getView().showMessage("压缩失败，" + ExceptionEngine.handleException(e).getMsg());
                             }
                         }

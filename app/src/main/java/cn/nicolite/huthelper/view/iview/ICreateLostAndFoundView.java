@@ -8,6 +8,12 @@ import cn.nicolite.huthelper.base.iview.IBaseView;
 
 public interface ICreateLostAndFoundView extends IBaseView {
     void selectImages();
+
     void uploadLostAndFoundInfo(String hidden);
+
+    void uploadProgress(String msg);
+
+    void uploadFailure(String msg);
+
     void publishSuccess();
 }

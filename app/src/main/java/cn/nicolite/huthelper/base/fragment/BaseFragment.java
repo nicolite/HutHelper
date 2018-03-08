@@ -19,6 +19,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import cn.nicolite.huthelper.app.MApplication;
 import cn.nicolite.huthelper.db.DaoHelper;
+import cn.nicolite.huthelper.db.DaoUtils;
 import cn.nicolite.huthelper.db.dao.ConfigureDao;
 import cn.nicolite.huthelper.db.dao.DaoSession;
 import cn.nicolite.huthelper.listener.FragmentLifeCycleListener;
@@ -41,27 +42,26 @@ public abstract class BaseFragment extends RxFragment {
     protected boolean isFirstVisible;
     protected DaoSession daoSession;
     protected String userId;
+
     /**
      * 获取daoSession
      */
     protected DaoSession getDaoSession() {
-        return DaoHelper.getDaoHelper(MApplication.AppContext).getDaoSession();
+        return DaoUtils.getDaoSession();
     }
 
     /**
      * 获取配置
      */
     protected List<Configure> getConfigureList() {
-        ConfigureDao configureDao = getDaoSession().getConfigureDao();
-        return configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(getLoginUser())).list();
+        return DaoUtils.getConfigureList();
     }
 
     /**
      * 获取当前登录用户
      */
     protected String getLoginUser() {
-        SharedPreferences preferences = MApplication.AppContext.getSharedPreferences("login_user", Context.MODE_PRIVATE);
-        return preferences.getString("userId", null);
+        return DaoUtils.getLoginUser();
     }
 
     @Override

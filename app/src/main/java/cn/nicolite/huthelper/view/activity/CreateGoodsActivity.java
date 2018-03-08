@@ -1,6 +1,7 @@
 package cn.nicolite.huthelper.view.activity;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -74,6 +75,7 @@ public class CreateGoodsActivity extends BaseActivity implements ICreateGoodsVie
     String[] goodsQuality;
     private int goodsQuaSelected = 0;
     private ImageAdapter adapter;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -153,9 +155,9 @@ public class CreateGoodsActivity extends BaseActivity implements ICreateGoodsVie
                                     showMessage("没有选商品成色");
                                 } else if (TextUtils.isEmpty(tvGoodsLocation.getText().toString())) {
                                     showMessage("没有填发布区域");
-                                } else if (TextUtils.isEmpty(tvGoodsPrice.getText().toString())){
+                                } else if (TextUtils.isEmpty(tvGoodsPrice.getText().toString())) {
                                     showMessage("没有填写价格");
-                                }else {
+                                } else {
                                     if (!ListUtils.isEmpty(uriList)) {
                                         createGoodsPresenter.createGoods(activity, uriList);
                                     } else {
@@ -227,8 +229,30 @@ public class CreateGoodsActivity extends BaseActivity implements ICreateGoodsVie
     }
 
     @Override
+    public void uploadProgress(String msg) {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(context);
+            progressDialog.setMessage(msg);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+        progressDialog.setMessage(msg);
+    }
+
+    @Override
+    public void uploadFailure(String msg) {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
     public void publishSuccess() {
-        //finish();
+
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+
         setResult(Constants.PUBLISH);
         finish();
     }

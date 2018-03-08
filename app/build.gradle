@@ -114,7 +114,7 @@ android {
     applicationVariants.all {
         variant ->
             variant.outputs.all {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CHINA);
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.CHINA);
                 String releaseTime = format.format(new Date());
                 outputFileName = "huthelper-${variant.flavorName}-${variant.versionName}(${variant.versionCode})_${releaseTime}.apk"
             }

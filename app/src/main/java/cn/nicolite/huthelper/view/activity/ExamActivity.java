@@ -86,8 +86,10 @@ public class ExamActivity extends BaseActivity implements IExamView {
 
     @Override
     public void showLoading() {
-        loadingDialog = new LoadingDialog(context)
-                .setLoadingText("查询中...");
+        if (loadingDialog == null){
+            loadingDialog = new LoadingDialog(context)
+                    .setLoadingText("查询中...");
+        }
         loadingDialog.show();
     }
 

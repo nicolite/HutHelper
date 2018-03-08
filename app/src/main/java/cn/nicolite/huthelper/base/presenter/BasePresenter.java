@@ -17,6 +17,7 @@ import cn.nicolite.huthelper.app.MApplication;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.base.fragment.BaseFragment;
 import cn.nicolite.huthelper.db.DaoHelper;
+import cn.nicolite.huthelper.db.DaoUtils;
 import cn.nicolite.huthelper.db.dao.ConfigureDao;
 import cn.nicolite.huthelper.db.dao.DaoSession;
 import cn.nicolite.huthelper.listener.ActivityLifeCycleListener;
@@ -51,23 +52,21 @@ public class BasePresenter<V, T> implements ActivityLifeCycleListener, FragmentL
      * 获取daoSession
      */
     protected DaoSession getDaoSession() {
-        return DaoHelper.getDaoHelper(MApplication.AppContext).getDaoSession();
+        return DaoUtils.getDaoSession();
     }
 
     /**
      * 获取配置
      */
     protected List<Configure> getConfigureList() {
-        ConfigureDao configureDao = daoSession.getConfigureDao();
-        return configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(getLoginUser())).list();
+        return DaoUtils.getConfigureList();
     }
 
     /**
      * 获取当前登录用户
      */
     protected String getLoginUser() {
-        SharedPreferences preferences = MApplication.AppContext.getSharedPreferences("login_user", Context.MODE_PRIVATE);
-        return preferences.getString("userId", null);
+        return DaoUtils.getLoginUser();
     }
 
     /**

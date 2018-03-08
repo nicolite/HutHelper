@@ -11,5 +11,9 @@ public interface ICreateGoodsView extends IBaseView {
 
     void uploadGoodsInfo(String imagesInfo);
 
+    void uploadProgress(String msg);
+
+    void uploadFailure(String msg);
+
     void publishSuccess();
 }

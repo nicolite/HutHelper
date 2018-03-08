@@ -11,5 +11,9 @@ public interface ICreateSayView extends IBaseView {
 
     void uploadSayInfo(String imagesInfo);
 
+    void uploadProgress(String msg);
+
+    void uploadFailure(String msg);
+
     void publishSuccess();
 }

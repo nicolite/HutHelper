@@ -7,11 +7,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import cn.nicolite.huthelper.app.MApplication;
 import cn.nicolite.huthelper.db.DaoHelper;
+import cn.nicolite.huthelper.db.DaoUtils;
 import cn.nicolite.huthelper.db.dao.ConfigureDao;
+import cn.nicolite.huthelper.model.bean.Configure;
 
 /**
  * 日期相关工具类
@@ -377,8 +380,11 @@ public class DateUtils {
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
         long be = 0;
         try {
-            //TODO 开学时间，每个学期需修改
-            Date begin = df.parse("2018-03-05");
+            //TODO 开学时间
+            List<Configure> configureList = DaoUtils.getConfigureList();
+            Configure configure = configureList.get(0);
+            String newTerm = TextUtils.isEmpty(configure.getNewTermDate()) ? "2018-03-05" : configure.getNewTermDate();
+            Date begin = df.parse(newTerm);
             Date end = new Date();
             be = (end.getTime() - begin.getTime()) / (1000 * 60 * 60 * 24);
         } catch (ParseException e) {

@@ -1,6 +1,7 @@
 package cn.nicolite.huthelper.view.activity;
 
 import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
@@ -81,6 +82,7 @@ public class CreateLostAndFoundActivity extends BaseActivity implements ICreateL
     private ImageAdapter adapter;
     private CreateLostAndFoundPresenter createLostAndFoundPresenter;
     private final int[] bg = {R.color.bg_list_1, R.color.bg_list_2, R.color.bg_list_3, R.color.bg_list_4};
+    private ProgressDialog progressDialog;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -252,14 +254,36 @@ public class CreateLostAndFoundActivity extends BaseActivity implements ICreateL
     @Override
     public void uploadLostAndFoundInfo(String hidden) {
         createLostAndFoundPresenter.uploadLostAndFoundInfo(edThing.getText().toString(),
-                edLocation.getText().toString(), edTime.getText().toString(), edPhone.getText().toString(),
+                edLocation.getText().toString(), edTime.getText().toString(), etTextContent.getText().toString(),
                 hidden, edPhone.getText().toString(), type);
 
     }
 
     @Override
+    public void uploadProgress(String msg) {
+        if (progressDialog == null) {
+            progressDialog = new ProgressDialog(context);
+            progressDialog.setMessage(msg);
+            progressDialog.setCancelable(false);
+            progressDialog.show();
+        }
+        progressDialog.setMessage(msg);
+    }
+
+    @Override
+    public void uploadFailure(String msg) {
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+    }
+
+    @Override
     public void publishSuccess() {
-        //finish();
+
+        if (progressDialog != null) {
+            progressDialog.dismiss();
+        }
+
         setResult(Constants.PUBLISH);
         finish();
     }
