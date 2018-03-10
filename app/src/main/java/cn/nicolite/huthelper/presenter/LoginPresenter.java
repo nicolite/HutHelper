@@ -127,7 +127,8 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
     }
 
     public void getToken(final String userId, String userName) {
-        APIUtils
+
+        /* APIUtils
                 .getMessageAPI()
                 .getToken(userId, userName)
                 .compose(getActivity().<Token>bindToLifecycle())
@@ -169,6 +170,20 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                     public void onComplete() {
 
                     }
-                });
+                }); */
+
+        //移除融云后暂时这样，接入其它IM后删除
+        if (getView() != null) {
+            ConfigureDao configureDao = daoSession.getConfigureDao();
+            List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
+            if (!ListUtils.isEmpty(list)) {
+                Configure configure = list.get(0);
+                configure.setToken("*");
+                configureDao.update(configure);
+            }
+
+            getView().onSuccess();
+            getView().closeLoading();
+        }
     }
 }

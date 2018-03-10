@@ -3,7 +3,8 @@ package cn.nicolite.huthelper.presenter;
 import android.Manifest;
 import android.content.Intent;
 import android.net.Uri;
-import android.text.TextUtils;
+import android.os.Bundle;
+import android.view.View;
 
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
@@ -24,7 +25,6 @@ import cn.nicolite.huthelper.db.dao.MenuDao;
 import cn.nicolite.huthelper.db.dao.NoticeDao;
 import cn.nicolite.huthelper.db.dao.TimeAxisDao;
 import cn.nicolite.huthelper.model.Constants;
-import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.Lesson;
 import cn.nicolite.huthelper.model.bean.Menu;
@@ -40,17 +40,15 @@ import cn.nicolite.huthelper.utils.CommUtil;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.view.activity.MainActivity;
+import cn.nicolite.huthelper.view.activity.NoticeItemActivity;
 import cn.nicolite.huthelper.view.activity.WebViewActivity;
+import cn.nicolite.huthelper.view.customView.CommonDialog;
 import cn.nicolite.huthelper.view.iview.IMainView;
 import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.UserInfo;
 
 /**
  * MainPresenter
@@ -64,6 +62,10 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     }
 
     public void showWeather() {
+
+        if (getView() != null) {
+            getView().showWeather(configure.getCity(), configure.getTmp(), configure.getContent());
+        }
 
         APIUtils
                 .getWeatherAPI()
@@ -97,7 +99,6 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                     public void onError(@NonNull Throwable e) {
                         if (getView() != null) {
                             getView().closeLoading();
-                            getView().showWeather(configure.getCity(), configure.getTmp(), configure.getContent());
                             getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
                     }
@@ -112,6 +113,10 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     public void showTimeAxis() {
         final TimeAxisDao timeAxisDao = daoSession.getTimeAxisDao();
         final List<TimeAxis> list = timeAxisDao.queryBuilder().list();
+
+        if (!ListUtils.isEmpty(list) && getView() != null) {
+            getView().showTimeAxis(list);
+        }
 
         APIUtils
                 .getDateLineAPI()
@@ -151,11 +156,6 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                     public void onError(@NonNull Throwable e) {
                         if (getView() != null) {
                             getView().closeLoading();
-
-                            if (!ListUtils.isEmpty(list)) {
-                                getView().showTimeAxis(list);
-                            }
-
                             getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
                     }
@@ -307,37 +307,6 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
     }
 
-    public void connectRongIM() {
-        final User user = configure.getUser();
-        RongIM.connect(configure.getToken(), new RongIMClient.ConnectCallback() {
-            @Override
-            public void onTokenIncorrect() {
-                getView().showMessage("Token不正确，请重新登录！");
-            }
-
-            @Override
-            public void onSuccess(String s) {
-                if (user == null) {
-                    if (getView() != null) {
-                        getView().showMessage("未获取到用户信息，请重新登录！");
-                    }
-                    return;
-                }
-                RongIM.getInstance()
-                        .setCurrentUserInfo(new UserInfo(user.getUser_id(), user.getTrueName(),
-                                Uri.parse(Constants.PICTURE_URL + user.getHead_pic_thumb())));
-                RongIM.getInstance().setMessageAttachedUserInfo(true);
-            }
-
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-                if (getView() != null) {
-                    getView().showMessage("连接即时聊天服务器出错！");
-                }
-            }
-        });
-    }
-
     public void registerPush() {
         XGPushManager.registerPush(getActivity().getApplicationContext(), configure.getStudentKH(), new XGIOperateCallback() {
             @Override
@@ -360,7 +329,6 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     public void initUser() {
 
         User user = configure.getUser();
-
         if (user != null) {
             getView().showUser(user);
         }
@@ -376,9 +344,12 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     }
 
     public void startChat() {
-        Map<String, Boolean> supportedConversation = new HashMap<>();
-        supportedConversation.put(Conversation.ConversationType.PRIVATE.getName(), false);
-        RongIM.getInstance().startConversationList(getActivity(), supportedConversation);
+        //TODO 开始聊天， 待添加
+        final CommonDialog commonDialog = new CommonDialog(getActivity());
+        commonDialog
+                .setMessage("私信暂时下线，新的私信已经在路上了！")
+                .setPositiveButton("知道了", null)
+                .show();
     }
 
     public void checkPermission() {
@@ -398,10 +369,9 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
                     @Override
                     public void onFailed(int requestCode, @android.support.annotation.NonNull List<String> deniedPermissions) {
-                        if (getView() == null) {
-                            return;
+                        if (getView() != null) {
+                            getView().showMessage("获取权限失败，请授予文件读写和读取手机状态权限！");
                         }
-                        getView().showMessage("获取权限失败，请授予文件读写和读取手机状态权限！");
                     }
                 })
                 .start();

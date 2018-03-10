@@ -21,8 +21,8 @@ import cn.nicolite.huthelper.presenter.SearchPresenter;
 import cn.nicolite.huthelper.presenter.UserInfoCardPresenter;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.ToastUtil;
+import cn.nicolite.huthelper.view.customView.CommonDialog;
 import cn.nicolite.huthelper.view.iview.IUserInfoCardView;
-import io.rong.imkit.RongIM;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -87,7 +87,11 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
                 finish();
                 break;
             case R.id.bt_user_chat:
-                RongIM.getInstance().startPrivateChat(this, mUserId, username);
+                final CommonDialog commonDialog = new CommonDialog(context);
+                commonDialog
+                        .setMessage("私信暂时下线，新的私信已经在路上了！")
+                        .setPositiveButton("知道了", null)
+                        .show();
                 break;
             case R.id.iv_user_shiwu:
                 Bundle sBundle = new Bundle();

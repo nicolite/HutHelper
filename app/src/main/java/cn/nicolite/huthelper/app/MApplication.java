@@ -16,9 +16,6 @@ import com.tencent.stat.common.StatConstants;
 import cn.nicolite.huthelper.BuildConfig;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.view.activity.MainActivity;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.model.Conversation;
-import io.rong.push.RongPushClient;
 
 
 /**
@@ -38,21 +35,6 @@ public class MApplication extends Application {
         if (!LeakCanary.isInAnalyzerProcess(this)) {
             LeakCanary.install(this);
         }
-
-        //注册融云小米push
-        RongPushClient.registerMiPush(this, Constants.XIAOMI_APPID, Constants.XIAOMI_APPKEY);
-
-        //初始化融云
-        RongIM.init(getApplicationContext());
-
-        //设置支持消息回执的会话类型
-        Conversation.ConversationType[] types = new Conversation.ConversationType[]{
-                Conversation.ConversationType.PRIVATE,
-                Conversation.ConversationType.GROUP,
-                Conversation.ConversationType.DISCUSSION
-        };
-
-        RongIM.getInstance().setReadReceiptConversationTypeList(types);
 
         try {
             StatConfig.init(this);

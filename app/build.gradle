@@ -42,8 +42,6 @@ android {
                 XG_ACCESS_KEY    : appKeyProperties.get("XG_ACCESS_KEY"),
                 MTA_APPKEY       : appKeyProperties.get("MTA_APPKEY"),
                 MTA_CHANNEL      : appKeyProperties.get("MTA_CHANNEL"),
-                RONG_CLOUD_KEY   : appKeyProperties.get("RONG_CLOUD_KEY"),
-                GAODE_APIKEY     : appKeyProperties.get("GAODE_APIKEY"),
                 BUGLY_APP_CHANNEL: appKeyProperties.get("BUGLY_APP_CHANNEL")
         ]
     }
@@ -259,9 +257,6 @@ dependencies {
 
     //MTA的jar包
     implementation 'com.qq.mta:mta:3.3.1-release'
-
-    //融云kit
-    implementation project(':IMKit')
 
     //数据库
     implementation 'org.greenrobot:greendao:3.2.2'

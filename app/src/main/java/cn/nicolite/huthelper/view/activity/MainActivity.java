@@ -48,10 +48,6 @@ import cn.nicolite.huthelper.view.customView.CommonDialog;
 import cn.nicolite.huthelper.view.customView.DateLineView;
 import cn.nicolite.huthelper.view.customView.DragLayout;
 import cn.nicolite.huthelper.view.customView.RichTextView;
-import io.rong.imkit.RongIM;
-import io.rong.imkit.manager.IUnReadMessageObserver;
-import io.rong.imlib.RongIMClient;
-import io.rong.imlib.model.Conversation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
@@ -198,8 +194,8 @@ public class MainActivity extends BaseActivity implements IMainView {
         mainPresenter.showWeather();
         mainPresenter.checkPermission();
         mainPresenter.registerPush();
+
         mainPresenter.showNotice(false);
-        mainPresenter.connectRongIM();
         mainPresenter.startLoginService();
         qBadgeView = new QBadgeView(context);
         qBadgeView.bindTarget(unReadMessage);
@@ -219,20 +215,6 @@ public class MainActivity extends BaseActivity implements IMainView {
             }
         });
 
-        RongIM.getInstance().addUnReadMessageCountChangedObserver(new IUnReadMessageObserver() {
-            @Override
-            public void onCountChanged(int i) {
-                if (i == 0) {
-                    qBadgeView.hide(false);
-                } else {
-                    if (i > 99) {
-                        qBadgeView.setBadgeText("99+");
-                    } else {
-                        qBadgeView.setBadgeText(String.valueOf(i));
-                    }
-                }
-            }
-        }, Conversation.ConversationType.PRIVATE);
 
         //上传帐号信息到腾讯MTA
         StatConfig.setCustomUserId(context, configure.getStudentKH());
@@ -296,7 +278,6 @@ public class MainActivity extends BaseActivity implements IMainView {
                         .setPositiveButton("是的", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                RongIM.getInstance().logout();
                                 XGPushManager.deleteTag(getApplicationContext(), configure.getStudentKH());
                                 XGPushManager.registerPush(getApplicationContext(), "*");
                                 XGPushManager.unregisterPush(getApplicationContext());
@@ -380,7 +361,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         tvTongzhiContont.setText(notice.getContent());
 
         if (isReceiver) {
-            final CommonDialog commonDialog = new CommonDialog(MainActivity.this);
+            final CommonDialog commonDialog = new CommonDialog(context);
             commonDialog
                     .setTitle(notice.getTitle())
                     .setMessage(notice.getContent())
@@ -461,20 +442,8 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
         if (localBroadcastManager != null) {
             localBroadcastManager.unregisterReceiver(mainReceiver);
-        }
-
-        RongIM.getInstance().removeUnReadMessageCountChangedObserver(new IUnReadMessageObserver() {
-            @Override
-            public void onCountChanged(int i) {
-
-            }
-        });
-        if (RongIM.getInstance().getCurrentConnectionStatus()
-                == RongIMClient.ConnectionStatusListener.ConnectionStatus.CONNECTED) {
-            RongIM.getInstance().disconnect();
         }
     }
 }

@@ -34,7 +34,7 @@ import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.iview.IUserInfoView;
 import cn.nicolite.huthelper.view.customView.CommonDialog;
-import io.rong.imkit.RongIM;
+
 
 /**
  * 用户信息界面
@@ -131,7 +131,6 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
             case R.id.user_logout:
                 List<Configure> configureList = getConfigureList();
                 User user = configureList.get(0).getUser();
-                RongIM.getInstance().logout();
                 XGPushManager.deleteTag(context, user.getStudentKH());
                 XGPushManager.registerPush(context, "*");
                 XGPushManager.unregisterPush(context);

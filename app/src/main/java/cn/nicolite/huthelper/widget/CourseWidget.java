@@ -18,6 +18,7 @@ import java.util.List;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.app.MApplication;
 import cn.nicolite.huthelper.db.DaoHelper;
+import cn.nicolite.huthelper.db.DaoUtils;
 import cn.nicolite.huthelper.db.dao.LessonDao;
 import cn.nicolite.huthelper.model.bean.Lesson;
 import cn.nicolite.huthelper.utils.CommUtil;
@@ -36,8 +37,8 @@ import static android.view.View.VISIBLE;
 
 public class CourseWidget extends AppWidgetProvider {
 
-    private List<Lesson> lessonList = DaoHelper.getDaoHelper(MApplication.AppContext).getDaoSession()
-            .getLessonDao().queryBuilder().where(LessonDao.Properties.UserId.eq(getLoginUser())).list();
+    private List<Lesson> lessonList = DaoUtils.getDaoSession().getLessonDao()
+            .queryBuilder().where(LessonDao.Properties.UserId.eq(DaoUtils.getLoginUser())).list();
 
     private static int xqj = DateUtils.getWeekOfToday();
 
@@ -57,13 +58,7 @@ public class CourseWidget extends AppWidgetProvider {
 
 
     private static int currNum = 0;
-    /**
-     * 获取当前登录用户
-     */
-    protected String getLoginUser() {
-        SharedPreferences preferences = MApplication.AppContext.getSharedPreferences("login_user", Context.MODE_PRIVATE);
-        return preferences.getString("userId", null);
-    }
+
 
     @Override
     public void onReceive(Context context, Intent intent) {

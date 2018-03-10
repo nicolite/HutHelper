@@ -140,6 +140,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         if (unbinder != null) {
             unbinder.unbind();
         }
+        StatService.onStop(context);
     }
 
     @Override
