@@ -47,11 +47,10 @@ public class GoodsInfoPresenter extends BasePresenter<IGoodsInfoView, GoodsInfoA
         }
 
         Configure configure = configureList.get(0);
-        User user = configure.getUser();
 
         APIUtils
                 .getMarketAPI()
-                .getGoodsInfo(user.getStudentKH(), configure.getAppRememberCode(), goodsId)
+                .getGoodsInfo(configure.getStudentKH(), configure.getAppRememberCode(), goodsId)
                 .compose(getActivity().<HttpPageResult<GoodsItem>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

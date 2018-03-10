@@ -43,30 +43,25 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, FeedBackActi
         List<Configure> configureList = getConfigureList();
 
         if (ListUtils.isEmpty(configureList)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
             }
-            getView().showMessage("获取用户信息失败！");
             return;
         }
         User user = configureList.get(0).getUser();
 
         if (TextUtils.isEmpty(content)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("反馈意见不能为空！");
             }
-            getView().showMessage("反馈意见不能为空！");
         } else if (contact.length() > 200) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("字数超过限制！");
             }
-            getView().showMessage("字数超过限制！");
-
         } else if (TextUtils.isEmpty(contact)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("联系方式不能为空！");
             }
-            getView().showMessage("联系方式不能为空！");
         } else {
             String version = null, model = null, from = null;
             try {
@@ -93,28 +88,27 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, FeedBackActi
                     .subscribe(new Observer<ResponseBody>() {
                         @Override
                         public void onSubscribe(@NonNull Disposable d) {
-                            if (getView() == null) {
-                                return;
+                            if (getView() != null) {
+                                getView().showLoading();
                             }
-                            getView().showLoading();
                         }
 
                         @Override
                         public void onNext(@NonNull ResponseBody responseBody) {
-                            if (getView() == null) {
-                                return;
+                            if (getView() != null) {
+                                getView().closeLoading();
+                                getView().onSuccess();
                             }
-                            getView().closeLoading();
-                            getView().onSuccess();
+
                         }
 
                         @Override
                         public void onError(@NonNull Throwable e) {
-                            if (getView() == null) {
-                                return;
+                            if (getView() != null) {
+                                getView().closeLoading();
+                                getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                             }
-                            getView().closeLoading();
-                            getView().showMessage(ExceptionEngine.handleException(e).getMsg());
+
                         }
 
                         @Override

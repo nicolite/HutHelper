@@ -48,7 +48,6 @@ public class ExplessonPresenter extends BasePresenter<IExplessonView, ExpLessonA
         }
 
         Configure configure = configureList.get(0);
-        User user = configure.getUser();
         final ExpLessonDao expLessonDao = getDaoSession().getExpLessonDao();
         final List<ExpLesson> list = expLessonDao
                 .queryBuilder()
@@ -64,7 +63,7 @@ public class ExplessonPresenter extends BasePresenter<IExplessonView, ExpLessonA
 
         APIUtils
                 .getExpLessonAPI()
-                .getExpLesson(user.getStudentKH(), configure.getAppRememberCode())
+                .getExpLesson(configure.getStudentKH(), configure.getAppRememberCode())
                 .compose(getActivity().<HttpResult<List<ExpLesson>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

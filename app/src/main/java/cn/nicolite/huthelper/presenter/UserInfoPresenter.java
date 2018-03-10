@@ -94,7 +94,6 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
         }
 
         final Configure configure = list.get(0);
-        final User user = configure.getUser();
 
         if (getView() != null) {
             getView().showMessage("头像上传中！");
@@ -102,7 +101,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
 
         APIUtils
                 .getUploadAPI()
-                .uploadAvatar(user.getStudentKH(), configure.getAppRememberCode(), file)
+                .uploadAvatar(configure.getStudentKH(), configure.getAppRememberCode(), file)
                 .compose(getActivity().<HttpResult<String>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -120,14 +119,11 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                             switch (msg) {
                                 case "ok":
                                     msg = "修改成功!";
-                                    getView().changeAvatarSuccess(bitmap);
+                                    User user = configure.getUser();
                                     user.setHead_pic_thumb(stringHttpResult.getData());
                                     user.setHead_pic(stringHttpResult.getData());
-                                    Intent intent = new Intent(Constants.mainBroadcast);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putInt("type", Constants.BROADCAST_TYPE_REFRESH_AVATAR);
-                                    intent.putExtras(bundle);
-                                    LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(intent);
+                                    daoSession.getUserDao().update(user);
+                                    getView().changeAvatarSuccess(bitmap);
                                     break;
                                 case "令牌错误":
                                     msg = "修改失败：帐号异地登录，请重新登录！";

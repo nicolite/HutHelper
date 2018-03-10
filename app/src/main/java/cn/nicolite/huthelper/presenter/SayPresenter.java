@@ -69,14 +69,13 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
         }
 
         Configure configure = configureList.get(0);
-        User user = configure.getUser();
 
         if (getView() != null) {
             getView().showMessage("正在删除！");
         }
         APIUtils
                 .getSayAPI()
-                .deleteSay(user.getStudentKH(), configure.getAppRememberCode(), say.getId())
+                .deleteSay(configure.getStudentKH(), configure.getAppRememberCode(), say.getId())
                 .compose(getActivity().<HttpResult<String>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

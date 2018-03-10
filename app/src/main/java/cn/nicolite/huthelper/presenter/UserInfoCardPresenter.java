@@ -44,15 +44,14 @@ public class UserInfoCardPresenter extends BasePresenter<IUserInfoCardView, User
         }
 
         Configure configure = configureList.get(0);
-        User user = configure.getUser();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
-        String env = user.getStudentKH() + configure.getAppRememberCode() + userId
+        String env = configure.getStudentKH() + configure.getAppRememberCode() + userId
                 + simpleDateFormat.format(new Date());
         LogUtils.d(TAG, env);
         APIUtils
                 .getUserAPI()
-                .getUserInfo(user.getStudentKH(), configure.getAppRememberCode(), userId,
+                .getUserInfo(configure.getStudentKH(), configure.getAppRememberCode(), userId,
                         EncryptUtils.SHA1(env))
                 .compose(getActivity().<HttpResult<User>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())

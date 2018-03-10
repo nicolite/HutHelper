@@ -48,15 +48,14 @@ public class UserListPresenter extends BasePresenter<IUserListView, UserListFrag
         }
 
         Configure configure = configureList.get(0);
-        User user = configure.getUser();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
         String date = simpleDateFormat.format(new Date());
-        String env = EncryptUtils.SHA1(user.getStudentKH() + configure.getAppRememberCode() + date);
+        String env = EncryptUtils.SHA1(configure.getStudentKH() + configure.getAppRememberCode() + date);
 
         APIUtils
                 .getUserAPI()
-                .getStudents(user.getStudentKH(), configure.getAppRememberCode(), env, name)
+                .getStudents(configure.getStudentKH(), configure.getAppRememberCode(), env, name)
                 .compose(getActivity().<HttpResult<List<User>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

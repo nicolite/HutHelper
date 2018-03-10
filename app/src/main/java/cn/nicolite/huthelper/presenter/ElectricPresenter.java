@@ -41,29 +41,26 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
     public void showLouHao() {
 
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取当前登录用户失败，请重新登录！");
             }
-            getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
 
         List<Configure> configureList = getConfigureList();
         if (ListUtils.isEmpty(configureList)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
             }
-            getView().showMessage("获取用户信息失败！");
             return;
         }
 
         Configure configure = configureList.get(0);
 
         if (!TextUtils.isEmpty(configure.getLou()) && !TextUtils.isEmpty(configure.getHao())) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showLouHao(configure.getLou(), configure.getHao());
             }
-            getView().showLouHao(configure.getLou(), configure.getHao());
         }
 
     }
@@ -71,32 +68,28 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
     public void showElectricData(String lou, String hao) {
 
         if (TextUtils.isEmpty(lou) || TextUtils.isEmpty(hao)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("宿舍楼栋和宿舍号不能为空");
             }
-            getView().showMessage("宿舍楼栋和宿舍号不能为空");
             return;
         }
 
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取当前登录用户失败，请重新登录！");
             }
-            getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
 
         List<Configure> list = getConfigureList();
         if (ListUtils.isEmpty(list)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
             }
-            getView().showMessage("获取用户信息失败！");
             return;
         }
 
         Configure configure = list.get(0);
-        User user = list.get(0).getUser();
 
         configure.setLou(lou);
         configure.setHao(hao);
@@ -104,11 +97,11 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
         String date = simpleDateFormat.format(new Date());
-        String env = EncryptUtils.SHA1(lou + hao + date + user.getStudentKH() + configure.getAppRememberCode());
+        String env = EncryptUtils.SHA1(lou + hao + date + configure.getStudentKH() + configure.getAppRememberCode());
 
         APIUtils
                 .getElectricAPI()
-                .getElectric(lou, hao, user.getStudentKH(), configure.getAppRememberCode(), env)
+                .getElectric(lou, hao, configure.getStudentKH(), configure.getAppRememberCode(), env)
                 .compose(getActivity().<Electric>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -150,19 +143,17 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
     public void showWeather() {
 
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取当前登录用户失败，请重新登录！");
             }
-            getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
 
         List<Configure> list = getConfigureList();
         if (ListUtils.isEmpty(list)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
             }
-            getView().showMessage("获取用户信息失败！");
             return;
         }
 

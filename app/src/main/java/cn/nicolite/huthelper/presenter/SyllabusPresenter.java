@@ -63,7 +63,6 @@ public class SyllabusPresenter extends BasePresenter<ISyllabusView, SyllabusActi
         }
 
         Configure configure = configureList.get(0);
-        User user = configure.getUser();
 
         if (getView() != null) {
             getView().showLoading();
@@ -71,7 +70,7 @@ public class SyllabusPresenter extends BasePresenter<ISyllabusView, SyllabusActi
 
         APIUtils
                 .getSyllabusAPI()
-                .getSyllabus(user.getStudentKH(), configure.getAppRememberCode())
+                .getSyllabus(configure.getStudentKH(), configure.getAppRememberCode())
                 .compose(getActivity().<SyllabusResult>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

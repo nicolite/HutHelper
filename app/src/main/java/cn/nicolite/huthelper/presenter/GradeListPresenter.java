@@ -49,7 +49,6 @@ public class GradeListPresenter extends BasePresenter<IGradeListView, GradeListA
             return;
         }
         Configure configure = configureList.get(0);
-        User user = configure.getUser();
 
         final GradeDao gradeDao = daoSession.getGradeDao();
 
@@ -67,7 +66,7 @@ public class GradeListPresenter extends BasePresenter<IGradeListView, GradeListA
 
         APIUtils
                 .getGradeAPI()
-                .getGradeList(user.getStudentKH(), configure.getAppRememberCode())
+                .getGradeList(configure.getStudentKH(), configure.getAppRememberCode())
                 .compose(getActivity().<HttpResult<List<Grade>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .map(new Function<HttpResult<List<Grade>>, List<Grade>>() {

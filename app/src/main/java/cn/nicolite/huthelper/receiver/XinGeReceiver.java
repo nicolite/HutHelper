@@ -84,7 +84,7 @@ public class XinGeReceiver extends XGPushBaseReceiver {
         noticeDao.insert(notice);
 
         //发送广播通知更新
-        Intent intent = new Intent(Constants.mainBroadcast);
+        Intent intent = new Intent(Constants.MainBroadcast);
         Bundle bundle = new Bundle();
         bundle.putInt("type", Constants.BROADCAST_TYPE_NOTICE);
         intent.putExtras(bundle);

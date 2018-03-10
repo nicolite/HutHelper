@@ -156,11 +156,10 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
         }
 
         Configure configure = configureList.get(0);
-        User user = configure.getUser();
 
         APIUtils
                 .getMarketAPI()
-                .searchGoods(user.getStudentKH(), configure.getAppRememberCode(), page, searchText)
+                .searchGoods(configure.getStudentKH(), configure.getAppRememberCode(), page, searchText)
                 .compose(getActivity().<HttpPageResult<List<Goods>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -66,7 +66,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     public void showWeather() {
 
         if (TextUtils.isEmpty(userId)) {
-            if (getView()!= null) {
+            if (getView() != null) {
                 getView().showMessage("获取当前登录用户失败，请重新登录！");
             }
             return;
@@ -186,7 +186,9 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
     public void showNotice(boolean isReceiver) {
         if (TextUtils.isEmpty(userId)) {
-            getView().showMessage("获取用户信息失败！");
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
+            }
             return;
         }
 
@@ -294,19 +296,17 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     public void checkUpdate(String num) {
 
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取当前登录用户失败，请重新登录！");
             }
-            getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
 
         final List<Configure> configureList = getConfigureList();
         if (ListUtils.isEmpty(configureList)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
             }
-            getView().showMessage("获取用户信息失败！");
             return;
         }
 
@@ -358,24 +358,22 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
     public void connectRongIM() {
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取当前登录用户失败，请重新登录！");
             }
-            getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
 
         List<Configure> configureList = getConfigureList();
 
-        final Configure configure;
         if (ListUtils.isEmpty(configureList)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取Token失败，请重新登录！");
             }
-            getView().showMessage("获取Token失败，请重新登录！");
             return;
         }
-        configure = configureList.get(0);
+
+        Configure configure = configureList.get(0);
         final User user = configure.getUser();
 
         RongIM.connect(configure.getToken(), new RongIMClient.ConnectCallback() {
@@ -387,10 +385,9 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             @Override
             public void onSuccess(String s) {
                 if (user == null) {
-                    if (getView() == null) {
-                        return;
+                    if (getView() != null) {
+                        getView().showMessage("未获取到用户信息，请重新登录！");
                     }
-                    getView().showMessage("未获取到用户信息，请重新登录！");
                     return;
                 }
                 RongIM.getInstance()
@@ -401,10 +398,9 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
             @Override
             public void onError(RongIMClient.ErrorCode errorCode) {
-                if (getView() == null) {
-                    return;
+                if (getView() != null) {
+                    getView().showMessage("连接即时聊天服务器出错！");
                 }
-                getView().showMessage("连接即时聊天服务器出错！");
             }
         });
     }
@@ -431,18 +427,16 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     public void initUser() {
 
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取当前登录用户失败，请重新登录！");
             }
-            getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
         List<Configure> configureList = getConfigureList();
         if (ListUtils.isEmpty(configureList)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
             }
-            getView().showMessage("获取用户信息失败！");
             return;
         }
 

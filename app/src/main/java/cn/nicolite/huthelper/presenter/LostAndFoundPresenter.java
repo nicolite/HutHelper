@@ -152,11 +152,10 @@ public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, Lost
         }
 
         Configure configure = configureList.get(0);
-        User user = configure.getUser();
 
         APIUtils
                 .getLostAndFoundAPI()
-                .searchLostAndFound(user.getStudentKH(), configure.getAppRememberCode(), page, searchText)
+                .searchLostAndFound(configure.getStudentKH(), configure.getAppRememberCode(), page, searchText)
                 .compose(getActivity().<HttpPageResult<List<LostAndFound>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

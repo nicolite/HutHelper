@@ -68,11 +68,10 @@ public class GradeRankPresenter extends BasePresenter<IGradeRankView, GradeRankA
         }
 
         Configure configure = configureList.get(0);
-        User user = configure.getUser();
 
         APIUtils
                 .getGradeAPI()
-                .getGradeRank(user.getStudentKH(), configure.getAppRememberCode())
+                .getGradeRank(configure.getStudentKH(), configure.getAppRememberCode())
                 .compose(getActivity().<GradeRankResult>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

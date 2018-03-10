@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -198,6 +199,11 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
     @Override
     public void changeAvatarSuccess(Bitmap bitmap) {
         ivUserHeadview.setImageBitmap(bitmap);
+        Intent intent = new Intent(Constants.MainBroadcast);
+        Bundle bundle = new Bundle();
+        bundle.putInt("type", Constants.BROADCAST_TYPE_REFRESH_AVATAR);
+        intent.putExtras(bundle);
+        LocalBroadcastManager.getInstance(context).sendBroadcast(intent);
     }
 
     @Override

@@ -35,33 +35,21 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
     public void showExam(final boolean isManual) {
 
         if (TextUtils.isEmpty(userId)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取当前登录用户失败，请重新登录！");
             }
-            getView().showMessage("获取当前登录用户失败，请重新登录！");
             return;
         }
 
         List<Configure> configureList = getConfigureList();
         if (ListUtils.isEmpty(configureList)) {
-            if (getView() == null) {
-                return;
+            if (getView() != null) {
+                getView().showMessage("获取用户信息失败！");
             }
-            getView().showMessage("获取用户信息失败！");
             return;
         }
 
         Configure configure = configureList.get(0);
-        User user = configure.getUser();
-
-        if (user == null) {
-            if (getView() == null) {
-                return;
-            }
-            getView().showMessage("获取用户信息失败！");
-            return;
-        }
-
 
         final ExamDao examDao = getDaoSession().getExamDao();
         final List<Exam> list = examDao.queryBuilder().where(ExamDao.Properties.UserId.eq(userId)).list();
@@ -76,7 +64,7 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
 
         APIUtils
                 .getExamAPI()
-                .getExamData(user.getStudentKH(), configure.getAppRememberCode())
+                .getExamData(configure.getStudentKH(), configure.getAppRememberCode())
                 .compose(getActivity().<ExamResult>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .map(new Function<ExamResult, List<Exam>>() {
@@ -124,27 +112,26 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
 
                     @Override
                     public void onNext(List<Exam> exams) {
-                        if (getView() == null) {
-                            return;
+                        if (getView() != null) {
+                            getView().closeLoading();
+                            if (ListUtils.isEmpty(exams)) {
+                                getView().showMessage("没有找到你的考试计划！");
+                                return;
+                            }
+                            getView().showExam(exams);
                         }
-                        getView().closeLoading();
-                        if (ListUtils.isEmpty(exams)) {
-                            getView().showMessage("没有找到你的考试计划！");
-                            return;
-                        }
-                        getView().showExam(exams);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        if (getView() == null) {
-                            return;
+                        if (getView() != null) {
+                            getView().closeLoading();
+                            if (!ListUtils.isEmpty(list)) {
+                                getView().showExam(list);
+                            }
+                            getView().showMessage("加载失败，" + ExceptionEngine.handleException(e).getMsg());
+
                         }
-                        getView().closeLoading();
-                        if (!ListUtils.isEmpty(list)) {
-                            getView().showExam(list);
-                        }
-                        getView().showMessage("加载失败，" + ExceptionEngine.handleException(e).getMsg());
 
                     }
 

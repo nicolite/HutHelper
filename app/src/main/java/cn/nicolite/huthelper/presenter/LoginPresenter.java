@@ -84,6 +84,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                                 Configure configure = new Configure();
                                 configure.setAppRememberCode(userHttpResult.getRemember_code_app());
                                 configure.setUserId(userHttpResult.getData().getUser_id());
+                                configure.setStudentKH(userHttpResult.getData().getStudentKH());
                                 ConfigureDao configureDao = daoSession.getConfigureDao();
 
                                 List<Configure> configureList = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userHttpResult.getData().getUser_id())).list();

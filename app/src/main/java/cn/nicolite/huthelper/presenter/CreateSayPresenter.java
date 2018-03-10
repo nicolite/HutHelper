@@ -107,11 +107,10 @@ public class CreateSayPresenter extends BasePresenter<ICreateSayView, CreateSayA
         }
 
         Configure configure = configureList.get(0);
-        User user = configure.getUser();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
         String date = simpleDateFormat.format(new Date());
-        String env = EncryptUtils.SHA1(user.getStudentKH() + configure.getAppRememberCode() + date);
+        String env = EncryptUtils.SHA1(configure.getStudentKH() + configure.getAppRememberCode() + date);
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
@@ -125,7 +124,7 @@ public class CreateSayPresenter extends BasePresenter<ICreateSayView, CreateSayA
 
         APIUtils
                 .getUploadAPI()
-                .uploadImages(user.getStudentKH(), configure.getAppRememberCode(), env, 0, file)
+                .uploadImages(configure.getStudentKH(), configure.getAppRememberCode(), env, 0, file)
                 .compose(getActivity().<UploadImages>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -248,11 +247,10 @@ public class CreateSayPresenter extends BasePresenter<ICreateSayView, CreateSayA
         }
 
         Configure configure = configureList.get(0);
-        User user = configure.getUser();
 
         APIUtils
                 .getSayAPI()
-                .createSay(user.getStudentKH(), configure.getAppRememberCode(), content, hidden)
+                .createSay(configure.getStudentKH(), configure.getAppRememberCode(), content, hidden)
                 .compose(getActivity().<HttpResult<String>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

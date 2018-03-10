@@ -3,15 +3,18 @@ package cn.nicolite.huthelper.view.activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 
 import java.lang.ref.WeakReference;
+import java.util.List;
 
 import butterknife.BindView;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.utils.ListUtils;
 
 /**
@@ -28,7 +31,6 @@ public class SplashActivity extends BaseActivity {
             R.drawable.start_4, R.drawable.start_5};
 
     private static final int what = 958;
-    private static final int finish = 156;
 
     private final MyHandler handler = new MyHandler(this);
 
@@ -86,7 +88,17 @@ public class SplashActivity extends BaseActivity {
     }
 
     public boolean isLogin() {
-        String userId = getLoginUser();
-        return userId != null && !userId.equals("*") && !ListUtils.isEmpty(getConfigureList());
+        //1.3.8以前的版本需要重新登录
+        List<Configure> configureList = getConfigureList();
+        if (!ListUtils.isEmpty(configureList)) {
+            Configure configure = configureList.get(0);
+            if (TextUtils.isEmpty(configure.getStudentKH())) {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
+        return userId != null && !userId.equals("*");
     }
 }

@@ -96,7 +96,6 @@ public class MainActivity extends BaseActivity implements IMainView {
     @BindView(R.id.tv_nav_name)
     RichTextView tvNavName;
     private MainPresenter mainPresenter;
-    private User user;
     private long exitTime = 0;
     private List<Menu> menuList = new ArrayList<>();
     private MenuAdapter menuAdapter;
@@ -140,7 +139,6 @@ public class MainActivity extends BaseActivity implements IMainView {
         }
 
         configure = configureList.get(0);
-        user = configure.getUser();
 
         rootView.setDragListener(new DragLayout.DragListener() {
             @Override
@@ -175,7 +173,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                             }
                             bundle.putString("url", url);
                         } else if (menu.getType() == WebViewActivity.TYPE_HOMEWORK) {
-                            bundle.putString("url", Constants.HOMEWORK + user.getStudentKH() + "/" + configure.getAppRememberCode());
+                            bundle.putString("url", Constants.HOMEWORK + configure.getStudentKH() + "/" + configure.getAppRememberCode());
                         }
                         bundle.putString("title", menu.getTitle());
                         bundle.putInt("type", menu.getType());
@@ -193,13 +191,13 @@ public class MainActivity extends BaseActivity implements IMainView {
 
         mainPresenter = new MainPresenter(this, this);
         mainPresenter.showMenu();
-        mainPresenter.checkUpdate(user.getStudentKH());
+        mainPresenter.checkUpdate(configure.getStudentKH());
         mainPresenter.initUser();
         mainPresenter.showTimeAxis();
         mainPresenter.showSyllabus();
         mainPresenter.showWeather();
         mainPresenter.checkPermission();
-        mainPresenter.registerPush(user.getStudentKH());
+        mainPresenter.registerPush(configure.getStudentKH());
         mainPresenter.showNotice(false);
         mainPresenter.connectRongIM();
         mainPresenter.startLoginService();
@@ -237,15 +235,15 @@ public class MainActivity extends BaseActivity implements IMainView {
         }, Conversation.ConversationType.PRIVATE);
 
         //上传帐号信息到腾讯MTA
-        StatConfig.setCustomUserId(this, user.getStudentKH());
+        StatConfig.setCustomUserId(this, configure.getStudentKH());
         //设置用户ID，已定位到用户级别的Crash记录
-        CrashReport.setUserId(user.getStudentKH());
+        CrashReport.setUserId(configure.getStudentKH());
 
         //注册本地广播监听消息
         localBroadcastManager = LocalBroadcastManager.getInstance(context);
         mainReceiver = new MainReceiver();
         intentFilter = new IntentFilter();
-        intentFilter.addAction(Constants.mainBroadcast);
+        intentFilter.addAction(Constants.MainBroadcast);
         localBroadcastManager.registerReceiver(mainReceiver, intentFilter);
     }
 
@@ -299,7 +297,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                             @Override
                             public void onClick(View v) {
                                 RongIM.getInstance().logout();
-                                XGPushManager.deleteTag(getApplicationContext(), user.getStudentKH());
+                                XGPushManager.deleteTag(getApplicationContext(), configure.getStudentKH());
                                 XGPushManager.registerPush(getApplicationContext(), "*");
                                 XGPushManager.unregisterPush(getApplicationContext());
                                 startActivity(LoginActivity.class);

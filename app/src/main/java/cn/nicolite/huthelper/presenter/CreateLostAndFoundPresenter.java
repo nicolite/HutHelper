@@ -107,11 +107,10 @@ public class CreateLostAndFoundPresenter extends BasePresenter<ICreateLostAndFou
         }
 
         Configure configure = configureList.get(0);
-        User user = configure.getUser();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
         String date = simpleDateFormat.format(new Date());
-        String env = EncryptUtils.SHA1(user.getStudentKH() + configure.getAppRememberCode() + date);
+        String env = EncryptUtils.SHA1(configure.getStudentKH() + configure.getAppRememberCode() + date);
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
@@ -125,7 +124,7 @@ public class CreateLostAndFoundPresenter extends BasePresenter<ICreateLostAndFou
 
         APIUtils
                 .getUploadAPI()
-                .uploadImages(user.getStudentKH(), configure.getAppRememberCode(), env, 2, file)
+                .uploadImages(configure.getStudentKH(), configure.getAppRememberCode(), env, 2, file)
                 .compose(getActivity().<UploadImages>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -249,11 +248,10 @@ public class CreateLostAndFoundPresenter extends BasePresenter<ICreateLostAndFou
         }
 
         Configure configure = configureList.get(0);
-        User user = configure.getUser();
 
         APIUtils
                 .getLostAndFoundAPI()
-                .createLostAndFound(user.getStudentKH(), configure.getAppRememberCode(), title, location,
+                .createLostAndFound(configure.getStudentKH(), configure.getAppRememberCode(), title, location,
                         time, content, hidden, phone, type)
                 .compose(getActivity().<HttpResult<String>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())

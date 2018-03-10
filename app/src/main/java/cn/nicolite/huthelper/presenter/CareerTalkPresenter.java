@@ -27,9 +27,9 @@ public class CareerTalkPresenter extends BasePresenter<ICareerTalkView, CareerTa
     }
 
     public void showCareerTalkList(final boolean isManual, boolean isAll) {
-        if (isAll){
+        if (isAll) {
             loadMoreAll(1, isManual, false);
-        }else {
+        } else {
             loadMoreHUT(1, isManual, false);
         }
 
@@ -54,38 +54,35 @@ public class CareerTalkPresenter extends BasePresenter<ICareerTalkView, CareerTa
                     @Override
                     public void onSubscribe(Disposable d) {
                         if (!isManual) {
-                            if (getView() == null){
-                                return;
+                            if (getView() != null) {
+                                getView().showLoading();
                             }
-                            getView().showLoading();
                         }
                     }
 
                     @Override
                     public void onNext(CareerTalkResult<List<CareerTalk>> listCareerTalkResult) {
-                        if (getView() == null){
-                            return;
-                        }
-                        getView().closeLoading();
-                        if (!TextUtils.isEmpty(listCareerTalkResult.getStatus())
-                                && listCareerTalkResult.getStatus().equals("success")) {
-                            if (isLoadMore) {
-                                getView().loadMore(listCareerTalkResult.getData());
-                                return;
+                        if (getView() != null) {
+                            getView().closeLoading();
+                            if (!TextUtils.isEmpty(listCareerTalkResult.getStatus())
+                                    && listCareerTalkResult.getStatus().equals("success")) {
+                                if (isLoadMore) {
+                                    getView().loadMore(listCareerTalkResult.getData());
+                                    return;
+                                }
+                                getView().showCareerTalkList(listCareerTalkResult.getData());
+                            } else {
+                                getView().showMessage("未请求到数据！");
                             }
-                            getView().showCareerTalkList(listCareerTalkResult.getData());
-                        } else {
-                            getView().showMessage("未请求到数据！");
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        if (getView() == null){
-                            return;
+                        if (getView() != null) {
+                            getView().closeLoading();
+                            getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
-                        getView().closeLoading();
-                        getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                     }
 
                     @Override
@@ -106,7 +103,7 @@ public class CareerTalkPresenter extends BasePresenter<ICareerTalkView, CareerTa
                     @Override
                     public void onSubscribe(Disposable d) {
                         if (!isManual) {
-                            if (getView() == null){
+                            if (getView() == null) {
                                 return;
                             }
                             getView().showLoading();
@@ -115,29 +112,27 @@ public class CareerTalkPresenter extends BasePresenter<ICareerTalkView, CareerTa
 
                     @Override
                     public void onNext(CareerTalkResult<List<CareerTalk>> listCareerTalkResult) {
-                        if (getView() == null){
-                            return;
-                        }
-                        getView().closeLoading();
-                        if (!TextUtils.isEmpty(listCareerTalkResult.getStatus())
-                                && listCareerTalkResult.getStatus().equals("success")) {
-                            if (isLoadMore) {
-                                getView().loadMore(listCareerTalkResult.getData());
-                                return;
+                        if (getView() != null) {
+                            getView().closeLoading();
+                            if (!TextUtils.isEmpty(listCareerTalkResult.getStatus())
+                                    && listCareerTalkResult.getStatus().equals("success")) {
+                                if (isLoadMore) {
+                                    getView().loadMore(listCareerTalkResult.getData());
+                                    return;
+                                }
+                                getView().showCareerTalkList(listCareerTalkResult.getData());
+                            } else {
+                                getView().showMessage("未请求到数据！");
                             }
-                            getView().showCareerTalkList(listCareerTalkResult.getData());
-                        } else {
-                            getView().showMessage("未请求到数据！");
                         }
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        if (getView() == null){
-                            return;
+                        if (getView() != null) {
+                            getView().closeLoading();
+                            getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
-                        getView().closeLoading();
-                        getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                     }
 
                     @Override
