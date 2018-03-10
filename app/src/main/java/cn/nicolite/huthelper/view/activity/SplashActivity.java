@@ -88,17 +88,15 @@ public class SplashActivity extends BaseActivity {
     }
 
     public boolean isLogin() {
-        //1.3.8以前的版本需要重新登录
+
+        //对1.3.8以前的版本做兼容，需要重新登录, 版本迭代完成后可删除
         List<Configure> configureList = getConfigureList();
         if (!ListUtils.isEmpty(configureList)) {
-            Configure configure = configureList.get(0);
-            if (TextUtils.isEmpty(configure.getStudentKH())) {
+            if (TextUtils.isEmpty(configureList.get(0).getStudentKH())) {
                 return false;
             }
-        } else {
-            return false;
         }
 
-        return userId != null && !userId.equals("*");
+        return userId != null && !userId.equals("*") && !ListUtils.isEmpty(getConfigureList());
     }
 }

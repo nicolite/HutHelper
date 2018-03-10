@@ -72,7 +72,8 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                                 editor.putString("userId", userHttpResult.getData().getUser_id());
                                 editor.apply();
 
-                                LogUtils.d(TAG, " xx: " + userHttpResult.getRemember_code_app());
+                                LogUtils.d(TAG, "appCode: " + userHttpResult.getRemember_code_app());
+                                LogUtils.d(TAG, "studentKH：" + userHttpResult.getData().getStudentKH());
                                 UserDao userDao = daoSession.getUserDao();
                                 List<User> userList = userDao.queryBuilder().where(UserDao.Properties.User_id.eq(userHttpResult.getData().getUser_id())).list();
                                 if (ListUtils.isEmpty(userList)) {
@@ -81,19 +82,20 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                                     userDao.update(userList.get(0));
                                 }
 
-                                Configure configure = new Configure();
-                                configure.setAppRememberCode(userHttpResult.getRemember_code_app());
-                                configure.setUserId(userHttpResult.getData().getUser_id());
-                                configure.setStudentKH(userHttpResult.getData().getStudentKH());
                                 ConfigureDao configureDao = daoSession.getConfigureDao();
-
                                 List<Configure> configureList = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userHttpResult.getData().getUser_id())).list();
 
                                 if (ListUtils.isEmpty(configureList)) {
+                                    Configure configure = new Configure();
+                                    configure.setAppRememberCode(userHttpResult.getRemember_code_app());
+                                    configure.setUserId(userHttpResult.getData().getUser_id());
+                                    configure.setStudentKH(userHttpResult.getData().getStudentKH());
                                     configureDao.insert(configure);
                                 } else {
                                     Configure newConfigure = configureList.get(0);
                                     newConfigure.setAppRememberCode(userHttpResult.getRemember_code_app());
+                                    newConfigure.setUserId(userHttpResult.getData().getUser_id());
+                                    newConfigure.setStudentKH(userHttpResult.getData().getStudentKH());
                                     configureDao.update(newConfigure);
                                 }
 
@@ -151,7 +153,6 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                             getView().onSuccess();
                             getView().closeLoading();
                         }
-
 
                     }
 

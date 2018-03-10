@@ -74,23 +74,6 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
             return;
         }
 
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-
-        List<Configure> list = getConfigureList();
-        if (ListUtils.isEmpty(list)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
-        Configure configure = list.get(0);
-
         configure.setLou(lou);
         configure.setHao(hao);
         configure.update();
@@ -141,50 +124,14 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
     }
 
     public void showWeather() {
-
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-
-        List<Configure> list = getConfigureList();
-        if (ListUtils.isEmpty(list)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
-        Configure configure = list.get(0);
-
         getView().showWeather(configure.getCity(), configure.getTmp(), configure.getContent());
     }
 
     public void showVoteSummary() {
 
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-
-        List<Configure> list = getConfigureList();
-        if (ListUtils.isEmpty(list)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
-        Configure configure = list.get(0);
-        User user = configure.getUser();
-
         APIUtils
                 .getVoteAPI()
-                .getAirConditionerData(user.getStudentKH(), configure.getAppRememberCode())
+                .getAirConditionerData(configure.getStudentKH(), configure.getAppRememberCode())
                 .compose(getActivity().<Vote>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -225,27 +172,9 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
 
     public void vote(String opt) {
 
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-
-        List<Configure> list = getConfigureList();
-        if (ListUtils.isEmpty(list)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
-        Configure configure = list.get(0);
-        User user = configure.getUser();
-
         APIUtils
                 .getVoteAPI()
-                .setAirConditionerData(user.getStudentKH(), configure.getAppRememberCode(), opt)
+                .setAirConditionerData(configure.getStudentKH(), configure.getAppRememberCode(), opt)
                 .compose(getActivity().<Vote>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

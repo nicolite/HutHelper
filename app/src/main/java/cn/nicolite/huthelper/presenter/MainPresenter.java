@@ -65,21 +65,6 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
     public void showWeather() {
 
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-
-        final List<Configure> list = getConfigureList();
-        if (ListUtils.isEmpty(list)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
         APIUtils
                 .getWeatherAPI()
                 .getWeather()
@@ -101,7 +86,6 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                             getView().showWeather(weather.getData().getCity(), weather.getData().getWendu(),
                                     weather.getData().getForecast().get(0).getType());
 
-                            Configure configure = list.get(0);
                             configure.setCity(weather.getData().getCity());
                             configure.setTmp(weather.getData().getWendu());
                             configure.setContent(weather.getData().getForecast().get(0).getType());
@@ -113,7 +97,6 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                     public void onError(@NonNull Throwable e) {
                         if (getView() != null) {
                             getView().closeLoading();
-                            Configure configure = list.get(0);
                             getView().showWeather(configure.getCity(), configure.getTmp(), configure.getContent());
                             getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }
@@ -185,12 +168,6 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     }
 
     public void showNotice(boolean isReceiver) {
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
 
         NoticeDao noticeDao = daoSession.getNoticeDao();
         List<Notice> list = noticeDao.queryBuilder()
@@ -213,13 +190,6 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     }
 
     public void showMenu() {
-
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户数据失败，请重新登录！");
-            }
-            return;
-        }
 
         MenuDao menuDao = daoSession.getMenuDao();
         List<Menu> menus = menuDao.queryBuilder()
@@ -293,29 +263,11 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     }
 
     //必须调用此接口以记录该用户是否使用工大助手
-    public void checkUpdate(String num) {
-
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-
-        final List<Configure> configureList = getConfigureList();
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
-        Configure configure = configureList.get(0);
-
+    public void checkUpdate() {
 
         APIUtils
                 .getUpdateAPI()
-                .checkUpdate(num, configure.getAppRememberCode())
+                .checkUpdate(configure.getStudentKH(), configure.getAppRememberCode())
                 .compose(getActivity().<HttpResult<Update>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
@@ -333,7 +285,6 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                                 return;
                             }
 
-                            Configure configure = configureList.get(0);
                             configure.setLibraryUrl(data.getApi_base_address().getLibrary());
                             configure.setTestPlanUrl(data.getApi_base_address().getTest_plan());
                             configure.setNewTermDate(data.getSchool_opens());
@@ -357,25 +308,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     }
 
     public void connectRongIM() {
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-
-        List<Configure> configureList = getConfigureList();
-
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取Token失败，请重新登录！");
-            }
-            return;
-        }
-
-        Configure configure = configureList.get(0);
         final User user = configure.getUser();
-
         RongIM.connect(configure.getToken(), new RongIMClient.ConnectCallback() {
             @Override
             public void onTokenIncorrect() {
@@ -405,8 +338,8 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
         });
     }
 
-    public void registerPush(String studentKH) {
-        XGPushManager.registerPush(getActivity().getApplicationContext(), studentKH, new XGIOperateCallback() {
+    public void registerPush() {
+        XGPushManager.registerPush(getActivity().getApplicationContext(), configure.getStudentKH(), new XGIOperateCallback() {
             @Override
             public void onSuccess(Object o, int i) {
                 LogUtils.d(TAG, "注册成功，设备token为：" + o);
@@ -426,21 +359,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
     public void initUser() {
 
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-        List<Configure> configureList = getConfigureList();
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
-        User user = configureList.get(0).getUser();
+        User user = configure.getUser();
 
         if (user != null) {
             getView().showUser(user);

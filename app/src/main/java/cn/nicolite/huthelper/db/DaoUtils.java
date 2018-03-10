@@ -37,6 +37,6 @@ public class DaoUtils {
      */
     public static String getLoginUser() {
         SharedPreferences preferences = MApplication.application.getSharedPreferences("login_user", Context.MODE_PRIVATE);
-        return preferences.getString("userId", null);
+        return preferences.getString("userId", "*");
     }
 }

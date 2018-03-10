@@ -32,22 +32,6 @@ public class ExplessonPresenter extends BasePresenter<IExplessonView, ExpLessonA
 
     public void showExplesson(final boolean isManual) {
 
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-
-        List<Configure> configureList = getConfigureList();
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
-        Configure configure = configureList.get(0);
         final ExpLessonDao expLessonDao = getDaoSession().getExpLessonDao();
         final List<ExpLesson> list = expLessonDao
                 .queryBuilder()

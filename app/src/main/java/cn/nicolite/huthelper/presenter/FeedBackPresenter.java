@@ -33,22 +33,8 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, FeedBackActi
     }
 
     public void feeBack(String content, String contact) {
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() == null) {
-                return;
-            }
-            getView().showMessage("获取用户信息失败！");
-            return;
-        }
-        List<Configure> configureList = getConfigureList();
 
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-        User user = configureList.get(0).getUser();
+        User user = configure.getUser();
 
         if (TextUtils.isEmpty(content)) {
             if (getView() != null) {

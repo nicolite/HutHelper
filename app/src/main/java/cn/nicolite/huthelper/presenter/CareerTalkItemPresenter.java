@@ -19,12 +19,12 @@ import io.reactivex.schedulers.Schedulers;
  * Created by nicolite on 17-11-5.
  */
 
-public class CareerTalkItemPresenter extends BasePresenter<ICareerTalkItemView, CareerTalkItemActivity>{
+public class CareerTalkItemPresenter extends BasePresenter<ICareerTalkItemView, CareerTalkItemActivity> {
     public CareerTalkItemPresenter(ICareerTalkItemView view, CareerTalkItemActivity activity) {
         super(view, activity);
     }
 
-    public void showContent(int id){
+    public void showContent(int id) {
         APIUtils
                 .getCareerTalkAPI()
                 .getCareerTalk(id)
@@ -34,17 +34,17 @@ public class CareerTalkItemPresenter extends BasePresenter<ICareerTalkItemView, 
                 .subscribe(new Observer<CareerTalkResult<CareerTalkItem>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
-                        if (getView() != null){
+                        if (getView() != null) {
                             getView().showLoading();
                         }
                     }
 
                     @Override
                     public void onNext(CareerTalkResult<CareerTalkItem> careerTalkItemCareerTalkResult) {
-                        if (getView() != null){
+                        if (getView() != null) {
                             getView().closeLoading();
                             if (!TextUtils.isEmpty(careerTalkItemCareerTalkResult.getStatus())
-                            &&careerTalkItemCareerTalkResult.getStatus().equals("success")){
+                                    && careerTalkItemCareerTalkResult.getStatus().equals("success")) {
                                 getView().showContent(careerTalkItemCareerTalkResult.getData());
                             }
                         }
@@ -52,7 +52,7 @@ public class CareerTalkItemPresenter extends BasePresenter<ICareerTalkItemView, 
 
                     @Override
                     public void onError(Throwable e) {
-                        if (getView() != null){
+                        if (getView() != null) {
                             getView().closeLoading();
                             getView().showMessage(ExceptionEngine.handleException(e).getMsg());
                         }

@@ -181,7 +181,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
 
     //多dex配置,解决dex超过64k
-    implementation 'com.android.support:multidex:1.0.2'
+    implementation 'com.android.support:multidex:1.0.3'
 
     //retrofit okhttp rxjava
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'

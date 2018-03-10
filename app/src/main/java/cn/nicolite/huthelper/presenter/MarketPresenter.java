@@ -144,19 +144,6 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
             searchText = "";
         }
 
-        if (TextUtils.isEmpty(userId)) {
-            getView().showMessage("获取用户信息失败！");
-            return;
-        }
-        List<Configure> configureList = getConfigureList();
-
-        if (ListUtils.isEmpty(configureList)) {
-            getView().showMessage("获取用户信息失败！");
-            return;
-        }
-
-        Configure configure = configureList.get(0);
-
         APIUtils
                 .getMarketAPI()
                 .searchGoods(configure.getStudentKH(), configure.getAppRememberCode(), page, searchText)
@@ -223,23 +210,9 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
 
     public void showGoodsByUserId(final int page, String userId, final boolean isLoadMore) {
 
-        if (TextUtils.isEmpty(userId)) {
-            getView().showMessage("获取用户信息失败！");
-            return;
-        }
-        List<Configure> configureList = getConfigureList();
-
-        if (ListUtils.isEmpty(configureList)) {
-            getView().showMessage("获取用户信息失败！");
-            return;
-        }
-
-        Configure configure = configureList.get(0);
-        User user = configure.getUser();
-
         APIUtils
                 .getMarketAPI()
-                .getGoodsListByUserId(user.getStudentKH(), configure.getAppRememberCode(), page, userId)
+                .getGoodsListByUserId(configure.getStudentKH(), configure.getAppRememberCode(), page, userId)
                 .compose(getActivity().<HttpPageResult<List<Goods>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

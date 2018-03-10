@@ -28,23 +28,6 @@ public class LostAndFoundInfoPresenter extends BasePresenter<ILostAndFoundInfoVi
     }
 
     public void deleteLostAndFound(String lostId) {
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
-        List<Configure> configureList = getConfigureList();
-
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
-        Configure configure = configureList.get(0);
 
         if (getView() != null) {
             getView().showMessage("正在删除！");

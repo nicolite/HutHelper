@@ -23,6 +23,8 @@ import cn.nicolite.huthelper.db.dao.DaoSession;
 import cn.nicolite.huthelper.listener.ActivityLifeCycleListener;
 import cn.nicolite.huthelper.listener.FragmentLifeCycleListener;
 import cn.nicolite.huthelper.model.bean.Configure;
+import cn.nicolite.huthelper.presenter.LoginPresenter;
+import cn.nicolite.huthelper.utils.ListUtils;
 
 /**
  * Presenter基类  所有Persenter都要继承此类
@@ -39,6 +41,7 @@ public class BasePresenter<V, T> implements ActivityLifeCycleListener, FragmentL
     protected T activity;
     protected DaoSession daoSession;
     protected String userId;
+    protected Configure configure;
 
     public BasePresenter(V view, T activity) {
         attachView(view);
@@ -46,6 +49,13 @@ public class BasePresenter<V, T> implements ActivityLifeCycleListener, FragmentL
         setListener(activity);
         userId = getLoginUser();
         daoSession = getDaoSession();
+
+        List<Configure> configureList = getConfigureList();
+        if (!ListUtils.isEmpty(configureList)) {
+            configure = configureList.get(0);
+        }
+
+
     }
 
     /**

@@ -32,10 +32,6 @@ public class GradeRankPresenter extends BasePresenter<IGradeRankView, GradeRankA
     }
 
     public void showRank(boolean isForceRefresh) {
-        if (TextUtils.isEmpty(userId)) {
-            getView().showMessage("获取用户信息失败！");
-            return;
-        }
 
         if (!isForceRefresh) {
             List<GradeSum> list = daoSession.getGradeSumDao().queryBuilder()
@@ -60,14 +56,6 @@ public class GradeRankPresenter extends BasePresenter<IGradeRankView, GradeRankA
             }
         }
 
-        List<Configure> configureList = getConfigureList();
-
-        if (ListUtils.isEmpty(configureList)) {
-            getView().showMessage("获取用户信息失败！");
-            return;
-        }
-
-        Configure configure = configureList.get(0);
 
         APIUtils
                 .getGradeAPI()

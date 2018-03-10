@@ -140,19 +140,6 @@ public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, Lost
             searchText = "";
         }
 
-        if (TextUtils.isEmpty(userId)) {
-            getView().showMessage("获取用户信息失败！");
-            return;
-        }
-        List<Configure> configureList = getConfigureList();
-
-        if (ListUtils.isEmpty(configureList)) {
-            getView().showMessage("获取用户信息失败！");
-            return;
-        }
-
-        Configure configure = configureList.get(0);
-
         APIUtils
                 .getLostAndFoundAPI()
                 .searchLostAndFound(configure.getStudentKH(), configure.getAppRememberCode(), page, searchText)
@@ -217,23 +204,10 @@ public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, Lost
     }
 
     public void showLostAndFoundByUserId(final int page, String userId, final boolean isLoadMore) {
-        if (TextUtils.isEmpty(userId)) {
-            getView().showMessage("获取用户信息失败！");
-            return;
-        }
-        List<Configure> configureList = getConfigureList();
-
-        if (ListUtils.isEmpty(configureList)) {
-            getView().showMessage("获取用户信息失败！");
-            return;
-        }
-
-        Configure configure = configureList.get(0);
-        User user = configure.getUser();
 
         APIUtils
                 .getLostAndFoundAPI()
-                .getLostAndFoundListByUserId(user.getStudentKH(), configure.getAppRememberCode(), page, userId)
+                .getLostAndFoundListByUserId(configure.getStudentKH(), configure.getAppRememberCode(), page, userId)
                 .compose(getActivity().<HttpPageResult<List<LostAndFound>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

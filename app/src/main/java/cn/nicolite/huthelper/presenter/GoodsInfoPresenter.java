@@ -30,23 +30,6 @@ public class GoodsInfoPresenter extends BasePresenter<IGoodsInfoView, GoodsInfoA
     }
 
     public void showGoodsInfo(String goodsId) {
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
-        List<Configure> configureList = getConfigureList();
-
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
-        Configure configure = configureList.get(0);
 
         APIUtils
                 .getMarketAPI()

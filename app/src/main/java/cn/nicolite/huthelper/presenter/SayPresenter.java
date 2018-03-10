@@ -53,22 +53,6 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
     }
 
     public void deleteSay(final Say say) {
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-
-        List<Configure> configureList = getConfigureList();
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-
-        Configure configure = configureList.get(0);
 
         if (getView() != null) {
             getView().showMessage("正在删除！");
@@ -108,27 +92,10 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
     }
 
     public void likeSay(String sayId) {
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-
-        List<Configure> configureList = getConfigureList();
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-
-        Configure configure = configureList.get(0);
-        User user = configure.getUser();
 
         APIUtils
                 .getSayAPI()
-                .likeSay(user.getStudentKH(), configure.getAppRememberCode(), sayId)
+                .likeSay(configure.getStudentKH(), configure.getAppRememberCode(), sayId)
                 .compose(getActivity().<HttpResult<String>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -159,31 +126,15 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
     }
 
     public void addComment(final String comment, String sayId, final int position) {
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-
-        List<Configure> configureList = getConfigureList();
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-
-        Configure configure = configureList.get(0);
-        final User user = configure.getUser();
 
         if (getView() != null) {
             getView().showMessage("正在评论...！");
         }
 
+
         APIUtils
                 .getSayAPI()
-                .createComment(user.getStudentKH(), configure.getAppRememberCode(), comment, sayId)
+                .createComment(configure.getStudentKH(), configure.getAppRememberCode(), comment, sayId)
                 .compose(getActivity().<HttpResult<String>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -197,6 +148,7 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
                     public void onNext(HttpResult<String> stringHttpResult) {
                         if (getView() != null) {
                             if (stringHttpResult.getCode() == 200) {
+                                User user = configure.getUser();
                                 getView().commentSuccess(comment, position, userId, user.getUsername());
                                 getView().showMessage("评论成功！");
                             }
@@ -223,25 +175,7 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
 
     public void loadSayList(final int page, final boolean isManual, final boolean isLoadMore) {
 
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-
-        List<Configure> configureList = getConfigureList();
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-
-        Configure configure = configureList.get(0);
-        User user = configure.getUser();
-
-        loadLikedSay(user.getStudentKH(), configure.getAppRememberCode(), new Observer<HttpResult<List<String>>>() {
+        loadLikedSay(configure.getStudentKH(), configure.getAppRememberCode(), new Observer<HttpResult<List<String>>>() {
             @Override
             public void onSubscribe(Disposable d) {
                 if (getView() != null && !isManual) {
@@ -360,25 +294,8 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
     }
 
     public void loadLikedSay() {
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
 
-        List<Configure> configureList = getConfigureList();
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-
-        Configure configure = configureList.get(0);
-        User user = configure.getUser();
-
-        loadLikedSay(user.getStudentKH(), configure.getAppRememberCode(), new Observer<HttpResult<List<String>>>() {
+        loadLikedSay(configure.getStudentKH(), configure.getAppRememberCode(), new Observer<HttpResult<List<String>>>() {
 
             @Override
             public void onSubscribe(Disposable d) {
@@ -406,24 +323,8 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
     }
 
     public void loadSayListByUserId(final String userId, final int page, final boolean isManual, final boolean isLoadMore) {
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
 
-        List<Configure> configureList = getConfigureList();
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-        final Configure configure = configureList.get(0);
-        final User user = configure.getUser();
-
-        loadLikedSay(user.getStudentKH(), configure.getAppRememberCode(), new Observer<HttpResult<List<String>>>() {
+        loadLikedSay(configure.getStudentKH(), configure.getAppRememberCode(), new Observer<HttpResult<List<String>>>() {
             @Override
             public void onSubscribe(Disposable d) {
                 if (getView() != null && !isManual) {
@@ -436,7 +337,7 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
                 if (getView() != null) {
                     if (listHttpResult.getMsg().equals("成功获得点赞数据")) {
                         SayLikedCache.setLikedList(listHttpResult.getData());
-                        loadSayListByUserId(user.getStudentKH(), configure.getAppRememberCode(), userId,
+                        loadSayListByUserId(configure.getStudentKH(), configure.getAppRememberCode(), userId,
                                 page, isLoadMore);
                     } else {
                         getView().closeLoading();

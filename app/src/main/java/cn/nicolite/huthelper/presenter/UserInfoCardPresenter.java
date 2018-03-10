@@ -32,18 +32,6 @@ public class UserInfoCardPresenter extends BasePresenter<IUserInfoCardView, User
     }
 
     public void showInfo(String userId) {
-        if (TextUtils.isEmpty(userId)) {
-            getView().showMessage("获取用户信息失败！");
-            return;
-        }
-        List<Configure> configureList = getConfigureList();
-
-        if (ListUtils.isEmpty(configureList)) {
-            getView().showMessage("获取用户信息失败！");
-            return;
-        }
-
-        Configure configure = configureList.get(0);
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
         String env = configure.getStudentKH() + configure.getAppRememberCode() + userId

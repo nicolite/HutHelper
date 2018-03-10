@@ -66,25 +66,6 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
             }
         }
 
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
-        List<Configure> configureList = getConfigureList();
-
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
-        Configure configure = configureList.get(0);
-
-
         APIUtils
                 .getMarketAPI()
                 .createGoods(configure.getStudentKH(), configure.getAppRememberCode(),
@@ -139,29 +120,6 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
      * @param count  总共需要上传的图片个数
      */
     public void uploadImages(Bitmap bitmap, final int count, final int i) {
-
-
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            stringBuilder.delete(0, stringBuilder.length());
-            uploadCount.set(0);
-            return;
-        }
-
-        List<Configure> configureList = getConfigureList();
-
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            stringBuilder.delete(0, stringBuilder.length());
-            uploadCount.set(0);
-            return;
-        }
-
-        Configure configure = configureList.get(0);
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
         String date = simpleDateFormat.format(new Date());

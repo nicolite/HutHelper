@@ -34,23 +34,6 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
 
     public void showExam(final boolean isManual) {
 
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取当前登录用户失败，请重新登录！");
-            }
-            return;
-        }
-
-        List<Configure> configureList = getConfigureList();
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
-        Configure configure = configureList.get(0);
-
         final ExamDao examDao = getDaoSession().getExamDao();
         final List<Exam> list = examDao.queryBuilder().where(ExamDao.Properties.UserId.eq(userId)).list();
 

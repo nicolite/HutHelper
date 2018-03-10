@@ -32,6 +32,7 @@ import cn.nicolite.huthelper.view.adapter.LostAndFoundAdapter;
 import cn.nicolite.huthelper.view.iview.ILostAndFoundView;
 
 /**
+ * 失物招领页面
  * Created by nicolite on 17-11-12.
  */
 

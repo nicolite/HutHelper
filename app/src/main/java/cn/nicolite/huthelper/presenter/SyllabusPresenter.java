@@ -33,13 +33,6 @@ public class SyllabusPresenter extends BasePresenter<ISyllabusView, SyllabusActi
 
     public void showSyllabus(boolean isForceRefresh) {
 
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
         //不是强制刷新， 如果数据库中已经有数据，不进行数据请求
         if (!isForceRefresh) {
             List<Lesson> list = daoSession.getLessonDao().queryBuilder()
@@ -53,16 +46,6 @@ public class SyllabusPresenter extends BasePresenter<ISyllabusView, SyllabusActi
             }
         }
 
-        List<Configure> configureList = getConfigureList();
-
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
-        Configure configure = configureList.get(0);
 
         if (getView() != null) {
             getView().showLoading();

@@ -191,13 +191,13 @@ public class MainActivity extends BaseActivity implements IMainView {
 
         mainPresenter = new MainPresenter(this, this);
         mainPresenter.showMenu();
-        mainPresenter.checkUpdate(configure.getStudentKH());
+        mainPresenter.checkUpdate();
         mainPresenter.initUser();
         mainPresenter.showTimeAxis();
         mainPresenter.showSyllabus();
         mainPresenter.showWeather();
         mainPresenter.checkPermission();
-        mainPresenter.registerPush(configure.getStudentKH());
+        mainPresenter.registerPush();
         mainPresenter.showNotice(false);
         mainPresenter.connectRongIM();
         mainPresenter.startLoginService();
@@ -235,7 +235,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         }, Conversation.ConversationType.PRIVATE);
 
         //上传帐号信息到腾讯MTA
-        StatConfig.setCustomUserId(this, configure.getStudentKH());
+        StatConfig.setCustomUserId(context, configure.getStudentKH());
         //设置用户ID，已定位到用户级别的Crash记录
         CrashReport.setUserId(configure.getStudentKH());
 

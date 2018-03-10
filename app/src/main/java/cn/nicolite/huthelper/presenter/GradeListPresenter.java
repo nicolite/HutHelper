@@ -34,21 +34,6 @@ public class GradeListPresenter extends BasePresenter<IGradeListView, GradeListA
     }
 
     public void showGradeList() {
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-        List<Configure> configureList = getConfigureList();
-
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-        Configure configure = configureList.get(0);
 
         final GradeDao gradeDao = daoSession.getGradeDao();
 

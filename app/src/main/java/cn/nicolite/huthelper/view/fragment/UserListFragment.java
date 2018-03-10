@@ -1,6 +1,5 @@
 package cn.nicolite.huthelper.view.fragment;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -19,15 +18,12 @@ import java.util.List;
 import butterknife.BindView;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.fragment.BaseFragment;
-import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.presenter.UserListPresenter;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.activity.UserInfoCardActivity;
 import cn.nicolite.huthelper.view.adapter.UserListAdapter;
 import cn.nicolite.huthelper.view.iview.IUserListView;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.model.UserInfo;
 
 /**
  * Created by nicolite on 17-11-11.
@@ -90,22 +86,7 @@ public class UserListFragment extends BaseFragment implements IUserListView {
         lRecyclerViewAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-                final User user = userList.get(position);
-                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-                    @Override
-                    public UserInfo getUserInfo(String s) {
-                        return new UserInfo(user.getUser_id(), user.getTrueName(),
-                                Uri.parse(Constants.PICTURE_URL + user.getHead_pic()));
-                    }
-                }, true);
-
-                RongIM.getInstance().refreshUserInfoCache(new UserInfo(user.getUser_id(),
-                        user.getTrueName(),
-                        Uri.parse(Constants.PICTURE_URL + user.getHead_pic())));
-
-                //  RongIM.getInstance().startPrivateChat(context, user.getId(),
-                //          user.getTrueName());
-
+                User user = userList.get(position);
                 Bundle bundle = new Bundle();
                 bundle.putString("userId", user.getUser_id());
                 bundle.putString("username", user.getTrueName());

@@ -86,28 +86,6 @@ public class CreateSayPresenter extends BasePresenter<ICreateSayView, CreateSayA
      */
     public void uploadImages(Bitmap bitmap, final int count, final int i) {
 
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            stringBuilder.delete(0, stringBuilder.length());
-            uploadCount.set(0);
-            return;
-        }
-
-        List<Configure> configureList = getConfigureList();
-
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            stringBuilder.delete(0, stringBuilder.length());
-            uploadCount.set(0);
-            return;
-        }
-
-        Configure configure = configureList.get(0);
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
         String date = simpleDateFormat.format(new Date());
         String env = EncryptUtils.SHA1(configure.getStudentKH() + configure.getAppRememberCode() + date);
@@ -230,23 +208,6 @@ public class CreateSayPresenter extends BasePresenter<ICreateSayView, CreateSayA
     }
 
     public void uploadSayInfo(String content, String hidden) {
-        if (TextUtils.isEmpty(userId)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
-        List<Configure> configureList = getConfigureList();
-
-        if (ListUtils.isEmpty(configureList)) {
-            if (getView() != null) {
-                getView().showMessage("获取用户信息失败！");
-            }
-            return;
-        }
-
-        Configure configure = configureList.get(0);
 
         APIUtils
                 .getSayAPI()
