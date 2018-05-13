@@ -95,7 +95,7 @@ public class AboutActivity extends BaseActivity {
                 Bundle bundle2 = new Bundle();
                 bundle2.putInt("type", WebViewActivity.TYPE_BLOG);
                 bundle2.putString("url", Constants.BLOG);
-                bundle2.putString("title", "NICOLITE");
+                bundle2.putString("title", "nicolite");
                 startActivity(WebViewActivity.class, bundle2);
                 break;
             case R.id.openSource:

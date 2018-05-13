@@ -6,7 +6,6 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.widget.RemoteViews;
 
 import java.util.ArrayList;
@@ -16,8 +15,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import cn.nicolite.huthelper.R;
-import cn.nicolite.huthelper.app.MApplication;
-import cn.nicolite.huthelper.db.DaoHelper;
 import cn.nicolite.huthelper.db.DaoUtils;
 import cn.nicolite.huthelper.db.dao.LessonDao;
 import cn.nicolite.huthelper.model.bean.Lesson;
@@ -56,9 +53,7 @@ public class CourseWidget extends AppWidgetProvider {
 
     //public static final String START_MAINACTIVITY_ACTION="cn.nicolite.huthelper.action_startmainActivity";
 
-
     private static int currNum = 0;
-
 
     @Override
     public void onReceive(Context context, Intent intent) {

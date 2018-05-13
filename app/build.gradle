@@ -112,8 +112,8 @@ android {
     applicationVariants.all {
         variant ->
             variant.outputs.all {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH-mm-ss", Locale.CHINA);
-                String releaseTime = format.format(new Date());
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA)
+                String releaseTime = format.format(new Date())
                 outputFileName = "huthelper-${variant.flavorName}-${variant.versionName}(${variant.versionCode})_${releaseTime}.apk"
             }
     }
@@ -168,36 +168,36 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation 'com.android.support:appcompat-v7:27.0.2'
-    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
-    implementation 'com.android.support:design:27.0.2'
-    implementation 'com.android.support:cardview-v7:27.0.2'
-    implementation 'com.android.support:recyclerview-v7:27.0.2'
-    implementation 'com.android.support:support-annotations:27.0.2'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:support-annotations:27.1.1'
     testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.1'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
     //多dex配置,解决dex超过64k
     implementation 'com.android.support:multidex:1.0.3'
 
     //retrofit okhttp rxjava
-    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.3'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
 
     //生命周期管理
-    implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.0'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'
 
     // If you want to bind to Android-specific lifecycles
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.0'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1'
 
     // If you want pre-written Activities and Fragments you can subclass as providers
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.0'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
 
     //Glide--图片加载
     implementation 'com.github.bumptech.glide:glide:3.8.0'
@@ -213,7 +213,7 @@ dependencies {
     implementation 'top.zibin:Luban:1.1.3'
 
     //PhotoView----图片放大缩小
-    implementation 'com.github.chrisbanes:PhotoView:2.0.0'
+    implementation 'com.github.chrisbanes:PhotoView:2.1.3'
 
     //图片选择
     implementation 'com.zhihu.android:matisse:0.4.3'
@@ -223,7 +223,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
 
     //Gson---json解析
-    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.google.code.gson:gson:2.8.3'
 
     //动画低版本支持
     implementation 'com.nineoldandroids:library:2.4.0'
@@ -232,28 +232,28 @@ dependencies {
     implementation 'com.yanzhenjie:permission:1.1.2'
 
     // bugly升级sdk
-    compile 'com.tencent.bugly:crashreport_upgrade:1.3.4'
+    implementation 'com.tencent.bugly:crashreport_upgrade:1.3.4'
 
     //滑动退出Activity
     implementation 'com.r0adkll:slidableactivity:2.0.6'
 
     //网页抓取
-    implementation 'org.jsoup:jsoup:1.10.3'
+    implementation 'org.jsoup:jsoup:1.11.3'
 
     //LRecyclerView
-    implementation 'com.github.jdsjlzx:LRecyclerView:1.4.3'
+    implementation 'com.github.jdsjlzx:LRecyclerView:1.5.0'
 
     //小红点
     implementation 'q.rorbin:badgeview:1.1.2'
 
     //信鸽推送
-    implementation 'com.tencent.xinge:xinge:3.2.2.1-beta'
+    implementation 'com.tencent.xinge:xinge:3.2.2-release'
 
     //wup包 如果和其他腾讯系的sdk 发生wup冲突，这个依赖可不添加
-    implementation 'com.tencent.wup:wup:1.0.0.E-alpha'
+    implementation 'com.tencent.wup:wup:1.0.0.E-release'
 
     //mid包
-    implementation 'com.tencent.mid:mid:4.0.6-beta'
+    implementation 'com.tencent.mid:mid:4.0.6-release'
 
     //MTA的jar包
     implementation 'com.qq.mta:mta:3.3.1-release'
@@ -265,15 +265,15 @@ dependencies {
     implementation 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.0.1'
 
     //ijkplayer 视频播放
-    implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.8.4'
-    implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4'
+//    implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.8.4'
+//    implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4'
 
     //implementation 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.4' API21及以上
 
     //compile 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.4'
 
     //ExoPlayer as IMediaPlayer: optional, experimental
-    implementation 'tv.danmaku.ijk.media:ijkplayer-exo:0.8.4'
+    //implementation 'tv.danmaku.ijk.media:ijkplayer-exo:0.8.4'
 
     //内存泄露检测
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'

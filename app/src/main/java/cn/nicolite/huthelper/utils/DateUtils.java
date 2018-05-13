@@ -358,7 +358,6 @@ public class DateUtils {
         return w;
     }
 
-    /** */
     /**
      * 计算两个时间之间相隔天数
      *

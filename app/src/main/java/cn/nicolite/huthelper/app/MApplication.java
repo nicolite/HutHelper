@@ -59,7 +59,7 @@ public class MApplication extends Application {
         super.attachBaseContext(base);
         //初始化多dex配置
         MultiDex.install(this);
-      //  Beta.installTinker();
+       //  Beta.installTinker();
     }
 
 
