@@ -11,9 +11,8 @@ import cn.nicolite.huthelper.db.dao.ConfigureDao;
 import cn.nicolite.huthelper.db.dao.UserDao;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.HttpResult;
-import cn.nicolite.huthelper.model.bean.Token;
 import cn.nicolite.huthelper.model.bean.User;
-import cn.nicolite.huthelper.network.api.APIUtils;
+import cn.nicolite.huthelper.network.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.LogUtils;
@@ -37,16 +36,6 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
     }
 
     public void login(final String username, String password) {
-       /* String env = "";
-        try {
-            InputStream inputStream = getActivity().getResources().getAssets().open("rsa_public_key.pem");
-            env = EncryptUtils.RSAPublicKeyEncrypt(password, inputStream);
-            inputStream.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        LogUtils.d(TAG, "xx " + env);*/
 
         APIUtils
                 .getLoginAPI()

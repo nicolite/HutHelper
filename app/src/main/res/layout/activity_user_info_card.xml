@@ -63,22 +63,11 @@
                 android:textSize="14sp" />
 
             <TextView
-                android:id="@+id/tv_user_class"
-                android:layout_width="match_parent"
-                android:layout_height="20dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="5dp"
-                android:gravity="center"
-                android:text="加载中..."
-                android:textColor="#FFADADAD"
-                android:textSize="12sp" />
-
-            <TextView
                 android:id="@+id/tv_user_department"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:layout_marginTop="0.5dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="加载中..."
                 android:textColor="#FFADADAD"
@@ -98,7 +87,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="40dp"
                 android:orientation="horizontal"
                 android:weightSum="3">
 

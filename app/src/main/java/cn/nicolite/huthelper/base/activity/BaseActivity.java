@@ -3,23 +3,19 @@ package cn.nicolite.huthelper.base.activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.view.WindowManager;
 
-import com.tencent.stat.StatService;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import cn.nicolite.huthelper.db.DaoHelper;
 import cn.nicolite.huthelper.db.DaoUtils;
-import cn.nicolite.huthelper.db.dao.ConfigureDao;
 import cn.nicolite.huthelper.db.dao.DaoSession;
 import cn.nicolite.huthelper.listener.ActivityLifeCycleListener;
 import cn.nicolite.huthelper.manager.ActivityStackManager;
@@ -106,7 +102,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         if (lifeCycleListener != null) {
             lifeCycleListener.onResume();
         }
-        StatService.onResume(context);
     }
 
     @Override
@@ -116,7 +111,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         if (lifeCycleListener != null) {
             lifeCycleListener.onPause();
         }
-        StatService.onPause(context);
     }
 
     @Override
@@ -126,7 +120,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         if (lifeCycleListener != null) {
             lifeCycleListener.onStop();
         }
-        StatService.onStop(context);
     }
 
     @Override
@@ -140,7 +133,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         if (unbinder != null) {
             unbinder.unbind();
         }
-        StatService.onStop(context);
     }
 
     @Override

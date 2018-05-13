@@ -2,9 +2,6 @@ package cn.nicolite.huthelper.presenter;
 
 import android.Manifest;
 import android.content.Intent;
-import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
 
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
@@ -13,9 +10,7 @@ import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import cn.nicolite.huthelper.BuildConfig;
 import cn.nicolite.huthelper.app.MApplication;
@@ -24,7 +19,6 @@ import cn.nicolite.huthelper.db.dao.LessonDao;
 import cn.nicolite.huthelper.db.dao.MenuDao;
 import cn.nicolite.huthelper.db.dao.NoticeDao;
 import cn.nicolite.huthelper.db.dao.TimeAxisDao;
-import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.Lesson;
 import cn.nicolite.huthelper.model.bean.Menu;
@@ -33,14 +27,13 @@ import cn.nicolite.huthelper.model.bean.TimeAxis;
 import cn.nicolite.huthelper.model.bean.Update;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.model.bean.Weather;
-import cn.nicolite.huthelper.network.api.APIUtils;
+import cn.nicolite.huthelper.network.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.services.LoginService;
 import cn.nicolite.huthelper.utils.CommUtil;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.view.activity.MainActivity;
-import cn.nicolite.huthelper.view.activity.NoticeItemActivity;
 import cn.nicolite.huthelper.view.activity.WebViewActivity;
 import cn.nicolite.huthelper.view.customView.CommonDialog;
 import cn.nicolite.huthelper.view.iview.IMainView;

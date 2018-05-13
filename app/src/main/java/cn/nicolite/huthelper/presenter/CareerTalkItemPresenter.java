@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.model.bean.CareerTalkItem;
 import cn.nicolite.huthelper.model.bean.CareerTalkResult;
-import cn.nicolite.huthelper.network.api.APIUtils;
+import cn.nicolite.huthelper.network.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.view.activity.CareerTalkItemActivity;
 import cn.nicolite.huthelper.view.iview.ICareerTalkItemView;

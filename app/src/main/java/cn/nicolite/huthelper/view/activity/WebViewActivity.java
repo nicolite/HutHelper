@@ -111,7 +111,6 @@ public class WebViewActivity extends BaseActivity {
     }
 
     private void initWebView() {
-
         settings = webView.getSettings();
         settings.setLoadWithOverviewMode(true);
         settings.setBuiltInZoomControls(true);// 使页面支持缩放
@@ -291,7 +290,7 @@ public class WebViewActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (webView != null) {
-            //webView.loadDataWithBaseURL(null, "about:blank", "text/html", "utf-8", null); //会导致空指针
+            webView.loadDataWithBaseURL(null, "about:blank", "text/html", "utf-8", null); //会导致空指针
             webView.clearHistory();
             webView.clearCache(true);
             webView.clearFormData();

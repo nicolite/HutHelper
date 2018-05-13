@@ -5,14 +5,10 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.text.TextUtils;
 
-import java.util.List;
-
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
-import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.User;
-import cn.nicolite.huthelper.network.api.APIUtils;
+import cn.nicolite.huthelper.network.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
-import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.view.activity.FeedBackActivity;
 import cn.nicolite.huthelper.view.iview.IFeedBackView;
 import io.reactivex.Observer;

@@ -1,5 +1,5 @@
 # HutHelper
-工大助手开源
+工大助手开源版，API暂不开源
 
 # 下载地址
 [酷安](https://www.coolapk.com/apk/cn.nicolite.huthelper) [小米应用商店](http://app.mi.com/details?id=cn.nicolite.huthelper&ref=search)
@@ -27,6 +27,3 @@ Mac 10.13.3 、Android Studio 3.1.2 、JDK1.9
 
 # 数据库
 [greenDAO](http://greenrobot.org/greendao/)
-
-# 热修复
-[Bugly_Tinker](https://bugly.qq.com/docs/user-guide/instruction-manual-android-hotfix/?v=20170912151050)

@@ -20,9 +20,6 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.tencent.android.tpush.XGPushManager;
-import com.tencent.bugly.beta.Beta;
-import com.tencent.bugly.crashreport.CrashReport;
-import com.tencent.stat.StatConfig;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,12 +39,13 @@ import cn.nicolite.huthelper.presenter.MainPresenter;
 import cn.nicolite.huthelper.utils.ButtonUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
+import cn.nicolite.huthelper.utils.ToastUtil;
 import cn.nicolite.huthelper.view.adapter.MenuAdapter;
-import cn.nicolite.huthelper.view.iview.IMainView;
 import cn.nicolite.huthelper.view.customView.CommonDialog;
 import cn.nicolite.huthelper.view.customView.DateLineView;
 import cn.nicolite.huthelper.view.customView.DragLayout;
 import cn.nicolite.huthelper.view.customView.RichTextView;
+import cn.nicolite.huthelper.view.iview.IMainView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
@@ -215,12 +213,6 @@ public class MainActivity extends BaseActivity implements IMainView {
             }
         });
 
-
-        //上传帐号信息到腾讯MTA
-        StatConfig.setCustomUserId(context, configure.getStudentKH());
-        //设置用户ID，已定位到用户级别的Crash记录
-        CrashReport.setUserId(configure.getStudentKH());
-
         //注册本地广播监听消息
         localBroadcastManager = LocalBroadcastManager.getInstance(context);
         mainReceiver = new MainReceiver();
@@ -266,7 +258,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                 mainPresenter.startChat();
                 break;
             case R.id.tv_nav_update:
-                Beta.checkUpgrade();
+                showMessage("开源版不提供检查升级功能");
                 break;
             case R.id.tv_nav_share:
                 mainPresenter.share();

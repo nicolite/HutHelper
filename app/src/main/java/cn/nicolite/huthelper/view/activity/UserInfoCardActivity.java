@@ -38,8 +38,6 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
     TextView tvUserName;
     @BindView(R.id.tv_user_bio)
     TextView tvUserBio;
-    @BindView(R.id.tv_user_class)
-    TextView tvUserClass;
     @BindView(R.id.tv_user_department)
     TextView tvUserDepartment;
     private UserInfoCardPresenter userInfoCardPresenter;
@@ -154,7 +152,6 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
 
         tvUserName.setText(username);
         tvUserBio.setText(TextUtils.isEmpty(user.getBio()) ? "没有签名" : user.getBio());
-        tvUserClass.setText(user.getClass_name());
         tvUserDepartment.setText(user.getDep_name());
     }
 }

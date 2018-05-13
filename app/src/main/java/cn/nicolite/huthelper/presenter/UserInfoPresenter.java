@@ -1,12 +1,8 @@
 package cn.nicolite.huthelper.presenter;
 
 import android.Manifest;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.content.LocalBroadcastManager;
-import android.text.TextUtils;
 
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
@@ -16,13 +12,10 @@ import java.util.List;
 
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.db.dao.UserDao;
-import cn.nicolite.huthelper.model.Constants;
-import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.User;
-import cn.nicolite.huthelper.network.api.APIUtils;
+import cn.nicolite.huthelper.network.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
-import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.view.activity.UserInfoActivity;
 import cn.nicolite.huthelper.view.iview.IUserInfoView;
 import io.reactivex.Observer;
