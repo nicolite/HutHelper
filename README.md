@@ -1,4 +1,3 @@
-[![Build Status](https://travis-ci.org/nicolite/HutHelper.svg?branch=master)](https://travis-ci.org/nicolite/HutHelper)
 ### HutHelper
 工大助手开源版，私有API全为静态（逐步开放中）
 
