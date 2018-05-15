@@ -260,7 +260,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
 
         APIUtils
                 .getUpdateAPI()
-                .checkUpdate(configure.getStudentKH(), configure.getAppRememberCode())
+                .checkUpdate()
                 .compose(getActivity().<HttpResult<Update>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(Schedulers.io())
