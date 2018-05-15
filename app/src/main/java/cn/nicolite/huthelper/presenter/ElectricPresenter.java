@@ -79,7 +79,7 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
 
         APIUtils
                 .getElectricAPI()
-                .getElectric(lou, hao)
+                .getElectric()
                 .compose(getActivity().<Electric>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -126,7 +126,7 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
 
         APIUtils
                 .getVoteAPI()
-                .getAirConditionerData(configure.getStudentKH(), configure.getAppRememberCode())
+                .getAirConditionerData()
                 .compose(getActivity().<Vote>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -169,7 +169,7 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
 
         APIUtils
                 .getVoteAPI()
-                .setAirConditionerData(configure.getStudentKH(), configure.getAppRememberCode(), opt)
+                .setAirConditionerData()
                 .compose(getActivity().<Vote>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

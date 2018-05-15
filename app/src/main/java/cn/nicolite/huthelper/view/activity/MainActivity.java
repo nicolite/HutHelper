@@ -160,18 +160,19 @@ public class MainActivity extends BaseActivity implements IMainView {
                     try {
                         Menu menu = menuList.get(position);
                         Bundle bundle = new Bundle();
-                        if (menu.getType() == WebViewActivity.TYPE_LIBRARY) {
-                            String url = Constants.LIBRARY;
-                            if (!TextUtils.isEmpty(configure.getLibraryUrl())) {
-                                url = configure.getLibraryUrl() + "/opac/m/index";
-                            }
-                            bundle.putString("url", url);
-                        } else if (menu.getType() == WebViewActivity.TYPE_HOMEWORK) {
-                            bundle.putString("url", Constants.HOMEWORK + configure.getStudentKH() + "/" + configure.getAppRememberCode());
+                        switch (menu.getType()) {
+                            case WebViewActivity.TYPE_HOMEWORK:
+                                showMessage("开原版暂不提供此功能");
+                                return;
+                            case WebViewActivity.TYPE_LIBRARY:
+                                String url = Constants.LIBRARY;
+                                if (!TextUtils.isEmpty(configure.getLibraryUrl())) {
+                                    url = configure.getLibraryUrl() + "/opac/m/index";
+                                }
+                                bundle.putString("url", url);
                         }
                         bundle.putString("title", menu.getTitle());
                         bundle.putInt("type", menu.getType());
-
                         startActivityForResult(Class.forName(menu.getPath()), bundle, Constants.REQUEST);
                     } catch (ClassNotFoundException e) {
                         showMessage("找不到该页面！");
