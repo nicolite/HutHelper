@@ -31,9 +31,9 @@ public class RetrofitUtils {
     }
 
     public static RetrofitUtils getInstance() {
-        if (instance == null){
-            synchronized (RetrofitUtils.class){
-                if (instance == null){
+        if (instance == null) {
+            synchronized (RetrofitUtils.class) {
+                if (instance == null) {
                     instance = new RetrofitUtils();
                 }
             }
@@ -43,14 +43,15 @@ public class RetrofitUtils {
 
     /**
      * 配置OkHttp
+     *
      * @return OkHttpClient
      */
-    private static OkHttpClient okHttpClient(){
+    private static OkHttpClient okHttpClient() {
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor(new HttpLoggingInterceptor.Logger() {
             @Override
             public void log(@NonNull String message) {
-                LogUtils.d(TAG ,"okHttp：" + message);
+                LogUtils.d(TAG, "okHttp：" + message);
             }
         });
         logging.setLevel(HttpLoggingInterceptor.Level.BASIC);
@@ -65,13 +66,10 @@ public class RetrofitUtils {
 
     /**
      * 获取Retrofit
+     *
      * @return Retrofit
      */
     public Retrofit retrofit() {
-      // if (BuildConfig.LOG_DEBUG){
-      //     BASE_URL = Constants.TEST_BASE_URL;
-      // }
-
         return new Retrofit.Builder()
                 .client(okHttpClient())
                 .baseUrl(BASE_URL)

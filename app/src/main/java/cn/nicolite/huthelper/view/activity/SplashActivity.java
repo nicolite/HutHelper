@@ -32,7 +32,7 @@ public class SplashActivity extends BaseActivity {
 
     private static final int what = 958;
 
-    private final MyHandler handler = new MyHandler(this);
+    private MyHandler handler = new MyHandler(this);
 
     private static class MyHandler extends Handler {
         private final WeakReference<SplashActivity> activityWeakReference;
@@ -98,5 +98,11 @@ public class SplashActivity extends BaseActivity {
         }
 
         return userId != null && !userId.equals("*") && !ListUtils.isEmpty(getConfigureList());
+    }
+
+    @Override
+    protected void onDestroy() {
+        handler = null;
+        super.onDestroy();
     }
 }

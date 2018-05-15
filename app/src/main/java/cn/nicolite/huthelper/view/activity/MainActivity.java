@@ -191,7 +191,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         mainPresenter.showSyllabus();
         mainPresenter.showWeather();
         mainPresenter.checkPermission();
-        mainPresenter.registerPush();
+        // mainPresenter.registerPush(); //TODO 在openKey.properties填好key后，可以开启使用
 
         mainPresenter.showNotice(false);
         mainPresenter.startLoginService();
@@ -258,7 +258,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                 mainPresenter.startChat();
                 break;
             case R.id.tv_nav_update:
-                showMessage("开源版不提供检查升级功能");
+                showMessage("开源版暂不提供检查更新功能");
                 break;
             case R.id.tv_nav_share:
                 mainPresenter.share();
