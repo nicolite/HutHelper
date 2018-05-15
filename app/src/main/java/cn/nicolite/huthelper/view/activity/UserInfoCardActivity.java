@@ -140,11 +140,12 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
 
     @Override
     public void showInfo(User user) {
+        String head_pic = !TextUtils.isEmpty(user.getHead_pic()) ? user.getHead_pic() : user.getHead_pic_thumb();
         avatarUrlList.clear();
-        avatarUrlList.add(user.getHead_pic_thumb());
+        avatarUrlList.add(head_pic);
         Glide
                 .with(activity)
-                .load(Constants.PICTURE_URL + user.getHead_pic_thumb())
+                .load(Constants.PICTURE_URL + head_pic)
                 .bitmapTransform(new CropCircleTransformation(UserInfoCardActivity.this))
                 .dontAnimate()
                 .skipMemoryCache(true)

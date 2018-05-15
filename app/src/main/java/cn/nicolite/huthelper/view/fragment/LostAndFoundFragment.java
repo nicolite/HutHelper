@@ -160,11 +160,11 @@ public class LostAndFoundFragment extends BaseFragment implements ILostAndFoundV
                 } else {
                     bundle.putBoolean("delete", false);
                 }
-                if(Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT){
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
                     startActivityForResult(LostAndFoundInfoActivity.class, bundle, Constants.REQUEST);
-                }else {
+                } else {
                     Bundle options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, "lostAndFoundTransition").toBundle();
-                    startActivityForResult(LostAndFoundInfoActivity.class, Constants.REQUEST,bundle, options);
+                    startActivityForResult(LostAndFoundInfoActivity.class, Constants.REQUEST, bundle, options);
                 }
 
             }
@@ -260,8 +260,8 @@ public class LostAndFoundFragment extends BaseFragment implements ILostAndFoundV
     }
 
     public void deleteItem(int position) {
-       // lostAndFoundList.remove(position);
-       // lRecyclerViewAdapter.notifyItemRemoved(position);
+        // lostAndFoundList.remove(position);
+        // lRecyclerViewAdapter.notifyItemRemoved(position);
 
         refreshData();
     }

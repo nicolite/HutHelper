@@ -184,7 +184,7 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
         phone = goodsItem.getPhone();
         username = goodsItem.getUsername();
         imageList.clear();
-        imageList.addAll(goodsItem.getPics());
+        imageList.addAll(goodsItem.getPics_src());
         tvSendtimeLost.setText(goodsItem.getCreated_on());
         tvTextLostTitle.setText(goodsItem.getTit());
         tvTextLost.setText(goodsItem.getContent());
@@ -194,10 +194,11 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
         tvGoodsTel.setText(TextUtils.isEmpty(phone) ? "无联系方式" : phone);
         tvGoodsLocation.setText(TextUtils.isEmpty(goodsItem.getAddress()) ? "湖工大" : goodsItem.getAddress());
 
-        if (!ListUtils.isEmpty(imageList)) {
+        List<String> pics_tub = goodsItem.getPics();
+        if (!ListUtils.isEmpty(pics_tub)) {
             Glide
                     .with(this)
-                    .load(Constants.PICTURE_URL + imageList.get(0))
+                    .load(Constants.PICTURE_URL + pics_tub.get(0))
                     .skipMemoryCache(true)
                     .placeholder(R.drawable.blur_plac_min)
                     .error(R.drawable.blur_plac_min)

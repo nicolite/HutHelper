@@ -74,7 +74,7 @@ public class FreshmanGuideActivity extends BaseActivity implements IFreshmanGuid
 
     @Override
     public void showLoading() {
-        if (loadingDialog == null){
+        if (loadingDialog == null) {
             loadingDialog = new LoadingDialog(context)
                     .setLoadingText("加载中...");
         }
@@ -83,7 +83,7 @@ public class FreshmanGuideActivity extends BaseActivity implements IFreshmanGuid
 
     @Override
     public void closeLoading() {
-        if (loadingDialog != null){
+        if (loadingDialog != null) {
             loadingDialog.dismiss();
         }
     }

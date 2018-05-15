@@ -77,13 +77,9 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
         configure.setHao(hao);
         configure.update();
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
-        String date = simpleDateFormat.format(new Date());
-        String env = EncryptUtils.SHA1(lou + hao + date + configure.getStudentKH() + configure.getAppRememberCode());
-
         APIUtils
                 .getElectricAPI()
-                .getElectric(lou, hao, configure.getStudentKH(), configure.getAppRememberCode(), env)
+                .getElectric(lou, hao)
                 .compose(getActivity().<Electric>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -185,7 +181,7 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
 
                     @Override
                     public void onNext(Vote vote) {
-                        if (getView() != null){
+                        if (getView() != null) {
                             if (!TextUtils.isEmpty(vote.getMsg()) && vote.getMsg().equals("令牌错误")) {
                                 getView().showMessage(vote.getMsg() + "，请重新登录！");
                                 return;

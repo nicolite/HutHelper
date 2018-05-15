@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,10 +56,11 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
     @Override
     public void onBindViewHolder(final SayViewHolder holder, final int position) {
         final Say say = sayList.get(position);
+        String head_pic = !TextUtils.isEmpty(say.getHead_pic()) ? say.getHead_pic() : say.getHead_pic_thumb();
 
         Glide
                 .with(context)
-                .load(Constants.PICTURE_URL + say.getHead_pic_thumb())
+                .load(Constants.PICTURE_URL + head_pic)
                 .bitmapTransform(new CropCircleTransformation(context))
                 .placeholder(R.drawable.say_default_head)
                 .skipMemoryCache(true)
