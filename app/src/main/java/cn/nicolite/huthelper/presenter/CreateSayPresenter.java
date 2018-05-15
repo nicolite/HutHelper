@@ -84,23 +84,13 @@ public class CreateSayPresenter extends BasePresenter<ICreateSayView, CreateSayA
      */
     public void uploadImages(Bitmap bitmap, final int count, final int i) {
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
-        String date = simpleDateFormat.format(new Date());
-        String env = EncryptUtils.SHA1(configure.getStudentKH() + configure.getAppRememberCode() + date);
-
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
-        byte[] bytes = outputStream.toByteArray();
-        RequestBody requestBody = RequestBody.create(MediaType.parse("img/jpeg"), bytes);
-        MultipartBody.Part file = MultipartBody.Part.createFormData("file", "01.jpg", requestBody);
-
         if (getView() != null) {
             getView().uploadProgress(String.valueOf("正在上传图片"));
         }
 
         APIUtils
                 .getUploadAPI()
-                .uploadImages(configure.getStudentKH(), configure.getAppRememberCode(), env, 0, file)
+                .uploadImages()
                 .compose(getActivity().<UploadImages>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

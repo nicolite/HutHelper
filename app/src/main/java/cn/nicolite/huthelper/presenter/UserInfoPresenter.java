@@ -7,12 +7,12 @@ import android.support.annotation.NonNull;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
 
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.db.dao.UserDao;
 import cn.nicolite.huthelper.model.bean.HttpResult;
+import cn.nicolite.huthelper.model.bean.UploadImages;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.network.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
@@ -22,9 +22,6 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 
 /**
  * UserInfoPresenter
@@ -50,11 +47,6 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
     }
 
     public void uploadAvatar(final Bitmap bitmap) {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
-        byte[] bytes = outputStream.toByteArray();
-        RequestBody requestBody = RequestBody.create(MediaType.parse("img/jpeg"), bytes);
-        MultipartBody.Part file = MultipartBody.Part.createFormData("file", "01.jpg", requestBody);
 
         if (getView() != null) {
             getView().showMessage("头像上传中！");
@@ -62,36 +54,29 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
 
         APIUtils
                 .getUploadAPI()
-                .uploadAvatar(configure.getStudentKH(), configure.getAppRememberCode(), file)
-                .compose(getActivity().<HttpResult<String>>bindToLifecycle())
+                .uploadImages()
+                .compose(getActivity().<UploadImages>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<HttpResult<String>>() {
+                .subscribe(new Observer<UploadImages>() {
                     @Override
                     public void onSubscribe(Disposable d) {
                         getActivity().showLoading();
                     }
 
                     @Override
-                    public void onNext(HttpResult<String> stringHttpResult) {
+                    public void onNext(UploadImages uploadImages) {
                         if (getView() != null) {
                             getView().closeLoading();
-                            String msg = stringHttpResult.getMsg();
-                            switch (msg) {
-                                case "ok":
-                                    msg = "修改成功!";
-                                    User user = configure.getUser();
-                                    user.setHead_pic_thumb(stringHttpResult.getData());
-                                    user.setHead_pic(stringHttpResult.getData());
-                                    daoSession.getUserDao().update(user);
-                                    getView().changeAvatarSuccess(bitmap);
-                                    break;
-                                case "令牌错误":
-                                    msg = "修改失败：帐号异地登录，请重新登录！";
-                                    break;
-                                default:
-                                    msg = stringHttpResult.getMsg();
-                                    break;
+                            String msg = "修改失败！";
+                            if (uploadImages.getCode() == 200) {
+                                msg = "修改成功!";
+                                User user = configure.getUser();
+                                user.setHead_pic_thumb(uploadImages.getData());
+                                user.setHead_pic(uploadImages.getData());
+                                daoSession.getUserDao().update(user);
+                                getView().changeAvatarSuccess(bitmap);
+
                             }
                             getView().showMessage(msg);
                         }

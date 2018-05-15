@@ -63,7 +63,7 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, FeedBackActi
 
             APIUtils
                     .getFeedBackAPI()
-                    .feedBack(contact, content)
+                    .feedBack()
                     .compose(getActivity().<ResponseBody>bindToLifecycle())
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

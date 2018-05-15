@@ -114,7 +114,7 @@ public class ExpLessonActivity extends BaseActivity implements IExplessonView {
 
     @Override
     public void showLoading() {
-        if (loadingDialog == null){
+        if (loadingDialog == null) {
             loadingDialog = new LoadingDialog(context)
                     .setLoadingText("查询中...");
         }
