@@ -4,7 +4,6 @@ import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Vote;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
-import retrofit2.http.Path;
 
 /**
  * 投票API

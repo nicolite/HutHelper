@@ -165,11 +165,8 @@ public class MainActivity extends BaseActivity implements IMainView {
                                 showMessage("开原版暂不提供此功能");
                                 return;
                             case WebViewActivity.TYPE_LIBRARY:
-                                String url = Constants.LIBRARY;
-                                if (!TextUtils.isEmpty(configure.getLibraryUrl())) {
-                                    url = configure.getLibraryUrl() + "/opac/m/index";
-                                }
-                                bundle.putString("url", url);
+                                showMessage("开原版暂不提供此功能");
+                                return;
                         }
                         bundle.putString("title", menu.getTitle());
                         bundle.putInt("type", menu.getType());

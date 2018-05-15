@@ -1,0 +1,292 @@
+{
+  "code": 200,
+  "msg": "ok",
+  "data": [
+    {
+      "teacher": "彭成",
+      "lesson": "软件工程课程设计*实践教学环节",
+      "obj": "",
+      "locate": "综合楼213",
+      "weeks_no": "13",
+      "week": "1",
+      "lesson_no": "3",
+      "period": "4",
+      "real_time": "14:00-17:30"
+    },
+    {
+      "teacher": "曾志浩",
+      "lesson": "JavaEE开发技术课程设计*实践教学环节",
+      "obj": "",
+      "locate": "计通楼计207",
+      "weeks_no": "15",
+      "week": "5",
+      "lesson_no": "3",
+      "period": "4",
+      "real_time": "14:00-17:30"
+    },
+    {
+      "teacher": "曾志浩",
+      "lesson": "JavaEE开发技术课程设计*实践教学环节",
+      "obj": "",
+      "locate": "计通楼计207",
+      "weeks_no": "15",
+      "week": "4",
+      "lesson_no": "3",
+      "period": "4",
+      "real_time": "14:00-17:30"
+    },
+    {
+      "teacher": "曾志浩",
+      "lesson": "JavaEE开发技术课程设计*实践教学环节",
+      "obj": "",
+      "locate": "计通楼计207",
+      "weeks_no": "15",
+      "week": "3",
+      "lesson_no": "3",
+      "period": "4",
+      "real_time": "14:00-17:30"
+    },
+    {
+      "teacher": "曾志浩",
+      "lesson": "JavaEE开发技术课程设计*实践教学环节",
+      "obj": "",
+      "locate": "计通楼计207",
+      "weeks_no": "15",
+      "week": "2",
+      "lesson_no": "3",
+      "period": "4",
+      "real_time": "14:00-17:30"
+    },
+    {
+      "teacher": "曾志浩",
+      "lesson": "JavaEE开发技术课程设计*实践教学环节",
+      "obj": "",
+      "locate": "计通楼计207",
+      "weeks_no": "15",
+      "week": "1",
+      "lesson_no": "3",
+      "period": "4",
+      "real_time": "14:00-17:30"
+    },
+    {
+      "teacher": "董刚",
+      "lesson": "网络工程*专业课程",
+      "obj": "",
+      "locate": "计通楼计206",
+      "weeks_no": "3",
+      "week": "6",
+      "lesson_no": "4",
+      "period": "2",
+      "real_time": "16:00-17:40"
+    },
+    {
+      "teacher": "董刚",
+      "lesson": "网络工程*专业课程",
+      "obj": "",
+      "locate": "计通楼计206",
+      "weeks_no": "4",
+      "week": "6",
+      "lesson_no": "4",
+      "period": "2",
+      "real_time": "16:00-17:40"
+    },
+    {
+      "teacher": "董刚",
+      "lesson": "网络工程*专业课程",
+      "obj": "",
+      "locate": "计通楼计206",
+      "weeks_no": "6",
+      "week": "6",
+      "lesson_no": "4",
+      "period": "2",
+      "real_time": "16:00-17:40"
+    },
+    {
+      "teacher": "董刚",
+      "lesson": "网络工程*专业课程",
+      "obj": "",
+      "locate": "计通楼计206",
+      "weeks_no": "7",
+      "week": "6",
+      "lesson_no": "4",
+      "period": "2",
+      "real_time": "16:00-17:40"
+    },
+    {
+      "teacher": "董刚",
+      "lesson": "网络工程*专业课程",
+      "obj": "",
+      "locate": "计通楼计206",
+      "weeks_no": "8",
+      "week": "6",
+      "lesson_no": "4",
+      "period": "2",
+      "real_time": "16:00-17:40"
+    },
+    {
+      "teacher": "董刚",
+      "lesson": "网络工程*专业课程",
+      "obj": "",
+      "locate": "计通楼计206",
+      "weeks_no": "9",
+      "week": "6",
+      "lesson_no": "4",
+      "period": "2",
+      "real_time": "16:00-17:40"
+    },
+    {
+      "teacher": "曾志浩",
+      "lesson": "JavaEE开发技术*大类专业课程",
+      "obj": "",
+      "locate": "计通楼计207",
+      "weeks_no": "5",
+      "week": "4",
+      "lesson_no": "4",
+      "period": "2",
+      "real_time": "16:00-17:40"
+    },
+    {
+      "teacher": "曾志浩",
+      "lesson": "JavaEE开发技术*大类专业课程",
+      "obj": "",
+      "locate": "计通楼计207",
+      "weeks_no": "6",
+      "week": "4",
+      "lesson_no": "4",
+      "period": "2",
+      "real_time": "16:00-17:40"
+    },
+    {
+      "teacher": "曾志浩",
+      "lesson": "JavaEE开发技术*大类专业课程",
+      "obj": "",
+      "locate": "计通楼计207",
+      "weeks_no": "11",
+      "week": "4",
+      "lesson_no": "4",
+      "period": "2",
+      "real_time": "16:00-17:40"
+    },
+    {
+      "teacher": "曾志浩",
+      "lesson": "JavaEE开发技术*大类专业课程",
+      "obj": "",
+      "locate": "计通楼计207",
+      "weeks_no": "12",
+      "week": "4",
+      "lesson_no": "4",
+      "period": "2",
+      "real_time": "16:00-17:40"
+    },
+    {
+      "teacher": "曾志浩",
+      "lesson": "JavaEE开发技术*大类专业课程",
+      "obj": "",
+      "locate": "计通楼计207",
+      "weeks_no": "5",
+      "week": "5",
+      "lesson_no": "4",
+      "period": "2",
+      "real_time": "16:00-17:40"
+    },
+    {
+      "teacher": "曾志浩",
+      "lesson": "JavaEE开发技术*大类专业课程",
+      "obj": "",
+      "locate": "计通楼计207",
+      "weeks_no": "6",
+      "week": "5",
+      "lesson_no": "4",
+      "period": "2",
+      "real_time": "16:00-17:40"
+    },
+    {
+      "teacher": "曾志浩",
+      "lesson": "JavaEE开发技术*大类专业课程",
+      "obj": "",
+      "locate": "计通楼计207",
+      "weeks_no": "11",
+      "week": "5",
+      "lesson_no": "4",
+      "period": "2",
+      "real_time": "16:00-17:40"
+    },
+    {
+      "teacher": "曾志浩",
+      "lesson": "JavaEE开发技术*大类专业课程",
+      "obj": "",
+      "locate": "计通楼计207",
+      "weeks_no": "12",
+      "week": "5",
+      "lesson_no": "4",
+      "period": "2",
+      "real_time": "16:00-17:40"
+    },
+    {
+      "teacher": "彭成",
+      "lesson": "软件工程课程设计*实践教学环节",
+      "obj": "",
+      "locate": "综合楼213",
+      "weeks_no": "13",
+      "week": "2",
+      "lesson_no": "3",
+      "period": "4",
+      "real_time": "14:00-17:30"
+    },
+    {
+      "teacher": "彭成",
+      "lesson": "软件工程课程设计*实践教学环节",
+      "obj": "",
+      "locate": "综合楼213",
+      "weeks_no": "13",
+      "week": "3",
+      "lesson_no": "3",
+      "period": "4",
+      "real_time": "14：00-17:30"
+    },
+    {
+      "teacher": "彭成",
+      "lesson": "软件工程课程设计*实践教学环节",
+      "obj": "",
+      "locate": "综合楼213",
+      "weeks_no": "13",
+      "week": "4",
+      "lesson_no": "3",
+      "period": "4",
+      "real_time": "14:00-17:30"
+    },
+    {
+      "teacher": "彭成",
+      "lesson": "软件工程课程设计*实践教学环节",
+      "obj": "",
+      "locate": "综合楼213",
+      "weeks_no": "13",
+      "week": "5",
+      "lesson_no": "3",
+      "period": "4",
+      "real_time": "14:00-17:30"
+    },
+    {
+      "teacher": "唐黎黎",
+      "lesson": "移动互联网*专业课程",
+      "obj": "",
+      "locate": "计通楼206",
+      "weeks_no": "12",
+      "week": "7",
+      "lesson_no": "3",
+      "period": "4",
+      "real_time": "14:00-17:30"
+    },
+    {
+      "teacher": "唐黎黎",
+      "lesson": "移动互联网*专业课程",
+      "obj": "",
+      "locate": "计通楼206",
+      "weeks_no": "12",
+      "week": "7",
+      "lesson_no": "1",
+      "period": "4",
+      "real_time": "8:00-11:30"
+    }
+  ]
+}

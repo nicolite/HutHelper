@@ -34,7 +34,7 @@ public class ExplessonPresenter extends BasePresenter<IExplessonView, ExpLessonA
                 .where(ExpLessonDao.Properties.UserId.eq(userId))
                 .list();
 
-        if (!ListUtils.isEmpty(list) || !isManual) {
+        if (!ListUtils.isEmpty(list) && !isManual) {
             if (getView() != null) {
                 getView().showExpLesson(list);
                 return;
@@ -43,7 +43,7 @@ public class ExplessonPresenter extends BasePresenter<IExplessonView, ExpLessonA
 
         APIUtils
                 .getExpLessonAPI()
-                .getExpLesson(configure.getStudentKH(), configure.getAppRememberCode())
+                .getExpLesson()
                 .compose(getActivity().<HttpResult<List<ExpLesson>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
