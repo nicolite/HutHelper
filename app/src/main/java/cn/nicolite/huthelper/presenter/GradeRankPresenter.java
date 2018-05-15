@@ -55,7 +55,7 @@ public class GradeRankPresenter extends BasePresenter<IGradeRankView, GradeRankA
 
         APIUtils
                 .getGradeAPI()
-                .getGradeRank(configure.getStudentKH(), configure.getAppRememberCode())
+                .getGradeRank()
                 .compose(getActivity().<GradeRankResult>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -49,7 +49,7 @@ public class GradeListPresenter extends BasePresenter<IGradeListView, GradeListA
 
         APIUtils
                 .getGradeAPI()
-                .getGradeList(configure.getStudentKH(), configure.getAppRememberCode())
+                .getGradeList()
                 .compose(getActivity().<HttpResult<List<Grade>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .map(new Function<HttpResult<List<Grade>>, List<Grade>>() {
