@@ -43,7 +43,7 @@ public class ExamPresenter extends BasePresenter<IExamView, ExamActivity> {
 
         APIUtils
                 .getExamAPI()
-                .getExamData(configure.getStudentKH(), configure.getAppRememberCode())
+                .getExamData()
                 .compose(getActivity().<ExamResult>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .map(new Function<ExamResult, List<Exam>>() {

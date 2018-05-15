@@ -34,7 +34,7 @@ public class ExplessonPresenter extends BasePresenter<IExplessonView, ExpLessonA
                 .where(ExpLessonDao.Properties.UserId.eq(userId))
                 .list();
 
-        if (!ListUtils.isEmpty(list)) {
+        if (!ListUtils.isEmpty(list) || !isManual) {
             if (getView() != null) {
                 getView().showExpLesson(list);
                 return;

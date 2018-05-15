@@ -1,0 +1,49 @@
+{
+  "code": 100,
+  "status": "success",
+  "message": "Excited",
+  "res": {
+    "exam": [
+      {
+        "KKDepNo": "08",
+        "CourseName": "网络工程",
+        "Starttime": "2018-05-15 16:00:00",
+        "EndTime": "2018-05-15 17:40:00",
+        "Week_Num": "11",
+        "isset": "1",
+        "RoomName": "电气楼402"
+      },
+      {
+        "KKDepNo": "08",
+        "CourseName": "移动互联网",
+        "Starttime": "2018-05-29 16:00:00",
+        "EndTime": "2018-05-29 17:40:00",
+        "Week_Num": "13",
+        "isset": "1",
+        "RoomName": "电气楼402"
+      },
+      {
+        "KKDepNo": "08",
+        "CourseName": "软件工程",
+        "Starttime": "2018-06-05 16:00:00",
+        "EndTime": "2018-06-05 17:40:00",
+        "Week_Num": "14",
+        "isset": "0",
+        "RoomName": "电气楼402"
+      },
+      {
+        "KKDepNo": "08",
+        "CourseName": "JavaEE开发技术",
+        "Starttime": "2018-06-13 10:00:00",
+        "EndTime": "2018-06-13 11:40:00",
+        "Week_Num": "15",
+        "isset": "0",
+        "RoomName": "电气楼403"
+      }
+    ],
+    "cxexam": []
+  },
+  "stuclass": "软件工程",
+  "stuname": "nicolite",
+  "count": 4
+}
