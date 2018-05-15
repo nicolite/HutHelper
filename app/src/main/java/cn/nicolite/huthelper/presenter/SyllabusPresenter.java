@@ -49,7 +49,7 @@ public class SyllabusPresenter extends BasePresenter<ISyllabusView, SyllabusActi
 
         APIUtils
                 .getSyllabusAPI()
-                .getSyllabus(configure.getStudentKH(), configure.getAppRememberCode())
+                .getSyllabus()
                 .compose(getActivity().<SyllabusResult>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
