@@ -4,6 +4,7 @@ import cn.nicolite.huthelper.model.Constants;
 import io.reactivex.Observable;
 import okhttp3.ResponseBody;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 /**
@@ -12,7 +13,6 @@ import retrofit2.http.POST;
  */
 
 public interface FeedBackAPI {
-    @FormUrlEncoded
-    @POST(Constants.API_BASE_URL + "/master/staticAPI/feedback.json")
+    @GET(Constants.API_BASE_URL + "/master/staticAPI/feedback.json")
     Observable<ResponseBody> feedBack();
 }
