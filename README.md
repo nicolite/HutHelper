@@ -1,4 +1,5 @@
 ### HutHelper
+![](https://raw.githubusercontent.com/nicolite/HutHelper/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
 工大助手开源版，私有API全为静态（逐步开放中）
 
 ### 下载地址
