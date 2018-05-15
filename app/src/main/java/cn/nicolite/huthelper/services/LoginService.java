@@ -5,20 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.Nullable;
 
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.nicolite.huthelper.app.MApplication;
-import cn.nicolite.huthelper.db.DaoHelper;
-import cn.nicolite.huthelper.db.dao.ConfigureDao;
-import cn.nicolite.huthelper.db.dao.DaoSession;
-import cn.nicolite.huthelper.model.bean.Configure;
-import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.model.bean.Valid;
 import cn.nicolite.huthelper.network.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
-import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.view.activity.OffsiteLoginDialogActivity;
 import io.reactivex.Observer;
@@ -36,12 +28,11 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 public class LoginService extends IntentService {
 
     private static final int DELAY = 2 * 1000;
-    private static final int PERIOD = 15 * 1000;
+    private static final int PERIOD = 30 * 1000;
     private static final String ACTION_INIT_WHEN_APP_CREATE = "cn.nicolite.huthelper.service.action.INIT";
     private static final String TAG = "LoginService";
     private Timer timer;
 
-    private DaoSession daoSession = DaoHelper.getDaoHelper(MApplication.AppContext).getDaoSession();
     private Intent intent;
 
     public LoginService() {
@@ -73,27 +64,9 @@ public class LoginService extends IntentService {
     }
 
     private void isLoginOnOtherPlace() {
-        String userId = getSharedPreferences("login_user", Context.MODE_PRIVATE).getString("userId", null);
-        if (userId == null || userId.equals("*")) {
-            LogUtils.d(TAG, "没有找到登录用户");
-            stop();
-            return;
-        }
-
-        List<Configure> list = daoSession.getConfigureDao().queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
-
-        if (ListUtils.isEmpty(list)) {
-            LogUtils.d(TAG, "没有找到登录用户");
-            stop();
-            return;
-        }
-
-        Configure configure = list.get(0);
-        User user = configure.getUser();
-
         APIUtils
                 .getMessageAPI()
-                .isValid(user.getStudentKH(), configure.getAppRememberCode())
+                .isValid()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Observer<Valid>() {
