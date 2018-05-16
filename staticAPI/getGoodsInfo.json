@@ -1,0 +1,20 @@
+{
+  "code": 200,
+  "data": {
+    "tit": "求购一辆女士自行车",
+    "content": "不要山地车",
+    "prize": "200",
+    "user_id": "10120775",
+    "attr": "7成新及以下",
+    "pics": [
+      "\/uploads\/userpics\/201805\/1526461831.358895344_thumb.jpg"
+    ],
+    "created_on": "2018-05-16 17:10:32",
+    "phone": "17773348097",
+    "address": "五食堂",
+    "pics_src": [
+      "\/uploads\/userpics\/201805\/1526461831.358895344.jpg"
+    ],
+    "username": "nicolite"
+  }
+}

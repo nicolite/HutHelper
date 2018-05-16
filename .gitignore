@@ -50,7 +50,7 @@ freeline/
 freeline_project_description.json
 
 # proguard file
-/app/proguard-rules.pro
+#/app/proguard-rules.pro
 
 # keyStore file
 #signing.properties

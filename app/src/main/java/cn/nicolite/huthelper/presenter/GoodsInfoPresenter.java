@@ -33,7 +33,7 @@ public class GoodsInfoPresenter extends BasePresenter<IGoodsInfoView, GoodsInfoA
 
         APIUtils
                 .getMarketAPI()
-                .getGoodsInfo(configure.getStudentKH(), configure.getAppRememberCode(), goodsId)
+                .getGoodsInfo()
                 .compose(getActivity().<HttpPageResult<GoodsItem>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -99,7 +99,7 @@ public class GoodsInfoPresenter extends BasePresenter<IGoodsInfoView, GoodsInfoA
 
         APIUtils
                 .getMarketAPI()
-                .deleteGoods(user.getStudentKH(), configure.getAppRememberCode(), goodId)
+                .deleteGoods()
                 .compose(getActivity().<HttpResult<String>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

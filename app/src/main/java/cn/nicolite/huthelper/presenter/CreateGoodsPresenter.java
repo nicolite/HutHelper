@@ -11,13 +11,9 @@ import android.text.TextUtils;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
@@ -26,7 +22,6 @@ import cn.nicolite.huthelper.model.bean.UploadImages;
 import cn.nicolite.huthelper.network.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.utils.CommUtil;
-import cn.nicolite.huthelper.utils.EncryptUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.view.activity.CreateGoodsActivity;
 import cn.nicolite.huthelper.view.iview.ICreateGoodsView;
@@ -34,9 +29,6 @@ import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
-import okhttp3.MediaType;
-import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
 import top.zibin.luban.Luban;
 import top.zibin.luban.OnCompressListener;
 
@@ -66,8 +58,7 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
 
         APIUtils
                 .getMarketAPI()
-                .createGoods(configure.getStudentKH(), configure.getAppRememberCode(),
-                        title, content, price, attr, phone, address, type, hidden)
+                .createGoods()
                 .compose(getActivity().<HttpResult<String>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

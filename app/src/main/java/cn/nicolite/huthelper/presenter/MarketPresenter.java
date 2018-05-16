@@ -75,7 +75,7 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
 
         APIUtils
                 .getMarketAPI()
-                .getGoodsList(page, type)
+                .getGoodsList()
                 .compose(getActivity().<HttpPageResult<List<Goods>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -144,7 +144,7 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
 
         APIUtils
                 .getMarketAPI()
-                .searchGoods(configure.getStudentKH(), configure.getAppRememberCode(), page, searchText)
+                .searchGoods()
                 .compose(getActivity().<HttpPageResult<List<Goods>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -210,7 +210,7 @@ public class MarketPresenter extends BasePresenter<IMarketView, MarketFragment> 
 
         APIUtils
                 .getMarketAPI()
-                .getGoodsListByUserId(configure.getStudentKH(), configure.getAppRememberCode(), page, userId)
+                .getGoodsListByUserId()
                 .compose(getActivity().<HttpPageResult<List<Goods>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

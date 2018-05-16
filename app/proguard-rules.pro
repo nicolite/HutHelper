@@ -188,59 +188,11 @@ public static java.lang.String TABLENAME;
 -keep class com.qq.taf.jce.** {*;}
 #信鸽推送 结束
 
-#腾讯mta 开始
--keep class com.tencent.stat.* {*;}
--keep class com.tencent.mid.* {*;}
-#腾讯mta 结束
-
-#腾讯bugly 开始
--dontwarn com.tencent.bugly.**
--keep public class com.tencent.bugly.**{*;}
--keep class android.support.**{*;}
-#腾讯bugly 结束
-
 #Jsoup 开始
 -keep class org.jsoup.nodes.** {*;}
 -keep class org.jsoup.nodes.** {*;}
 -keep class org.jsoup.select.** {*;}
 #Jsoup 结束
-
-#融云 开始
--keepattributes Exceptions,InnerClasses
-
--keepattributes Signature
-
-# RongCloud SDK
--keep class io.rong.** {*;}
--keep class * implements io.rong.imlib.model.MessageContent {*;}
--dontwarn io.rong.push.**
--dontnote com.xiaomi.**
--dontnote com.google.android.gms.gcm.**
--dontnote io.rong.**
-
-# VoIP
--keep class io.agora.rtc.** {*;}
-
-# Location
--keep class com.amap.api.**{*;}
--keep class com.amap.api.services.**{*;}
-
-# 红包
--keep class com.google.gson.** { *; }
--keep class com.uuhelper.Application.** {*;}
--keep class net.sourceforge.zbar.** { *; }
--keep class com.google.android.gms.** { *; }
--keep class com.alipay.** {*;}
--keep class com.jrmf360.rylib.** {*;}
-# 广播推送
--keep public class * extends android.content.BroadcastReceiver
--ignorewarnings
-#融云 结束
-
-#ijkPlayer
--keep class tv.danmaku.ijk.media.player.** {*;}
--keep class tv.danmaku.ijk.media.player.IjkMediaPlayer{*;}
--keep class tv.danmaku.ijk.media.player.ffmpeg.FFmpegApi{*;}
 
 #指定压缩级别
 -optimizationpasses 5
