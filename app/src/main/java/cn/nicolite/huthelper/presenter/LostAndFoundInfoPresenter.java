@@ -28,7 +28,7 @@ public class LostAndFoundInfoPresenter extends BasePresenter<ILostAndFoundInfoVi
 
         APIUtils
                 .getLostAndFoundAPI()
-                .deleteLostAndFound(configure.getStudentKH(), configure.getAppRememberCode(), lostId)
+                .deleteLostAndFound()
                 .compose(getActivity().<HttpResult<String>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

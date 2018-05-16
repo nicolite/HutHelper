@@ -192,8 +192,7 @@ public class CreateLostAndFoundPresenter extends BasePresenter<ICreateLostAndFou
 
         APIUtils
                 .getLostAndFoundAPI()
-                .createLostAndFound(configure.getStudentKH(), configure.getAppRememberCode(), title, location,
-                        time, content, hidden, phone, type)
+                .createLostAndFound()
                 .compose(getActivity().<HttpResult<String>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

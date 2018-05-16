@@ -70,7 +70,7 @@ public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, Lost
     public void loadLostAndFoundList(final int page, int type, final boolean isManual, final boolean isLoadMore) {
         APIUtils
                 .getLostAndFoundAPI()
-                .getLostAndFoundList(page, type)
+                .getLostAndFoundList()
                 .compose(getActivity().<HttpPageResult<List<LostAndFound>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -140,7 +140,7 @@ public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, Lost
 
         APIUtils
                 .getLostAndFoundAPI()
-                .searchLostAndFound(configure.getStudentKH(), configure.getAppRememberCode(), page, searchText)
+                .searchLostAndFound()
                 .compose(getActivity().<HttpPageResult<List<LostAndFound>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -205,7 +205,7 @@ public class LostAndFoundPresenter extends BasePresenter<ILostAndFoundView, Lost
 
         APIUtils
                 .getLostAndFoundAPI()
-                .getLostAndFoundListByUserId(configure.getStudentKH(), configure.getAppRememberCode(), page, userId)
+                .getLostAndFoundListByUserId()
                 .compose(getActivity().<HttpPageResult<List<LostAndFound>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
