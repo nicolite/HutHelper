@@ -15,7 +15,7 @@ public class Constants {
     public static final String FRESHMANGUIDE_URL = ARTICLE_BASE_URL + "/home/post/19"; //新生攻略
 
     //SOME URL
-    public static final String CHANGE_PWD = ARTICLE_BASE_URL + "/auth/resetPass";
+    public static final String CHANGE_PWD = "不开放";
     public static final String HELP = ARTICLE_BASE_URL + "/home/post/39";
     public static final String PERMISSON = ARTICLE_BASE_URL + "/home/post/40";
     public static final String LIBRARY = "不开放";

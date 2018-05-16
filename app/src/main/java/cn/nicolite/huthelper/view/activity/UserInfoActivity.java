@@ -122,11 +122,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
                         .show();
                 break;
             case R.id.rl_user_password:
-                Bundle bundle = new Bundle();
-                bundle.putInt("type", WebViewActivity.TYPE_CHANGE_PWD);
-                bundle.putString("title", "修改密码");
-                bundle.putString("url", Constants.CHANGE_PWD);
-                startActivity(WebViewActivity.class, bundle);
+                showMessage("开源版暂不提供此功能");
                 break;
             case R.id.user_logout:
                 List<Configure> configureList = getConfigureList();

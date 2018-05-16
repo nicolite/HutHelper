@@ -39,7 +39,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
 
         APIUtils
                 .getLoginAPI()
-                .login(username, password)
+                .login()
                 .compose(getActivity().<HttpResult<User>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
