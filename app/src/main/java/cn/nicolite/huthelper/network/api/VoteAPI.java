@@ -1,6 +1,5 @@
 package cn.nicolite.huthelper.network.api;
 
-import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Vote;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -16,7 +15,7 @@ public interface VoteAPI {
      *
      * @return
      */
-    @GET(Constants.API_BASE_URL + "/master/staticAPI/vote.json")
+    @GET("master/staticAPI/vote.json")
     Observable<Vote> getAirConditionerData();
 
     /**
@@ -24,7 +23,7 @@ public interface VoteAPI {
      *
      * @return
      */
-    @GET(Constants.API_BASE_URL + "/master/staticAPI/vote.json")
+    @GET("master/staticAPI/vote.json")
     Observable<Vote> setAirConditionerData();
 
 }

@@ -11,6 +11,6 @@ import retrofit2.http.GET;
  */
 
 public interface VideoAPI {
-    @GET(Constants.API_BASE_URL + "/master/staticAPI/video.json")
+    @GET("master/staticAPI/video.json")
     Observable<Video> getVideoData();
 }

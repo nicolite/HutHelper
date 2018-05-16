@@ -16,10 +16,10 @@ import retrofit2.http.GET;
 
 public interface GradeAPI {
 
-    @GET(Constants.API_BASE_URL + "/master/staticAPI/getScore.json")
+    @GET("master/staticAPI/getScore.json")
     Observable<HttpResult<List<Grade>>> getGradeList();
 
-    @GET(Constants.API_BASE_URL + "/master/staticAPI/gradeRank.json")
+    @GET("master/staticAPI/gradeRank.json")
     Observable<GradeRankResult> getGradeRank();
 
 }

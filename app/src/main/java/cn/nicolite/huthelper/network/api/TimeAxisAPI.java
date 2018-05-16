@@ -13,6 +13,6 @@ import retrofit2.http.GET;
  */
 
 public interface TimeAxisAPI {
-    @GET(Constants.API_BASE_URL + "/master/staticAPI/timeAxis.json")
+    @GET("master/staticAPI/timeAxis.json")
     Observable<List<TimeAxis>> getTimeAxis();
 }

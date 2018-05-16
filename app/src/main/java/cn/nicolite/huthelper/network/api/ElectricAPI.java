@@ -11,6 +11,6 @@ import retrofit2.http.GET;
  */
 
 public interface ElectricAPI {
-    @GET(Constants.API_BASE_URL + "/master/staticAPI/getPower.json")
+    @GET("master/staticAPI/getPower.json")
     Observable<Electric> getElectric();
 }

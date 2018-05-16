@@ -1,6 +1,5 @@
 package cn.nicolite.huthelper.network.api;
 
-import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.ExamResult;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -11,6 +10,6 @@ import retrofit2.http.GET;
  */
 
 public interface ExamAPI {
-    @GET(Constants.API_BASE_URL + "/master/staticAPI/exam.json")
+    @GET("master/staticAPI/exam.json")
     Observable<ExamResult> getExamData();
 }

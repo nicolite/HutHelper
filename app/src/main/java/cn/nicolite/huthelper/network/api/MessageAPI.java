@@ -1,6 +1,5 @@
 package cn.nicolite.huthelper.network.api;
 
-import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Valid;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -16,7 +15,7 @@ public interface MessageAPI {
      *
      * @return {"code":true}
      */
-    @GET(Constants.API_BASE_URL + "/master/staticAPI/isTokenValid.json")
+    @GET("master/staticAPI/isTokenValid.json")
     Observable<Valid> isValid();
 
 }

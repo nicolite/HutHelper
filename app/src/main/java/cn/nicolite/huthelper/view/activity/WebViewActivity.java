@@ -490,6 +490,7 @@ public class WebViewActivity extends BaseActivity {
                         .replace("<p><span>&nbsp;</span></p>", "")
                         .replace("<p><strong><span>&nbsp;</span></strong></p>", "");
 
+                LogUtils.d(TAG, html);
                 e.onNext(html);
             }
         })

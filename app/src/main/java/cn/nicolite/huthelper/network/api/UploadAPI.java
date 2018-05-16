@@ -1,6 +1,5 @@
 package cn.nicolite.huthelper.network.api;
 
-import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.UploadImages;
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -17,6 +16,6 @@ public interface UploadAPI {
      *
      * @return
      */
-    @GET(Constants.API_BASE_URL + "/master/staticAPI/upload.json")
+    @GET("master/staticAPI/upload.json")
     Observable<UploadImages> uploadImages();
 }

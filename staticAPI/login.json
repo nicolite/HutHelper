@@ -1,0 +1,23 @@
+{
+  "code": 200,
+  "msg": "",
+  "status": "",
+  "remember_code_app": "xdfsdfsfaewwdfsfssfds",
+  "data": {
+    "studentKH": "xxxxxdsdsss",
+    "school": "xxxs中学",
+    "TrueName": "nicolite",
+    "username": "nicolite",
+    "bio": "",
+    "dep_name": "计算机学院",
+    "class_name": "软件工程1504",
+    "address": "xx省",
+    "active": 1,
+    "login_cnt": 471,
+    "head_pic": "/uploads/headpics/201710/1508172877.406252580.jpg",
+    "last_login": "2017-10-17 19:55:26",
+    "sex": "男",
+    "user_id": 24454433,
+    "head_pic_thumb": "/uploads/headpics/201710/1508172877.406252580_thumb.jpg"
+  }
+}
