@@ -56,7 +56,7 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
         }
         APIUtils
                 .getSayAPI()
-                .deleteSay(configure.getStudentKH(), configure.getAppRememberCode(), say.getId())
+                .deleteSay()
                 .compose(getActivity().<HttpResult<String>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -92,7 +92,7 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
 
         APIUtils
                 .getSayAPI()
-                .likeSay(configure.getStudentKH(), configure.getAppRememberCode(), sayId)
+                .likeSay()
                 .compose(getActivity().<HttpResult<String>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -131,7 +131,7 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
 
         APIUtils
                 .getSayAPI()
-                .createComment(configure.getStudentKH(), configure.getAppRememberCode(), comment, sayId)
+                .createComment()
                 .compose(getActivity().<HttpResult<String>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -221,7 +221,7 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
 
         APIUtils
                 .getSayAPI()
-                .getSayList(page)
+                .getSayList()
                 .compose(getActivity().<HttpPageResult<List<Say>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -283,7 +283,7 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
     public void loadLikedSay(String studentKh, String appCode, Observer<HttpResult<List<String>>> observer) {
         APIUtils
                 .getSayAPI()
-                .getLikedSay(studentKh, appCode)
+                .getLikedSay()
                 .compose(getActivity().<HttpResult<List<String>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -372,7 +372,7 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
 
         APIUtils
                 .getSayAPI()
-                .getSayListByuserId(studentKH, appCode, page, userId)
+                .getSayListByuserId()
                 .compose(getActivity().<HttpPageResult<List<Say>>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

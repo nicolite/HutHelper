@@ -319,6 +319,12 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
         XGPushConfig.enableDebug(getActivity().getApplicationContext(), BuildConfig.LOG_DEBUG);
     }
 
+    public void unregisterPush() {
+        XGPushManager.deleteTag(getActivity().getApplicationContext(), configure.getStudentKH());
+        XGPushManager.registerPush(getActivity().getApplicationContext(), "*");
+        XGPushManager.unregisterPush(getActivity().getApplicationContext());
+    }
+
     public void initUser() {
 
         User user = configure.getUser();

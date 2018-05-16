@@ -1,7 +1,7 @@
 {
   "code": 200,
-  "msg": "",
-  "status": "",
+  "msg": "登录成功",
+  "status": "ok",
   "remember_code_app": "xdfsdfsfaewwdfsfssfds",
   "data": {
     "studentKH": "xxxxxdsdsss",

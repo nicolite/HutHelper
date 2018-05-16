@@ -268,9 +268,8 @@ public class MainActivity extends BaseActivity implements IMainView {
                         .setPositiveButton("是的", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                XGPushManager.deleteTag(getApplicationContext(), configure.getStudentKH());
-                                XGPushManager.registerPush(getApplicationContext(), "*");
-                                XGPushManager.unregisterPush(getApplicationContext());
+                                //TODO 反注册推送
+//                                mainPresenter.unregisterPush();
                                 startActivity(LoginActivity.class);
                                 commonDialog.dismiss();
                                 finish();

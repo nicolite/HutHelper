@@ -1,7 +1,7 @@
 ### HutHelper
 ![](https://raw.githubusercontent.com/nicolite/HutHelper/master/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)  
 
-工大助手开源版，私有API已全改为静态，部分与敏感信息相关的功能不提供，推送功能需自行到腾讯信鸽推送申请id和key填入openKey.properties相关位置，并在MainActivity中去掉推送注册的注释，二手市场，失物招领，说说等发布功能不提供，仅能够查看页面。
+工大助手开源版，私有API已全改为静态，部分与敏感信息相关的功能不提供，推送功能需自行到腾讯信鸽推送申请id和key填入openKey.properties相关位置，并在MainActivity中去掉推送注册和反注册的注释，二手市场，失物招领，说说等发布功能不提供，仅能够查看页面。
 
 ### 下载地址
 [酷安](https://www.coolapk.com/apk/cn.nicolite.huthelper) [小米应用商店](http://app.mi.com/details?id=cn.nicolite.huthelper&ref=search)
