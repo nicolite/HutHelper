@@ -132,7 +132,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
 
         APIUtils
                 .getUserAPI()
-                .changeUsername(configure.getStudentKH(), configure.getAppRememberCode(), userName)
+                .changeUsername()
                 .compose(getActivity().<HttpResult>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -178,7 +178,7 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
 
         APIUtils
                 .getUserAPI()
-                .changeBio(configure.getStudentKH(), configure.getAppRememberCode(), bio)
+                .changeBio()
                 .compose(getActivity().<HttpResult>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

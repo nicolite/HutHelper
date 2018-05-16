@@ -27,7 +27,7 @@ public interface LostAndFoundAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/getLostAndFound.json.json")
+    @GET("master/staticAPI/getLostAndFound.json")
     Observable<HttpPageResult<List<LostAndFound>>> getLostAndFoundList();
 
 
@@ -36,7 +36,7 @@ public interface LostAndFoundAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/getLostAndFound.json.json")
+    @GET("master/staticAPI/getLostAndFound.json")
     Observable<HttpPageResult<List<LostAndFound>>> getLostAndFoundListByUserId();
 
     /**
@@ -44,7 +44,7 @@ public interface LostAndFoundAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/getLostAndFound.json.json")
+    @GET("master/staticAPI/getLostAndFound.json")
     Observable<HttpPageResult<List<LostAndFound>>> searchLostAndFound();
 
     /**

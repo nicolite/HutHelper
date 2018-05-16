@@ -20,7 +20,4 @@ public interface LoginAPI {
     @GET("master/staticAPI/login.json")
     Observable<HttpResult<User>> login();
 
-    @GET("https://api.tutuweb.cn/api/v1/get/login/{num}/{pass}")
-    Observable<HttpResult<User>> login(@Path("num") String num, @Path("pass") String password);
-
 }

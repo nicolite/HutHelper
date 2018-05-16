@@ -1,15 +1,9 @@
 package cn.nicolite.huthelper.presenter;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.network.APIUtils;
-import cn.nicolite.huthelper.utils.EncryptUtils;
-import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.view.activity.UserInfoCardActivity;
 import cn.nicolite.huthelper.view.iview.IUserInfoCardView;
 import io.reactivex.Observer;
@@ -28,14 +22,9 @@ public class UserInfoCardPresenter extends BasePresenter<IUserInfoCardView, User
 
     public void showInfo(String userId) {
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
-        String env = configure.getStudentKH() + configure.getAppRememberCode() + userId
-                + simpleDateFormat.format(new Date());
-        LogUtils.d(TAG, env);
         APIUtils
                 .getUserAPI()
-                .getUserInfo(configure.getStudentKH(), configure.getAppRememberCode(), userId,
-                        EncryptUtils.SHA1(env))
+                .getUserInfo()
                 .compose(getActivity().<HttpResult<User>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
