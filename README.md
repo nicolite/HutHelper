@@ -7,13 +7,13 @@
 [酷安](https://www.coolapk.com/apk/cn.nicolite.huthelper) [小米应用商店](http://app.mi.com/details?id=cn.nicolite.huthelper&ref=search)
 
 ### 图片展示
-<image src=https://raw.githubusercontent.com/nicolite/HutHelper/master/image/f1.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/master/image/f2.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/master/image/f3.jpg width=250 height=450>
+<image src=https://raw.githubusercontent.com/nicolite/HutHelper/res/images/v1.3/f1.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/res/images/v1.3/f2.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/res/images/v1.3/f3.jpg width=250 height=450>
 
-<image src=https://raw.githubusercontent.com/nicolite/HutHelper/master/image/f4.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/master/image/f5.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/master/image/f6.jpg width=250 height=450>
+<image src=https://raw.githubusercontent.com/nicolite/HutHelper/res/images/v1.3/f4.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/res/images/v1.3/f5.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/res/images/v1.3/f6.jpg width=250 height=450>
 
-<image src=https://raw.githubusercontent.com/nicolite/HutHelper/master/image/f7.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/master/image/f8.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/master/image/f9.jpg width=250 height=450>
+<image src=https://raw.githubusercontent.com/nicolite/HutHelper/res/images/v1.3/f7.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/res/images/v1.3/f8.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/res/images/v1.3/f9.jpg width=250 height=450>
 
-<image src=https://raw.githubusercontent.com/nicolite/HutHelper/master/image/f10.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/master/image/f11.jpg width=250 height=450>
+<image src=https://raw.githubusercontent.com/nicolite/HutHelper/res/images/v1.3/f10.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/res/images/v1.3/f11.jpg width=250 height=450>
 
 ### 运行配置
 Android 4.4 (API 19)以上， 2G RAM以上，分辨率1920x1080以上
