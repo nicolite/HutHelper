@@ -31,5 +31,4 @@ public class MApplication extends Application {
         //初始化多dex配置
         MultiDex.install(this);
     }
-
 }
