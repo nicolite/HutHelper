@@ -1,8 +1,6 @@
 package cn.nicolite.huthelper.view.activity;
 
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +11,7 @@ import com.bumptech.glide.Glide;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import cn.nicolite.huthelper.BuildConfig;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.model.Constants;
@@ -60,14 +59,7 @@ public class AboutActivity extends BaseActivity {
                 .skipMemoryCache(true)
                 .dontAnimate()
                 .into(logo);
-
-        try {
-            PackageManager pm = getPackageManager();
-            PackageInfo pi = pm.getPackageInfo(getPackageName(), PackageManager.GET_ACTIVITIES);
-            version.setText(String.valueOf(pi.versionName + " (" + pi.versionCode + ")"));
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
+        version.setText(String.valueOf("V" + BuildConfig.VERSION_NAME + " (" + BuildConfig.VERSION_CODE + ")"));
     }
 
     @OnClick({R.id.toolbar_back, R.id.help, R.id.permission_message, R.id.blog,

@@ -7,6 +7,7 @@ import android.text.TextUtils;
 
 import java.util.List;
 
+import cn.nicolite.huthelper.BuildConfig;
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.User;
@@ -49,17 +50,9 @@ public class FeedBackPresenter extends BasePresenter<IFeedBackView, FeedBackActi
                 getView().showMessage("联系方式不能为空！");
             }
         } else {
-            String version = null, model = null, from = null;
-            try {
-                PackageManager pm = getActivity().getPackageManager();
-                PackageInfo pi = pm.getPackageInfo(getActivity().getPackageName(), PackageManager.GET_ACTIVITIES);
-                version = "版本：Android " + pi.versionName + "（" + pi.versionCode + "）";
-                model = "机型：" + Build.MANUFACTURER + Build.MODEL + "（Android " + Build.VERSION.RELEASE + "）";
-            } catch (PackageManager.NameNotFoundException e) {
-                e.printStackTrace();
-            }
-
-            from = "来源：" + user.getTrueName() + " " + user.getClass_name() + " " + user.getStudentKH();
+            String version = "版本：Android " + BuildConfig.VERSION_NAME + "（" + BuildConfig.VERSION_CODE + "）";
+            String model = "机型：" + Build.MANUFACTURER + Build.MODEL + "（Android " + Build.VERSION.RELEASE + "）";
+            String from = "来源：" + user.getTrueName() + " " + user.getClass_name() + " " + user.getStudentKH();
 
             if (!TextUtils.isEmpty(version) && !TextUtils.isEmpty(model)) {
                 content = from + "<br/>" + version + "<br/>" + model + "<br/>" + "内容：" + content;
