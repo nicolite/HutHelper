@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#acc4e1"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_selector_ok_transparent" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/et_text_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:background="@android:color/transparent"
+                android:gravity="top|start"
+                android:hint="详情描述....."
+                android:lineSpacingExtra="3dp"
+                android:minLines="4"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:textColor="#ffffff"
+                android:textColorHint="#ffffff"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:paddingEnd="15dp"
+                android:paddingStart="15dp">
+
+                <ImageView
+                    android:id="@+id/add_pic"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginEnd="5dp"
+                    android:src="@drawable/ic_addpic" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minHeight="100dp"
+                    android:scrollbars="none" />
+
+            </LinearLayout>
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="263dp"
+                    android:layout_marginTop="85dp"
+                    android:background="@color/bg_grey" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginStart="15dp"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    android:paddingBottom="30dp"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="10dp"
+                    android:paddingTop="30dp">
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center"
+                            android:src="@drawable/icon_lostwhat" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end|center"
+                            android:layout_marginStart="40dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_thing"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="拾到物品"
+                                android:textColor="#404040"
+                                android:textSize="12sp" />
+
+                            <EditText
+                                android:id="@+id/ed_thing"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="请输入物品名称"
+                                android:imeOptions="actionNext"
+                                android:maxLength="20"
+                                android:maxLines="1"
+                                android:paddingTop="5dp"
+                                android:singleLine="true"
+                                android:textColor="#404040"
+                                android:textColorHint="#cacaca"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:paddingTop="30dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center"
+                            android:src="@drawable/icon_time" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end|center"
+                            android:layout_marginStart="40dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="拾到时间"
+                                android:textColor="#404040"
+                                android:textSize="12sp" />
+
+                            <EditText
+                                android:id="@+id/ed_time"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:focusableInTouchMode="false"
+                                android:hint="请选择大致时间"
+                                android:imeOptions="actionNext"
+                                android:inputType="date"
+                                android:lines="1"
+                                android:maxLength="20"
+                                android:paddingTop="5dp"
+                                android:textColor="#404040"
+                                android:textColorHint="#cacaca"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:paddingTop="30dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center"
+                            android:src="@drawable/icon_locate" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end|center"
+                            android:layout_marginStart="40dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_location"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="拾到地点"
+                                android:textColor="#404040"
+                                android:textSize="12sp" />
+
+                            <EditText
+                                android:id="@+id/ed_location"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="请输入地点"
+                                android:imeOptions="actionNext"
+                                android:maxLength="20"
+                                android:maxLines="1"
+                                android:paddingTop="5dp"
+                                android:singleLine="true"
+                                android:textColor="#404040"
+                                android:textColorHint="#cacaca"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+                    </FrameLayout>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:layout_marginStart="10dp"
+                        android:paddingTop="30dp">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="start|center"
+                            android:src="@drawable/icon_tel" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="end|center"
+                            android:layout_marginStart="40dp"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_phone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="联系电话"
+                                android:textColor="#404040"
+                                android:textSize="12sp" />
+
+                            <EditText
+                                android:id="@+id/ed_phone"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@null"
+                                android:hint="请输入联系电话"
+                                android:imeOptions="actionDone"
+                                android:inputType="phone"
+                                android:maxLength="11"
+                                android:maxLines="1"
+                                android:paddingTop="5dp"
+                                android:singleLine="true"
+                                android:textColor="#404040"
+                                android:textColorHint="#cacaca"
+                                android:textSize="16sp" />
+                        </LinearLayout>
+                    </FrameLayout>
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="2dp"
+    android:layout_marginEnd="2dp"
+    android:layout_marginStart="2dp"
+    android:layout_marginTop="2dp"
+    android:background="@drawable/bg_list"
+    android:orientation="vertical"
+    android:padding="13dp"
+    android:transitionName="lostTransition">
+
+
+    <TextView
+        android:id="@+id/tv_item_lose_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:lineSpacingMultiplier="1.2"
+        android:maxLines="10"
+        android:text="中午拾到黑色情报抗日神剧地方了快捷键力扛九鼎弗兰克你看上的放假你看见龙宽九段是否里空间龙宽九段输入历史课大娘水饺卡夫卡了多久"
+        android:textColor="@color/white"
+        android:textSize="14sp" />
+
+    <cn.nicolite.huthelper.view.customView.PictureGridView
+        android:id="@+id/gv_item_lose_img"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:horizontalSpacing="10dp"
+        android:numColumns="2"
+        android:verticalSpacing="10dp"
+        android:visibility="gone" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp">
+
+        <TextView
+            android:id="@+id/tv_item_lose_author"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="gaodjfls"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/tv_item_lose_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="发布时间"
+            android:textColor="@color/white"
+            android:textSize="12sp" />
+    </FrameLayout>
+
+</LinearLayout>

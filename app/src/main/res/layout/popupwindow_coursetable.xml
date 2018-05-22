@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="20dp"
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/week_choose_bg"
+    android:orientation="vertical">
+
+    <ListView
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:scrollbars="none"
+        android:id="@+id/lv_weekchoose_coursetable"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@null" />
+</LinearLayout>

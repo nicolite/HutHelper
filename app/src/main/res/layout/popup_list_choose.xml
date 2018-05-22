@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="170dp"
+    android:layout_height="120dp"
+    android:background="@drawable/bg_menulist"
+    android:orientation="vertical"
+    android:paddingBottom="20dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="24dp">
+
+    <cn.nicolite.huthelper.view.customView.RichTextView
+        android:id="@+id/tv_popmenu_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:drawablePadding="20dp"
+        android:text="添加失物"
+        android:textColor="#404040"
+        android:textSize="16sp"
+        view:drawable_height="25dp"
+        view:drawable_location="left"
+        view:drawable_src="@drawable/ic_add_list"
+        view:drawable_width="25dp" />
+
+    <cn.nicolite.huthelper.view.customView.RichTextView
+        android:id="@+id/tv_popmenu_mime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:drawablePadding="20dp"
+        android:text="我的发布"
+        android:textColor="#404040"
+        android:textSize="16sp"
+        view:drawable_height="25dp"
+        view:drawable_location="left"
+        view:drawable_src="@drawable/ic_mine_list"
+        view:drawable_width="25dp" />
+
+</LinearLayout>

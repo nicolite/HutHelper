@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="10dp"
+    android:background="@color/white">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:id="@+id/iv_addcommit_line"
+        android:background="@color/line_grey"/>
+
+    <Button
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/btn_addcomment_submit"
+        android:layout_below="@+id/iv_addcommit_line"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:textColor="@color/white"
+        android:text="发送"
+        android:background="@drawable/btn_maincolor"
+        android:layout_marginEnd="15dp"
+        android:textSize="15sp"/>
+
+    <EditText
+        android:background="@null"
+        android:paddingTop="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:textColor="@color/dull_grey"
+        android:drawableBottom="@drawable/editbg_line"
+        android:hint="写下你的评论..."
+        android:drawablePadding="4dp"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/btn_addcomment_submit"
+        android:id="@+id/et_addcomment_content" />
+</RelativeLayout>

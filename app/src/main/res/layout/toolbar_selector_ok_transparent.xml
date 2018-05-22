@@ -1,0 +1,65 @@
+<android.support.design.widget.AppBarLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent"
+    app:elevation="0dp">
+
+    <FrameLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp">
+
+        <ImageView
+            android:id="@+id/toolbar_back"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start|center_vertical"
+            android:paddingBottom="5dp"
+            android:paddingEnd="23dp"
+            android:paddingStart="5dp"
+            android:paddingTop="5dp"
+            android:src="@drawable/toolbar_back_icon2" />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/toolbar_select_1"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:background="@drawable/btn_select"
+                android:button="@null"
+                android:checked="true"
+                android:text="选项1" />
+
+            <RadioButton
+                android:id="@+id/toolbar_select_2"
+                android:layout_width="60dp"
+                android:layout_height="30dp"
+                android:gravity="center"
+                android:button="@null"
+                android:background="@drawable/btn_select"
+                android:text="选项2" />
+        </RadioGroup>
+
+
+        <ImageView
+            android:id="@+id/toolbar_ok"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end|center_vertical"
+            android:paddingBottom="5dp"
+            android:paddingEnd="14dp"
+            android:paddingStart="14dp"
+            android:paddingTop="6dp"
+            android:src="@drawable/done_duigou" />
+    </FrameLayout>
+</android.support.design.widget.AppBarLayout>

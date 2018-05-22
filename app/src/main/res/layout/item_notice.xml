@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_noticeitem_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp" />
+
+    <cn.nicolite.huthelper.view.customView.RichTextView
+        android:id="@+id/tv_noticeitem_time"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:drawablePadding="7.5dp"
+        android:gravity="center_vertical"
+        android:textColor="#adadad"
+        android:textSize="12sp"
+        view:drawable_height="14dp"
+        view:drawable_location="left"
+        view:drawable_src="@drawable/notice_time"
+        view:drawable_width="14dp" />
+
+    <TextView
+        android:id="@+id/tv_noticeitem_content"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="通知内容预览"
+        android:textColor="#404040"
+        android:textSize="14sp" />
+
+    <Button
+        android:id="@+id/btn_noticeitem_show"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="10dp"
+        android:background="#dff9fa"
+        android:text="查看详情"
+        android:textColor="@color/colorPrimary"
+        android:textSize="12sp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginTop="20dp"
+        android:background="@color/line_grey" />
+</LinearLayout>

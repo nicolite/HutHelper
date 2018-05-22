@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_grade"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/toolbar_refresh_transparent" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/scroll_grade_body"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="12dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="10dp"
+                    android:text="总览"
+                    android:textColor="@color/light_grey"
+                    android:textSize="14sp" />
+
+                <cn.nicolite.huthelper.view.customView.CirclePie
+                    android:id="@+id/pie_grade_xf"
+                    android:layout_width="152dp"
+                    android:layout_height="152dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp" />
+
+
+                <TextView
+                    android:id="@+id/tv_grade_avgjd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/tv_grade_nopassnum"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="10dp"
+                    android:text="综合绩点"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_grade_nopassnum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/tv_grade_avggrade"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginStart="12dp"
+                    android:text="总挂科数"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:id="@+id/tv_grade_avggrade"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/iv_grade_line"
+                    android:layout_marginStart="12dp"
+                    android:text="平均分"
+                    android:textColor="@color/white"
+                    android:textSize="12sp" />
+
+                <View
+                    android:id="@+id/iv_grade_line"
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:layout_below="@+id/pie_grade_xf"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/light_grey" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignTop="@+id/iv_grade_line"
+                    android:background="@color/transparent">
+
+                    <RadioGroup
+                        android:id="@+id/radio_group_segmented_control"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center_horizontal"
+                        android:orientation="horizontal">
+
+                        <RadioButton
+                            android:id="@+id/radio_grade_xq"
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginEnd="20dp"
+                            android:button="@null"
+                            android:checked="true"
+                            android:drawableBottom="@drawable/bg_radiobutton_grade"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_horizontal|top"
+                            android:paddingBottom="3dp"
+                            android:text="学期"
+                            android:textColor="@drawable/tvbg_grade_radio"
+                            android:textSize="17sp"
+                            tools:checked="true" />
+
+                        <RadioButton
+                            android:id="@+id/radio_grade_xn"
+                            android:layout_width="40dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:button="@null"
+                            android:drawableBottom="@drawable/bg_radiobutton_grade"
+                            android:drawablePadding="5dp"
+                            android:gravity="center_horizontal|top"
+                            android:text="学年"
+                            android:textColor="@drawable/tvbg_grade_radio"
+                            android:textSize="17sp" />
+                    </RadioGroup>
+                </LinearLayout>
+            </RelativeLayout>
+
+            <cn.nicolite.huthelper.view.customView.WrapContentHeightViewPager
+                android:id="@+id/viewpager"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="5dp"
+                android:flipInterval="30"
+                android:persistentDrawingCache="animation" />
+
+            <Button
+                android:id="@+id/btn_grade_showall"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="283dp"
+                android:layout_height="42dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="30dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/btn_maincolor"
+                android:text="查看所有成绩"
+                android:textColor="@color/white"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

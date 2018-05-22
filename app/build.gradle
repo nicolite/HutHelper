@@ -1,0 +1,259 @@
+import java.text.SimpleDateFormat
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'org.greenrobot.greendao'
+
+static def gitVersionCode() {
+    def cmd = 'git rev-list HEAD --count'
+    def gitVersionCode = 22582 + cmd.execute().text.trim().toInteger()
+    return gitVersionCode
+}
+
+static def gitVersionTag() {
+    def cmd = 'git describe --tags --always --dirty="-dev"'
+    def gitVersionTag = cmd.execute().text.trim()
+    gitVersionTag = gitVersionTag.replaceFirst("-", ".").replace("\"", "")
+    return gitVersionTag
+}
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion '27.0.3'
+    defaultConfig {
+        applicationId "cn.nicolite.huthelper"
+        minSdkVersion 19
+        targetSdkVersion 27
+        versionCode gitVersionCode()
+        versionName gitVersionTag()
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86'//, 'armeabi'//, 'x86_64', "mips"
+        }
+        //从appKey.properties文件中拉取信息
+        def appKeyStream = new FileInputStream(rootProject.file('appKey.properties'))
+        def appKeyProperties = new Properties()
+        appKeyProperties.load(appKeyStream)
+        manifestPlaceholders = [
+                XG_ACCESS_ID     : appKeyProperties.get("XG_ACCESS_ID"),
+                XG_ACCESS_KEY    : appKeyProperties.get("XG_ACCESS_KEY"),
+                MTA_APPKEY       : appKeyProperties.get("MTA_APPKEY"),
+                MTA_CHANNEL      : appKeyProperties.get("MTA_CHANNEL"),
+                BUGLY_APP_CHANNEL: appKeyProperties.get("BUGLY_APP_CHANNEL")
+        ]
+    }
+
+    dexOptions {
+        jumboMode true
+        javaMaxHeapSize "2g"
+    }
+
+    signingConfigs {
+        //从signing.properties文件中拉取签名信息
+        def keystoreStream = new FileInputStream(rootProject.file('signing.properties'))
+        def keyProperties = new Properties()
+        keyProperties.load(keystoreStream)
+
+        config {
+            keyAlias keyProperties.getProperty('KEY_ALIAS')
+            keyPassword keyProperties.getProperty('KEY_PWD')
+            storeFile file(keyProperties.getProperty('KEYSTORE_FILE'))
+            storePassword keyProperties.getProperty('KEYSTORE_PWD')
+        }
+
+        release {
+            keyAlias keyProperties['KEY_ALIAS']
+            keyPassword keyProperties['KEY_PWD']
+            storeFile file(keyProperties['KEYSTORE_FILE'])
+            storePassword keyProperties['KEYSTORE_PWD']
+        }
+
+        debug {
+            keyAlias keyProperties['KEY_ALIAS']
+            keyPassword keyProperties['KEY_PWD']
+            storeFile file(keyProperties['KEYSTORE_FILE'])
+            storePassword keyProperties['KEYSTORE_PWD']
+        }
+    }
+
+    buildTypes {
+
+        release {
+            minifyEnabled true
+            zipAlignEnabled true
+            shrinkResources true
+            buildConfigField("boolean", "LOG_DEBUG", "false")
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+
+        debug {
+            minifyEnabled false
+            zipAlignEnabled false
+            shrinkResources false
+            buildConfigField("boolean", "LOG_DEBUG", "true")
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
+
+        }
+    }
+
+    greendao {
+        schemaVersion 3
+        daoPackage "cn.nicolite.huthelper.db.dao"
+        targetGenDir "src/main/java"
+        generateTests false
+        targetGenDirTests "src/androidTest/java"
+    }
+
+    applicationVariants.all {
+        variant ->
+            variant.outputs.all {
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA);
+                String releaseTime = format.format(new Date());
+                outputFileName = "huthelper-${variant.flavorName}-${variant.versionName}(${variant.versionCode})_${releaseTime}.apk"
+            }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+        disable 'MissingTranslation'
+    }
+
+    packagingOptions {
+        //rxjava1和rxjava2冲突
+        exclude 'META-INF/rxjava.properties'
+    }
+
+    productFlavors {
+        //测试版
+        beta {
+            flavorDimensions "beta"
+            manifestPlaceholders = [
+                    MTA_CHANNEL      : "测试",
+                    BUGLY_APP_CHANNEL: "测试"
+            ]
+        }
+        //bugly
+        bugly {
+            flavorDimensions "bugly"
+            manifestPlaceholders = [
+                    MTA_CHANNEL      : "bugly",
+                    BUGLY_APP_CHANNEL: "bugly"
+            ]
+        }
+        //酷安
+        kuan {
+            flavorDimensions "kuan"
+            manifestPlaceholders = [
+                    MTA_CHANNEL      : "酷安",
+                    BUGLY_APP_CHANNEL: "酷安"
+            ]
+        }
+        //小米
+        xiaomi {
+            flavorDimensions "xiaomi"
+            manifestPlaceholders = [
+                    MTA_CHANNEL      : "小米应用商店",
+                    BUGLY_APP_CHANNEL: "小米应用商店"
+            ]
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support:design:27.1.1'
+    implementation 'com.android.support:cardview-v7:27.1.1'
+    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    implementation 'com.android.support:support-annotations:27.1.1'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //多dex配置,解决dex超过64k
+    implementation 'com.android.support:multidex:1.0.3'
+
+    //retrofit okhttp rxjava
+    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+
+    //生命周期管理
+    implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
+
+    //Glide--图片加载
+    implementation 'com.github.bumptech.glide:glide:3.8.0'
+    implementation 'com.github.bumptech.glide:okhttp3-integration:1.5.0'
+    implementation 'jp.wasabeef:glide-transformations:2.0.2'
+
+    //Luban---图片压缩
+    implementation 'top.zibin:Luban:1.1.4'
+
+    //PhotoView----图片放大缩小
+    implementation 'com.github.chrisbanes:PhotoView:2.1.3'
+
+    //图片选择
+    implementation 'com.zhihu.android:matisse:0.5.0-beta3'
+
+    //ButterKnife
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation 'com.jakewharton:butterknife:8.8.1'
+
+    //Gson---json解析
+    implementation 'com.google.code.gson:gson:2.8.3'
+
+    //动画低版本支持
+    implementation 'com.nineoldandroids:library:2.4.0'
+
+    //权限管理
+    implementation 'com.yanzhenjie:permission:1.1.2'
+
+    // bugly升级sdk
+    implementation 'com.tencent.bugly:crashreport_upgrade:1.3.4'
+
+    //滑动退出Activity
+    implementation 'com.r0adkll:slidableactivity:2.0.6'
+
+    //网页抓取
+    implementation 'org.jsoup:jsoup:1.11.3'
+
+    //LRecyclerView
+    implementation 'com.github.jdsjlzx:LRecyclerView:1.5.0'
+
+    //小红点
+    implementation 'q.rorbin:badgeview:1.1.2'
+
+    //信鸽推送
+    implementation 'com.tencent.xinge:xinge:3.2.2-release'
+
+    //wup包 如果和其他腾讯系的sdk 发生wup冲突，这个依赖可不添加
+    implementation 'com.tencent.wup:wup:1.0.0.E-release'
+
+    //mid包
+    implementation 'com.tencent.mid:mid:4.0.6-release'
+
+    //数据库
+    implementation 'org.greenrobot:greendao:3.2.2'
+
+    //数据库升级数据迁移
+    implementation 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.0.1'
+
+    //内存泄露检测
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+

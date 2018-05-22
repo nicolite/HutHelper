@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1dcbdb</color>
+    <color name="colorPrimaryDark">#1dcbdb</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="item_common_pressed">#e0e0e0</color>
+    <color name="common_btn_color">#dff9fa</color>
+
+    <color name="themeColor">#1dcbdb</color>
+    <color name="background_common">#20386c</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+
+    <color name="transparent">#00000000</color>
+
+    <color name="light_blue">#1ddbcd</color>
+
+    <color name="black1">#333333</color>
+    <color name="black2">#666666</color>
+
+    <color name="textColor_black">#646262</color> <!-- 黑色 -->
+
+    <color name="week_view_text_date">#abadae</color>
+
+    <color name="dialog_bg">#f5f5f5</color>
+
+    <color name="themecolor_1">#acc4e1</color> <!-- 主题色 -->
+    <color name="themecolor_2">#8dcddf</color>
+    <color name="themecolor_3">#96c8ab</color>
+    <color name="themecolor_4">#bfbbe2</color>
+
+    <color name="light_grey">#adadad</color> <!-- 浅灰 -->
+    <color name="medium_grey">#808080</color> <!-- 中灰 -->
+    <color name="dull_grey">#404040</color> <!-- 深灰-->
+    <color name="bg_grey">#efefef</color> <!-- 大灰底-->
+    <color name="line_grey">#dbdbdb</color> <!-- 分割线 -->
+
+    <color name="new_grty">#cacaca</color>
+
+    <color name="bg_black_shadow">#80000000</color>
+
+    <color name="translucent_1">#3F000000</color>
+
+    <color name="bg_list_1">#acc4e1</color>
+    <color name="bg_list_2">#96c8ab</color>
+    <color name="bg_list_3">#8dcddf</color>
+    <color name="bg_list_4">#bfbbe2</color>
+
+</resources>

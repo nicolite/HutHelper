@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_grey"
+    android:fitsSystemWindows="true"
+    android:paddingBottom="20dp">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/notice_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.v4.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="18dp" />
+
+        <include layout="@layout/toolbar_nomenu_transparent" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            view:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <TextView
+                android:id="@+id/tv_noticeitem_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:paddingEnd="35dp"
+                android:paddingStart="35dp"
+                android:paddingTop="15dp"
+                android:textColor="@color/white"
+                android:textIsSelectable="true"
+                android:textSize="27sp" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tv_noticeitem_title"
+                android:layout_centerHorizontal="true"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="92dp"
+                android:background="@color/white"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="15dp"
+                    android:orientation="vertical"
+                    android:paddingBottom="15dp"
+                    android:paddingEnd="20dp"
+                    android:paddingStart="20dp"
+                    android:paddingTop="15dp">
+
+                    <cn.nicolite.huthelper.view.customView.RichTextView
+                        android:id="@+id/tv_noticeitem_time"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:drawablePadding="7.5dp"
+                        android:textColor="#adadad"
+                        android:textSize="12sp"
+                        view:drawable_height="14dp"
+                        view:drawable_location="left"
+                        view:drawable_src="@drawable/notice_time"
+                        view:drawable_width="14dp" />
+
+                    <TextView
+                        android:id="@+id/tv_noticeitem_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="15dp"
+                        android:lineSpacingMultiplier="1.8"
+                        android:textColor="#404040"
+                        android:textIsSelectable="true"
+                        android:textSize="14sp" />
+                </LinearLayout>
+            </ScrollView>
+        </RelativeLayout>
+    </LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>

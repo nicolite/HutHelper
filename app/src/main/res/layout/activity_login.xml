@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="280dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/up_bcg" />
+
+    <RelativeLayout
+        android:layout_width="283dp"
+        android:layout_height="42dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="45dp"
+        android:background="@drawable/login_etbg"
+        android:orientation="horizontal"
+        android:paddingLeft="21dp"
+        android:paddingRight="21dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_user_mini" />
+
+        <EditText
+            android:id="@+id/et_username"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:hint="学号"
+            android:imeOptions="actionNext"
+            android:inputType="text"
+            android:textColor="#404040"
+            android:textColorHint="#cacaca"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="283dp"
+        android:layout_height="42dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_etbg"
+        android:orientation="horizontal"
+        android:paddingLeft="21dp"
+        android:paddingRight="21dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_password" />
+
+        <EditText
+            android:id="@+id/et_password"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:hint="密码"
+            android:inputType="textPassword"
+            android:textColor="#404040"
+            android:textColorHint="#cacaca"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_login"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="283dp"
+        android:layout_height="42dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/login_btnbg"
+        android:text="登录"
+        android:textColor="#1dbbdb"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/tv_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="50dp"
+        android:text="密码默认为身份证后六位(x小写) 忘记密码？"
+        android:textColor="#cacaca"
+        android:textSize="13sp" />
+</LinearLayout>
