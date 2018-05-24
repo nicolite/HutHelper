@@ -161,6 +161,15 @@ android {
                     BUGLY_APP_CHANNEL: "小米应用商店"
             ]
         }
+
+        //华为应用市场
+        huawei {
+            flavorDimensions "huawei"
+            manifestPlaceholders = [
+                    MTA_CHANNEL      : "华为应用市场",
+                    BUGLY_APP_CHANNEL: "华为应用市场"
+            ]
+        }
     }
 
 }
