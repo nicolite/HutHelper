@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/say_root_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="10dp"
@@ -158,21 +159,20 @@
          android:textColor="@color/black2"
          android:textSize="14sp" />-->
 
-    <ImageView
+    <View
         android:id="@+id/iv_item_say"
         android:layout_width="match_parent"
         android:layout_height="0.5dp"
         android:layout_below="@+id/ll_sayitem"
         android:layout_marginTop="10dp"
-        android:background="@color/line_grey"
-        android:visibility="gone" />
+        android:background="@color/line_grey" />
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_say_comments"
+    <LinearLayout
+        android:id="@+id/comment_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_item_say"
-        android:focusable="false"
-        android:focusableInTouchMode="false" />
+        android:orientation="vertical" />
+
 
 </RelativeLayout>

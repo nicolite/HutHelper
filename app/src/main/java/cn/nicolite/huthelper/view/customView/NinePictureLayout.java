@@ -40,7 +40,6 @@ public class NinePictureLayout extends PictureLayout {
                 .placeholder(R.drawable.img_loading)
                 .error(R.drawable.img_error)
                 .skipMemoryCache(true)
-                .thumbnail(0.8f)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .crossFade()
                 .into(new SimpleTarget<Bitmap>() {
@@ -88,7 +87,9 @@ public class NinePictureLayout extends PictureLayout {
                 .placeholder(R.drawable.img_loading)
                 .error(R.drawable.img_error)
                 .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .centerCrop()
+                .crossFade()
                 .into(imageView);
     }
 

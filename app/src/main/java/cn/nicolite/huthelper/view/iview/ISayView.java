@@ -11,10 +11,18 @@ import cn.nicolite.huthelper.model.bean.Say;
 
 public interface ISayView extends IBaseView {
     void showSayList(List<Say> list);
+
     void loadMore(List<Say> list);
+
     void noMoreData();
-    void deleteSuccess(Say say);
+
+    void deleteSaySuccess(Say say);
+
+    void deleteCommentSuccess(int sayPosition, Say.CommentsBean commentsBean);
+
     void commentSuccess(String comment, int position, String userId, String username);
+
     void loadFailure();
+
     void loadMoreFailure();
 }

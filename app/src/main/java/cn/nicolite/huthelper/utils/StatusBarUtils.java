@@ -32,12 +32,10 @@ public class StatusBarUtils {
         } else if (FlymeStatusBarLightMode(window, true)) {
             LogUtils.d(TAG, "setDeepColorStatusBar: " + "Flyme");
         } else {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                // 透明状态栏
-                window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                // 透明导航栏
-                window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            }
+            // 透明状态栏
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // 透明导航栏
+            window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
             LogUtils.d(TAG, "setDeepColorStatusBar: " + "not supported device");
         }
     }

@@ -89,6 +89,11 @@ public class UserInfoPresenter extends BasePresenter<IUserInfoView, UserInfoActi
                             getView().closeLoading();
                             if (uploadImages.getCode() == 200) {
                                 getView().showMessage("修改成功!");
+                                User user = configure.getUser();
+                                user.setHead_pic_thumb(uploadImages.getData());
+                                user.setHead_pic(uploadImages.getData_original());
+                                daoSession.getUserDao().update(user);
+                                getView().changeAvatarSuccess(bitmap);
                             } else {
                                 getView().showMessage("修改失败!");
                             }

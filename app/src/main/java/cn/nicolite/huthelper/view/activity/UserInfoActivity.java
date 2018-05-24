@@ -3,8 +3,10 @@ package cn.nicolite.huthelper.view.activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,11 +16,15 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tencent.android.tpush.XGPushManager;
+import com.yalantis.ucrop.UCrop;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import butterknife.BindView;
@@ -32,8 +38,8 @@ import cn.nicolite.huthelper.presenter.UserInfoPresenter;
 import cn.nicolite.huthelper.utils.DensityUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
-import cn.nicolite.huthelper.view.iview.IUserInfoView;
 import cn.nicolite.huthelper.view.customView.CommonDialog;
+import cn.nicolite.huthelper.view.iview.IUserInfoView;
 
 
 /**
@@ -68,7 +74,6 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
     TextView tvUserBio;
     private UserInfoPresenter userInfoPresenter;
     private final int REQUEST_CODE_CHOOSE = 111;
-    private final int REQUEST_CODE_CUT = 222;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -183,12 +188,14 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
         tvUserNum.setText(user.getStudentKH());
         tvUserClass.setText(user.getClass_name());
         tvUserBio.setText(TextUtils.isEmpty(user.getBio()) ? "没有签名" : user.getBio());
-        if (!TextUtils.isEmpty(user.getHead_pic_thumb())) {
+        String headPic = TextUtils.isEmpty(user.getHead_pic()) ? user.getHead_pic_thumb() : user.getHead_pic();
+        if (!TextUtils.isEmpty(headPic)) {
             int width = DensityUtils.dp2px(context, 40);
             Glide
                     .with(this)
-                    .load(Constants.PICTURE_URL + user.getHead_pic_thumb())
+                    .load(Constants.PICTURE_URL + headPic)
                     .override(width, width)
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .skipMemoryCache(true)
                     .dontAnimate()
                     .into(ivUserHeadview);
@@ -208,7 +215,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
     @Override
     public void changeAvatar() {
         Matisse.from(this)
-                .choose(MimeType.of(MimeType.JPEG, MimeType.PNG))
+                .choose(MimeType.of(MimeType.JPEG, MimeType.PNG, MimeType.GIF))
                 .countable(true)
                 .maxSelectable(1)
                 .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
@@ -224,23 +231,31 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
         if (requestCode == REQUEST_CODE_CHOOSE && resultCode == RESULT_OK) {
             List<Uri> uriList = Matisse.obtainResult(data);
             if (!ListUtils.isEmpty(uriList)) {
+                //图片裁剪
                 Uri uri = uriList.get(0);
-                Intent intent = new Intent();
-                intent.setAction("com.android.camera.action.CROP");
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                intent.setDataAndType(uri, "image/*");// mUri是已经选择的图片Uri
-                intent.putExtra("crop", "true");
-                intent.putExtra("aspectX", 1);// 裁剪框比例
-                intent.putExtra("aspectY", 1);
-                intent.putExtra("outputX", 150);// 输出图片大小
-                intent.putExtra("outputY", 150);
-                intent.putExtra("return-data", true);
-
-                startActivityForResult(intent, REQUEST_CODE_CUT);
+                Uri cacheUri = Uri.fromFile(new File(getCacheDir(), "crop.jpg"));
+                UCrop.Options options = new UCrop.Options();
+                options.setStatusBarColor(Color.parseColor("#1dcbdb"));
+                options.setToolbarColor(Color.parseColor("#1dcbdb"));
+                options.setCompressionFormat(Bitmap.CompressFormat.JPEG);
+                options.setCompressionQuality(90);
+                options.setShowCropGrid(true);
+                options.setFreeStyleCropEnabled(true);
+                UCrop.of(uri, cacheUri)
+                        .withAspectRatio(1, 1)
+                        .withMaxResultSize(300, 300)
+                        .withOptions(options)
+                        .start(activity);
             }
-        } else if (requestCode == REQUEST_CODE_CUT && resultCode == RESULT_OK) {
-            Bitmap bitmap = data.getParcelableExtra("data");
-            userInfoPresenter.uploadAvatar(bitmap);
+        } else if (requestCode == UCrop.REQUEST_CROP && resultCode == RESULT_OK) {
+            Uri output = UCrop.getOutput(data);
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), output);
+                userInfoPresenter.uploadAvatar(bitmap);
+            } catch (IOException e) {
+                e.printStackTrace();
+                showMessage("出现未知错误！");
+            }
         } else {
             userInfoPresenter.showUserData();
         }

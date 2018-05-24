@@ -1,15 +1,22 @@
 package cn.nicolite.huthelper.view.adapter;
 
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.support.v7.widget.OrientationHelper;
+import android.graphics.Color;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.SpannableStringBuilder;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -21,14 +28,13 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
-import cn.nicolite.huthelper.app.MApplication;
+import cn.nicolite.huthelper.db.DaoUtils;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Say;
 import cn.nicolite.huthelper.model.bean.SayLikedCache;
 import cn.nicolite.huthelper.utils.AnimationTools;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.view.customView.NinePictureLayout;
-import cn.nicolite.huthelper.view.customView.NoScrollLinearLayoutManager;
 import cn.nicolite.huthelper.view.customView.PictureLayout;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -42,23 +48,26 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
     private List<Say> sayList;
     private OnItemClickListener onItemClickListener;
     private String userId;
+    private int sayPosition = -1;
 
     public SayAdapter(Context context, List<Say> sayList) {
         this.context = context;
         this.sayList = sayList;
-        SharedPreferences preferences = MApplication.appContext.getSharedPreferences("login_user", Context.MODE_PRIVATE);
-        userId = preferences.getString("userId", "");
+        userId = DaoUtils.getLoginUser();
     }
 
+    @NonNull
     @Override
-    public SayViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SayViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.item_say_list, parent, false);
         return new SayViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(final SayViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final SayViewHolder holder, final int position) {
         final Say say = sayList.get(position);
+        sayPosition = position;
+        List<Say.CommentsBean> comments = say.getComments();
         String imageUrl = TextUtils.isEmpty(say.getHead_pic()) ? Constants.PICTURE_URL + say.getHead_pic_thumb() :
                 Constants.PICTURE_URL + say.getHead_pic();
         Glide
@@ -77,7 +86,6 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
         holder.tvItemSayXy.setText(say.getDep_name());
         holder.tvSayItemLikenum.setText(say.getLikes());
         holder.tvItemSaycontent.setText(say.getContent());
-
         if (say.getUser_id().equals(userId)) {
             holder.ivItemDeletesay.setVisibility(View.VISIBLE);
         } else {
@@ -127,34 +135,17 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
 
         final List<String> pics = say.getPics();
         final List<String> picsRaw = new ArrayList<>();
-
         for (String item : pics) {
             picsRaw.add(item.replace("_thumb", ""));
         }
-
         holder.rvItemSayimg.setUrlList(picsRaw);
 
-        int num = say.getComments().size();
-        if (num == 0) {
-            holder.rvSayComments.setVisibility(View.GONE);
+        if (comments.size() <= 0) {
             holder.ivItemSay.setVisibility(View.GONE);
             holder.tvSayItemCommitnum.setText("0");
         } else {
-            holder.rvSayComments.setVisibility(View.VISIBLE);
-            holder.tvSayItemCommitnum.setText(String.valueOf(say.getComments().size()));
             holder.ivItemSay.setVisibility(View.VISIBLE);
-            NoScrollLinearLayoutManager layout = new NoScrollLinearLayoutManager(context, OrientationHelper.VERTICAL, false);
-            holder.rvSayComments.setLayoutManager(layout);
-            CommentAdapter commentAdapter = new CommentAdapter(context, say.getComments());
-            holder.rvSayComments.setAdapter(commentAdapter);
-            commentAdapter.setOnItemClickListener(new CommentAdapter.OnItemClickListener() {
-                @Override
-                public void onItemClick(RecyclerView.Adapter adapter, int position, long itemId, String userId, String username) {
-                    if (onItemClickListener != null) {
-                        onItemClickListener.onUserClick(userId, username);
-                    }
-                }
-            });
+            holder.tvSayItemCommitnum.setText(String.valueOf(comments.size()));
         }
 
         holder.ivItemSayAvatar.setOnClickListener(new View.OnClickListener() {
@@ -191,6 +182,12 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
                 onItemClickListener.onImageClick(position, picsRaw);
             }
         });
+
+        holder.commentContainer.removeAllViews();
+        for (int i = 0; i < comments.size(); i++) {
+            Say.CommentsBean commentsBean = comments.get(i);
+            addComment(holder.commentContainer, commentsBean);
+        }
     }
 
     @Override
@@ -198,7 +195,10 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
         return ListUtils.isEmpty(sayList) ? 0 : sayList.size();
     }
 
+
     static class SayViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.say_root_view)
+        RelativeLayout sayRootView;
         @BindView(R.id.iv_item_say_avatar)
         ImageView ivItemSayAvatar;
         @BindView(R.id.tv_item_sayauthor)
@@ -224,11 +224,21 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
         @BindView(R.id.ll_sayitem)
         LinearLayout llSayitem;
         @BindView(R.id.iv_item_say)
-        ImageView ivItemSay;
-        @BindView(R.id.rv_say_comments)
-        RecyclerView rvSayComments;
+        View ivItemSay;
+        @BindView(R.id.comment_container)
+        LinearLayout commentContainer;
 
         public SayViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    static class CommentViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.text)
+        TextView text;
+
+        public CommentViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -246,10 +256,61 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
         void onDeleteClick(Say say, int position);
 
         void onImageClick(int position, List<String> urlList);
+
+        void onCommentDeleteClick(int sayPosition, Say.CommentsBean commentsBean);
+
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }
 
+    private void addComment(ViewGroup commentContainer, final Say.CommentsBean commentsBean) {
+        TextView comment = (TextView) LayoutInflater.from(context).inflate(R.layout.item_comments, commentContainer, false);
+        String userName = commentsBean.getUsername() + ": ";
+        String content = userName + commentsBean.getComment();
+        SpannableStringBuilder richContent = new SpannableStringBuilder(content);
+
+        richContent.setSpan(new ClickableSpan() {
+            @Override
+            public void onClick(View widget) {
+                if (onItemClickListener != null) {
+                    onItemClickListener.onUserClick(commentsBean.getUser_id(), commentsBean.getUsername());
+                }
+            }
+
+            @Override
+            public void updateDrawState(TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        }, 0, userName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        richContent.setSpan(new ForegroundColorSpan(Color.parseColor("#1dcbdb")), 0, userName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+//        if (commentsBean.getUser_id().equals(userId)) {
+//            richContent.append("  删除");
+//            richContent.setSpan(new ClickableSpan() {
+//                @Override
+//                public void onClick(View widget) {
+//                    if (onItemClickListener != null && sayPosition > -1) {
+//                        onItemClickListener.onCommentDeleteClick(sayPosition, commentsBean);
+//                    }
+//                }
+//
+//                @Override
+//                public void updateDrawState(TextPaint ds) {
+//                    super.updateDrawState(ds);
+//                    ds.setUnderlineText(false);
+//                }
+//            }, content.length(), richContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//
+//            richContent.setSpan(new ForegroundColorSpan(Color.RED), content.length(), richContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+//        }
+
+        comment.setText(richContent);
+        comment.setMovementMethod(LinkMovementMethod.getInstance());
+
+        commentContainer.addView(comment);
+    }
 }

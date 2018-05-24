@@ -1,11 +1,8 @@
 package cn.nicolite.huthelper.presenter;
 
-import android.text.TextUtils;
-
 import java.util.List;
 
 import cn.nicolite.huthelper.base.presenter.BasePresenter;
-import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.HttpPageResult;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.Say;
@@ -26,7 +23,8 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
-
+    public static final int TYPE_SAY = 525;
+    public static final int TYPE_COMMENT = 864;
 
     public SayPresenter(ISayView view, SayFragment activity) {
         super(view, activity);
@@ -52,14 +50,13 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
         }
     }
 
-    public void deleteSay(final Say say) {
-
+    public void deleteById(final int type, String id, final Object object, final int position) {
         if (getView() != null) {
             getView().showMessage("正在删除！");
         }
         APIUtils.INSTANCE
                 .getSayAPI()
-                .deleteSay(configure.getStudentKH(), configure.getAppRememberCode(), say.getId())
+                .deleteSay(configure.getStudentKH(), configure.getAppRememberCode(), id)
                 .compose(getActivity().<HttpResult<String>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -72,7 +69,12 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
                     @Override
                     public void onNext(HttpResult<String> stringHttpResult) {
                         if (getView() != null) {
-                            getView().deleteSuccess(say);
+                            if (type == TYPE_SAY && object instanceof Say) {
+                                getView().deleteSaySuccess((Say) object);
+                            } else if (type == TYPE_COMMENT && object instanceof Say.CommentsBean) {
+                                getView().deleteCommentSuccess(position, (Say.CommentsBean) object);
+                            }
+                            getView().showMessage("删除成功！");
                         }
                     }
 
@@ -89,6 +91,14 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
 
                     }
                 });
+    }
+
+    public void deleteSay(int sayPosition, Say say) {
+        deleteById(TYPE_SAY, say.getId(), say, sayPosition);
+    }
+
+    public void deleteComment(int sayPosition, Say.CommentsBean commentsBean) {
+        deleteById(TYPE_COMMENT, commentsBean.getId(), commentsBean, sayPosition);
     }
 
     public void likeSay(String sayId) {

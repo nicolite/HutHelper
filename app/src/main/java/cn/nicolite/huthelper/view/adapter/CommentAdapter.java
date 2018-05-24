@@ -25,6 +25,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     private List<Say.CommentsBean> commentsBeanList;
     private OnItemClickListener onItemClickListener;
     public CommentAdapter commentAdapter;
+
     public CommentAdapter(Context context, List<Say.CommentsBean> commentsBeanList) {
         this.context = context;
         this.commentsBeanList = commentsBeanList;
@@ -40,7 +41,8 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     @Override
     public void onBindViewHolder(final CommentViewHolder holder, int position) {
         final Say.CommentsBean commentsBean = commentsBeanList.get(position);
-        holder.text.setText(Html.fromHtml(String.valueOf("<font color = '#1dcbdb'>" + commentsBean.getUsername() + "：</font>" + commentsBean.getComment())));
+        String content = "<font color = '#1dcbdb'>" + commentsBean.getUsername() + "：</font>" + commentsBean.getComment();
+        holder.text.setText(Html.fromHtml(content));
         holder.text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
