@@ -32,6 +32,7 @@ public abstract class PictureLayout extends ViewGroup {
     private boolean isFirst;
     private boolean isShowAll;
     private List<String> urlList = new ArrayList<>();
+    private OnClickImageListener onClickImageListener;
 
     public PictureLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -214,7 +215,9 @@ public abstract class PictureLayout extends ViewGroup {
         imageView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickImage(i, url, urlList);
+                if (onClickImageListener != null) {
+                    onClickImageListener.onClickImage(i, urlList);
+                }
             }
         });
         return imageView;
@@ -244,7 +247,13 @@ public abstract class PictureLayout extends ViewGroup {
 
     protected abstract void displayImage(RatioImageView imageView, String url);
 
-    protected abstract void onClickImage(int position, String url, List<String> urlList);
+    public void setOnClickImageListener(OnClickImageListener onClickImageListener) {
+        this.onClickImageListener = onClickImageListener;
+    }
+
+    public interface OnClickImageListener {
+        void onClickImage(int position, List<String> urlList);
+    }
 
     //禁止滑动
     @Override

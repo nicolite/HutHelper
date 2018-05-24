@@ -38,6 +38,7 @@ import cn.nicolite.huthelper.utils.CommUtil;
 import cn.nicolite.huthelper.utils.KeyBoardUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.utils.ToastUtil;
+import cn.nicolite.huthelper.view.activity.ShowImageActivity;
 import cn.nicolite.huthelper.view.activity.UserInfoCardActivity;
 import cn.nicolite.huthelper.view.adapter.SayAdapter;
 import cn.nicolite.huthelper.view.iview.ISayView;
@@ -149,6 +150,16 @@ public class SayFragment extends BaseFragment implements ISayView {
                         .setNegativeButton("取消", null)
                         .show();
 
+            }
+
+            @Override
+            public void onImageClick(int position, List<String> urlList) {
+                Bundle bundle = new Bundle();
+                bundle.putStringArrayList("images", (ArrayList<String>) urlList);
+                bundle.putInt("curr", position);
+                Intent intent = new Intent(context, ShowImageActivity.class);
+                intent.putExtras(bundle);
+                context.startActivity(intent);
             }
 
         });

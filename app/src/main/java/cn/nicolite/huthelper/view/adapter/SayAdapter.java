@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -28,6 +29,7 @@ import cn.nicolite.huthelper.utils.AnimationTools;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.view.customView.NinePictureLayout;
 import cn.nicolite.huthelper.view.customView.NoScrollLinearLayoutManager;
+import cn.nicolite.huthelper.view.customView.PictureLayout;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -124,7 +126,13 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
         });
 
         final List<String> pics = say.getPics();
-        holder.rvItemSayimg.setUrlList(pics);
+        final List<String> picsRaw = new ArrayList<>();
+
+        for (String item : pics) {
+            picsRaw.add(item.replace("_thumb", ""));
+        }
+
+        holder.rvItemSayimg.setUrlList(picsRaw);
 
         int num = say.getComments().size();
         if (num == 0) {
@@ -174,6 +182,13 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
                 if (onItemClickListener != null) {
                     onItemClickListener.onAddCommentClick(position, say.getId());
                 }
+            }
+        });
+
+        holder.rvItemSayimg.setOnClickImageListener(new PictureLayout.OnClickImageListener() {
+            @Override
+            public void onClickImage(int position, List<String> urlList) {
+                onItemClickListener.onImageClick(position, picsRaw);
             }
         });
     }
@@ -229,6 +244,8 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
         void onLikeClick(String sayId);
 
         void onDeleteClick(Say say, int position);
+
+        void onImageClick(int position, List<String> urlList);
     }
 
     public void setOnItemClickListener(OnItemClickListener onItemClickListener) {

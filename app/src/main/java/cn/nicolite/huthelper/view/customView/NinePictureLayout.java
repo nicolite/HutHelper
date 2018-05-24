@@ -1,22 +1,17 @@
 package cn.nicolite.huthelper.view.customView;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.os.Bundle;
 import android.util.AttributeSet;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.SimpleTarget;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.Constants;
-import cn.nicolite.huthelper.view.activity.ShowImageActivity;
 
 
 /**
@@ -45,9 +40,10 @@ public class NinePictureLayout extends PictureLayout {
                 .placeholder(R.drawable.img_loading)
                 .error(R.drawable.img_error)
                 .skipMemoryCache(true)
+                .thumbnail(0.8f)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .crossFade()
                 .into(new SimpleTarget<Bitmap>() {
-
                     @Override
                     public void onLoadStarted(Drawable placeholder) {
                         super.onLoadStarted(placeholder);
@@ -96,13 +92,4 @@ public class NinePictureLayout extends PictureLayout {
                 .into(imageView);
     }
 
-    @Override
-    protected void onClickImage(int position, String url, List<String> urlList) {
-        Bundle bundle = new Bundle();
-        bundle.putStringArrayList("images", (ArrayList<String>) urlList);
-        bundle.putInt("curr", position);
-        Intent intent = new Intent(context, ShowImageActivity.class);
-        intent.putExtras(bundle);
-        context.startActivity(intent);
-    }
 }
