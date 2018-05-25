@@ -98,8 +98,7 @@ public class SayActivity extends BaseActivity {
             }
             final User user = configureList.get(0).getUser();
 
-            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            View popupWindowLayout = layoutInflater.inflate(R.layout.popup_list_choose, null);
+            View popupWindowLayout = LayoutInflater.from(context).inflate(R.layout.popup_list_choose, rootView, false);
 
             TextView tvMime = (TextView) popupWindowLayout.findViewById(R.id.tv_popmenu_mime);
             TextView tvAdd = (TextView) popupWindowLayout.findViewById(R.id.tv_popmenu_add);

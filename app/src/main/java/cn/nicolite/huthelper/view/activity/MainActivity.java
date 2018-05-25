@@ -43,11 +43,11 @@ import cn.nicolite.huthelper.utils.ButtonUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.MenuAdapter;
-import cn.nicolite.huthelper.view.iview.IMainView;
 import cn.nicolite.huthelper.view.customView.CommonDialog;
 import cn.nicolite.huthelper.view.customView.DateLineView;
 import cn.nicolite.huthelper.view.customView.DragLayout;
 import cn.nicolite.huthelper.view.customView.RichTextView;
+import cn.nicolite.huthelper.view.iview.IMainView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
@@ -91,6 +91,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     ImageView ivNavAvatar;
     @BindView(R.id.tv_nav_name)
     RichTextView tvNavName;
+
     private MainPresenter mainPresenter;
     private long exitTime = 0;
     private List<Menu> menuList = new ArrayList<>();
@@ -122,6 +123,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     protected void doBusiness() {
+
         String userId = getLoginUser();
         if (TextUtils.isEmpty(userId)) {
             startActivity(LoginActivity.class);
@@ -196,7 +198,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         mainPresenter.registerPush();
 
         mainPresenter.showNotice(false);
-       // mainPresenter.startLoginService(); //TODO 接口没了
+        // mainPresenter.startLoginService(); //TODO 接口没了
         qBadgeView = new QBadgeView(context);
         qBadgeView.bindTarget(unReadMessage);
         qBadgeView.setBadgeGravity(Gravity.END | Gravity.TOP);

@@ -7,10 +7,12 @@ import android.graphics.PixelFormat
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.WindowManager
+import cn.nicolite.huthelper.R
 import cn.nicolite.huthelper.db.DaoUtils
 import cn.nicolite.huthelper.db.dao.DaoSession
 import cn.nicolite.huthelper.listener.ActivityLifeCycleListener
 import cn.nicolite.huthelper.manager.ActivityStackManager
+import cn.nicolite.huthelper.model.bean.Configure
 import cn.nicolite.huthelper.utils.LogUtils
 import cn.nicolite.huthelper.utils.SlidrUtils
 import cn.nicolite.huthelper.utils.StatusBarUtils
@@ -26,6 +28,8 @@ abstract class BaseActivity : RxAppCompatActivity() {
     protected lateinit var context: Context
     protected lateinit var activity: AppCompatActivity
     protected val daoSession: DaoSession = DaoUtils.getDaoSession()
+    protected val loginUserId: String = DaoUtils.getLoginUser()
+    protected val configureList: List<Configure> = DaoUtils.getConfigureList()
     private var lifeCycleListener: ActivityLifeCycleListener? = null
 
     companion object {
@@ -90,22 +94,31 @@ abstract class BaseActivity : RxAppCompatActivity() {
     /**
      * 初始化Activity配置,
      */
-    protected open fun initConfig(savedInstanceState: Bundle?) {}
+    protected open fun initConfig(savedInstanceState: Bundle?) {
+        LogUtils.d(TAG, "$TAG-->initConfig()")
+    }
 
     /**
      * 初始化Bundle参数
      */
-    protected open fun initBundleData(bundle: Bundle?) {}
+    protected open fun initBundleData(bundle: Bundle?) {
+        LogUtils.d(TAG, "$TAG-->initBundleData()")
+    }
 
     /**
      * 获取 xml layout
      */
-    protected abstract fun setLayoutId(): Int
+    protected open fun setLayoutId(): Int {
+        LogUtils.d(TAG, "$TAG-->setLayoutId()")
+        return R.layout.activity_default
+    }
 
     /**
      * 业务逻辑代码
      */
-    protected abstract fun doBusiness()
+    protected open fun doBusiness() {
+        LogUtils.d(TAG, "$TAG-->doBusiness()")
+    }
 
     /**
      * 设置生命周期监听

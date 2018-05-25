@@ -23,8 +23,6 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
-    public static final int TYPE_SAY = 525;
-    public static final int TYPE_COMMENT = 864;
 
     public SayPresenter(ISayView view, SayFragment activity) {
         super(view, activity);
@@ -50,13 +48,14 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
         }
     }
 
-    public void deleteById(final int type, String id, final Object object, final int position) {
+    public void deleteSay(final int position, final String sayId) {
+
         if (getView() != null) {
             getView().showMessage("正在删除！");
         }
         APIUtils.INSTANCE
                 .getSayAPI()
-                .deleteSay(configure.getStudentKH(), configure.getAppRememberCode(), id)
+                .deleteSay(configure.getStudentKH(), configure.getAppRememberCode(), sayId)
                 .compose(getActivity().<HttpResult<String>>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -69,11 +68,7 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
                     @Override
                     public void onNext(HttpResult<String> stringHttpResult) {
                         if (getView() != null) {
-                            if (type == TYPE_SAY && object instanceof Say) {
-                                getView().deleteSaySuccess((Say) object);
-                            } else if (type == TYPE_COMMENT && object instanceof Say.CommentsBean) {
-                                getView().deleteCommentSuccess(position, (Say.CommentsBean) object);
-                            }
+                            getView().deleteSaySuccess(position, sayId);
                             getView().showMessage("删除成功！");
                         }
                     }
@@ -93,12 +88,41 @@ public class SayPresenter extends BasePresenter<ISayView, SayFragment> {
                 });
     }
 
-    public void deleteSay(int sayPosition, Say say) {
-        deleteById(TYPE_SAY, say.getId(), say, sayPosition);
-    }
+    public void deleteComment(final int sayPosition, final String commentId, final int commentPosition) {
+        APIUtils
+                .INSTANCE
+                .getSayAPI()
+                .deleteComment(configure.getStudentKH(), configure.getAppRememberCode(), commentId)
+                .compose(getActivity().<HttpResult<String>>bindToLifecycle())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Observer<HttpResult<String>>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
 
-    public void deleteComment(int sayPosition, Say.CommentsBean commentsBean) {
-        deleteById(TYPE_COMMENT, commentsBean.getId(), commentsBean, sayPosition);
+                    }
+
+                    @Override
+                    public void onNext(HttpResult<String> stringHttpResult) {
+                        if (getView() != null) {
+                            getView().deleteCommentSuccess(sayPosition, commentId, commentPosition);
+                            getView().showMessage("删除成功！");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        if (getView() != null) {
+                            getView().closeLoading();
+                            getView().showMessage("删除失败，" + ExceptionEngine.handleException(e).getMsg());
+                        }
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });
     }
 
     public void likeSay(String sayId) {

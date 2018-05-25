@@ -79,12 +79,12 @@ public class SplashActivity extends BaseActivity {
     protected void doBusiness() {
         Glide
                 .with(this)
-                .load(bgs[(int) (Math.random() * 4)])
+                .load(bgs[0])
                 .asBitmap()
                 .centerCrop()
                 .crossFade()
                 .into(imageView);
-        handler.sendEmptyMessageDelayed(what, 1000);
+        handler.sendEmptyMessageDelayed(what, 100);
     }
 
     public boolean isLogin() {

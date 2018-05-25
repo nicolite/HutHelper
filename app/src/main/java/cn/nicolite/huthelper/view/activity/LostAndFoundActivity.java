@@ -137,8 +137,7 @@ public class LostAndFoundActivity extends BaseActivity {
         final User user = configureList.get(0).getUser();
 
         if (weekListWindow == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            View popupWindowLayout = layoutInflater.inflate(R.layout.popup_list_choose, null);
+            View popupWindowLayout = LayoutInflater.from(context).inflate(R.layout.popup_list_choose, rootView, false);
 
             weekListWindow = new PopupWindow(popupWindowLayout,
                     DensityUtils.dp2px(context, 170),

@@ -7,9 +7,11 @@ import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cn.nicolite.huthelper.R
 import cn.nicolite.huthelper.db.DaoUtils
 import cn.nicolite.huthelper.db.dao.DaoSession
 import cn.nicolite.huthelper.listener.FragmentLifeCycleListener
+import cn.nicolite.huthelper.model.bean.Configure
 import cn.nicolite.huthelper.utils.LogUtils
 import com.trello.rxlifecycle2.components.support.RxFragment
 
@@ -26,6 +28,8 @@ abstract class BaseFragment : RxFragment() {
     protected var isUserVisible = false
     protected var isFirstVisible = false
     protected val daoSession: DaoSession = DaoUtils.getDaoSession()
+    protected val userId: String = DaoUtils.getLoginUser()
+    protected val configureList: List<Configure> = DaoUtils.getConfigureList()
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
         super.setUserVisibleHint(isVisibleToUser)
@@ -128,24 +132,33 @@ abstract class BaseFragment : RxFragment() {
     /**
      * 初始化Fragment配置,
      */
-    protected open fun initConfig(savedInstanceState: Bundle?) {}
+    protected open fun initConfig(savedInstanceState: Bundle?) {
+        LogUtils.d(TAG, "$TAG-->initConfig()")
+    }
 
     /**
      * 初始化Bundle参数
      *
      * @param arguments
      */
-    protected open fun initArguments(arguments: Bundle?) {}
+    protected open fun initArguments(arguments: Bundle?) {
+        LogUtils.d(TAG, "$TAG-->initArguments()")
+    }
 
     /**
      * 获取 xml layout
      */
-    protected abstract fun setLayoutId(): Int
+    protected open fun setLayoutId(): Int {
+        LogUtils.d(TAG, "$TAG-->setLayoutId()")
+        return R.layout.activity_default
+    }
 
     /**
      * 业务逻辑代码
      */
-    protected abstract fun doBusiness()
+    protected open fun doBusiness() {
+        LogUtils.d(TAG, "$TAG-->doBusiness()")
+    }
 
     /**
      * fragment对用户可见
@@ -153,7 +166,9 @@ abstract class BaseFragment : RxFragment() {
      * @param isVisible      是否可见
      * @param isFirstVisible 是否第一次可见
      */
-    protected open fun visibleToUser(isUserVisible: Boolean, isFirstVisible: Boolean) {}
+    protected open fun visibleToUser(isUserVisible: Boolean, isFirstVisible: Boolean) {
+        LogUtils.d(TAG, "$TAG-->visibleToUser()")
+    }
 
     /**
      * 是否为Attach到Activity中的第一个fragment
@@ -161,6 +176,7 @@ abstract class BaseFragment : RxFragment() {
      * @return
      */
     protected open fun isFirstFragment(): Boolean {
+        LogUtils.d(TAG, "$TAG-->isFirstFragment()")
         return false
     }
 

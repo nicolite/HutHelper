@@ -167,12 +167,13 @@
         android:layout_marginTop="10dp"
         android:background="@color/line_grey" />
 
-    <LinearLayout
-        android:id="@+id/comment_container"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_say_comments"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/iv_item_say"
-        android:orientation="vertical" />
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
 
 
 </RelativeLayout>

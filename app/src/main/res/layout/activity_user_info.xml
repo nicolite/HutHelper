@@ -332,7 +332,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginStart="40dp"
                         android:text="软件"
-                        android:textColor="@color/light_grey" />
+                        android:textColor="@color/light_grey"
+                        android:textSize="13sp" />
                 </RelativeLayout>
 
                 <Button

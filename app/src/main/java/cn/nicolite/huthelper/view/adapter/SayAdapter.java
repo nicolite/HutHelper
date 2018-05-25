@@ -1,16 +1,10 @@
 package cn.nicolite.huthelper.view.adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableStringBuilder;
-import android.text.Spanned;
-import android.text.TextPaint;
 import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
-import android.text.style.ClickableSpan;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +29,7 @@ import cn.nicolite.huthelper.model.bean.SayLikedCache;
 import cn.nicolite.huthelper.utils.AnimationTools;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.view.customView.NinePictureLayout;
+import cn.nicolite.huthelper.view.customView.NoScrollLinearLayoutManager;
 import cn.nicolite.huthelper.view.customView.PictureLayout;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
@@ -48,7 +43,6 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
     private List<Say> sayList;
     private OnItemClickListener onItemClickListener;
     private String userId;
-    private int sayPosition = -1;
 
     public SayAdapter(Context context, List<Say> sayList) {
         this.context = context;
@@ -66,7 +60,6 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull final SayViewHolder holder, final int position) {
         final Say say = sayList.get(position);
-        sayPosition = position;
         List<Say.CommentsBean> comments = say.getComments();
         String imageUrl = TextUtils.isEmpty(say.getHead_pic()) ? Constants.PICTURE_URL + say.getHead_pic_thumb() :
                 Constants.PICTURE_URL + say.getHead_pic();
@@ -128,7 +121,7 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
             @Override
             public void onClick(View view) {
                 if (onItemClickListener != null) {
-                    onItemClickListener.onDeleteClick(say, holder.getAdapterPosition());
+                    onItemClickListener.onDeleteClick(say.getId(), holder.getAdapterPosition());
                 }
             }
         });
@@ -140,11 +133,13 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
         }
         holder.rvItemSayimg.setUrlList(picsRaw);
 
-        if (comments.size() <= 0) {
+        if (ListUtils.isEmpty(comments)) {
             holder.ivItemSay.setVisibility(View.GONE);
+            holder.rvSayComments.setVisibility(View.GONE);
             holder.tvSayItemCommitnum.setText("0");
         } else {
             holder.ivItemSay.setVisibility(View.VISIBLE);
+            holder.rvSayComments.setVisibility(View.VISIBLE);
             holder.tvSayItemCommitnum.setText(String.valueOf(comments.size()));
         }
 
@@ -183,10 +178,26 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
             }
         });
 
-        holder.commentContainer.removeAllViews();
-        for (int i = 0; i < comments.size(); i++) {
-            Say.CommentsBean commentsBean = comments.get(i);
-            addComment(holder.commentContainer, commentsBean);
+        if (!ListUtils.isEmpty(comments)) {
+            NoScrollLinearLayoutManager layout = new NoScrollLinearLayoutManager(context, OrientationHelper.VERTICAL, false);
+            holder.rvSayComments.setLayoutManager(layout);
+            CommentAdapter commentAdapter = new CommentAdapter(context, say.getComments(), userId, position);
+            holder.rvSayComments.setAdapter(commentAdapter);
+            commentAdapter.setOnItemClickListener(new CommentAdapter.OnItemClickListener() {
+                @Override
+                public void onUserClick(int position, String userId, String username) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onUserClick(userId, username);
+                    }
+                }
+
+                @Override
+                public void onDeleteClick(int sayPosition, int commentPosition, Say.CommentsBean commentsBean) {
+                    if (onItemClickListener != null) {
+                        onItemClickListener.onCommentDeleteClick(sayPosition, commentsBean.getId(), commentPosition);
+                    }
+                }
+            });
         }
     }
 
@@ -225,8 +236,8 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
         LinearLayout llSayitem;
         @BindView(R.id.iv_item_say)
         View ivItemSay;
-        @BindView(R.id.comment_container)
-        LinearLayout commentContainer;
+        @BindView(R.id.rv_say_comments)
+        RecyclerView rvSayComments;
 
         public SayViewHolder(View itemView) {
             super(itemView);
@@ -245,7 +256,6 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
     }
 
     public interface OnItemClickListener {
-        void onItemClick(RecyclerView.Adapter adapter, int position, long itemId);
 
         void onAddCommentClick(int position, String sayId);
 
@@ -253,11 +263,11 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
 
         void onLikeClick(String sayId);
 
-        void onDeleteClick(Say say, int position);
+        void onDeleteClick(String sayId, int position);
 
         void onImageClick(int position, List<String> urlList);
 
-        void onCommentDeleteClick(int sayPosition, Say.CommentsBean commentsBean);
+        void onCommentDeleteClick(int sayPosition, String commentId, int commentPosition);
 
     }
 
@@ -265,52 +275,4 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
         this.onItemClickListener = onItemClickListener;
     }
 
-    private void addComment(ViewGroup commentContainer, final Say.CommentsBean commentsBean) {
-        TextView comment = (TextView) LayoutInflater.from(context).inflate(R.layout.item_comments, commentContainer, false);
-        String userName = commentsBean.getUsername() + ": ";
-        String content = userName + commentsBean.getComment();
-        SpannableStringBuilder richContent = new SpannableStringBuilder(content);
-
-        richContent.setSpan(new ClickableSpan() {
-            @Override
-            public void onClick(View widget) {
-                if (onItemClickListener != null) {
-                    onItemClickListener.onUserClick(commentsBean.getUser_id(), commentsBean.getUsername());
-                }
-            }
-
-            @Override
-            public void updateDrawState(TextPaint ds) {
-                super.updateDrawState(ds);
-                ds.setUnderlineText(false);
-            }
-        }, 0, userName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-        richContent.setSpan(new ForegroundColorSpan(Color.parseColor("#1dcbdb")), 0, userName.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-
-//        if (commentsBean.getUser_id().equals(userId)) {
-//            richContent.append("  删除");
-//            richContent.setSpan(new ClickableSpan() {
-//                @Override
-//                public void onClick(View widget) {
-//                    if (onItemClickListener != null && sayPosition > -1) {
-//                        onItemClickListener.onCommentDeleteClick(sayPosition, commentsBean);
-//                    }
-//                }
-//
-//                @Override
-//                public void updateDrawState(TextPaint ds) {
-//                    super.updateDrawState(ds);
-//                    ds.setUnderlineText(false);
-//                }
-//            }, content.length(), richContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//
-//            richContent.setSpan(new ForegroundColorSpan(Color.RED), content.length(), richContent.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-//        }
-
-        comment.setText(richContent);
-        comment.setMovementMethod(LinkMovementMethod.getInstance());
-
-        commentContainer.addView(comment);
-    }
 }

@@ -9,6 +9,7 @@ import cn.nicolite.huthelper.db.DaoUtils
 import cn.nicolite.huthelper.db.dao.DaoSession
 import cn.nicolite.huthelper.listener.ActivityLifeCycleListener
 import cn.nicolite.huthelper.listener.FragmentLifeCycleListener
+import cn.nicolite.huthelper.model.bean.Configure
 import java.lang.ref.Reference
 import java.lang.ref.WeakReference
 
@@ -21,6 +22,8 @@ open class BasePresenter<I, V>(iView: I, view: V) : ActivityLifeCycleListener, F
     protected lateinit var iViewRef: Reference<I>
     protected lateinit var viewRef: Reference<V>
     protected val daoSession: DaoSession = DaoUtils.getDaoSession()
+    protected val userId: String = DaoUtils.getLoginUser()
+    protected val configureList: List<Configure> = DaoUtils.getConfigureList()
     protected var context: Context? = null
     protected var activity: AppCompatActivity? = null
 

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -29,9 +30,9 @@ import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.ScreenUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.ChooseListAdapter;
+import cn.nicolite.huthelper.view.customView.LoadingDialog;
 import cn.nicolite.huthelper.view.fragment.SyllabusFragment;
 import cn.nicolite.huthelper.view.iview.ISyllabusView;
-import cn.nicolite.huthelper.view.customView.LoadingDialog;
 
 /**
  * Created by nicolite on 17-11-13.
@@ -71,6 +72,7 @@ public class SyllabusActivity extends BaseActivity implements ISyllabusView {
 
     @Override
     protected void doBusiness() {
+
         CurrWeek = DateUtils.getNowWeek();
         toolbarTitle.setText(String.valueOf("第" + CurrWeek + "周"));
         chooseNum = CurrWeek - 1;

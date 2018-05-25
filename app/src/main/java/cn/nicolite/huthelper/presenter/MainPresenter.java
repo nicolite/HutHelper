@@ -1,6 +1,7 @@
 package cn.nicolite.huthelper.presenter;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 
 import com.tencent.android.tpush.XGIOperateCallback;
@@ -19,6 +20,7 @@ import cn.nicolite.huthelper.db.dao.LessonDao;
 import cn.nicolite.huthelper.db.dao.MenuDao;
 import cn.nicolite.huthelper.db.dao.NoticeDao;
 import cn.nicolite.huthelper.db.dao.TimeAxisDao;
+import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.Lesson;
 import cn.nicolite.huthelper.model.bean.Menu;
@@ -189,7 +191,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                 .where(MenuDao.Properties.UserId.eq(userId))
                 .list();
 
-        if (ListUtils.isEmpty(menus) || menus.size() > 15) {
+        if (ListUtils.isEmpty(menus) || menus.size() > 14) {
             List<Menu> menuItems = new ArrayList<>();
             Menu item = new Menu(0, 0, WebViewActivity.TYPE_LIBRARY, "图书馆", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
             menuItems.add(item);
@@ -217,8 +219,8 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             menuItems.add(item);
             item = new Menu(12, 12, 0, "全部", "cn.nicolite.huthelper.view.activity.AllActivity", true);
             menuItems.add(item);
-            item = new Menu(13, 13, 0, "视频专栏", "cn.nicolite.huthelper.view.activity.VideoActivity", false);
-            menuItems.add(item);
+//            item = new Menu(13, 13, 0, "视频专栏", "cn.nicolite.huthelper.view.activity.VideoActivity", false);
+//            menuItems.add(item);
             item = new Menu(14, 14, 0, "新生攻略", "cn.nicolite.huthelper.view.activity.FreshmanGuideActivity", false);
             menuItems.add(item);
 
@@ -301,6 +303,12 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     }
 
     public void registerPush() {
+        Context applicationContext = MApplication.appContext;
+        XGPushConfig.enableDebug(applicationContext, BuildConfig.LOG_DEBUG);
+        XGPushConfig.setMiPushAppId(applicationContext, Constants.XIAOMI_APPID);
+        XGPushConfig.setMiPushAppKey(applicationContext, Constants.XIAOMI_APPKEY);
+        XGPushConfig.enableOtherPush(applicationContext, true);
+        XGPushConfig.setHuaweiDebug(BuildConfig.LOG_DEBUG);
         XGPushManager.registerPush(getActivity().getApplicationContext(), configure.getStudentKH(), new XGIOperateCallback() {
             @Override
             public void onSuccess(Object o, int i) {

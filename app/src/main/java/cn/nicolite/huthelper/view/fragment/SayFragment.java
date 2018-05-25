@@ -1,12 +1,10 @@
 package cn.nicolite.huthelper.view.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -106,16 +104,11 @@ public class SayFragment extends BaseFragment implements ISayView {
             }
         });
 
-
         sayAdapter = new SayAdapter(context, sayList);
         lRecyclerViewAdapter = new LRecyclerViewAdapter(sayAdapter);
         lRecyclerView.setAdapter(lRecyclerViewAdapter);
         sayPresenter = new SayPresenter(this, this);
         sayAdapter.setOnItemClickListener(new SayAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(RecyclerView.Adapter adapter, int position, long itemId) {
-
-            }
 
             @Override
             public void onAddCommentClick(int position, String sayId) {
@@ -137,7 +130,7 @@ public class SayFragment extends BaseFragment implements ISayView {
             }
 
             @Override
-            public void onDeleteClick(final Say say, final int position) {
+            public void onDeleteClick(final String sayId, final int position) {
                 final CommonDialog commonDialog = new CommonDialog(context);
                 commonDialog
                         .setMessage("确定删除这条说说？")
@@ -145,13 +138,13 @@ public class SayFragment extends BaseFragment implements ISayView {
                             @Override
                             public void onClick(View view) {
                                 commonDialog.dismiss();
-                                sayPresenter.deleteSay(position, say);
+                                sayPresenter.deleteSay(position, sayId);
                             }
                         })
                         .setNegativeButton("取消", null)
                         .show();
-
             }
+
 
             @Override
             public void onImageClick(int position, List<String> urlList) {
@@ -164,14 +157,14 @@ public class SayFragment extends BaseFragment implements ISayView {
             }
 
             @Override
-            public void onCommentDeleteClick(final int sayPosition, final Say.CommentsBean commentsBean) {
+            public void onCommentDeleteClick(final int sayPosition, final String commentId, final int commentPosition) {
                 final CommonDialog commonDialog = new CommonDialog(context);
                 commonDialog.setMessage("确认删除?")
                         .setPositiveButton("确认", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
                                 commonDialog.dismiss();
-                                sayPresenter.deleteComment(sayPosition, commentsBean);
+                                sayPresenter.deleteComment(sayPosition, commentId, commentPosition);
                             }
                         })
                         .setNegativeButton("取消", null)
@@ -275,25 +268,26 @@ public class SayFragment extends BaseFragment implements ISayView {
     }
 
     @Override
-    public void deleteSaySuccess(Say say) {
-        sayList.remove(say);
-        lRecyclerViewAdapter.notifyDataSetChanged();
+    public void deleteSaySuccess(int position, String sayId) {
+        sayList.remove(position);
+        lRecyclerViewAdapter.notifyItemRemoved(position);
     }
 
     @Override
-    public void deleteCommentSuccess(int sayPosition, Say.CommentsBean commentsBean) {
-        sayList.get(sayPosition).getComments().remove(commentsBean);
-        lRecyclerViewAdapter.notifyDataSetChanged();
+    public void deleteCommentSuccess(int sayPosition, String commentId, int commentPosition) {
+        sayList.get(sayPosition).getComments().remove(commentPosition);
+        sayAdapter.notifyItemChanged(sayPosition);
     }
 
     @Override
     public void commentSuccess(String comment, int position, String userId, String username) {
         Say.CommentsBean commentsBean = new Say.CommentsBean();
+        commentsBean.setId("");
         commentsBean.setComment(comment);
         commentsBean.setUser_id(userId);
         commentsBean.setUsername(username);
         sayList.get(position).getComments().add(commentsBean);
-        lRecyclerViewAdapter.notifyDataSetChanged();
+        sayAdapter.notifyItemChanged(position);
     }
 
     @Override
@@ -313,8 +307,7 @@ public class SayFragment extends BaseFragment implements ISayView {
     private void showCommitView(final int position, final String sayId) {
 
         if (addCommitWindow == null || button == null || editText == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            final View popupWindowLayout = layoutInflater.inflate(R.layout.popwin_addcommit, null);
+            final View popupWindowLayout = LayoutInflater.from(context).inflate(R.layout.popwin_addcommit, rootView, false);
             button = (Button) popupWindowLayout.findViewById(R.id.btn_addcomment_submit);
             editText = (EditText) popupWindowLayout.findViewById(R.id.et_addcomment_content);
             addCommitWindow = new PopupWindow(popupWindowLayout, RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT);

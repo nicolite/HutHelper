@@ -9,7 +9,6 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_LOGS" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
@@ -23,6 +22,11 @@
     <!--小米推送-->
     <permission
         android:name="cn.nicolite.huthelper.permission.MIPUSH_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <!-- 华为推送 -->
+    <permission
+        android:name="cn.nicolite.huthelper.permission.HUAWEI_RECEIVE"
         android:protectionLevel="signature" />
 
     <uses-permission android:name="cn.nicolite.huthelper.permission.MIPUSH_RECEIVE" />
@@ -41,6 +45,19 @@
         tools:replace="android:allowBackup">
         <activity
             android:name=".view.activity.SplashActivity"
+            android:theme="@style/AppSplash">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".view.activity.SyllabusMainActivity"
+            android:icon="@mipmap/ic_kechengbiao"
+            android:label="@string/kechengbiao"
+            android:launchMode="singleTask"
+            android:roundIcon="@mipmap/ic_kechengbiao_round"
             android:theme="@style/AppSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -159,6 +176,7 @@
 
         <activity
             android:name=".view.activity.SyllabusActivity"
+            android:launchMode="singleTask"
             android:theme="@style/AppTheme" />
 
         <activity
@@ -247,6 +265,38 @@
                 <action android:name="com.tencent.android.tpush.action.PUSH_MESSAGE" />
                 <!-- 监听注册、反注册、设置/删除标签、通知被点击等处理结果 -->
                 <action android:name="com.tencent.android.tpush.action.FEEDBACK" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 小米推送 -->
+        <receiver
+            android:name=".receiver.MiPushReceiver"
+            android:exported="true"
+            android:permission="cn.nicolite.huthelper.permission.MIPUSH_RECEIVE">
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.RECEIVE_MESSAGE" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.MESSAGE_ARRIVED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.xiaomi.mipush.ERROR" />
+            </intent-filter>
+        </receiver>
+
+        <!-- 华为推送 -->
+        <receiver
+            android:name=".receiver.HuaweiPushReceiver"
+            android:permission="cn.nicolite.huthelper.permission.HUAWEIPUSH_RECEIVE">
+            <intent-filter>
+                <!-- 必须,用于接收TOKEN -->
+                <action android:name="com.huawei.android.push.intent.REGISTRATION" />
+                <!-- 必须，用于接收消息 -->
+                <action android:name="com.huawei.android.push.intent.RECEIVE" />
+                <!-- 可选，用于点击通知栏或通知栏上的按钮后触发onEvent回调 -->
+                <action android:name="com.huawei.android.push.intent.CLICK" />
+                <!-- 可选，查看PUSH通道是否连接，不查看则不需要 -->
+                <action android:name="com.huawei.intent.action.PUSH_STATE" />
             </intent-filter>
         </receiver>
 

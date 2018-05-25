@@ -26,8 +26,8 @@ import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.utils.ToastUtil;
 import cn.nicolite.huthelper.view.adapter.ImageAdapter;
-import cn.nicolite.huthelper.view.iview.ILostAndFoundInfoView;
 import cn.nicolite.huthelper.view.customView.CommonDialog;
+import cn.nicolite.huthelper.view.iview.ILostAndFoundInfoView;
 
 /**
  * Created by nicolite on 17-11-12.
@@ -127,7 +127,12 @@ public class LostAndFoundInfoActivity extends BaseActivity implements ILostAndFo
         ivNumLost.setText(lostAndFound.getUsername());
         tvSendtimeLost.setText(lostAndFound.getCreated_on());
 
-        final List<String> pics = lostAndFound.getPics();
+        List<String> pics = lostAndFound.getPics();
+        final List<String> picsRaw = new ArrayList<>();
+        for (String picR : pics) {
+            picsRaw.add(picR.replace("_thumb", ""));
+        }
+
         if (!ListUtils.isEmpty(pics)) {
             recyclerView.setLayoutManager(new LinearLayoutManager(context, OrientationHelper.HORIZONTAL, false));
             ImageAdapter adapter = new ImageAdapter(context, pics);
@@ -136,7 +141,7 @@ public class LostAndFoundInfoActivity extends BaseActivity implements ILostAndFo
                 @Override
                 public void onItemClick(View view, int position, long itemId) {
                     Bundle bundle = new Bundle();
-                    bundle.putStringArrayList("images", (ArrayList<String>) pics);
+                    bundle.putStringArrayList("images", (ArrayList<String>) picsRaw);
                     bundle.putInt("curr", position);
                     startActivity(ShowImageActivity.class, bundle);
                 }

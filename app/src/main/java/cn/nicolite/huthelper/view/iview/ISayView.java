@@ -16,9 +16,9 @@ public interface ISayView extends IBaseView {
 
     void noMoreData();
 
-    void deleteSaySuccess(Say say);
+    void deleteSaySuccess(int position, String sayId);
 
-    void deleteCommentSuccess(int sayPosition, Say.CommentsBean commentsBean);
+    void deleteCommentSuccess(int sayPosition, String commentId, int commentPosition);
 
     void commentSuccess(String comment, int position, String userId, String username);
 
