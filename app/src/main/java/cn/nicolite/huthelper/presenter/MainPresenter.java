@@ -305,8 +305,8 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     public void registerPush() {
         Context applicationContext = MApplication.appContext;
         XGPushConfig.enableDebug(applicationContext, BuildConfig.LOG_DEBUG);
-        XGPushConfig.setMiPushAppId(applicationContext, Constants.XIAOMI_APPID);
-        XGPushConfig.setMiPushAppKey(applicationContext, Constants.XIAOMI_APPKEY);
+        XGPushConfig.setMiPushAppId(applicationContext, Constants.XIAOMI_APP_ID);
+        XGPushConfig.setMiPushAppKey(applicationContext, Constants.XIAOMI_APP_KEY);
         XGPushConfig.enableOtherPush(applicationContext, true);
         XGPushConfig.setHuaweiDebug(BuildConfig.LOG_DEBUG);
         XGPushManager.registerPush(getActivity().getApplicationContext(), configure.getStudentKH(), new XGIOperateCallback() {

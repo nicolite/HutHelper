@@ -26,7 +26,7 @@ import cn.nicolite.huthelper.utils.ListUtils;
  * Created by nicolite on 17-10-13.
  */
 
-public class BasePresenter<V, T> implements ActivityLifeCycleListener, FragmentLifeCycleListener {
+public abstract class BasePresenter<V, T> implements ActivityLifeCycleListener, FragmentLifeCycleListener {
 
     protected final String TAG = getClass().getSimpleName();
 

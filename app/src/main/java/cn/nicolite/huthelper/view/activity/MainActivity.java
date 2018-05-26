@@ -10,7 +10,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
@@ -49,7 +48,6 @@ import cn.nicolite.huthelper.view.customView.DragLayout;
 import cn.nicolite.huthelper.view.customView.RichTextView;
 import cn.nicolite.huthelper.view.iview.IMainView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import q.rorbin.badgeview.Badge;
 import q.rorbin.badgeview.QBadgeView;
 
 /**
@@ -91,6 +89,8 @@ public class MainActivity extends BaseActivity implements IMainView {
     ImageView ivNavAvatar;
     @BindView(R.id.tv_nav_name)
     RichTextView tvNavName;
+    @BindView(R.id.tv_nav_private_message)
+    RichTextView sixin;
 
     private MainPresenter mainPresenter;
     private long exitTime = 0;
@@ -123,6 +123,10 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     protected void doBusiness() {
+
+        //TODO 私信功能暂时隐藏
+        sixin.setVisibility(View.GONE); //侧栏私信菜单
+        unReadMessage.setVisibility(View.GONE); //首页铃铛
 
         String userId = getLoginUser();
         if (TextUtils.isEmpty(userId)) {
@@ -196,26 +200,27 @@ public class MainActivity extends BaseActivity implements IMainView {
         mainPresenter.showWeather();
         mainPresenter.checkPermission();
         mainPresenter.registerPush();
-
         mainPresenter.showNotice(false);
-        // mainPresenter.startLoginService(); //TODO 接口没了
-        qBadgeView = new QBadgeView(context);
-        qBadgeView.bindTarget(unReadMessage);
-        qBadgeView.setBadgeGravity(Gravity.END | Gravity.TOP);
-        qBadgeView.setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
-            @Override
-            public void onDragStateChanged(int dragState, Badge badge, View targetView) {
+        mainPresenter.startLoginService();
 
-            }
-        });
-
-        qBadgeView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                qBadgeView.hide(false);
-                mainPresenter.startChat();
-            }
-        });
+        //TODO 私信功能暂时隐藏
+//        qBadgeView = new QBadgeView(context);
+//        qBadgeView.bindTarget(unReadMessage);
+//        qBadgeView.setBadgeGravity(Gravity.END | Gravity.TOP);
+//        qBadgeView.setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
+//            @Override
+//            public void onDragStateChanged(int dragState, Badge badge, View targetView) {
+//
+//            }
+//        });
+//
+//        qBadgeView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                qBadgeView.hide(false);
+//                mainPresenter.startChat();
+//            }
+//        });
 
 
         //上传帐号信息到腾讯MTA

@@ -17,7 +17,7 @@ import java.lang.ref.WeakReference
  * Created by nicolite on 2018/5/20.
  * email nicolite@nicolite.cn
  */
-open class BasePresenter<I, V>(iView: I, view: V) : ActivityLifeCycleListener, FragmentLifeCycleListener {
+abstract class BasePresenter<I, V>(iView: I, view: V) : ActivityLifeCycleListener, FragmentLifeCycleListener {
     protected val TAG = javaClass.simpleName
     protected lateinit var iViewRef: Reference<I>
     protected lateinit var viewRef: Reference<V>

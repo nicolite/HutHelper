@@ -81,6 +81,12 @@ public class ShowImageAdapter extends PagerAdapter {
                     @Override
                     public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
                         imageView.setImageDrawable(resource);
+//                        Glide
+//                                .with(context)
+//                                .load(resource.getCurrent())
+//                                .centerCrop()
+//                                .dontAnimate()
+//                                .into(imageView);
                         attacher.update();
                     }
 

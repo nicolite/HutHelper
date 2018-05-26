@@ -11,7 +11,7 @@ import cn.nicolite.huthelper.model.bean.Configure;
  * Created by nicolite on 2018/3/5.
  */
 
-public class BaseUtils {
+public abstract class BaseUtils {
     protected final String TAG = getClass().getSimpleName();
 
     /**

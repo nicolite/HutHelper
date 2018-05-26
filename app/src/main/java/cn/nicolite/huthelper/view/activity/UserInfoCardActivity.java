@@ -41,6 +41,9 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
     TextView tvUserBio;
     @BindView(R.id.tv_user_department)
     TextView tvUserDepartment;
+    @BindView(R.id.bt_user_chat)
+    TextView startChat;
+
     private UserInfoCardPresenter userInfoCardPresenter;
     private String mUserId;
     private String username;
@@ -72,6 +75,10 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
 
     @Override
     protected void doBusiness() {
+
+        //TODO 私信功能暂时隐藏
+        startChat.setVisibility(View.INVISIBLE);
+
         toolbarTitle.setText(username);
         tvUserName.setText(username);
         userInfoCardPresenter = new UserInfoCardPresenter(this, this);
@@ -141,22 +148,24 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
 
     @Override
     public void showInfo(User user) {
-        avatarUrlList.clear();
-        avatarUrlList.add(user.getHead_pic_thumb());
         String imageUrl = TextUtils.isEmpty(user.getHead_pic()) ? Constants.PICTURE_URL + user.getHead_pic_thumb() :
                 Constants.PICTURE_URL + user.getHead_pic();
+
+        avatarUrlList.clear();
+        avatarUrlList.add(imageUrl);
+
         Glide
                 .with(activity)
                 .load(imageUrl)
                 .placeholder(R.drawable.head_boy)
                 .error(R.drawable.say_default_head)
-                .bitmapTransform(new CropCircleTransformation(UserInfoCardActivity.this))
+                .bitmapTransform(new CropCircleTransformation(context))
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .dontAnimate()
                 .skipMemoryCache(true)
                 .into(ivUserAvatar);
 
-        tvUserName.setText(username);
+        tvUserName.setText(TextUtils.isEmpty(user.getUsername()) ? username : user.getUsername());
         tvUserBio.setText(TextUtils.isEmpty(user.getBio()) ? "TA什么也没留下" : user.getBio());
         tvUserDepartment.setText(user.getDep_name());
     }

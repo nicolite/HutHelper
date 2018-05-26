@@ -72,25 +72,29 @@ public class SyllabusActivity extends BaseActivity implements ISyllabusView {
 
     @Override
     protected void doBusiness() {
+        if (ListUtils.isEmpty(getConfigureList()) || TextUtils.isEmpty(userId) || userId.equals("*")) {
+            startActivity(SplashActivity.class);
+            finish();
+        } else {
+            CurrWeek = DateUtils.getNowWeek();
+            toolbarTitle.setText(String.valueOf("第" + CurrWeek + "周"));
+            chooseNum = CurrWeek - 1;
 
-        CurrWeek = DateUtils.getNowWeek();
-        toolbarTitle.setText(String.valueOf("第" + CurrWeek + "周"));
-        chooseNum = CurrWeek - 1;
+            SharedPreferences.Editor edit = getSharedPreferences("choose", MODE_PRIVATE).edit();
+            edit.putInt("position", chooseNum);
+            edit.apply();
 
-        SharedPreferences.Editor edit = getSharedPreferences("choose", MODE_PRIVATE).edit();
-        edit.putInt("position", chooseNum);
-        edit.apply();
+            lessonList.addAll(daoSession.getLessonDao()
+                    .queryBuilder()
+                    .where(LessonDao.Properties.UserId.eq(userId))
+                    .list());
 
-        lessonList.addAll(daoSession.getLessonDao()
-                .queryBuilder()
-                .where(LessonDao.Properties.UserId.eq(userId))
-                .list());
+            syllabusFragment = SyllabusFragment.newInstance();
+            getSupportFragmentManager().beginTransaction().replace(R.id.content, syllabusFragment).commit();
 
-        syllabusFragment = SyllabusFragment.newInstance();
-        getSupportFragmentManager().beginTransaction().replace(R.id.content, syllabusFragment).commit();
-
-        syllabusPresenter = new SyllabusPresenter(this, this);
-        syllabusPresenter.showSyllabus(false);
+            syllabusPresenter = new SyllabusPresenter(this, this);
+            syllabusPresenter.showSyllabus(false);
+        }
     }
 
     @OnClick({R.id.toolbar_back, R.id.toolbar_title, R.id.toolbar_refresh})
@@ -222,6 +226,6 @@ public class SyllabusActivity extends BaseActivity implements ISyllabusView {
                 syllabusFragment.onActivityResult(requestCode, resultCode, data);
             }
         }
-
     }
+
 }

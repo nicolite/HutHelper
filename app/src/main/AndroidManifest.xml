@@ -53,19 +53,6 @@
         </activity>
 
         <activity
-            android:name=".view.activity.SyllabusMainActivity"
-            android:icon="@mipmap/ic_kechengbiao"
-            android:label="@string/kechengbiao"
-            android:launchMode="singleTask"
-            android:roundIcon="@mipmap/ic_kechengbiao_round"
-            android:theme="@style/AppSplash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity
             android:name=".view.activity.MainActivity"
             android:launchMode="singleTask"
             android:theme="@style/MainActivity" />
@@ -176,8 +163,16 @@
 
         <activity
             android:name=".view.activity.SyllabusActivity"
+            android:icon="@mipmap/ic_kechengbiao"
+            android:label="@string/kechengbiao"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme" />
+            android:roundIcon="@mipmap/ic_kechengbiao_round"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:name=".view.activity.SyllabusItemActivity"

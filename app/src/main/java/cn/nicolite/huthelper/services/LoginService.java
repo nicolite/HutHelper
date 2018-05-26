@@ -14,8 +14,8 @@ import cn.nicolite.huthelper.db.DaoHelper;
 import cn.nicolite.huthelper.db.dao.ConfigureDao;
 import cn.nicolite.huthelper.db.dao.DaoSession;
 import cn.nicolite.huthelper.model.bean.Configure;
+import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.User;
-import cn.nicolite.huthelper.model.bean.Valid;
 import cn.nicolite.huthelper.network.api.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.utils.ListUtils;
@@ -36,7 +36,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 public class LoginService extends IntentService {
 
     private static final int DELAY = 2 * 1000;
-    private static final int PERIOD = 15 * 1000;
+    private static final int PERIOD = 20 * 1000;
     private static final String ACTION_INIT_WHEN_APP_CREATE = "cn.nicolite.huthelper.service.action.INIT";
     private static final String TAG = "LoginService";
     private Timer timer;
@@ -89,24 +89,25 @@ public class LoginService extends IntentService {
         }
 
         Configure configure = list.get(0);
-        User user = configure.getUser();
 
         APIUtils.INSTANCE
-                .getMessageAPI()
-                .isValid(user.getStudentKH(), configure.getAppRememberCode())
+                .getUserAPI()
+                .getStudentInfo(configure.getStudentKH(), configure.getAppRememberCode(), configure.getUserId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Observer<Valid>() {
+                .subscribe(new Observer<HttpResult<User>>() {
                     @Override
                     public void onSubscribe(Disposable d) {
 
                     }
 
                     @Override
-                    public void onNext(Valid valid) {
-                        if (!valid.isCode()) {
+                    public void onNext(HttpResult<User> userHttpResult) {
+                        if (userHttpResult.getCode() != 200) {
                             LogUtils.d(TAG, "帐号已在在另一台设备登录！");
                             startLogin();
+                        } else if (userHttpResult.getCode() == 404) {
+                            LogUtils.d(TAG, "未找到该用户!（服务器出问题）");
                         } else {
                             LogUtils.d(TAG, "未发现在其他设备登录！");
                         }
@@ -115,6 +116,7 @@ public class LoginService extends IntentService {
                     @Override
                     public void onError(Throwable e) {
                         LogUtils.d(TAG, ExceptionEngine.handleException(e).getMsg());
+
                     }
 
                     @Override
