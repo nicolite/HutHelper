@@ -15,7 +15,7 @@ import java.util.List;
 
 import cn.nicolite.huthelper.BuildConfig;
 import cn.nicolite.huthelper.app.MApplication;
-import cn.nicolite.huthelper.base.presenter.BasePresenter;
+import cn.nicolite.huthelper.base.BasePresenter;
 import cn.nicolite.huthelper.db.dao.LessonDao;
 import cn.nicolite.huthelper.db.dao.MenuDao;
 import cn.nicolite.huthelper.db.dao.NoticeDao;
@@ -29,7 +29,7 @@ import cn.nicolite.huthelper.model.bean.TimeAxis;
 import cn.nicolite.huthelper.model.bean.Update;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.model.bean.Weather;
-import cn.nicolite.huthelper.network.api.APIUtils;
+import cn.nicolite.huthelper.network.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.services.LoginService;
 import cn.nicolite.huthelper.utils.CommUtil;

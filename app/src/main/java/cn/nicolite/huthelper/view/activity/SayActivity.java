@@ -1,6 +1,5 @@
 package cn.nicolite.huthelper.view.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -18,7 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
-import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.base.BaseActivity;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.User;

@@ -18,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.tencent.android.tpush.XGPushManager;
 import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -29,7 +30,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
-import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.base.BaseActivity;
 import cn.nicolite.huthelper.manager.ActivityStackManager;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Configure;
@@ -402,32 +403,27 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     public void showUser(User user) {
         tvNavName.setText(user.getTrueName());
-        if (!TextUtils.isEmpty(user.getHead_pic_thumb())) {
+        String headPic = Constants.PICTURE_URL + (TextUtils.isEmpty(user.getHead_pic()) ? user.getHead_pic_thumb() : user.getHead_pic());
+
+        if (!TextUtils.isEmpty(headPic)) {
             Glide
-                    .with(MainActivity.this)
-                    .load(Constants.PICTURE_URL + user.getHead_pic_thumb())
+                    .with(activity)
+                    .load(headPic)
                     .bitmapTransform(new CropCircleTransformation(context))
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                     .skipMemoryCache(true)
                     .crossFade()
                     .into(ivNavAvatar);
         } else {
-            if ("男".equals(user.getSex())) {
-                Glide
-                        .with(this)
-                        .load(R.drawable.head_boy)
-                        .bitmapTransform(new CropCircleTransformation(context))
-                        .skipMemoryCache(true)
-                        .crossFade()
-                        .into(ivNavAvatar);
-            } else {
-                Glide
-                        .with(this)
-                        .load(R.drawable.head_girl)
-                        .bitmapTransform(new CropCircleTransformation(context))
-                        .skipMemoryCache(true)
-                        .crossFade()
-                        .into(ivNavAvatar);
-            }
+            int headPicD = user.getSex().equals("男") ? R.drawable.head_boy : R.drawable.head_girl;
+            Glide
+                    .with(activity)
+                    .load(headPicD)
+                    .bitmapTransform(new CropCircleTransformation(context))
+                    .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                    .skipMemoryCache(true)
+                    .crossFade()
+                    .into(ivNavAvatar);
         }
     }
 

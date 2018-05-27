@@ -4,20 +4,16 @@ package cn.nicolite.huthelper.presenter;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 
-import cn.nicolite.huthelper.base.presenter.BasePresenter;
+import cn.nicolite.huthelper.base.BasePresenter;
 import cn.nicolite.huthelper.db.dao.ConfigureDao;
 import cn.nicolite.huthelper.db.dao.UserDao;
-import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.User;
-import cn.nicolite.huthelper.network.api.APIUtils;
+import cn.nicolite.huthelper.network.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
-import cn.nicolite.huthelper.utils.EncryptUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.view.activity.LoginActivity;

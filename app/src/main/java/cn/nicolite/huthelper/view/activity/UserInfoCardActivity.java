@@ -15,7 +15,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
-import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.base.BaseActivity;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.presenter.SearchPresenter;
@@ -161,7 +161,7 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
                 .error(R.drawable.say_default_head)
                 .bitmapTransform(new CropCircleTransformation(context))
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .dontAnimate()
+                .crossFade()
                 .skipMemoryCache(true)
                 .into(ivUserAvatar);
 

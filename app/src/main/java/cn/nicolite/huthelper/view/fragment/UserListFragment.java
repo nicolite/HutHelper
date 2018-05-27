@@ -17,7 +17,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.nicolite.huthelper.R;
-import cn.nicolite.huthelper.base.fragment.BaseFragment;
+import cn.nicolite.huthelper.base.BaseFragment;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.presenter.UserListPresenter;
 import cn.nicolite.huthelper.utils.SnackbarUtils;

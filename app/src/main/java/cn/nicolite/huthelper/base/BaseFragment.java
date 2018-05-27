@@ -1,4 +1,4 @@
-package cn.nicolite.huthelper.base.fragment;
+package cn.nicolite.huthelper.base;
 
 import android.app.Activity;
 import android.content.Context;

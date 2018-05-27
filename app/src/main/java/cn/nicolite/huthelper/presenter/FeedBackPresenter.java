@@ -4,9 +4,9 @@ import android.os.Build;
 import android.text.TextUtils;
 
 import cn.nicolite.huthelper.BuildConfig;
-import cn.nicolite.huthelper.base.presenter.BasePresenter;
+import cn.nicolite.huthelper.base.BasePresenter;
 import cn.nicolite.huthelper.model.bean.User;
-import cn.nicolite.huthelper.network.api.APIUtils;
+import cn.nicolite.huthelper.network.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.view.activity.FeedBackActivity;
 import cn.nicolite.huthelper.view.iview.IFeedBackView;

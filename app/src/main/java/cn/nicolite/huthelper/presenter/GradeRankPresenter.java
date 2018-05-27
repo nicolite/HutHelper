@@ -2,13 +2,13 @@ package cn.nicolite.huthelper.presenter;
 
 import java.util.List;
 
-import cn.nicolite.huthelper.base.presenter.BasePresenter;
+import cn.nicolite.huthelper.base.BasePresenter;
 import cn.nicolite.huthelper.db.dao.GradeRankDao;
 import cn.nicolite.huthelper.db.dao.GradeSumDao;
 import cn.nicolite.huthelper.model.bean.GradeRank;
 import cn.nicolite.huthelper.model.bean.GradeRankResult;
 import cn.nicolite.huthelper.model.bean.GradeSum;
-import cn.nicolite.huthelper.network.api.APIUtils;
+import cn.nicolite.huthelper.network.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.view.activity.GradeRankActivity;

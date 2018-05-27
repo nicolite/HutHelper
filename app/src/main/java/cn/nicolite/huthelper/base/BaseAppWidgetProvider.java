@@ -1,4 +1,6 @@
-package cn.nicolite.huthelper.base.utils;
+package cn.nicolite.huthelper.base;
+
+import android.appwidget.AppWidgetProvider;
 
 import java.util.List;
 
@@ -7,11 +9,10 @@ import cn.nicolite.huthelper.db.dao.DaoSession;
 import cn.nicolite.huthelper.model.bean.Configure;
 
 /**
- * Utils基类 所有Utils都需要继承此类开发
- * Created by nicolite on 2018/3/5.
+ * Created by nicolite on 17-12-15.
  */
 
-public abstract class BaseUtils {
+public class BaseAppWidgetProvider extends AppWidgetProvider {
     protected final String TAG = getClass().getSimpleName();
 
     /**

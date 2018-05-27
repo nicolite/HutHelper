@@ -8,7 +8,7 @@ import org.jsoup.select.Elements;
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.nicolite.huthelper.base.presenter.BasePresenter;
+import cn.nicolite.huthelper.base.BasePresenter;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.FreshmanGuide;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;

@@ -17,7 +17,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
-import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.base.BaseActivity;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.ExpLesson;
 import cn.nicolite.huthelper.presenter.ExplessonPresenter;

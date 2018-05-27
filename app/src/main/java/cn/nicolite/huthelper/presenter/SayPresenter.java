@@ -2,13 +2,13 @@ package cn.nicolite.huthelper.presenter;
 
 import java.util.List;
 
-import cn.nicolite.huthelper.base.presenter.BasePresenter;
+import cn.nicolite.huthelper.base.BasePresenter;
 import cn.nicolite.huthelper.model.bean.HttpPageResult;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.Say;
 import cn.nicolite.huthelper.model.bean.SayLikedCache;
 import cn.nicolite.huthelper.model.bean.User;
-import cn.nicolite.huthelper.network.api.APIUtils;
+import cn.nicolite.huthelper.network.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.view.fragment.SayFragment;

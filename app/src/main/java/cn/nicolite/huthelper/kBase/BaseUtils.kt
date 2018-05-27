@@ -6,6 +6,7 @@ import cn.nicolite.huthelper.model.bean.Configure
 /**
  * Created by nicolite on 2018/5/20.
  * email nicolite@nicolite.cn
+ *  kotlin Utils 基类
  */
 
 abstract class BaseUtils {

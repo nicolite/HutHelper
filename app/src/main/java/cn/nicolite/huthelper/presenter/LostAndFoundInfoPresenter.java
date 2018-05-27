@@ -1,8 +1,8 @@
 package cn.nicolite.huthelper.presenter;
 
-import cn.nicolite.huthelper.base.presenter.BasePresenter;
+import cn.nicolite.huthelper.base.BasePresenter;
 import cn.nicolite.huthelper.model.bean.HttpResult;
-import cn.nicolite.huthelper.network.api.APIUtils;
+import cn.nicolite.huthelper.network.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.view.activity.LostAndFoundInfoActivity;
 import cn.nicolite.huthelper.view.iview.ILostAndFoundInfoView;

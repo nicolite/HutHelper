@@ -17,7 +17,7 @@ import butterknife.BindViews;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
-import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.base.BaseActivity;
 import cn.nicolite.huthelper.model.bean.GradeRank;
 import cn.nicolite.huthelper.model.bean.GradeSum;
 import cn.nicolite.huthelper.presenter.GradeRankPresenter;

@@ -22,6 +22,8 @@ import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 /**
  * Created by nicolite on 2018/5/20.
  * email nicolite@nicolite.cn
+ * kotlin Activity 基类 包含生命周期管理
+ * 所有kotlin Activity都要继承此类
  */
 abstract class BaseActivity : RxAppCompatActivity() {
     protected val TAG = javaClass.simpleName

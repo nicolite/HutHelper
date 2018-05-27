@@ -11,7 +11,7 @@ import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
-import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.base.BaseActivity;
 import cn.nicolite.huthelper.presenter.SearchPresenter;
 import cn.nicolite.huthelper.utils.ToastUtil;
 import cn.nicolite.huthelper.view.fragment.LostAndFoundFragment;

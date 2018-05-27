@@ -1,4 +1,4 @@
-package cn.nicolite.huthelper.base.presenter;
+package cn.nicolite.huthelper.base;
 
 
 import android.content.Context;
@@ -12,8 +12,8 @@ import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
-import cn.nicolite.huthelper.base.activity.BaseActivity;
-import cn.nicolite.huthelper.base.fragment.BaseFragment;
+import cn.nicolite.huthelper.base.BaseActivity;
+import cn.nicolite.huthelper.base.BaseFragment;
 import cn.nicolite.huthelper.db.DaoUtils;
 import cn.nicolite.huthelper.db.dao.DaoSession;
 import cn.nicolite.huthelper.listener.ActivityLifeCycleListener;

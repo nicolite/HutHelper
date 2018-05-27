@@ -10,7 +10,7 @@ import android.widget.LinearLayout;
 
 import butterknife.BindView;
 import cn.nicolite.huthelper.R;
-import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.base.BaseActivity;
 
 
 /**

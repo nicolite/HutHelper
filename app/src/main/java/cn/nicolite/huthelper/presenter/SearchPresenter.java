@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 import java.util.List;
 
-import cn.nicolite.huthelper.base.presenter.BasePresenter;
+import cn.nicolite.huthelper.base.BasePresenter;
 import cn.nicolite.huthelper.db.dao.SearchHistoryDao;
 import cn.nicolite.huthelper.model.bean.SearchHistory;
 import cn.nicolite.huthelper.utils.ListUtils;

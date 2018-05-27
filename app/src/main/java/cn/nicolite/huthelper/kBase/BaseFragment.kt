@@ -18,6 +18,8 @@ import com.trello.rxlifecycle2.components.support.RxFragment
 /**
  * Created by nicolite on 2018/5/20.
  * email nicolite@nicolite.cn
+ * kotlin Fragment 基类 包含生命周期管理
+ * 所有kotlin Fragment都要继承此类
  */
 abstract class BaseFragment : RxFragment() {
     protected val TAG = javaClass.simpleName

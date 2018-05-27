@@ -27,7 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.nicolite.huthelper.R;
-import cn.nicolite.huthelper.base.fragment.BaseFragment;
+import cn.nicolite.huthelper.base.BaseFragment;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Say;
 import cn.nicolite.huthelper.presenter.SayPresenter;

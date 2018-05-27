@@ -4,10 +4,10 @@ import android.text.TextUtils;
 
 import java.util.List;
 
-import cn.nicolite.huthelper.base.presenter.BasePresenter;
+import cn.nicolite.huthelper.base.BasePresenter;
 import cn.nicolite.huthelper.model.bean.CareerTalk;
 import cn.nicolite.huthelper.model.bean.CareerTalkResult;
-import cn.nicolite.huthelper.network.api.APIUtils;
+import cn.nicolite.huthelper.network.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.view.activity.CareerTalkActivity;
 import cn.nicolite.huthelper.view.iview.ICareerTalkView;

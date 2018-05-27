@@ -1,4 +1,4 @@
-package cn.nicolite.huthelper.base.iview;
+package cn.nicolite.huthelper.base;
 
 /**
  *

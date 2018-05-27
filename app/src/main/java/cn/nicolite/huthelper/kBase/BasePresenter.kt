@@ -16,6 +16,8 @@ import java.lang.ref.WeakReference
 /**
  * Created by nicolite on 2018/5/20.
  * email nicolite@nicolite.cn
+ *  kotlin BasePresenter 基类
+ * 所有kotlin BasePresenter都要继承此类
  */
 abstract class BasePresenter<I, V>(iView: I, view: V) : ActivityLifeCycleListener, FragmentLifeCycleListener {
     protected val TAG = javaClass.simpleName

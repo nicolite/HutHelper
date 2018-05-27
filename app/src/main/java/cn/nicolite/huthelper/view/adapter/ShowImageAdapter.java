@@ -61,6 +61,7 @@ public class ShowImageAdapter extends PagerAdapter {
             url = Constants.PICTURE_URL + url;
         }
 
+        final String finalUrl = url;
         Glide
                 .with(context)
                 .load(url)
@@ -69,7 +70,6 @@ public class ShowImageAdapter extends PagerAdapter {
                 .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .crossFade()
-                .centerCrop()
                 .into(new SimpleTarget<GlideDrawable>() {
                     @Override
                     public void onLoadStarted(Drawable placeholder) {
@@ -80,14 +80,15 @@ public class ShowImageAdapter extends PagerAdapter {
 
                     @Override
                     public void onResourceReady(GlideDrawable resource, GlideAnimation<? super GlideDrawable> glideAnimation) {
-                        imageView.setImageDrawable(resource);
-//                        Glide
-//                                .with(context)
-//                                .load(resource.getCurrent())
-//                                .centerCrop()
-//                                .dontAnimate()
-//                                .into(imageView);
+                        Glide
+                                .with(context)
+                                .load("")
+                                .placeholder(resource.getCurrent())
+                                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                                .centerCrop()
+                                .into(imageView);
                         attacher.update();
+
                     }
 
                     @Override

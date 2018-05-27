@@ -2,7 +2,7 @@ package cn.nicolite.huthelper.view.iview;
 
 import java.util.List;
 
-import cn.nicolite.huthelper.base.iview.IBaseView;
+import cn.nicolite.huthelper.base.IBaseView;
 import cn.nicolite.huthelper.model.bean.GradeRank;
 import cn.nicolite.huthelper.model.bean.GradeSum;
 
