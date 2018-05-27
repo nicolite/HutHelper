@@ -83,7 +83,7 @@
         android:layout_height="1dp"
         android:background="@color/bg_grey" />
 
-    <WebView
+    <cn.nicolite.huthelper.view.customView.MMWebView
         android:id="@+id/careertalk_item_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

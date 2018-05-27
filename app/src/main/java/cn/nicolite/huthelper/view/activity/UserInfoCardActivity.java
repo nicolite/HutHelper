@@ -21,7 +21,7 @@ import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.presenter.SearchPresenter;
 import cn.nicolite.huthelper.presenter.UserInfoCardPresenter;
 import cn.nicolite.huthelper.utils.ListUtils;
-import cn.nicolite.huthelper.utils.ToastUtil;
+import cn.nicolite.huthelper.utils.ToastUtils;
 import cn.nicolite.huthelper.view.customView.CommonDialog;
 import cn.nicolite.huthelper.view.iview.IUserInfoCardView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -58,11 +58,11 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
     @Override
     protected void initBundleData(Bundle bundle) {
         if (bundle != null) {
-            mUserId = bundle.getString("userId", null);
-            username = bundle.getString("username", null);
+            mUserId = bundle.getString("userId", "");
+            username = bundle.getString("username", "");
 
             if (TextUtils.isEmpty(mUserId) || TextUtils.isEmpty(username)) {
-                ToastUtil.showToastShort("获取信息失败！");
+                ToastUtils.showToastShort("获取信息失败！");
                 finish();
             }
         }
@@ -165,7 +165,9 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
                 .skipMemoryCache(true)
                 .into(ivUserAvatar);
 
-        tvUserName.setText(TextUtils.isEmpty(user.getUsername()) ? username : user.getUsername());
+        String name = TextUtils.isEmpty(user.getUsername()) ? username : user.getUsername();
+        tvUserName.setText(name);
+        toolbarTitle.setText(name);
         tvUserBio.setText(TextUtils.isEmpty(user.getBio()) ? "TA什么也没留下" : user.getBio());
         tvUserDepartment.setText(user.getDep_name());
     }

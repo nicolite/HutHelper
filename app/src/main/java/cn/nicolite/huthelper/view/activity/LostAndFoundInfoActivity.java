@@ -24,7 +24,7 @@ import cn.nicolite.huthelper.model.bean.LostAndFound;
 import cn.nicolite.huthelper.presenter.LostAndFoundInfoPresenter;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
-import cn.nicolite.huthelper.utils.ToastUtil;
+import cn.nicolite.huthelper.utils.ToastUtils;
 import cn.nicolite.huthelper.view.adapter.ImageAdapter;
 import cn.nicolite.huthelper.view.customView.CommonDialog;
 import cn.nicolite.huthelper.view.iview.ILostAndFoundInfoView;
@@ -86,7 +86,7 @@ public class LostAndFoundInfoActivity extends BaseActivity implements ILostAndFo
             position = bundle.getInt("position", -1);
             lostAndFound = (LostAndFound) bundle.getSerializable("data");
             if (lostAndFound == null || position == -1) {
-                ToastUtil.showToastShort("获取信息失败！");
+                ToastUtils.showToastShort("获取信息失败！");
                 finish();
             }
         }

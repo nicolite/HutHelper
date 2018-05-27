@@ -26,7 +26,7 @@ import cn.nicolite.huthelper.model.bean.GoodsItem;
 import cn.nicolite.huthelper.presenter.GoodsInfoPresenter;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
-import cn.nicolite.huthelper.utils.ToastUtil;
+import cn.nicolite.huthelper.utils.ToastUtils;
 import cn.nicolite.huthelper.view.adapter.ImageAdapter;
 import cn.nicolite.huthelper.view.iview.IGoodsInfoView;
 import cn.nicolite.huthelper.view.customView.CommonDialog;
@@ -93,7 +93,7 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
             delete = bundle.getBoolean("delete", false);
             position = bundle.getInt("position", -1);
             if (TextUtils.isEmpty(mUserId) || TextUtils.isEmpty(goodsId) || position == -1) {
-                ToastUtil.showToastShort("获取信息失败！");
+                ToastUtils.showToastShort("获取信息失败！");
                 finish();
             }
         }

@@ -40,6 +40,7 @@ class MApplication : Application() {
         Beta.canShowUpgradeActs.add(MainActivity::class.java)
         Bugly.init(this, Constants.BUGLY_APPID, BuildConfig.LOG_DEBUG)
         Bugly.setIsDevelopmentDevice(this, BuildConfig.LOG_DEBUG)
+
     }
 
     override fun attachBaseContext(base: Context?) {

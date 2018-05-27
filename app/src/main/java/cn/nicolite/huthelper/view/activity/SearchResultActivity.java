@@ -13,7 +13,7 @@ import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.BaseActivity;
 import cn.nicolite.huthelper.presenter.SearchPresenter;
-import cn.nicolite.huthelper.utils.ToastUtil;
+import cn.nicolite.huthelper.utils.ToastUtils;
 import cn.nicolite.huthelper.view.fragment.LostAndFoundFragment;
 import cn.nicolite.huthelper.view.fragment.MarketFragment;
 import cn.nicolite.huthelper.view.fragment.SayFragment;
@@ -49,7 +49,7 @@ public class SearchResultActivity extends BaseActivity {
             searchText = bundle.getString("searchText", "");
             extras = bundle.getString("extras", "");
             if (type == -1) {
-                ToastUtil.showToastShort("获取类型异常！");
+                ToastUtils.showToastShort("获取类型异常！");
                 finish();
             }
         }
@@ -130,7 +130,7 @@ public class SearchResultActivity extends BaseActivity {
                 transaction.replace(R.id.fragment_content, SayFragment.newInstance(SayFragment.MYSAY, searchText));
                 break;
             default:
-                ToastUtil.showToastShort("未知类型！");
+                ToastUtils.showToastShort("未知类型！");
         }
         transaction.commit();
     }

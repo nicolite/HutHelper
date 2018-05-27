@@ -3,6 +3,7 @@ package cn.nicolite.huthelper.presenter;
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushConfig;
@@ -191,7 +192,12 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                 .where(MenuDao.Properties.UserId.eq(userId))
                 .list();
 
-        if (ListUtils.isEmpty(menus) || menus.size() > 14) {
+        int newVersionCode = 0; //TODO 需要更新menu时，将这个数值加一
+
+        SharedPreferences updateMainMenu = MApplication.appContext.getSharedPreferences("update_main_menu", Context.MODE_PRIVATE);
+        int oldVersionCode = updateMainMenu.getInt("versionCode", -1);
+
+        if (newVersionCode > oldVersionCode || ListUtils.isEmpty(menus)) {
             List<Menu> menuItems = new ArrayList<>();
             Menu item = new Menu(0, 0, WebViewActivity.TYPE_LIBRARY, "图书馆", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
             menuItems.add(item);
@@ -221,28 +227,20 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             menuItems.add(item);
 //            item = new Menu(13, 13, 0, "视频专栏", "cn.nicolite.huthelper.view.activity.VideoActivity", false);
 //            menuItems.add(item);
+            item = new Menu(13, 13, 0, "广告专栏", "cn.nicolite.huthelper.view.activity.ADActivity", false);
+            menuItems.add(item);
             item = new Menu(14, 14, 0, "新生攻略", "cn.nicolite.huthelper.view.activity.FreshmanGuideActivity", false);
             menuItems.add(item);
 
+            menuDao.deleteAll();
             for (Menu menu : menuItems) {
-                if (!ListUtils.isEmpty(menus)) {
-                    //更新时保留用户自定义内容
-                    Menu menuOld = menus.get(0);
-                    if (!menuOld.getTitle().equals(menu.getTitle())
-                            || !menuOld.getPath().equals(menu.getPath())
-                            || menuOld.getType() != menu.getType()
-                            || menuOld.getImgId() != menu.getImgId()) {
-                        menuOld.setTitle(menu.getTitle());
-                        menuOld.setPath(menu.getPath());
-                        menuOld.setType(menu.getType());
-                        menuOld.setImgId(menu.getImgId());
-                        menuDao.update(menuOld);
-                    }
-                    continue;
-                }
                 menu.setUserId(userId);
                 menuDao.insert(menu);
             }
+
+            updateMainMenu.edit()
+                    .putInt("versionCode", newVersionCode)
+                    .apply();
         }
 
         List<Menu> menuList = menuDao.queryBuilder()

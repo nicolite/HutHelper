@@ -35,7 +35,7 @@ import cn.nicolite.huthelper.utils.ButtonUtils;
 import cn.nicolite.huthelper.utils.CommUtil;
 import cn.nicolite.huthelper.utils.KeyBoardUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
-import cn.nicolite.huthelper.utils.ToastUtil;
+import cn.nicolite.huthelper.utils.ToastUtils;
 import cn.nicolite.huthelper.view.activity.ShowImageActivity;
 import cn.nicolite.huthelper.view.activity.UserInfoCardActivity;
 import cn.nicolite.huthelper.view.adapter.SayAdapter;
@@ -330,7 +330,7 @@ public class SayFragment extends BaseFragment implements ISayView {
                             addCommitWindow.dismiss();
 
                         if (TextUtils.isEmpty(comment)) {
-                            ToastUtil.showToastShort("请填写评论内容！");
+                            ToastUtils.showToastShort("请填写评论内容！");
                             return;
                         }
                         sayPresenter.addComment(comment, sayId, position);

@@ -131,7 +131,13 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
         for (String item : pics) {
             picsRaw.add(item.replace("_thumb", ""));
         }
+
         holder.rvItemSayimg.setUrlList(picsRaw);
+        if (ListUtils.isEmpty(pics)) {
+            holder.rvItemSayimg.setVisibility(View.GONE);
+        } else {
+            holder.rvItemSayimg.setVisibility(View.VISIBLE);
+        }
 
         if (ListUtils.isEmpty(comments)) {
             holder.ivItemSay.setVisibility(View.GONE);

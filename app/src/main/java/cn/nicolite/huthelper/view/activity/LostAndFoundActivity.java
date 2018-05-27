@@ -27,7 +27,7 @@ import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.presenter.SearchPresenter;
 import cn.nicolite.huthelper.utils.DensityUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
-import cn.nicolite.huthelper.utils.ToastUtil;
+import cn.nicolite.huthelper.utils.ToastUtils;
 import cn.nicolite.huthelper.view.adapter.TabAdapter;
 import cn.nicolite.huthelper.view.fragment.LostAndFoundFragment;
 
@@ -124,14 +124,14 @@ public class LostAndFoundActivity extends BaseActivity {
 
     private void showMenuWindows(View parent) {
         if (TextUtils.isEmpty(userId)) {
-            ToastUtil.showToastShort("获取用户信息失败！");
+            ToastUtils.showToastShort("获取用户信息失败！");
             return;
         }
 
         List<Configure> configureList = getConfigureList();
 
         if (ListUtils.isEmpty(configureList)) {
-            ToastUtil.showToastShort("获取用户信息失败！");
+            ToastUtils.showToastShort("获取用户信息失败！");
             return;
         }
         final User user = configureList.get(0).getUser();

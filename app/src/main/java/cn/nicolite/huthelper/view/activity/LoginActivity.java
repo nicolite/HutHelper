@@ -22,7 +22,7 @@ import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.presenter.LoginPresenter;
 import cn.nicolite.huthelper.utils.KeyBoardUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
-import cn.nicolite.huthelper.utils.ToastUtil;
+import cn.nicolite.huthelper.utils.ToastUtils;
 import cn.nicolite.huthelper.view.iview.ILoginView;
 import cn.nicolite.huthelper.view.customView.LoadingDialog;
 
@@ -102,7 +102,7 @@ public class LoginActivity extends BaseActivity implements ILoginView{
                 String password = etPassword.getText().toString();
 
                 if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)){
-                    ToastUtil.showToastShort("请填写完整再提交");
+                    ToastUtils.showToastShort("请填写完整再提交");
                     return;
                 }
 

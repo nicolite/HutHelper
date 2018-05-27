@@ -31,7 +31,7 @@ import cn.nicolite.huthelper.utils.DensityUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.utils.ScreenUtils;
-import cn.nicolite.huthelper.utils.ToastUtil;
+import cn.nicolite.huthelper.utils.ToastUtils;
 import cn.nicolite.huthelper.view.adapter.SyllabusItemAdapter;
 import cn.nicolite.huthelper.view.customView.CommonDialog;
 
@@ -108,7 +108,7 @@ public class SyllabusItemActivity extends BaseActivity {
         }
 
         if (lessonId == -2) {
-            ToastUtil.showToastShort("获取课程信息出错！");
+            ToastUtils.showToastShort("获取课程信息出错！");
             finish();
         } else if (lessonId == -3) {
             type = ADD_COURSE;
@@ -189,21 +189,21 @@ public class SyllabusItemActivity extends BaseActivity {
                                 lesson.setAddByUser(false);
                                 lesson.setId(lessonId);
                                 lessonDao.update(lesson);
-                                ToastUtil.showToastShort("编辑成功");
+                                ToastUtils.showToastShort("编辑成功");
                             } else {
                                 lesson.setAddByUser(true);
                                 lessonDao.insert(lesson);
-                                ToastUtil.showToastShort("添加成功");
+                                ToastUtils.showToastShort("添加成功");
                             }
                             setResult(Constants.REFRESH);
                             finish();
                         } else {
-                            ToastUtil.showToastShort("请填写课程名");
+                            ToastUtils.showToastShort("请填写课程名");
                         }
                         type = SHOW_COURSE;
                     } catch (Exception e) {
                         e.printStackTrace();
-                        ToastUtil.showToastShort("添加出现错误");
+                        ToastUtils.showToastShort("添加出现错误");
                     }
                 }
                 break;
@@ -257,7 +257,7 @@ public class SyllabusItemActivity extends BaseActivity {
 
     private void setCourseData() {
         if (lesson == null) {
-            ToastUtil.showToastShort("获取课程数据出错！");
+            ToastUtils.showToastShort("获取课程数据出错！");
             finish();
         }
 
@@ -338,7 +338,7 @@ public class SyllabusItemActivity extends BaseActivity {
                     public void onClick(View view) {
                         commonDialog.dismiss();
                         lessonDao.deleteByKey(lessonId);
-                        ToastUtil.showToastShort("删除成功");
+                        ToastUtils.showToastShort("删除成功");
                         setResult(Constants.DELETE);
                         finish();
                     }

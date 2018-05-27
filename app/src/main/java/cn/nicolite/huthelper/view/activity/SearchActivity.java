@@ -21,7 +21,7 @@ import cn.nicolite.huthelper.model.bean.SearchHistory;
 import cn.nicolite.huthelper.presenter.SearchPresenter;
 import cn.nicolite.huthelper.utils.KeyBoardUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
-import cn.nicolite.huthelper.utils.ToastUtil;
+import cn.nicolite.huthelper.utils.ToastUtils;
 import cn.nicolite.huthelper.view.adapter.SearchAdapter;
 import cn.nicolite.huthelper.view.iview.ISearchView;
 import cn.nicolite.huthelper.view.customView.CommonDialog;
@@ -56,7 +56,7 @@ public class SearchActivity extends BaseActivity implements ISearchView {
         if (bundle != null) {
             type = bundle.getInt("type", -1);
             if (type == -1) {
-                ToastUtil.showToastShort("获取类型异常！");
+                ToastUtils.showToastShort("获取类型异常！");
                 finish();
             }
         }

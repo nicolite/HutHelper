@@ -17,7 +17,7 @@ import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.BaseActivity;
 import cn.nicolite.huthelper.model.bean.Video;
 import cn.nicolite.huthelper.utils.CommUtil;
-import cn.nicolite.huthelper.utils.ToastUtil;
+import cn.nicolite.huthelper.utils.ToastUtils;
 import cn.nicolite.huthelper.view.adapter.VideoItemAdapter;
 import cn.nicolite.huthelper.view.customView.CommonDialog;
 import jp.wasabeef.glide.transformations.BlurTransformation;
@@ -55,7 +55,7 @@ public class VideoItemActivity extends BaseActivity {
             url = bundle.getString("url");
             linksBean = (Video.LinksBean) bundle.getSerializable("link");
         } else {
-            ToastUtil.showToastShort("数据异常");
+            ToastUtils.showToastShort("数据异常");
             finish();
         }
     }

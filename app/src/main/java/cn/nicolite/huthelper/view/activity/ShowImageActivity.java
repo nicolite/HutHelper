@@ -16,7 +16,7 @@ import cn.nicolite.huthelper.utils.ButtonUtils;
 import cn.nicolite.huthelper.utils.CommUtil;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
-import cn.nicolite.huthelper.utils.ToastUtil;
+import cn.nicolite.huthelper.utils.ToastUtils;
 import cn.nicolite.huthelper.view.adapter.ShowImageAdapter;
 
 /**
@@ -46,7 +46,7 @@ public class ShowImageActivity extends BaseActivity {
         images = bundle.getStringArrayList("images");
         currentPosition = bundle.getInt("curr");
         if (ListUtils.isEmpty(images)) {
-            ToastUtil.showToastShort("获取数据出错");
+            ToastUtils.showToastShort("获取数据出错");
             finish();
         }
     }

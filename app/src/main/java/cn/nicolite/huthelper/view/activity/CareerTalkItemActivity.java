@@ -20,9 +20,10 @@ import cn.nicolite.huthelper.injection.JsInject;
 import cn.nicolite.huthelper.model.bean.CareerTalkItem;
 import cn.nicolite.huthelper.presenter.CareerTalkItemPresenter;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
-import cn.nicolite.huthelper.utils.ToastUtil;
-import cn.nicolite.huthelper.view.iview.ICareerTalkItemView;
+import cn.nicolite.huthelper.utils.ToastUtils;
 import cn.nicolite.huthelper.view.customView.LoadingDialog;
+import cn.nicolite.huthelper.view.customView.MMWebView;
+import cn.nicolite.huthelper.view.iview.ICareerTalkItemView;
 
 /**
  * 宣讲会详情页面
@@ -47,7 +48,7 @@ public class CareerTalkItemActivity extends BaseActivity implements ICareerTalkI
     @BindView(R.id.careertalk_item_address)
     TextView careertalkItemAddress;
     @BindView(R.id.careertalk_item_webview)
-    WebView webView;
+    MMWebView webView;
     @BindView(R.id.rootView)
     LinearLayout rootView;
 
@@ -67,11 +68,11 @@ public class CareerTalkItemActivity extends BaseActivity implements ICareerTalkI
         if (bundle != null) {
             id = bundle.getInt("id", -1);
             if (id == -1) {
-                ToastUtil.showToastShort("获取参数异常！");
+                ToastUtils.showToastShort("获取参数异常！");
                 finish();
             }
         } else {
-            ToastUtil.showToastShort("获取参数异常！");
+            ToastUtils.showToastShort("获取参数异常！");
             finish();
         }
     }

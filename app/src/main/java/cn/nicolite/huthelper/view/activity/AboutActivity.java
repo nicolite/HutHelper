@@ -15,7 +15,7 @@ import cn.nicolite.huthelper.BuildConfig;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.BaseActivity;
 import cn.nicolite.huthelper.model.Constants;
-import cn.nicolite.huthelper.utils.ToastUtil;
+import cn.nicolite.huthelper.utils.ToastUtils;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
@@ -104,7 +104,7 @@ public class AboutActivity extends BaseActivity {
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intent);
                 } catch (Exception e) {
-                    ToastUtil.showToastShort("您的手机没有安装Android应用市场");
+                    ToastUtils.showToastShort("您的手机没有安装Android应用市场");
                     e.printStackTrace();
                 }
                 break;

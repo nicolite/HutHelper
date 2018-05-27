@@ -13,6 +13,10 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.SEND_DOWNLOAD_COMPLETED_INTENTS" />
+    <uses-permission android:name="android.permission.DOWNLOAD_WITHOUT_NOTIFICATION" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
 
     <!-- 信鸽推送 -->
     <permission
@@ -207,6 +211,10 @@
 
         <activity
             android:name=".view.activity.NoticeItemActivity"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name=".view.activity.ADActivity"
             android:theme="@style/AppTheme" />
 
         <!--bugly 升级Activity-->

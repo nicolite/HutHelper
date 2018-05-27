@@ -13,7 +13,7 @@ import cn.nicolite.huthelper.base.BaseActivity;
 import cn.nicolite.huthelper.db.dao.NoticeDao;
 import cn.nicolite.huthelper.model.bean.Notice;
 import cn.nicolite.huthelper.utils.ListUtils;
-import cn.nicolite.huthelper.utils.ToastUtil;
+import cn.nicolite.huthelper.utils.ToastUtils;
 import cn.nicolite.huthelper.view.customView.RichTextView;
 
 /**
@@ -47,7 +47,7 @@ public class NoticeItemActivity extends BaseActivity {
             noticeId = bundle.getLong("noticeId", -2);
         }
         if (noticeId == -2) {
-            ToastUtil.showToastShort("获取通知失败！");
+            ToastUtils.showToastShort("获取通知失败！");
             finish();
         }
     }
@@ -67,7 +67,7 @@ public class NoticeItemActivity extends BaseActivity {
                 .list();
 
         if (ListUtils.isEmpty(list)) {
-            ToastUtil.showToastShort("未找到该通知的数据！");
+            ToastUtils.showToastShort("未找到该通知的数据！");
             finish();
             return;
         }

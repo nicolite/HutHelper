@@ -174,7 +174,7 @@ public class CommUtil {
         }
         // 通知图库更新
         context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.parse("file://" + path)));
-        ToastUtil.showToastShort("图片已成功保存至:" + appDir.toString() + "/" + fileName);
+        ToastUtils.showToastShort("图片已成功保存至:" + appDir.toString() + "/" + fileName);
     }
 
     public static void downloadBitmap(final Context context, String url) {
@@ -183,7 +183,7 @@ public class CommUtil {
                 url = Constants.PICTURE_URL + url;
             }
         } else {
-            ToastUtil.showToastShort("获取下载链接失败！");
+            ToastUtils.showToastShort("获取下载链接失败！");
             return;
         }
 
@@ -201,7 +201,7 @@ public class CommUtil {
                     @Override
                     public void onLoadFailed(Exception e, Drawable errorDrawable) {
                         super.onLoadFailed(e, errorDrawable);
-                        ToastUtil.showToastShort("保存失败");
+                        ToastUtils.showToastShort("保存失败");
                     }
                 });
     }
