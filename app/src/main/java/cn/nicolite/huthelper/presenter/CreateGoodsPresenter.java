@@ -124,7 +124,7 @@ public class CreateGoodsPresenter extends BasePresenter<ICreateGoodsView, Create
         String env = EncryptUtils.SHA1(configure.getStudentKH() + configure.getAppRememberCode() + date);
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
         byte[] bytes = outputStream.toByteArray();
         RequestBody requestBody = RequestBody.create(MediaType.parse("img/jpeg"), bytes);
         MultipartBody.Part file = MultipartBody.Part.createFormData("file", "01.jpg", requestBody);

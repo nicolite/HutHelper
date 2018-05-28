@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.LayoutInflater
 import android.view.View
 import android.webkit.WebChromeClient
 import android.webkit.WebSettings
@@ -287,18 +288,16 @@ class WebViewActivity : BaseActivity() {
     }
 
     protected fun initErrorPage() {
-        if (mErrorView == null) {
-            mErrorView = View.inflate(this, R.layout.online_error, null)
-            val button = mErrorView.findViewById(R.id.btn_refer) as ImageButton
-            button.setOnClickListener {
-                if (!CommUtil.isOnline(applicationContext)) {
-                    SnackbarUtils.showShortSnackbar(rootView, "网络不可用！")
-                }
-                hideErrorPage()
-                webView.reload()
+        mErrorView = LayoutInflater.from(context).inflate(R.layout.online_error, rootView, false)
+        val button = mErrorView.findViewById(R.id.btn_refer) as ImageButton
+        button.setOnClickListener {
+            if (!CommUtil.isOnline(applicationContext)) {
+                SnackbarUtils.showShortSnackbar(rootView, "网络不可用！")
             }
-            mErrorView.setOnClickListener(null)
+            hideErrorPage()
+            webView.reload()
         }
+        mErrorView.setOnClickListener(null)
     }
 
     /**
@@ -329,7 +328,7 @@ class WebViewActivity : BaseActivity() {
         mIsErrorPage = false
     }
 
-    fun loadContent(url: String) {
+    private fun loadContent(url: String) {
         Observable.create(ObservableOnSubscribe<String> { e ->
             val document = Jsoup.connect(url)
                     .userAgent("Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko)Chrome/50.0.2661.102 Safari/537.36")

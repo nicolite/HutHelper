@@ -102,7 +102,7 @@ android {
     }
 
     greendao {
-        schemaVersion 3
+        schemaVersion 4
         daoPackage "cn.nicolite.huthelper.db.dao"
         targetGenDir "src/main/java"
         generateTests false
@@ -162,7 +162,14 @@ android {
                     BUGLY_APP_CHANNEL: "小米应用商店"
             ]
         }
-
+        //应用宝
+        yingyongbao {
+            flavorDimensions "yingyongbao"
+            manifestPlaceholders = [
+                    MTA_CHANNEL      : "应用宝",
+                    BUGLY_APP_CHANNEL: "应用宝"
+            ]
+        }
     }
 
 }

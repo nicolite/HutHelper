@@ -10,6 +10,7 @@ import kotlinx.android.synthetic.main.toolbar_nomenu.*
 /**
  * Created by nicolite on 2018/5/27.
  * email nicolite@nicolite.cn
+ * 广告页面，用于放广告
  */
 class ADActivity : BaseActivity(), IADView {
 
