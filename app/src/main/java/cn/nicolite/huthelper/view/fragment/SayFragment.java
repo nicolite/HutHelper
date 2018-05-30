@@ -119,7 +119,7 @@ public class SayFragment extends BaseFragment implements ISayView {
             @Override
             public void onUserClick(String userId, String username) {
                 Bundle bundle = new Bundle();
-                bundle.putString("userId", userId);
+                bundle.putString("loginUserId", userId);
                 bundle.putString("username", username);
                 startActivity(UserInfoCardActivity.class, bundle);
             }

@@ -2,6 +2,7 @@ package cn.nicolite.huthelper.presenter;
 
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -75,11 +76,10 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
 
         configure.setLou(lou);
         configure.setHao(hao);
-        configure.update();
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM", Locale.CHINA);
         String date = simpleDateFormat.format(new Date());
-        String env = EncryptUtils.SHA1(lou + hao + date + configure.getStudentKH() + configure.getAppRememberCode());
+        final String env = EncryptUtils.SHA1(lou + hao + date + configure.getStudentKH() + configure.getAppRememberCode());
 
         APIUtils.INSTANCE
                 .getElectricAPI()
@@ -98,7 +98,23 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
                         if (getView() != null) {
                             getView().closeLoading();
                             if (electric.getCode() == 200) {
-                                getView().showElectric(electric);
+                                String yudian = configure.getYudian();
+                                String yue = configure.getYue();
+
+                                if (!TextUtils.isEmpty(yudian) && !TextUtils.isEmpty(yue) &&
+                                        !yudian.equals("0.00") && !yue.equals("0.00") &&
+                                        electric.getAmmeter().equals("0.00") && electric.getBalance().equals("0.00")) {
+
+                                    Electric electric1 = new Electric();
+                                    electric1.setAmmeter(yudian);
+                                    electric1.setBalance(yue);
+                                    getView().showElectric(electric1);
+                                } else {
+                                    configure.setYudian(electric.getAmmeter());
+                                    configure.setYue(electric.getBalance());
+                                    configure.update();
+                                    getView().showElectric(electric);
+                                }
                             } else {
                                 getView().showMessage("获取电费数据失败！ " + electric.getCode());
                             }
@@ -185,7 +201,7 @@ public class ElectricPresenter extends BasePresenter<IElectricView, ElectricActi
 
                     @Override
                     public void onNext(Vote vote) {
-                        if (getView() != null){
+                        if (getView() != null) {
                             if (!TextUtils.isEmpty(vote.getMsg()) && vote.getMsg().equals("令牌错误")) {
                                 getView().showMessage(vote.getMsg() + "，请重新登录！");
                                 return;

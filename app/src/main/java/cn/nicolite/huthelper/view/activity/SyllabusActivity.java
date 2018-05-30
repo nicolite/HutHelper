@@ -130,8 +130,7 @@ public class SyllabusActivity extends BaseActivity implements ISyllabusView {
 
         int width = ScreenUtils.getScreenWidth(context) / 2;
         if (weekListWindow == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-            View popupWindowLayout = layoutInflater.inflate(R.layout.popupwindow_coursetable, null);
+            View popupWindowLayout = LayoutInflater.from(context).inflate(R.layout.popupwindow_coursetable, rootView, false);
             weekListView = (ListView) popupWindowLayout.findViewById(R.id.lv_weekchoose_coursetable);
             final List<String> weekList = new ArrayList<>();
             for (int i = 1; i <= 25; i++) {
@@ -206,7 +205,7 @@ public class SyllabusActivity extends BaseActivity implements ISyllabusView {
         this.lessonList.addAll(lessonList);
 
         CurrWeek = DateUtils.getNowWeek();
-        toolbarTitle.setText(String.valueOf("第" + CurrWeek + "周"));
+        toolbarTitle.setText(String.valueOf("第" + CurrWeek + "周(本周)"));
         chooseNum = CurrWeek - 1;
 
         SharedPreferences.Editor edit = getSharedPreferences("choose", MODE_PRIVATE).edit();
@@ -214,7 +213,10 @@ public class SyllabusActivity extends BaseActivity implements ISyllabusView {
         edit.apply();
 
         content.setVisibility(View.VISIBLE);
-        syllabusFragment.updateData();
+
+        if (syllabusFragment != null) {
+            syllabusFragment.updateData();
+        }
         setResult(Constants.REFRESH);
     }
 

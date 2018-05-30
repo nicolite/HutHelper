@@ -102,7 +102,7 @@ android {
     }
 
     greendao {
-        schemaVersion 4
+        schemaVersion 5
         daoPackage "cn.nicolite.huthelper.db.dao"
         targetGenDir "src/main/java"
         generateTests false

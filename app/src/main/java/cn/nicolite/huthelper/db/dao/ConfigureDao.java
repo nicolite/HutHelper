@@ -39,9 +39,11 @@ public class ConfigureDao extends AbstractDao<Configure, Long> {
         public final static Property StudentKH = new Property(7, String.class, "studentKH", false, "STUDENT_KH");
         public final static Property Lou = new Property(8, String.class, "lou", false, "LOU");
         public final static Property Hao = new Property(9, String.class, "hao", false, "HAO");
-        public final static Property LibraryUrl = new Property(10, String.class, "libraryUrl", false, "LIBRARY_URL");
-        public final static Property TestPlanUrl = new Property(11, String.class, "testPlanUrl", false, "TEST_PLAN_URL");
-        public final static Property NewTermDate = new Property(12, String.class, "newTermDate", false, "NEW_TERM_DATE");
+        public final static Property Yudian = new Property(10, String.class, "yudian", false, "YUDIAN");
+        public final static Property Yue = new Property(11, String.class, "yue", false, "YUE");
+        public final static Property LibraryUrl = new Property(12, String.class, "libraryUrl", false, "LIBRARY_URL");
+        public final static Property TestPlanUrl = new Property(13, String.class, "testPlanUrl", false, "TEST_PLAN_URL");
+        public final static Property NewTermDate = new Property(14, String.class, "newTermDate", false, "NEW_TERM_DATE");
     }
 
     private DaoSession daoSession;
@@ -70,9 +72,11 @@ public class ConfigureDao extends AbstractDao<Configure, Long> {
                 "\"STUDENT_KH\" TEXT," + // 7: studentKH
                 "\"LOU\" TEXT," + // 8: lou
                 "\"HAO\" TEXT," + // 9: hao
-                "\"LIBRARY_URL\" TEXT," + // 10: libraryUrl
-                "\"TEST_PLAN_URL\" TEXT," + // 11: testPlanUrl
-                "\"NEW_TERM_DATE\" TEXT);"); // 12: newTermDate
+                "\"YUDIAN\" TEXT," + // 10: yudian
+                "\"YUE\" TEXT," + // 11: yue
+                "\"LIBRARY_URL\" TEXT," + // 12: libraryUrl
+                "\"TEST_PLAN_URL\" TEXT," + // 13: testPlanUrl
+                "\"NEW_TERM_DATE\" TEXT);"); // 14: newTermDate
     }
 
     /** Drops the underlying database table. */
@@ -135,19 +139,29 @@ public class ConfigureDao extends AbstractDao<Configure, Long> {
             stmt.bindString(10, hao);
         }
  
+        String yudian = entity.getYudian();
+        if (yudian != null) {
+            stmt.bindString(11, yudian);
+        }
+ 
+        String yue = entity.getYue();
+        if (yue != null) {
+            stmt.bindString(12, yue);
+        }
+ 
         String libraryUrl = entity.getLibraryUrl();
         if (libraryUrl != null) {
-            stmt.bindString(11, libraryUrl);
+            stmt.bindString(13, libraryUrl);
         }
  
         String testPlanUrl = entity.getTestPlanUrl();
         if (testPlanUrl != null) {
-            stmt.bindString(12, testPlanUrl);
+            stmt.bindString(14, testPlanUrl);
         }
  
         String newTermDate = entity.getNewTermDate();
         if (newTermDate != null) {
-            stmt.bindString(13, newTermDate);
+            stmt.bindString(15, newTermDate);
         }
     }
 
@@ -205,19 +219,29 @@ public class ConfigureDao extends AbstractDao<Configure, Long> {
             stmt.bindString(10, hao);
         }
  
+        String yudian = entity.getYudian();
+        if (yudian != null) {
+            stmt.bindString(11, yudian);
+        }
+ 
+        String yue = entity.getYue();
+        if (yue != null) {
+            stmt.bindString(12, yue);
+        }
+ 
         String libraryUrl = entity.getLibraryUrl();
         if (libraryUrl != null) {
-            stmt.bindString(11, libraryUrl);
+            stmt.bindString(13, libraryUrl);
         }
  
         String testPlanUrl = entity.getTestPlanUrl();
         if (testPlanUrl != null) {
-            stmt.bindString(12, testPlanUrl);
+            stmt.bindString(14, testPlanUrl);
         }
  
         String newTermDate = entity.getNewTermDate();
         if (newTermDate != null) {
-            stmt.bindString(13, newTermDate);
+            stmt.bindString(15, newTermDate);
         }
     }
 
@@ -245,9 +269,11 @@ public class ConfigureDao extends AbstractDao<Configure, Long> {
             cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7), // studentKH
             cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8), // lou
             cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9), // hao
-            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // libraryUrl
-            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // testPlanUrl
-            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12) // newTermDate
+            cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10), // yudian
+            cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11), // yue
+            cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12), // libraryUrl
+            cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13), // testPlanUrl
+            cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14) // newTermDate
         );
         return entity;
     }
@@ -264,9 +290,11 @@ public class ConfigureDao extends AbstractDao<Configure, Long> {
         entity.setStudentKH(cursor.isNull(offset + 7) ? null : cursor.getString(offset + 7));
         entity.setLou(cursor.isNull(offset + 8) ? null : cursor.getString(offset + 8));
         entity.setHao(cursor.isNull(offset + 9) ? null : cursor.getString(offset + 9));
-        entity.setLibraryUrl(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
-        entity.setTestPlanUrl(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
-        entity.setNewTermDate(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setYudian(cursor.isNull(offset + 10) ? null : cursor.getString(offset + 10));
+        entity.setYue(cursor.isNull(offset + 11) ? null : cursor.getString(offset + 11));
+        entity.setLibraryUrl(cursor.isNull(offset + 12) ? null : cursor.getString(offset + 12));
+        entity.setTestPlanUrl(cursor.isNull(offset + 13) ? null : cursor.getString(offset + 13));
+        entity.setNewTermDate(cursor.isNull(offset + 14) ? null : cursor.getString(offset + 14));
      }
     
     @Override

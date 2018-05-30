@@ -73,15 +73,7 @@
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".view.activity.AboutActivity"
-            android:theme="@style/AppTheme" />
-
-        <activity
             android:name=".view.activity.FeedBackActivity"
-            android:theme="@style/AppTheme" />
-
-        <activity
-            android:name=".view.activity.UserInfoActivity"
             android:theme="@style/AppTheme" />
 
         <activity
@@ -157,14 +149,6 @@
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".view.activity.CalendarActivity"
-            android:theme="@style/AppTheme" />
-
-        <activity
-            android:name=".view.activity.FreshmanGuideActivity"
-            android:theme="@style/AppTheme" />
-
-        <activity
             android:name=".view.activity.SyllabusActivity"
             android:icon="@mipmap/ic_kechengbiao"
             android:label="@string/kechengbiao"
@@ -213,7 +197,7 @@
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".view.activity.ADActivity"
+            android:name=".view.activity.ContainerActivity"
             android:theme="@style/AppTheme" />
 
         <!--bugly 升级Activity-->

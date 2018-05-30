@@ -88,7 +88,7 @@ public class UserListFragment extends BaseFragment implements IUserListView {
             public void onItemClick(View view, int position) {
                 User user = userList.get(position);
                 Bundle bundle = new Bundle();
-                bundle.putString("userId", user.getUser_id());
+                bundle.putString("loginUserId", user.getUser_id());
                 bundle.putString("username", user.getTrueName());
                 startActivity(UserInfoCardActivity.class, bundle);
             }

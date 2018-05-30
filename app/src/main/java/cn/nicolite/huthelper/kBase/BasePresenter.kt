@@ -2,6 +2,7 @@ package cn.nicolite.huthelper.kBase
 
 import android.content.Context
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -26,8 +27,10 @@ abstract class BasePresenter<I, V>(iView: I, view: V) : ActivityLifeCycleListene
     protected val daoSession: DaoSession = DaoUtils.getDaoSession()
     protected val userId: String = DaoUtils.getLoginUser()
     protected val configureList: List<Configure> = DaoUtils.getConfigureList()
+    protected val configure: Configure = configureList[0]
     protected var context: Context? = null
     protected var activity: AppCompatActivity? = null
+    protected var fragment: Fragment? = null
 
     init {
         attachIView(iView)
@@ -109,15 +112,9 @@ abstract class BasePresenter<I, V>(iView: I, view: V) : ActivityLifeCycleListene
 
     override fun onCreate(saveInstanceState: Bundle?) {
         val view = getView()
-        when (view) {
-            is BaseActivity -> {
-                context = view
-                activity = view
-            }
-            is BaseFragment -> {
-                context = view.context
-                activity = view.activity as AppCompatActivity
-            }
+        if (view is BaseActivity) {
+            context = view
+            activity = view
         }
     }
 
@@ -142,7 +139,14 @@ abstract class BasePresenter<I, V>(iView: I, view: V) : ActivityLifeCycleListene
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?) {}
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {}
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        val view = getView()
+        if (view is BaseFragment) {
+            context = view.context
+            fragment = view
+            activity = view.activity as AppCompatActivity
+        }
+    }
 
     override fun onDestroyView() {
         if (getView() is BaseFragment) {

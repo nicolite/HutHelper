@@ -30,7 +30,7 @@ abstract class BaseFragment : RxFragment() {
     protected var isUserVisible = false
     protected var isFirstVisible = false
     protected val daoSession: DaoSession = DaoUtils.getDaoSession()
-    protected val userId: String = DaoUtils.getLoginUser()
+    protected val loginUserId: String = DaoUtils.getLoginUser()
     protected val configureList: List<Configure> = DaoUtils.getConfigureList()
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {

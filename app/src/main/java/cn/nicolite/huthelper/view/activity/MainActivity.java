@@ -178,10 +178,11 @@ public class MainActivity extends BaseActivity implements IMainView {
                         } else if (menu.getType() == WebViewActivity.TYPE_HOMEWORK) {
                             bundle.putString("url", Constants.HOMEWORK + configure.getStudentKH() + "/" + configure.getAppRememberCode());
                         }
+
                         bundle.putString("title", menu.getTitle());
                         bundle.putInt("type", menu.getType());
 
-                        startActivityForResult(Class.forName(menu.getPath()), bundle, Constants.REQUEST);
+                        startActivityForResult(Class.forName(menu.getPath().trim()), bundle, Constants.REQUEST);
                     } catch (ClassNotFoundException e) {
                         showMessage("找不到该页面！");
                         e.printStackTrace();
@@ -265,10 +266,11 @@ public class MainActivity extends BaseActivity implements IMainView {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_nav_avatar:
-                startActivity(UserInfoActivity.class);
-                break;
             case R.id.tv_nav_name:
-                startActivity(UserInfoActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putInt("type", ContainerActivity.TYPE_USER_LIST);
+                bundle.putString("title", "个人信息");
+                startActivity(ContainerActivity.class, bundle);
                 break;
             case R.id.tv_nav_private_message:
                 mainPresenter.startChat();
@@ -298,7 +300,10 @@ public class MainActivity extends BaseActivity implements IMainView {
                         .show();
                 break;
             case R.id.tv_nav_about:
-                startActivity(AboutActivity.class);
+                Bundle bundle1 = new Bundle();
+                bundle1.putInt("type", ContainerActivity.TYPE_ABOUT);
+                bundle1.putString("title", "关于");
+                startActivity(ContainerActivity.class, bundle1);
                 break;
             case R.id.tv_nav_fback:
                 startActivity(FeedBackActivity.class);
@@ -312,9 +317,9 @@ public class MainActivity extends BaseActivity implements IMainView {
             case R.id.tv_tongzhi_title:
             case R.id.tv_tongzhi_contont:
                 if (notice != null) {
-                    Bundle bundle = new Bundle();
-                    bundle.putLong("noticeId", notice.getId());
-                    startActivity(NoticeItemActivity.class, bundle);
+                    Bundle bundle2 = new Bundle();
+                    bundle2.putLong("noticeId", notice.getId());
+                    startActivity(NoticeItemActivity.class, bundle2);
                 }
                 break;
             case R.id.tv_notice_maincontent:

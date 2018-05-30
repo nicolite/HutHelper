@@ -20,24 +20,11 @@ import cn.nicolite.huthelper.model.bean.Configure;
 
 public class DateUtils {
 
-    public static Calendar mRightNow = null;
-    public static int CUR_YEAR, CUR_MONTH, CUR_DAY;
-    public static String[] weekName = {"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
-    public static CustomDate cDate;
-
-    public static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
-
-    public DateUtils() {
-        mRightNow = Calendar.getInstance();
-        CUR_YEAR = mRightNow.get(Calendar.YEAR);
-        CUR_DAY = mRightNow.get(Calendar.DAY_OF_MONTH);
-        CUR_MONTH = mRightNow.get(Calendar.MONTH);
-    }
+    private static String[] weekName = {"周一", "周二", "周三", "周四", "周五", "周六", "周日"};
+    private static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
 
     /**
      * 计算当前周数
-     *
-     * @return
      */
     public static int getNowWeek(String date) {
 
@@ -133,16 +120,16 @@ public class DateUtils {
 
         int dayWeek = c.get(Calendar.DAY_OF_WEEK);//获得当前日期是一个星期的第几天
 
-
         c.add(Calendar.DATE, 7 - getWeekDay() + 2);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int month = c.get(Calendar.MONTH);
+        int year = c.get(Calendar.YEAR);
+
+        month += 1;
         if (dayWeek == 1) {
-            CustomDate date = new CustomDate(c.get(Calendar.YEAR),
-                    c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH) - 7);
-            return date;
+            day -= 7;
         }
-        CustomDate date = new CustomDate(c.get(Calendar.YEAR),
-                c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH));
-        return date;
+        return new CustomDate(year, month, day);
     }
 
     public static CustomDate getNextSunday(Date d) {
@@ -151,17 +138,15 @@ public class DateUtils {
         c.setTime(d);
         int dayWeek = c.get(Calendar.DAY_OF_WEEK);//获得当前日期是一个星期的第几天
         c.add(Calendar.DATE, 7 - getWeekDay() + 2);
+        int day = c.get(Calendar.DAY_OF_MONTH);
+        int month = c.get(Calendar.MONTH);
+        int year = c.get(Calendar.YEAR);
+
+        month += 1;
         if (dayWeek == 1) {
-            CustomDate date = new CustomDate(c.get(Calendar.YEAR),
-                    c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH) - 7);
-
-
-            return date;
+            day -= 7;
         }
-        CustomDate date = new CustomDate(c.get(Calendar.YEAR),
-                c.get(Calendar.MONTH) + 1, c.get(Calendar.DAY_OF_MONTH));
-
-        return date;
+        return new CustomDate(year, month, day);
     }
 
     public static int[] getWeekSunday(int year, int month, int day, int pervious) {

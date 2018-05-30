@@ -157,7 +157,7 @@ public class MarketFragment extends BaseFragment implements IMarketView {
                 Goods goods = goodsList.get(position);
                 Bundle bundle = new Bundle();
                 bundle.putString("goodsId", goods.getId());
-                bundle.putString("userId", goods.getUser_id());
+                bundle.putString("loginUserId", goods.getUser_id());
                 bundle.putInt("position", position);
                 if (type == MYGOODS && userId.equals(goods.getUser_id())) {
                     bundle.putBoolean("delete", true);

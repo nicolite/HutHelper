@@ -59,7 +59,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                             if (userHttpResult.getCode() == 200) {
                                 //保存当前登录用户的userId，用作标识当前登录的用户
                                 SharedPreferences.Editor editor = getActivity().getSharedPreferences("login_user", Context.MODE_PRIVATE).edit();
-                                editor.putString("userId", userHttpResult.getData().getUser_id());
+                                editor.putString("loginUserId", userHttpResult.getData().getUser_id());
                                 editor.apply();
 
                                 LogUtils.d(TAG, "appCode: " + userHttpResult.getRemember_code_app());
@@ -120,7 +120,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
 
         /* APIUtils
                 .getMessageAPI()
-                .getToken(userId, userName)
+                .getToken(loginUserId, userName)
                 .compose(getActivity().<Token>bindToLifecycle())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -134,7 +134,7 @@ public class LoginPresenter extends BasePresenter<ILoginView, LoginActivity> {
                     public void onNext(@NonNull Token token) {
                         if (getView() != null) {
                             ConfigureDao configureDao = daoSession.getConfigureDao();
-                            List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(userId)).list();
+                            List<Configure> list = configureDao.queryBuilder().where(ConfigureDao.Properties.UserId.eq(loginUserId)).list();
                             if (!ListUtils.isEmpty(list)) {
                                 Configure configure = list.get(0);
                                 configure.setToken(token.getToken());

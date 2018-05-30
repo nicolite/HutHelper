@@ -51,9 +51,9 @@ public class UserInfoCardPresenter extends BasePresenter<IUserInfoCardView, User
                     public void onNext(HttpResult<User> userHttpResult) {
                         if (getView() != null) {
                             getView().closeLoading();
-                            if (userHttpResult.getCode() == 200){
+                            if (userHttpResult.getCode() == 200) {
                                 getView().showInfo(userHttpResult.getData());
-                            }else {
+                            } else {
                                 getView().showMessage("获取信息失败，" + userHttpResult.getCode());
                             }
 

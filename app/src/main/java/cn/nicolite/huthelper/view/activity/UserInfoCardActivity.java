@@ -58,7 +58,7 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
     @Override
     protected void initBundleData(Bundle bundle) {
         if (bundle != null) {
-            mUserId = bundle.getString("userId", "");
+            mUserId = bundle.getString("loginUserId", "");
             username = bundle.getString("username", "");
 
             if (TextUtils.isEmpty(mUserId) || TextUtils.isEmpty(username)) {

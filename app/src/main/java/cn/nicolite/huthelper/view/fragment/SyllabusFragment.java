@@ -115,34 +115,25 @@ public class SyllabusFragment extends BaseFragment {
 
     protected List<TextView> courseTextViewList = new ArrayList<TextView>();
     protected SparseArray<List<Lesson>> textviewLessonSparseArray = new SparseArray<>();
-    public int CurrWeek;
+
     private View curClickView;
 
     private static final int WEEK = 7;
     private static final int TOTAL_COL = 7;
     private static final int TOTAL_ROW = 1;
 
+    public int CurrWeek;
     private CustomDate mShowDate;//自定义的日期  包括year month day
     private CourseInfoInitMessageHandler courseInfoInitMessageHandler = new CourseInfoInitMessageHandler(this);
     private int what = 111;
 
     public static SyllabusFragment newInstance() {
-
-        Bundle args = new Bundle();
-
-        SyllabusFragment fragment = new SyllabusFragment();
-        fragment.setArguments(args);
-        return fragment;
+        return new SyllabusFragment();
     }
 
-    @Override
-    protected void initConfig(Bundle savedInstanceState) {
-
-    }
-
-    @Override
-    protected void initArguments(Bundle arguments) {
-
+    {
+        CurrWeek = DateUtils.getNowWeek();
+        mShowDate = DateUtils.getNextSunday();
     }
 
     @Override
@@ -152,41 +143,30 @@ public class SyllabusFragment extends BaseFragment {
 
     @Override
     protected void doBusiness() {
-        firstGridWidth = DensityUtils.dp2px(context, 30 + 2);
+        firstGridWidth = DensityUtils.dp2px(context, 32);
         aveWidth = (ScreenUtils.getScreenWidth(context) - firstGridWidth) / 7;
         gridHeight = (ScreenUtils.getScreenHeight(context) - DensityUtils.dp2px(context, 3) * 4) / 12;
-        CurrWeek = DateUtils.getNowWeek();
+
         //初始化24小时view
         initTwentyFourHourViews();
         //导入日期
-        initDate();
-    }
-
-    @Override
-    protected void visibleToUser(boolean isVisible, boolean isFirstVisible) {
-
+        initDate(CurrWeek, mShowDate);
     }
 
     public void updateData() {
         courseTextViewList.clear();
         textviewLessonSparseArray.clear();
-        CurrWeek = DateUtils.getNowWeek();
-
         //更新数据前 移除view
         if (mUserCourseLayout != null) {
             mUserCourseLayout.removeAllViews();
         }
-
         courseInfoInitMessageHandler.sendEmptyMessage(what);
     }
 
     public void changeWeek(int weekNo, CustomDate date) {
-        courseTextViewList.clear();
-        textviewLessonSparseArray.clear();
         CurrWeek = weekNo;
         mShowDate = date;
-        fillDate();
-        mMonth.setText(String.valueOf(mShowDate.getMonth() + "月"));
+        initDate(weekNo, date);
     }
 
     public void removeAllViews() {
@@ -198,12 +178,18 @@ public class SyllabusFragment extends BaseFragment {
     /**
      * 初始化日期数据
      */
-    public void initDate() {
-        if (mShowDate == null) {
-            mShowDate = DateUtils.getNextSunday();
-        }
-        mMonth.setText(mShowDate.getMonth() < 10 ? "0" + mShowDate.getMonth() : mShowDate.getMonth() + "月");
-        fillDate();
+    public void initDate(int weekNo, CustomDate date) {
+        CurrWeek = weekNo;
+        mMonth.setText(String.valueOf(date.getMonth() + "月"));
+
+        courseTextViewList.clear();
+        textviewLessonSparseArray.clear();
+        //更新数据前 移除view
+        mUserCourseLayout.removeAllViews();
+
+        fillWeekDate();
+        //更新视图
+        courseInfoInitMessageHandler.sendEmptyMessage(what);
     }
 
     /**
@@ -551,5 +537,11 @@ public class SyllabusFragment extends BaseFragment {
                 updateData();
             }
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        removeAllViews();
+        super.onDestroy();
     }
 }

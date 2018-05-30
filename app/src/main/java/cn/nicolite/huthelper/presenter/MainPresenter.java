@@ -36,6 +36,7 @@ import cn.nicolite.huthelper.services.LoginService;
 import cn.nicolite.huthelper.utils.CommUtil;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.LogUtils;
+import cn.nicolite.huthelper.view.activity.ContainerActivity;
 import cn.nicolite.huthelper.view.activity.MainActivity;
 import cn.nicolite.huthelper.view.activity.WebViewActivity;
 import cn.nicolite.huthelper.view.customView.CommonDialog;
@@ -192,7 +193,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                 .where(MenuDao.Properties.UserId.eq(userId))
                 .list();
 
-        int newVersionCode = 0; //TODO 需要更新menu时，将这个数值加一
+        int newVersionCode = 4; //TODO 需要更新menu时，将这个数值加一
 
         SharedPreferences updateMainMenu = MApplication.appContext.getSharedPreferences("update_main_menu", Context.MODE_PRIVATE);
         int oldVersionCode = updateMainMenu.getInt("versionCode", -1);
@@ -217,7 +218,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             menuItems.add(item);
             item = new Menu(8, 8, 0, "实验课表", "cn.nicolite.huthelper.view.activity.ExpLessonActivity", true);
             menuItems.add(item);
-            item = new Menu(9, 9, 0, "校历", "cn.nicolite.huthelper.view.activity.CalendarActivity", false);
+            item = new Menu(9, 9, ContainerActivity.TYPE_CALENDAR, "校历", "cn.nicolite.huthelper.view.activity.ContainerActivity", false);
             menuItems.add(item);
             item = new Menu(10, 10, 0, "失物招领", "cn.nicolite.huthelper.view.activity.LostAndFoundActivity", true);
             menuItems.add(item);
@@ -227,9 +228,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             menuItems.add(item);
 //            item = new Menu(13, 13, 0, "视频专栏", "cn.nicolite.huthelper.view.activity.VideoActivity", false);
 //            menuItems.add(item);
-            item = new Menu(13, 13, 0, "广告专栏", "cn.nicolite.huthelper.view.activity.ADActivity", false);
-            menuItems.add(item);
-            item = new Menu(14, 14, 0, "新生攻略", "cn.nicolite.huthelper.view.activity.FreshmanGuideActivity", false);
+            item = new Menu(14, 14, ContainerActivity.TYPE_FRESHMAN_GUIDE, "新生攻略", "cn.nicolite.huthelper.view.activity.ContainerActivity", false);
             menuItems.add(item);
 
             menuDao.deleteAll();
