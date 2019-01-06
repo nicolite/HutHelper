@@ -44,30 +44,13 @@
             android:layout_gravity="center"
             android:orientation="vertical">
 
-            <cn.nicolite.huthelper.view.customView.RichTextView
-                android:id="@+id/tv_nav_private_message"
-                android:layout_width="wrap_content"
-                android:layout_height="32dp"
-                android:layout_gravity="start|center_horizontal"
-                android:layout_marginTop="40dp"
-                android:drawablePadding="20dp"
-                android:gravity="start|center_vertical"
-                android:padding="6dp"
-                android:text="私信"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                view:drawable_height="30dp"
-                view:drawable_location="left"
-                view:drawable_src="@drawable/sixin"
-                view:drawable_width="30dp" />
-
 
             <cn.nicolite.huthelper.view.customView.RichTextView
                 android:id="@+id/tv_nav_update"
                 android:layout_width="wrap_content"
                 android:layout_height="32dp"
                 android:layout_gravity="start|center_horizontal"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="40dp"
                 android:drawablePadding="20dp"
                 android:gravity="start|center_vertical"
                 android:padding="6dp"

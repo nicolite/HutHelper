@@ -20,4 +20,11 @@
             <enum name="bottom" value="4" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="MMWebView">
+        <attr name="minHeight" format="dimension" />
+        <attr name="maxHeight" format="dimension" />
+        <attr name="minWidth" format="dimension" />
+        <attr name="maxWidth" format="dimension" />
+    </declare-styleable>
 </resources>

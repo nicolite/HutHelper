@@ -240,7 +240,7 @@ public class MainActivity extends BaseActivity implements IMainView {
     }
 
 
-    @OnClick({R.id.iv_nav_avatar, R.id.tv_nav_name, R.id.tv_nav_private_message,
+    @OnClick({R.id.iv_nav_avatar, R.id.tv_nav_name,
             R.id.tv_nav_update, R.id.tv_nav_share, R.id.tv_nav_logout, R.id.tv_nav_about,
             R.id.tv_nav_fback, R.id.imgbtn_menusetting, R.id.imgbtn_bell,
             R.id.tv_tongzhi_contont, R.id.tv_tongzhi_title, R.id.tv_notice_maincontent})
@@ -251,9 +251,6 @@ public class MainActivity extends BaseActivity implements IMainView {
                 break;
             case R.id.tv_nav_name:
                 startActivity(UserInfoActivity.class);
-                break;
-            case R.id.tv_nav_private_message:
-                mainPresenter.startChat();
                 break;
             case R.id.tv_nav_update:
                 showMessage("开源版暂不提供检查更新功能");
