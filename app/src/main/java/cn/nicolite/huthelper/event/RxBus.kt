@@ -1,6 +1,6 @@
 package cn.nicolite.huthelper.event
 
-import cn.nicolite.mvp.utils.LogUtils
+import cn.nicolite.huthelper.utils.LogUtils
 import com.trello.rxlifecycle2.LifecycleProvider
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity
 import com.trello.rxlifecycle2.components.support.RxFragment

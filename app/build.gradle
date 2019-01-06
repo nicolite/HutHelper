@@ -208,28 +208,17 @@ dependencies {
     //LRecyclerView
     implementation 'com.github.jdsjlzx:LRecyclerView:1.5.0'
 
-    //小红点
-    implementation 'q.rorbin:badgeview:1.1.2'
-
     //信鸽推送
     implementation 'com.tencent.xinge:xinge:3.2.2-release'
-
-    //wup包 如果和其他腾讯系的sdk 发生wup冲突，这个依赖可不添加
     implementation 'com.tencent.wup:wup:1.0.0.E-release'
-
-    //mid包
     implementation 'com.tencent.mid:mid:4.0.6-release'
 
     //数据库
     implementation 'org.greenrobot:greendao:3.2.2'
     implementation 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.0.1'
 
-
     //内存泄露检测
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
     releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
-
-    //mvp base
-    implementation 'com.github.nicolite:archer:1.3.3'
 
 }

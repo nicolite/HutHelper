@@ -10,16 +10,13 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.tencent.android.tpush.XGPushManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,7 +36,6 @@ import cn.nicolite.huthelper.presenter.MainPresenter;
 import cn.nicolite.huthelper.utils.ButtonUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
-import cn.nicolite.huthelper.utils.ToastUtil;
 import cn.nicolite.huthelper.view.adapter.MenuAdapter;
 import cn.nicolite.huthelper.view.customView.CommonDialog;
 import cn.nicolite.huthelper.view.customView.DateLineView;
@@ -47,16 +43,12 @@ import cn.nicolite.huthelper.view.customView.DragLayout;
 import cn.nicolite.huthelper.view.customView.RichTextView;
 import cn.nicolite.huthelper.view.iview.IMainView;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
-import q.rorbin.badgeview.Badge;
-import q.rorbin.badgeview.QBadgeView;
 
 /**
  * 主页
  */
 public class MainActivity extends BaseActivity implements IMainView {
 
-    @BindView(R.id.unReadMessage)
-    FrameLayout unReadMessage;
     @BindView(R.id.tv_wd_temp)
     TextView tvWdTemp;
     @BindView(R.id.tv_wd_location)
@@ -94,7 +86,6 @@ public class MainActivity extends BaseActivity implements IMainView {
     private List<Menu> menuList = new ArrayList<>();
     private MenuAdapter menuAdapter;
     private boolean isOpen;
-    private QBadgeView qBadgeView;
     private Configure configure;
     private Notice notice;
     private LocalBroadcastManager localBroadcastManager;
@@ -193,23 +184,6 @@ public class MainActivity extends BaseActivity implements IMainView {
 
         mainPresenter.showNotice(false);
         mainPresenter.startLoginService();
-        qBadgeView = new QBadgeView(context);
-        qBadgeView.bindTarget(unReadMessage);
-        qBadgeView.setBadgeGravity(Gravity.END | Gravity.TOP);
-        qBadgeView.setOnDragStateChangedListener(new Badge.OnDragStateChangedListener() {
-            @Override
-            public void onDragStateChanged(int dragState, Badge badge, View targetView) {
-
-            }
-        });
-
-        qBadgeView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                qBadgeView.hide(false);
-                mainPresenter.startChat();
-            }
-        });
 
         //注册本地广播监听消息
         localBroadcastManager = LocalBroadcastManager.getInstance(context);
@@ -242,7 +216,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @OnClick({R.id.iv_nav_avatar, R.id.tv_nav_name,
             R.id.tv_nav_update, R.id.tv_nav_share, R.id.tv_nav_logout, R.id.tv_nav_about,
-            R.id.tv_nav_fback, R.id.imgbtn_menusetting, R.id.imgbtn_bell,
+            R.id.tv_nav_fback, R.id.imgbtn_menusetting,
             R.id.tv_tongzhi_contont, R.id.tv_tongzhi_title, R.id.tv_notice_maincontent})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -283,9 +257,6 @@ public class MainActivity extends BaseActivity implements IMainView {
                 break;
             case R.id.imgbtn_menusetting:
                 rootView.open();
-                break;
-            case R.id.imgbtn_bell:
-                mainPresenter.startChat();
                 break;
             case R.id.tv_tongzhi_title:
             case R.id.tv_tongzhi_contont:
