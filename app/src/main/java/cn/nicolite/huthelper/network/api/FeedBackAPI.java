@@ -10,6 +10,6 @@ import retrofit2.http.GET;
  */
 
 public interface FeedBackAPI {
-    @GET("master/staticAPI/feedback.json")
+    @GET("opensource/staticAPI/feedback.json")
     Observable<ResponseBody> feedBack();
 }

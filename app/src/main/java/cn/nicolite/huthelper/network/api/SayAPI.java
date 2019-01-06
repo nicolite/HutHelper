@@ -19,7 +19,7 @@ public interface SayAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/createSay.json")
+    @GET("opensource/staticAPI/createSay.json")
     Observable<HttpResult<String>> createSay();
 
 
@@ -28,7 +28,7 @@ public interface SayAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/createComment.json")
+    @GET("opensource/staticAPI/createComment.json")
     Observable<HttpResult<String>> createComment();
 
     /**
@@ -36,7 +36,7 @@ public interface SayAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/getSay.json")
+    @GET("opensource/staticAPI/getSay.json")
     Observable<HttpPageResult<List<Say>>> getSayListByuserId();
 
     /**
@@ -44,7 +44,7 @@ public interface SayAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/getSay.json")
+    @GET("opensource/staticAPI/getSay.json")
     Observable<HttpPageResult<List<Say>>> getSayList();
 
 
@@ -53,7 +53,7 @@ public interface SayAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/likeSay.json")
+    @GET("opensource/staticAPI/likeSay.json")
     Observable<HttpResult<String>> likeSay();
 
     /**
@@ -61,7 +61,7 @@ public interface SayAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/likeSay.json")
+    @GET("opensource/staticAPI/likeSay.json")
     Observable<HttpResult<String>> deleteSay();
 
     /**
@@ -69,7 +69,7 @@ public interface SayAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/getLikeSay.json")
+    @GET("opensource/staticAPI/getLikeSay.json")
     Observable<HttpResult<List<String>>> getLikedSay();
 
 }

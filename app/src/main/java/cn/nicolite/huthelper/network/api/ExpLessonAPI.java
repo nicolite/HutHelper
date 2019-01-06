@@ -14,6 +14,6 @@ import retrofit2.http.GET;
  */
 
 public interface ExpLessonAPI {
-    @GET("master/staticAPI/expLesson.json")
+    @GET("opensource/staticAPI/expLesson.json")
     Observable<HttpResult<List<ExpLesson>>> getExpLesson();
 }

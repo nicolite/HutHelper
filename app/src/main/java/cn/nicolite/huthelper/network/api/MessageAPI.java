@@ -15,7 +15,7 @@ public interface MessageAPI {
      *
      * @return {"code":true}
      */
-    @GET("master/staticAPI/isTokenValid.json")
+    @GET("opensource/staticAPI/isTokenValid.json")
     Observable<Valid> isValid();
 
 }

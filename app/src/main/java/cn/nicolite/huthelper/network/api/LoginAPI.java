@@ -17,7 +17,7 @@ public interface LoginAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/login.json")
+    @GET("opensource/staticAPI/login.json")
     Observable<HttpResult<User>> login();
 
 }

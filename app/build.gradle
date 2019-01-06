@@ -1,6 +1,8 @@
 import java.text.SimpleDateFormat
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 apply plugin: 'org.greenrobot.greendao'
 
 static def gitVersionCode() {
@@ -18,7 +20,7 @@ static def gitVersionTag() {
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "cn.nicolite.huthelper"
         minSdkVersion 18
@@ -28,7 +30,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         ndk {
-            abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86'//, 'armeabi'//, 'x86_64', "mips"
+            abiFilters 'armeabi-v7a', 'arm64-v8a'//, 'x86', 'armeabi'//, 'x86_64', "mips"
         }
 
         //从appKey.properties文件中拉取信息
@@ -67,16 +69,9 @@ android {
             storePassword keyProperties['KEYSTORE_PWD']
         }
 
-        debug {
-            keyAlias keyProperties['KEY_ALIAS']
-            keyPassword keyProperties['KEY_PWD']
-            storeFile file(keyProperties['KEYSTORE_FILE'])
-            storePassword keyProperties['KEYSTORE_PWD']
-        }
     }
 
     buildTypes {
-
         release {
             minifyEnabled true
             zipAlignEnabled true
@@ -92,7 +87,7 @@ android {
             shrinkResources false
             buildConfigField("boolean", "LOG_DEBUG", "true")
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
 
         }
     }
@@ -126,22 +121,6 @@ android {
     }
 
     productFlavors {
-        //测试版
-        beta {
-            flavorDimensions "beta"
-            manifestPlaceholders = [
-                    MTA_CHANNEL      : "测试",
-                    BUGLY_APP_CHANNEL: "测试"
-            ]
-        }
-        //bugly
-        bugly {
-            flavorDimensions "bugly"
-            manifestPlaceholders = [
-                    MTA_CHANNEL      : "bugly",
-                    BUGLY_APP_CHANNEL: "bugly"
-            ]
-        }
         //酷安
         kuan {
             flavorDimensions "kuan"
@@ -165,7 +144,7 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     implementation 'com.android.support:design:27.1.1'
     implementation 'com.android.support:cardview-v7:27.1.1'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
@@ -173,6 +152,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
     //多dex配置,解决dex超过64k
     implementation 'com.android.support:multidex:1.0.3'
@@ -181,18 +161,13 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
 
     //生命周期管理
-    implementation 'com.trello.rxlifecycle2:rxlifecycle:2.2.1'
-
-    // If you want to bind to Android-specific lifecycles
     implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1'
-
-    // If you want pre-written Activities and Fragments you can subclass as providers
     implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
 
     //Glide--图片加载
@@ -202,14 +177,11 @@ dependencies {
     //图片滤镜处理
     implementation 'jp.wasabeef:glide-transformations:2.0.2'
 
-    // If you want to use the GPU Filters（使用GPU）
-    implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
-
     //Luban---图片压缩
     implementation 'top.zibin:Luban:1.1.3'
 
     //PhotoView----图片放大缩小
-    implementation 'com.github.chrisbanes:PhotoView:2.1.3'
+    implementation 'com.github.chrisbanes:PhotoView:2.1.4'
 
     //图片选择
     implementation 'com.zhihu.android:matisse:0.4.3'
@@ -219,7 +191,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:8.8.1'
 
     //Gson---json解析
-    implementation 'com.google.code.gson:gson:2.8.3'
+    implementation 'com.google.code.gson:gson:2.8.5'
 
     //动画低版本支持
     implementation 'com.nineoldandroids:library:2.4.0'
@@ -250,22 +222,14 @@ dependencies {
 
     //数据库
     implementation 'org.greenrobot:greendao:3.2.2'
-
-    //数据库升级数据迁移
     implementation 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.0.1'
 
-    //ijkplayer 视频播放
-//    implementation 'tv.danmaku.ijk.media:ijkplayer-java:0.8.4'
-//    implementation 'tv.danmaku.ijk.media:ijkplayer-armv7a:0.8.4'
-
-    //implementation 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.4' API21及以上
-
-    //compile 'tv.danmaku.ijk.media:ijkplayer-arm64:0.8.4'
-
-    //ExoPlayer as IMediaPlayer: optional, experimental
-    //implementation 'tv.danmaku.ijk.media:ijkplayer-exo:0.8.4'
 
     //内存泄露检测
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
+
+    //mvp base
+    implementation 'com.github.nicolite:archer:1.3.3'
+
 }

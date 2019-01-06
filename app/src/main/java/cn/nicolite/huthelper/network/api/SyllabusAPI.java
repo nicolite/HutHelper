@@ -10,6 +10,6 @@ import retrofit2.http.GET;
  */
 
 public interface SyllabusAPI {
-    @GET("master/staticAPI/syllabus.json")
+    @GET("opensource/staticAPI/syllabus.json")
     Observable<SyllabusResult> getSyllabus();
 }

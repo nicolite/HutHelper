@@ -15,7 +15,7 @@ public interface VoteAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/vote.json")
+    @GET("opensource/staticAPI/vote.json")
     Observable<Vote> getAirConditionerData();
 
     /**
@@ -23,7 +23,7 @@ public interface VoteAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/vote.json")
+    @GET("opensource/staticAPI/vote.json")
     Observable<Vote> setAirConditionerData();
 
 }

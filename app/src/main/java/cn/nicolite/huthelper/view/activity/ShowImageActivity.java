@@ -18,6 +18,7 @@ import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.utils.ToastUtil;
 import cn.nicolite.huthelper.view.adapter.ShowImageAdapter;
+import cn.nicolite.huthelper.view.customView.MultipleTouchViewPager;
 
 /**
  * Created by nicolite on 17-10-19.
@@ -25,7 +26,7 @@ import cn.nicolite.huthelper.view.adapter.ShowImageAdapter;
 
 public class ShowImageActivity extends BaseActivity {
     @BindView(R.id.viewpager)
-    ViewPager viewpager;
+    MultipleTouchViewPager viewpager;
     @BindView(R.id.toolbar_title)
     TextView toolbarTitle;
     @BindView(R.id.rootView)
@@ -91,7 +92,7 @@ public class ShowImageActivity extends BaseActivity {
             case R.id.toolbar_download:
                 if (!ButtonUtils.isFastDoubleClick()) {
                     CommUtil.downloadBitmap(context, images.get(currentPosition));
-                }else {
+                } else {
                     SnackbarUtils.showShortSnackbar(rootView, "你点的太快了！");
                 }
                 break;

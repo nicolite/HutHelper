@@ -18,7 +18,7 @@ public interface UserAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/changeUsername.json")
+    @GET("opensource/staticAPI/changeUsername.json")
     Observable<HttpResult> changeUsername();
 
     /**
@@ -26,10 +26,10 @@ public interface UserAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/changeBio.json")
+    @GET("opensource/staticAPI/changeBio.json")
     Observable<HttpResult> changeBio();
 
-    @GET("master/staticAPI/.json")
+    @GET("opensource/staticAPI/.json")
     Observable<HttpResult<List<User>>> getStudents();
 
     /**
@@ -37,6 +37,6 @@ public interface UserAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/getUserInfo.json")
+    @GET("opensource/staticAPI/getUserInfo.json")
     Observable<HttpResult<User>> getUserInfo();
 }

@@ -10,6 +10,6 @@ import retrofit2.http.GET;
  */
 
 public interface ExamAPI {
-    @GET("master/staticAPI/exam.json")
+    @GET("opensource/staticAPI/exam.json")
     Observable<ExamResult> getExamData();
 }

@@ -20,7 +20,7 @@ public interface MarketAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/getGoods.json")
+    @GET("opensource/staticAPI/getGoods.json")
     Observable<HttpResult<String>> createGoods();
 
     /**
@@ -28,7 +28,7 @@ public interface MarketAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/getGoods.json")
+    @GET("opensource/staticAPI/getGoods.json")
     Observable<HttpPageResult<List<Goods>>> getGoodsList();
 
     /**
@@ -36,7 +36,7 @@ public interface MarketAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/getGoods.json")
+    @GET("opensource/staticAPI/getGoods.json")
     Observable<HttpPageResult<List<Goods>>> getGoodsListByUserId();
 
     /**
@@ -44,7 +44,7 @@ public interface MarketAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/getGoodsInfo.json")
+    @GET("opensource/staticAPI/getGoodsInfo.json")
     Observable<HttpPageResult<GoodsItem>> getGoodsInfo();
 
     /**
@@ -52,7 +52,7 @@ public interface MarketAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/deleteGoods.json")
+    @GET("opensource/staticAPI/deleteGoods.json")
     Observable<HttpResult<String>> deleteGoods();
 
 
@@ -61,7 +61,7 @@ public interface MarketAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/getGoods.json")
+    @GET("opensource/staticAPI/getGoods.json")
     Observable<HttpPageResult<List<Goods>>> searchGoods();
 
 

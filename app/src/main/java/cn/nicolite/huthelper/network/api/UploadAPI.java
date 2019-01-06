@@ -16,6 +16,6 @@ public interface UploadAPI {
      *
      * @return
      */
-    @GET("master/staticAPI/upload.json")
+    @GET("opensource/staticAPI/upload.json")
     Observable<UploadImages> uploadImages();
 }

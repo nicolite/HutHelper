@@ -11,6 +11,6 @@ import retrofit2.http.GET;
  */
 
 public interface UpdateAPI {
-    @GET("master/staticAPI/version.json")
+    @GET("opensource/staticAPI/version.json")
     Observable<HttpResult<Update>> checkUpdate();
 }
