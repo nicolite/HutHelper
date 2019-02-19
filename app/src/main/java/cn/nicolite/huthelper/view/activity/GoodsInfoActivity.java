@@ -89,7 +89,7 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
         if (bundle != null) {
             goodsId = bundle.getString("goodsId", null);
             mUserId = bundle.getString("userId", null);
-            delete = bundle.getBoolean("remove", false);
+            delete = bundle.getBoolean("delete", false);
             position = bundle.getInt("position", -1);
             if (TextUtils.isEmpty(mUserId) || TextUtils.isEmpty(goodsId) || position == -1) {
                 ToastUtil.showToastShort("获取信息失败！");

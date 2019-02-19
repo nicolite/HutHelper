@@ -160,14 +160,14 @@ public class MarketFragment extends BaseFragment implements IMarketView {
                 bundle.putString("userId", goods.getUser_id());
                 bundle.putInt("position", position);
                 if (type == MYGOODS && userId.equals(goods.getUser_id())) {
-                    bundle.putBoolean("remove", true);
+                    bundle.putBoolean("delete", true);
                 } else {
-                    bundle.putBoolean("remove", false);
+                    bundle.putBoolean("delete", false);
                 }
 
-                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT){
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
                     startActivityForResult(GoodsInfoActivity.class, bundle, Constants.REQUEST);
-                }else {
+                } else {
                     Bundle options = ActivityOptionsCompat.makeSceneTransitionAnimation(activity, view, "goodsTransition").toBundle();
                     startActivityForResult(GoodsInfoActivity.class, Constants.REQUEST, bundle, options);
                 }

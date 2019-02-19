@@ -82,7 +82,7 @@ public class LostAndFoundInfoActivity extends BaseActivity implements ILostAndFo
     @Override
     protected void initBundleData(Bundle bundle) {
         if (bundle != null) {
-            delete = bundle.getBoolean("remove", false);
+            delete = bundle.getBoolean("delete", false);
             position = bundle.getInt("position", -1);
             lostAndFound = (LostAndFound) bundle.getSerializable("data");
             if (lostAndFound == null || position == -1) {
