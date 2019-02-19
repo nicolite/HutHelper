@@ -9,8 +9,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.view.WindowManager;
 
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-
 import java.util.List;
 
 import butterknife.ButterKnife;
@@ -20,8 +18,8 @@ import cn.nicolite.huthelper.db.dao.DaoSession;
 import cn.nicolite.huthelper.listener.ActivityLifeCycleListener;
 import cn.nicolite.huthelper.manager.ActivityStackManager;
 import cn.nicolite.huthelper.model.bean.Configure;
+import cn.nicolite.huthelper.swipebackhelper.SwipeBackActivity;
 import cn.nicolite.huthelper.utils.LogUtils;
-import cn.nicolite.huthelper.utils.SlidrUtils;
 import cn.nicolite.huthelper.utils.StatusBarUtils;
 
 /**
@@ -30,7 +28,8 @@ import cn.nicolite.huthelper.utils.StatusBarUtils;
  * Created by nicolite on 17-9-6.
  */
 
-public abstract class BaseActivity extends RxAppCompatActivity {
+
+public abstract class BaseActivity extends SwipeBackActivity {
     /**
      * Log Tag
      */
@@ -344,9 +343,10 @@ public abstract class BaseActivity extends RxAppCompatActivity {
      * @param isSlideExit
      */
     public void setSlideExit(boolean isSlideExit) {
-        if (isSlideExit) {
-            SlidrUtils.setSlidrExit(this);
-        }
+        //使用另一种滑动返回
+//        if (isSlideExit) {
+//            SlidrUtils.setSlidrExit(this);
+//        }
     }
 
 }

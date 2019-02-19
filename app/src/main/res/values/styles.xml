@@ -6,20 +6,20 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <!--另一种滑动返回方案,不需要这2个flag-->
+        <!--<item name="android:windowIsTranslucent">true</item>-->
+        <!--<item name="android:windowBackground">@android:color/transparent</item>-->
     </style>
 
     <style name="AppSplash" parent="AppTheme">
-        <item name="android:windowDisablePreview">false</item>
-        <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:fitsSystemWindows">true</item>
+        <!--<item name="android:clipToPadding">true</item>-->
         <item name="android:windowBackground">@drawable/start_1</item>
     </style>
 
     <style name="MainActivity" parent="AppTheme">
-        <item name="android:windowIsTranslucent">false</item>
+        <!--<item name="android:windowIsTranslucent">false</item>-->
         <item name="android:windowBackground">@android:color/white</item>
     </style>
 

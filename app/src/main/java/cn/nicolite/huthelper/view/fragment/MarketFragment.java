@@ -160,9 +160,9 @@ public class MarketFragment extends BaseFragment implements IMarketView {
                 bundle.putString("userId", goods.getUser_id());
                 bundle.putInt("position", position);
                 if (type == MYGOODS && userId.equals(goods.getUser_id())) {
-                    bundle.putBoolean("delete", true);
+                    bundle.putBoolean("remove", true);
                 } else {
-                    bundle.putBoolean("delete", false);
+                    bundle.putBoolean("remove", false);
                 }
 
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT){

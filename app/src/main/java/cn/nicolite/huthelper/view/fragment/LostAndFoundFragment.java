@@ -156,9 +156,9 @@ public class LostAndFoundFragment extends BaseFragment implements ILostAndFoundV
                 bundle.putSerializable("data", lostAndFound);
                 bundle.putInt("position", position);
                 if (type == MYLOSTANDFOUND && userId.equals(lostAndFound.getUser_id())) {
-                    bundle.putBoolean("delete", true);
+                    bundle.putBoolean("remove", true);
                 } else {
-                    bundle.putBoolean("delete", false);
+                    bundle.putBoolean("remove", false);
                 }
                 if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
                     startActivityForResult(LostAndFoundInfoActivity.class, bundle, Constants.REQUEST);
