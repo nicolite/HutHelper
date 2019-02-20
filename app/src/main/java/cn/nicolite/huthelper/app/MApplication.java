@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.messy.swipebackhelper.SwipeBackHelper;
 import com.squareup.leakcanary.LeakCanary;
 
 /**
@@ -19,7 +20,8 @@ public class MApplication extends Application {
         super.onCreate();
         AppContext = getApplicationContext();
         application = this;
-
+        //初始化滑动返回库
+        SwipeBackHelper.init(this);
         if (!LeakCanary.isInAnalyzerProcess(this)) {
             LeakCanary.install(this);
         }

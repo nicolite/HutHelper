@@ -57,16 +57,69 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
     public void onBindViewHolder(final SayViewHolder holder, final int position) {
         final Say say = sayList.get(position);
         String head_pic = !TextUtils.isEmpty(say.getHead_pic()) ? say.getHead_pic() : say.getHead_pic_thumb();
+        //下载任务查询ID
+        final String task = "https://img.tuzhaozhao.com/2019/01/18/333f9619d6a0d5fa_600x600.jpg";
 
         Glide
                 .with(context)
                 .load(Constants.PICTURE_URL + head_pic)
+//                .load(task)
                 .bitmapTransform(new CropCircleTransformation(context))
                 .placeholder(R.drawable.say_default_head)
                 .skipMemoryCache(true)
                 .error(R.drawable.say_default_head)
                 .dontAnimate()
                 .into(holder.ivItemSayAvatar);
+
+        /*
+         * TODO 完善下载进度逻辑
+         * */
+//        DownloadSchedule.query(task)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new Observer<DownloadSchedule.Config>() {
+//                    Disposable mDisposable = null;
+//
+//                    void fin(Disposable d, DownloadSchedule.Config c) {
+//                        if (d != null && !d.isDisposed())
+//                            d.dispose();
+//                        DownloadSchedule.remove(c.getTask());
+//                        holder.tvItemSayTime.setText("下载完成");
+//
+//                    }
+//
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//                        mDisposable = d;
+//                    }
+//
+//                    @Override
+//                    public void onNext(DownloadSchedule.Config config) {
+////                        if (config.isDone()) fin(mDisposable, config);
+////                        else
+//                        StringBuilder builder = new StringBuilder();
+//                        if (config.isDone())
+//                            builder.append("完成 ");
+//                        else
+//                            builder.append("未完成 ");
+//                        if (config.isStart())
+//                            builder.append("开始 ");
+//                        else
+//                            builder.append("未开始 ");
+//                        builder.append("进度：").append(String.valueOf(config.getProgress())).append("%");
+//                        holder.tvItemSayTime.setText(builder.toString());
+//                    }
+//
+//                    @Override
+//                    public void onError(Throwable e) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onComplete() {
+//
+//                    }
+//                });
 
         holder.tvItemSayauthor.setText(say.getUsername());
         holder.tvItemSayTime.setText(say.getCreated_on());

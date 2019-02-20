@@ -32,6 +32,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning"
         tools:replace="android:allowBackup">
         <activity
             android:name=".view.activity.SplashActivity"
@@ -203,8 +204,12 @@
         </provider>
 
         <!-- Glide 使用OkHttp作为网络连接-->
+        <!--<meta-data-->
+        <!--android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"-->
+        <!--android:value="GlideModule" />-->
+        <!--自定义下载进度监听-->
         <meta-data
-            android:name="com.bumptech.glide.integration.okhttp3.OkHttpGlideModule"
+            android:name="cn.nicolite.huthelper.okhttp3.OkHttpGlideModule"
             android:value="GlideModule" />
 
         <!-- 信鸽推送 -->

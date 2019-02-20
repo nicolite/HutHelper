@@ -3,6 +3,7 @@ package cn.nicolite.huthelper.view.activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.widget.ImageView;
 
@@ -16,6 +17,8 @@ import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.utils.ListUtils;
+
+import static cn.nicolite.huthelper.util.UtilKt.setFullScreen;
 
 /**
  * 闪屏页
@@ -31,6 +34,13 @@ public class SplashActivity extends BaseActivity {
             R.drawable.start_4, R.drawable.start_5};
 
     private static final int what = 958;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setFullScreen(this);
+    }
+
 
     private MyHandler handler = new MyHandler(this);
 
