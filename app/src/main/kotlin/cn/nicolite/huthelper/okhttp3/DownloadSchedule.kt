@@ -27,10 +27,15 @@ object DownloadSchedule {
     * */
     @JvmStatic
     fun update(task: String, bytesRead: Long, contentLength: Long) {
-        if (tasks[task] == null)
-            tasks[task] = BehaviorSubject.createDefault(Config(task, bytesRead, contentLength))
-        else {
-            tasks[task]!!.onNext(Config(task, bytesRead, contentLength))
+        var subject = tasks[task]
+        if (subject == null) {
+            subject = BehaviorSubject.createDefault(Config(task, bytesRead, contentLength))
+            tasks[task] = subject
+        } else {
+            subject.onNext(Config(task, bytesRead, contentLength))
+        }
+        if (bytesRead >= contentLength) {
+            subject.onComplete()
         }
     }
 
