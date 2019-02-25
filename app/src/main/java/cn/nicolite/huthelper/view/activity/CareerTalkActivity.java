@@ -54,15 +54,10 @@ public class CareerTalkActivity extends BaseActivity implements ICareerTalkView 
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        setImmersiveStatusBar(true);
-        setDeepColorStatusBar(true);
-        setSlideExit(true);
+        setImmersiveStatusBar();
+        setDeepColorStatusBar();
     }
 
-    @Override
-    protected void initBundleData(Bundle bundle) {
-
-    }
 
     @Override
     protected int setLayoutId() {

@@ -37,13 +37,13 @@ public class SearchResultActivity extends BaseActivity {
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        setImmersiveStatusBar(true);
-        setDeepColorStatusBar(true);
-        setSlideExit(true);
+        setImmersiveStatusBar();
+        setDeepColorStatusBar();
     }
 
     @Override
     protected void initBundleData(Bundle bundle) {
+        super.initBundleData(bundle);
         if (bundle != null) {
             type = bundle.getInt("type", -1);
             searchText = bundle.getString("searchText", "");

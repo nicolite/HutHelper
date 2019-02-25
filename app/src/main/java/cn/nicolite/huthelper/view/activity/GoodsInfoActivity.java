@@ -79,13 +79,13 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        setImmersiveStatusBar(true);
-        setLayoutNoLimits(true);
-        setSlideExit(true);
+        setImmersiveStatusBar();
+        setLayoutNoLimits();
     }
 
     @Override
     protected void initBundleData(Bundle bundle) {
+        super.initBundleData(bundle);
         if (bundle != null) {
             goodsId = bundle.getString("goodsId", null);
             mUserId = bundle.getString("userId", null);

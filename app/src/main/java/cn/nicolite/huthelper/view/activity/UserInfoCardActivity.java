@@ -47,12 +47,12 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        setImmersiveStatusBar(true);
-        setSlideExit(true);
+        setImmersiveStatusBar();
     }
 
     @Override
     protected void initBundleData(Bundle bundle) {
+        super.initBundleData(bundle);
         if (bundle != null) {
             mUserId = bundle.getString("userId", null);
             username = bundle.getString("username", null);

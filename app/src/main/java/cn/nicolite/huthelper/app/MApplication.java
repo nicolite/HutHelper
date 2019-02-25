@@ -4,8 +4,11 @@ import android.app.Application;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 
+import com.messy.swipebackhelper.BuildConfig;
 import com.messy.swipebackhelper.SwipeBackHelper;
 import com.squareup.leakcanary.LeakCanary;
+
+import cn.nicolite.mvp.utils.LogUtils;
 
 /**
  * Created by nicolite on 17-9-5.
@@ -20,6 +23,8 @@ public class MApplication extends Application {
         super.onCreate();
         AppContext = getApplicationContext();
         application = this;
+
+        LogUtils.debug = BuildConfig.DEBUG;
         //初始化滑动返回库
         SwipeBackHelper.init(this);
         if (!LeakCanary.isInAnalyzerProcess(this)) {

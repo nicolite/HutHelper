@@ -89,6 +89,7 @@ public class WebViewActivity extends BaseActivity {
 
     @Override
     protected void initBundleData(Bundle bundle) {
+        super.initBundleData(bundle);
         type = bundle.getInt("type", -1);
         url = bundle.getString("url", null);
         title = bundle.getString("title", null);
@@ -471,7 +472,7 @@ public class WebViewActivity extends BaseActivity {
                                 || element.text().equals("新生攻略手册--转专业篇不可抗力下架")
                                 || element.text().equals("新生攻略手册--素拓篇不可抗力下架")
                                 || element.text().contains("严禁抄袭!")
-                                ) {
+                        ) {
                             element.remove();
                         }
                     }

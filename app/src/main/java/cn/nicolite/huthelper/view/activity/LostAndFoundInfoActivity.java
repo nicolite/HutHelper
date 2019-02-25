@@ -75,12 +75,12 @@ public class LostAndFoundInfoActivity extends BaseActivity implements ILostAndFo
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        setImmersiveStatusBar(true);
-        setSlideExit(true);
+        setImmersiveStatusBar();
     }
 
     @Override
     protected void initBundleData(Bundle bundle) {
+        super.initBundleData(bundle);
         if (bundle != null) {
             delete = bundle.getBoolean("delete", false);
             position = bundle.getInt("position", -1);

@@ -57,13 +57,13 @@ public class CareerTalkItemActivity extends BaseActivity implements ICareerTalkI
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        setImmersiveStatusBar(true);
-        setDeepColorStatusBar(true);
-        setSlideExit(true);
+        setImmersiveStatusBar();
+        setDeepColorStatusBar();
     }
 
     @Override
     protected void initBundleData(Bundle bundle) {
+        super.initBundleData(bundle);
         if (bundle != null) {
             id = bundle.getInt("id", -1);
             if (id == -1) {

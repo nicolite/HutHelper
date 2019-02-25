@@ -55,14 +55,8 @@ public class GradeListActivity extends BaseActivity implements IGradeListView {
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        setImmersiveStatusBar(true);
-        setDeepColorStatusBar(true);
-        setSlideExit(true);
-    }
-
-    @Override
-    protected void initBundleData(Bundle bundle) {
-
+        setImmersiveStatusBar();
+        setDeepColorStatusBar();
     }
 
     @Override

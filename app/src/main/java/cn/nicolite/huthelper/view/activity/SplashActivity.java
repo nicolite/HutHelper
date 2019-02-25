@@ -18,8 +18,6 @@ import cn.nicolite.huthelper.base.activity.BaseActivity;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.utils.ListUtils;
 
-import static cn.nicolite.huthelper.util.UtilKt.setFullScreen;
-
 /**
  * 闪屏页
  * Created by nicolite on 17-10-17.
@@ -38,7 +36,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setFullScreen(this);
+        setFullScreen();
     }
 
 
@@ -72,12 +70,7 @@ public class SplashActivity extends BaseActivity {
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        setImmersiveStatusBar(true);
-    }
-
-    @Override
-    protected void initBundleData(Bundle bundle) {
-
+        setImmersiveStatusBar();
     }
 
     @Override

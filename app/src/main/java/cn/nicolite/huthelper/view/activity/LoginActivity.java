@@ -49,11 +49,6 @@ public class LoginActivity extends BaseActivity implements ILoginView{
     }
 
     @Override
-    protected void initBundleData(Bundle bundle) {
-
-    }
-
-    @Override
     protected int setLayoutId() {
         return R.layout.activity_login;
     }

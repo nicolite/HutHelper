@@ -152,7 +152,7 @@ public class CommUtil {
         // 保存图片
         File appDir = new File(Environment.getExternalStorageDirectory(), "HutHelper");
         if (!appDir.exists()) {
-            appDir.mkdir();
+            appDir.mkdirs();
         }
         String fileName = System.currentTimeMillis() + ".jpg";
         File file = new File(appDir, fileName);

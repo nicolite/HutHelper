@@ -22,13 +22,9 @@ public class OffsiteLoginDialogActivity extends BaseActivity {
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        setImmersiveStatusBar(true);
+        setImmersiveStatusBar();
     }
 
-    @Override
-    protected void initBundleData(Bundle bundle) {
-
-    }
 
     @Override
     protected int setLayoutId() {

@@ -169,13 +169,6 @@ public class LostAndFoundFragment extends BaseFragment implements ILostAndFoundV
 
             }
         });
-
-        //第一次打开Activity时不会回调visibleToUser，会导致第一个Fragment页面不加载数据，在这里进行处理
-        if ((isUIVisible && isFirstVisible) || type == SEARCH || type == MYLOSTANDFOUND) {
-            lRecyclerView.forceToRefresh();
-            isFirstVisible = false;
-        }
-
     }
 
     @Override
@@ -183,6 +176,11 @@ public class LostAndFoundFragment extends BaseFragment implements ILostAndFoundV
         if (isFirstVisible) {
             lRecyclerView.forceToRefresh();
         }
+    }
+
+    @Override
+    protected boolean isFirstFragment() {
+        return true;
     }
 
     @Override

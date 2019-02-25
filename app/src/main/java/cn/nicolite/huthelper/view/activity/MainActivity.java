@@ -94,15 +94,11 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        hideToolBar(true);
-        setImmersiveStatusBar(true);
-        setLayoutNoLimits(true);
+        hideToolBar();
+        setImmersiveStatusBar();
+        setLayoutNoLimits();
     }
 
-    @Override
-    protected void initBundleData(Bundle bundle) {
-
-    }
 
     @Override
     protected int setLayoutId() {

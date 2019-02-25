@@ -54,14 +54,8 @@ public class MarketActivity extends BaseActivity {
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        setImmersiveStatusBar(true);
-        setDeepColorStatusBar(true);
-        setSlideExit(true);
-    }
-
-    @Override
-    protected void initBundleData(Bundle bundle) {
-
+        setImmersiveStatusBar();
+        setDeepColorStatusBar();
     }
 
     @Override

@@ -95,13 +95,13 @@ public class SyllabusItemActivity extends BaseActivity {
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        setImmersiveStatusBar(true);
-        setDeepColorStatusBar(true);
-        setSlideExit(true);
+        setImmersiveStatusBar();
+        setDeepColorStatusBar();
     }
 
     @Override
     protected void initBundleData(Bundle bundle) {
+        super.initBundleData(bundle);
         if (bundle != null) {
             lessonId = bundle.getLong("lessonId", -2);
             type = bundle.getInt("type", ADD_COURSE);

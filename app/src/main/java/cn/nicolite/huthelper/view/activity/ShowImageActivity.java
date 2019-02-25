@@ -37,13 +37,13 @@ public class ShowImageActivity extends BaseActivity {
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        setImmersiveStatusBar(true);
-        setLayoutNoLimits(true);
-        setSlideExit(true);
+        setImmersiveStatusBar();
+        setLayoutNoLimits();
     }
 
     @Override
     protected void initBundleData(Bundle bundle) {
+        super.initBundleData(bundle);
         images = bundle.getStringArrayList("images");
         currentPosition = bundle.getInt("curr");
         if (ListUtils.isEmpty(images)) {

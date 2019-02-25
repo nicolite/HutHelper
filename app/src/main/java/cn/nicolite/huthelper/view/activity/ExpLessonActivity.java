@@ -51,14 +51,8 @@ public class ExpLessonActivity extends BaseActivity implements IExplessonView {
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        setImmersiveStatusBar(true);
-        setDeepColorStatusBar(true);
-        setSlideExit(true);
-    }
-
-    @Override
-    protected void initBundleData(Bundle bundle) {
-
+        setImmersiveStatusBar();
+        setDeepColorStatusBar();
     }
 
     @Override
