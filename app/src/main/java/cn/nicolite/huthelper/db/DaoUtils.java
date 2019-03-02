@@ -21,7 +21,7 @@ public class DaoUtils {
      * 获取daoSession
      */
     public static DaoSession getDaoSession() {
-        return DaoHelper.getDaoHelper(MApplication.application).getDaoSession();
+        return DaoHelper.getDaoHelper(MApplication.Companion.getApplication()).getDaoSession();
     }
 
     /**
@@ -36,7 +36,7 @@ public class DaoUtils {
      * 获取当前登录用户
      */
     public static String getLoginUser() {
-        SharedPreferences preferences = MApplication.application.getSharedPreferences("login_user", Context.MODE_PRIVATE);
+        SharedPreferences preferences = MApplication.Companion.getApplication().getSharedPreferences("login_user", Context.MODE_PRIVATE);
         return preferences.getString("userId", "*");
     }
 }

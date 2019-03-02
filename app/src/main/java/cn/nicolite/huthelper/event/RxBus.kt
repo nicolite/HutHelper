@@ -80,9 +80,10 @@ object RxBus {
     }
 
     fun unsubscribe() {
-        val disposable = this.disposable
-        if (disposable != null && !disposable.isDisposed) {
-            disposable.dispose()
+        disposable?.let {
+            if (!it.isDisposed) {
+                it.dispose()
+            }
         }
     }
 

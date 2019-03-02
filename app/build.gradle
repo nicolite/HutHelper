@@ -105,7 +105,7 @@ android {
             variant.outputs.all {
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.CHINA)
                 String releaseTime = format.format(new Date())
-                outputFileName = "huthelper-${variant.flavorName}-${variant.versionName}(${variant.versionCode})_${releaseTime}.apk"
+                outputFileName = "huthelper_${variant.flavorName}_${variant.versionCode}_${variant.versionName}_${releaseTime}.apk"
             }
     }
 
@@ -115,17 +115,11 @@ android {
         disable 'MissingTranslation'
     }
 
-    packagingOptions {
-        //rxjava1和rxjava2冲突
-        exclude 'META-INF/rxjava.properties'
-    }
-
     productFlavors {
-
+        //release
         releases {
             flavorDimensions "release"
         }
-
         //beta
         beta {
             flavorDimensions "beta"
@@ -154,19 +148,16 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-
-    //多dex配置,解决dex超过64k
     implementation 'com.android.support:multidex:1.0.3'
 
     //retrofit okhttp rxjava
-    implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
+    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.5.0'
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
-
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     //生命周期管理
     implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1'
     implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'

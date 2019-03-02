@@ -1,5 +1,7 @@
 package cn.nicolite.huthelper.model;
 
+import org.jetbrains.annotations.NotNull;
+
 /**
  * 常量类 放置一些常量, 如APPID、APPKEY等
  * Created by nicolite on 17-10-13.
@@ -38,4 +40,7 @@ public class Constants {
     public static final int BROADCAST_TYPE_NOTICE = 0;
     public static final int BROADCAST_TYPE_REFRESH_AVATAR = 1;
 
+
+    public static final String BASE_API_URL = "";
+    public static final String BASE_API_TEST_URL = "";
 }

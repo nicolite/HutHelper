@@ -43,7 +43,7 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
     public SayAdapter(Context context, List<Say> sayList) {
         this.context = context;
         this.sayList = sayList;
-        SharedPreferences preferences = MApplication.AppContext.getSharedPreferences("login_user", Context.MODE_PRIVATE);
+        SharedPreferences preferences = MApplication.Companion.getAppContext().getSharedPreferences("login_user", Context.MODE_PRIVATE);
         userId = preferences.getString("userId", "");
     }
 

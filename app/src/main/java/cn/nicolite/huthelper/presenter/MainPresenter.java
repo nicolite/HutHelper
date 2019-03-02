@@ -375,7 +375,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     }
 
     public void startLoginService() {
-        LoginService.start(MApplication.application);
+        LoginService.start(MApplication.Companion.getApplication());
     }
 
 }

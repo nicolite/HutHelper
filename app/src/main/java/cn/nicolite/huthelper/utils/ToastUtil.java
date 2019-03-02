@@ -13,19 +13,19 @@ import cn.nicolite.huthelper.app.MApplication;
 public class ToastUtil {
 
     public static void showToastLong(String msg){
-        showToast(MApplication.AppContext,msg,Toast.LENGTH_LONG);
+        showToast(MApplication.Companion.getAppContext(),msg,Toast.LENGTH_LONG);
     }
 
     public static void showToastLong(int msg){
-        showToast(MApplication.AppContext,""+msg,Toast.LENGTH_LONG);
+        showToast(MApplication.Companion.getAppContext(),""+msg,Toast.LENGTH_LONG);
     }
 
     public static void showToastShort(String msg){
-        showToast(MApplication.AppContext,msg,Toast.LENGTH_SHORT);
+        showToast(MApplication.Companion.getAppContext(),msg,Toast.LENGTH_SHORT);
     }
 
     public static void showToastShort(int msg){
-        showToast(MApplication.AppContext,""+msg,Toast.LENGTH_SHORT);
+        showToast(MApplication.Companion.getAppContext(),""+msg,Toast.LENGTH_SHORT);
     }
 
     public static void showToast(Context context,String msg,int durstion){

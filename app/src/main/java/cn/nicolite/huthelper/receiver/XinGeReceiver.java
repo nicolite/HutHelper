@@ -95,14 +95,14 @@ public class XinGeReceiver extends XGPushBaseReceiver {
      * 获取daoSession
      */
     protected DaoSession getDaoSession() {
-        return DaoHelper.getDaoHelper(MApplication.AppContext).getDaoSession();
+        return DaoHelper.getDaoHelper(MApplication.Companion.getAppContext()).getDaoSession();
     }
 
     /**
      * 获取当前登录用户
      */
     protected String getLoginUser() {
-        SharedPreferences preferences = MApplication.AppContext.getSharedPreferences("login_user", Context.MODE_PRIVATE);
+        SharedPreferences preferences = MApplication.Companion.getAppContext().getSharedPreferences("login_user", Context.MODE_PRIVATE);
         return preferences.getString("userId", null);
     }
 
