@@ -27,7 +27,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.BindViews;
 import cn.nicolite.huthelper.R;
-import cn.nicolite.huthelper.base.fragment.BaseFragment;
+import cn.nicolite.huthelper.base.BaseFragment;
 import cn.nicolite.huthelper.db.dao.LessonDao;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Lesson;

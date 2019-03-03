@@ -1,14 +1,12 @@
 package cn.nicolite.huthelper.model;
 
-import org.jetbrains.annotations.NotNull;
-
 /**
  * 常量类 放置一些常量, 如APPID、APPKEY等
  * Created by nicolite on 17-10-13.
  */
 
 public class Constants {
-    //DataBase Name
+    //DB Name
     public static final String DBNAME = "huthelper-db";
     //API URL
     public static final String API_BASE_URL = "https://raw.githubusercontent.com/nicolite/HutHelper/";
@@ -17,9 +15,6 @@ public class Constants {
     public static final String FRESHMANGUIDE_URL = ARTICLE_BASE_URL + "/home/post/19"; //新生攻略
 
     //SOME URL
-    public static final String CHANGE_PWD = "不开放";
-    public static final String HELP = ARTICLE_BASE_URL + "/home/post/39";
-    public static final String PERMISSON = ARTICLE_BASE_URL + "/home/post/40";
     public static final String LIBRARY = "不开放";
     public static final String HOMEWORK = "不开放";
     public static final String BLOG = "http://nicolite.cn";
@@ -39,7 +34,6 @@ public class Constants {
     //Broadcast type
     public static final int BROADCAST_TYPE_NOTICE = 0;
     public static final int BROADCAST_TYPE_REFRESH_AVATAR = 1;
-
 
     public static final String BASE_API_URL = "";
     public static final String BASE_API_TEST_URL = "";

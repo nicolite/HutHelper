@@ -7,7 +7,7 @@ import android.view.Gravity;
 import android.view.View;
 
 import cn.nicolite.huthelper.R;
-import cn.nicolite.huthelper.base.activity.BaseActivity;
+import cn.nicolite.huthelper.base.BaseActivity;
 import cn.nicolite.huthelper.manager.ActivityStackManager;
 import cn.nicolite.huthelper.view.customView.CommonDialog;
 

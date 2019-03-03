@@ -84,15 +84,4 @@
         android:text="登录"
         android:textColor="#1dbbdb"
         android:textSize="13sp" />
-
-    <TextView
-        android:id="@+id/tv_message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="50dp"
-        android:text="密码默认为身份证后六位(x小写) 忘记密码？"
-        android:textColor="#cacaca"
-        android:textSize="13sp" />
 </LinearLayout>

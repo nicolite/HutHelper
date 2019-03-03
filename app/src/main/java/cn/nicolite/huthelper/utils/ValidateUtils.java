@@ -4,7 +4,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
  * Created by nicolite on 17-7-21.
  */
 
@@ -52,7 +51,6 @@ public class ValidateUtils {
             flag = true;
         }
         return flag;
-
     }
 
 }

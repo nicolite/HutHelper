@@ -22,10 +22,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.nicolite.huthelper.R;
-import cn.nicolite.huthelper.base.fragment.BaseFragment;
+import cn.nicolite.huthelper.base.BaseFragment;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Goods;
-import cn.nicolite.huthelper.presenter.MarketPresenter;
+import cn.nicolite.huthelper.view.presenter.MarketPresenter;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.activity.GoodsInfoActivity;
 import cn.nicolite.huthelper.view.adapter.MarketAdapter;

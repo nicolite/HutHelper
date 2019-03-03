@@ -29,10 +29,10 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.nicolite.huthelper.R;
-import cn.nicolite.huthelper.base.fragment.BaseFragment;
+import cn.nicolite.huthelper.base.BaseFragment;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Say;
-import cn.nicolite.huthelper.presenter.SayPresenter;
+import cn.nicolite.huthelper.view.presenter.SayPresenter;
 import cn.nicolite.huthelper.utils.ButtonUtils;
 import cn.nicolite.huthelper.utils.CommUtil;
 import cn.nicolite.huthelper.utils.KeyBoardUtils;
