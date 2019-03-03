@@ -7,11 +7,11 @@
 [酷安](https://www.coolapk.com/apk/cn.nicolite.huthelper)
 
 ### 图片展示
-<image src=https://raw.githubusercontent.com/nicolite/HutHelper/opensource/image/f1.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/res/image/f2.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/res/image/f3.jpg width=250 height=450>
+<image src=https://raw.githubusercontent.com/nicolite/HutHelper/opensource/image/f1.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/opensource/image/f2.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/opensource/image/f3.jpg width=250 height=450>
 
-<image src=https://raw.githubusercontent.com/nicolite/HutHelper/opensource/image/f4.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/res/image/f5.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/res/image/f6.jpg width=250 height=450>
+<image src=https://raw.githubusercontent.com/nicolite/HutHelper/opensource/image/f4.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/opensource/image/f5.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/opensource/image/f6.jpg width=250 height=450>
 
-<image src=https://raw.githubusercontent.com/nicolite/HutHelper/opensource/image/f7.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/res/image/f8.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/res/image/f9.jpg width=250 height=450>
+<image src=https://raw.githubusercontent.com/nicolite/HutHelper/opensource/image/f7.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/opensource/image/f8.jpg width=250 height=450> <image src=https://raw.githubusercontent.com/nicolite/HutHelper/opensource/image/f9.jpg width=250 height=450>
 
 <image src=https://raw.githubusercontent.com/nicolite/HutHelper/opensource/image/f10.jpg width=250 height=450>
 
@@ -22,7 +22,7 @@ Android 4.4 (API 19)以上， 2G RAM以上，分辨率1920x1080以上
 Android Studio 3.1.2 、JDK1.8
 
 ### 项目架构
-[RxJava2](https://github.com/ReactiveX/RxJava) + [Retrofit2](http://square.github.io/retrofit/) + [RxLifecycle2](https://github.com/trello/RxLifecycle) + [MVP](https://github.com/RuffianZhong/Rx-Mvp)
+[RxJava2](https://github.com/ReactiveX/RxJava) + [Retrofit2](http://square.github.io/retrofit/) + [RxLifecycle2](https://github.com/trello/RxLifecycle) + [MVP](https://github.com/nicolite/archer)
 
 ### View绑定
 [ButterKnife](http://jakewharton.github.io/butterknife/)  
