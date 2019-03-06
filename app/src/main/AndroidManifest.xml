@@ -149,10 +149,6 @@
             android:theme="@style/AppTheme" />
 
         <activity
-            android:name=".view.activity.FreshmanGuideActivity"
-            android:theme="@style/AppTheme" />
-
-        <activity
             android:name=".view.activity.SyllabusActivity"
             android:theme="@style/AppTheme" />
 
@@ -219,6 +215,10 @@
                 android:resource="@xml/coursewidget_provider_info" />
         </receiver>
 
+
+        <activity
+            android:name=".view.activity.FreshmanStrategyActivity"
+            android:theme="@style/AppTheme" />
     </application>
 
 </manifest>

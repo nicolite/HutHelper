@@ -130,7 +130,7 @@ public class CreateSayActivity extends BaseActivity implements ICreateSayView {
 
     @Override
     public void showMessage(String msg) {
-        SnackbarUtils.showShortSnackbar(rootView, msg);
+        SnackbarUtils.INSTANCE.showShortSnackbar(rootView, msg);
     }
 
     @Override

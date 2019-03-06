@@ -22,7 +22,7 @@ class DaoUpgradeHelper : DaoMaster.OpenHelper {
         super.onUpgrade(db, oldVersion, newVersion)
 
         //是否开启日志
-        MigrationHelper.DEBUG = BuildConfig.LOG_DEBUG
+        MigrationHelper.DEBUG = BuildConfig.DEBUG
 
         MigrationHelper.migrate(db, object : MigrationHelper.ReCreateAllTableListener {
             override fun onCreateAllTables(db: Database, ifNotExists: Boolean) {

@@ -1,13 +1,17 @@
 package cn.nicolite.huthelper.network
 
 import cn.nicolite.huthelper.BuildConfig
-import cn.nicolite.huthelper.model.Constants
+import cn.nicolite.huthelper.model.ConstantsValue
+import cn.nicolite.huthelper.utils.EncryptUtils
 import cn.nicolite.mvp.utils.LogUtils
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.URLEncoder
 import java.util.concurrent.TimeUnit
 
 /**
@@ -24,15 +28,29 @@ val okHttpClient: OkHttpClient
         val logging = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger { message -> LogUtils.d("okHttpClient", "okHttp：$message") })
         logging.level = HttpLoggingInterceptor.Level.BASIC
 
+        val xHeader = object : Interceptor {
+            override fun intercept(chain: Interceptor.Chain): Response {
+                return chain.proceed(
+                        chain.request().newBuilder()
+                                .addHeader("token", URLEncoder.encode(EncryptUtils.encryptString(), "UTF-8"))
+                                .addHeader("package_name", BuildConfig.APPLICATION_ID)
+                                .addHeader("channel", BuildConfig.FLAVOR)
+                                .addHeader("version", "${BuildConfig.VERSION_NAME}(${BuildConfig.VERSION_CODE})")
+                                .build()
+                )
+            }
+        }
+
         return OkHttpClient.Builder()
                 .connectTimeout(CONNECT_TIME_OUT.toLong(), TimeUnit.SECONDS)
                 .writeTimeout(WRITE_TIME_OUT.toLong(), TimeUnit.SECONDS)
                 .readTimeout(READ_TIME_OUT.toLong(), TimeUnit.SECONDS)
                 .addNetworkInterceptor(logging)
+                .addInterceptor(xHeader)
                 .build()
     }
 
-private val BASE_URL = if (BuildConfig.DEBUG) Constants.BASE_API_TEST_URL else Constants.BASE_API_URL
+private val BASE_URL = if (BuildConfig.DEBUG) ConstantsValue.BASE_API_TEST_URL else ConstantsValue.BASE_API_URL
 val retrofit: Retrofit
     get() {
         return Retrofit.Builder()

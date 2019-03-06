@@ -195,7 +195,7 @@ public class LostAndFoundInfoActivity extends BaseActivity implements ILostAndFo
 
     @Override
     public void showMessage(String msg) {
-        SnackbarUtils.showShortSnackbar(rootView, msg);
+        SnackbarUtils.INSTANCE.showShortSnackbar(rootView, msg);
     }
 
 

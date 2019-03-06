@@ -16,7 +16,6 @@ import cn.nicolite.huthelper.network.api.TimeAxisAPI;
 import cn.nicolite.huthelper.network.api.UpdateAPI;
 import cn.nicolite.huthelper.network.api.UploadAPI;
 import cn.nicolite.huthelper.network.api.UserAPI;
-import cn.nicolite.huthelper.network.api.VideoAPI;
 import cn.nicolite.huthelper.network.api.VoteAPI;
 import cn.nicolite.huthelper.network.api.WeatherAPI;
 import cn.nicolite.huthelper.network.retrofit.RetrofitUtils;
@@ -48,7 +47,6 @@ public class APIUtils {
     private static CareerTalkAPI careerTalkAPI;
     private static LostAndFoundAPI lostAndFoundAPI;
     private static GradeAPI gradeAPI;
-    private static VideoAPI videoAPI;
     private static SyllabusAPI syllabusAPI;
 
     public static LoginAPI getLoginAPI() {
@@ -171,12 +169,6 @@ public class APIUtils {
         return gradeAPI;
     }
 
-    public static VideoAPI getVideoAPI() {
-        if (videoAPI == null) {
-            videoAPI = retrofit.create(VideoAPI.class);
-        }
-        return videoAPI;
-    }
 
     public static SyllabusAPI getSyllabusAPI() {
         if (syllabusAPI == null) {

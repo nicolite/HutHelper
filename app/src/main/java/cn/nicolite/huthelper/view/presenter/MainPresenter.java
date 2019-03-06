@@ -217,7 +217,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             menuItems.add(item);
             item = new Menu(12, 12, 0, "全部", "cn.nicolite.huthelper.view.activity.AllActivity", true);
             menuItems.add(item);
-            item = new Menu(13, 14, 0, "新生攻略", "cn.nicolite.huthelper.view.activity.FreshmanGuideActivity", false);
+            item = new Menu(13, 14, 0, "新生攻略", "cn.nicolite.huthelper.view.activity.FreshmanStrategyActivity", false);
             menuItems.add(item);
 
             for (Menu menu : menuItems) {
@@ -314,7 +314,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                 getView().showMessage("注册推送服务失败：" + s + " code：" + i);
             }
         });
-        XGPushConfig.enableDebug(getActivity().getApplicationContext(), BuildConfig.LOG_DEBUG);
+        XGPushConfig.enableDebug(getActivity().getApplicationContext(), BuildConfig.DEBUG);
     }
 
     public void unregisterPush() {

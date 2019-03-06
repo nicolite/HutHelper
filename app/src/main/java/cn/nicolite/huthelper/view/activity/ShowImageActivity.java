@@ -93,7 +93,7 @@ public class ShowImageActivity extends BaseActivity {
                 if (!ButtonUtils.isFastDoubleClick()) {
                     CommUtil.downloadBitmap(context, images.get(currentPosition));
                 } else {
-                    SnackbarUtils.showShortSnackbar(rootView, "你点的太快了！");
+                    SnackbarUtils.INSTANCE.showShortSnackbar(rootView, "你点的太快了！");
                 }
                 break;
         }

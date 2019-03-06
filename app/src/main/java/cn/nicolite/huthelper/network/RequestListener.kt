@@ -8,11 +8,11 @@ import cn.nicolite.huthelper.exception.APIException
  * email nicolite@nicolite.cn
  */
 interface RxRequestListener<T> {
-    fun onMap(data: T)
-    fun onResponse(data: T)
+    fun onMap(responseResult: T)
+    fun onResponse(responseResult: T)
     fun onFailure(exception: APIException)
 }
 
 interface HttpRequestListener<T> : RxRequestListener<T> {
-    override fun onMap(data: T) {}
+    override fun onMap(responseResult: T) {}
 }

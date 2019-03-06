@@ -108,7 +108,7 @@ public class GradeListActivity extends BaseActivity implements IGradeListView {
 
     @Override
     public void showMessage(String msg) {
-        SnackbarUtils.showShortSnackbar(recyclerView, msg);
+        SnackbarUtils.INSTANCE.showShortSnackbar(recyclerView, msg);
     }
 
     @Override

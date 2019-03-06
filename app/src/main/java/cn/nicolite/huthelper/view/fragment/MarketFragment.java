@@ -203,7 +203,7 @@ public class MarketFragment extends BaseFragment implements IMarketView {
 
     @Override
     public void showMessage(String msg) {
-        SnackbarUtils.showShortSnackbar(rootView, msg);
+        SnackbarUtils.INSTANCE.showShortSnackbar(rootView, msg);
     }
 
     @Override

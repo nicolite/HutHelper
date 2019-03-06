@@ -161,7 +161,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
 
     @Override
     public void showMessage(String msg) {
-        SnackbarUtils.showShortSnackbar(rootView, msg);
+        SnackbarUtils.INSTANCE.showShortSnackbar(rootView, msg);
     }
 
     @Override

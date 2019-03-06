@@ -221,7 +221,7 @@ public class SayFragment extends BaseFragment implements ISayView {
 
     @Override
     public void showMessage(String msg) {
-        SnackbarUtils.showShortSnackbar(rootView, msg);
+        SnackbarUtils.INSTANCE.showShortSnackbar(rootView, msg);
     }
 
     @Override

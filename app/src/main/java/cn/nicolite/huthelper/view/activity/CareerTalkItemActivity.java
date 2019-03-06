@@ -106,7 +106,7 @@ public class CareerTalkItemActivity extends BaseActivity implements ICareerTalkI
 
     @Override
     public void showMessage(String msg) {
-        SnackbarUtils.showShortSnackbar(rootView, msg);
+        SnackbarUtils.INSTANCE.showShortSnackbar(rootView, msg);
     }
 
     @Override

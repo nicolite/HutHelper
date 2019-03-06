@@ -33,7 +33,7 @@ android {
             abiFilters 'armeabi-v7a', 'arm64-v8a'//, 'x86', 'armeabi'//, 'x86_64', "mips"
         }
 
-        //从appKey.properties文件中拉取信息
+        //从openKey.properties文件中拉取信息
         def appKeyStream = new FileInputStream(rootProject.file('openKey.properties'))
         def appKeyProperties = new Properties()
         appKeyProperties.load(appKeyStream)
@@ -76,7 +76,6 @@ android {
             minifyEnabled true
             zipAlignEnabled true
             shrinkResources true
-            buildConfigField("boolean", "LOG_DEBUG", "false")
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
@@ -85,7 +84,6 @@ android {
             minifyEnabled false
             zipAlignEnabled false
             shrinkResources false
-            buildConfigField("boolean", "LOG_DEBUG", "true")
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
 
@@ -123,7 +121,6 @@ android {
         //beta
         beta {
             flavorDimensions "beta"
-            applicationId "cn.nicolite.huthelper.beta"
         }
     }
 
@@ -208,8 +205,8 @@ dependencies {
     implementation 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.0.1'
 
     //内存泄露检测
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.1'
-    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.1'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
 
     //滑动返回
     implementation project(':swipebackhelper')

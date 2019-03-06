@@ -94,11 +94,9 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        hideToolBar();
         setImmersiveStatusBar();
         setLayoutNoLimits();
     }
-
 
     @Override
     protected int setLayoutId() {
@@ -273,7 +271,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         if (isOpen) {
             rootView.close(true);
         } else if (System.currentTimeMillis() - exitTime > 2000) {
-            SnackbarUtils.showShortSnackbar(rootView, "再按一次返回键退出");
+            SnackbarUtils.INSTANCE.showShortSnackbar(rootView, "再按一次返回键退出");
             exitTime = System.currentTimeMillis();
         } else {
             // super.onBackPressed();
@@ -293,7 +291,7 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     public void showMessage(String msg) {
-        SnackbarUtils.showShortSnackbar(rootView, msg);
+        SnackbarUtils.INSTANCE.showShortSnackbar(rootView, msg);
     }
 
     @Override

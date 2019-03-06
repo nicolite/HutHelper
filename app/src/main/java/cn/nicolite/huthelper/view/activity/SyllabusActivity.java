@@ -186,7 +186,7 @@ public class SyllabusActivity extends BaseActivity implements ISyllabusView {
 
     @Override
     public void showMessage(String msg) {
-        SnackbarUtils.showShortSnackbar(rootView, msg);
+        SnackbarUtils.INSTANCE.showShortSnackbar(rootView, msg);
     }
 
     @Override

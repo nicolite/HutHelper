@@ -229,7 +229,7 @@ public class AllActivity extends BaseActivity {
     }
 
     public void showMessage(String msg) {
-        SnackbarUtils.showShortSnackbar(rootView, msg);
+        SnackbarUtils.INSTANCE.showShortSnackbar(rootView, msg);
     }
 
 

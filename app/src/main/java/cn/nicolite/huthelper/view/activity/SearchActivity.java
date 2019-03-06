@@ -161,7 +161,7 @@ public class SearchActivity extends BaseActivity implements ISearchView {
 
     @Override
     public void showMessage(String msg) {
-        SnackbarUtils.showShortSnackbar(recyclerView, msg);
+        SnackbarUtils.INSTANCE.showShortSnackbar(recyclerView, msg);
     }
 
     @Override
