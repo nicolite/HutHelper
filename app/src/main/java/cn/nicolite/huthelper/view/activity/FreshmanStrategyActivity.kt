@@ -8,7 +8,7 @@ import cn.nicolite.huthelper.kbase.DefaultConfigActivity
 import cn.nicolite.huthelper.model.dao.FreshmanStrategy
 import cn.nicolite.huthelper.utils.SnackbarUtils
 import cn.nicolite.huthelper.view.IListView
-import cn.nicolite.huthelper.view.adapter.FreshmanStrategyAdapter
+import cn.nicolite.huthelper.view.adapter.FreshmanStrategyRecyclerViewAdapter
 import cn.nicolite.huthelper.view.presenter.FreshmanStrategyPresenter
 import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter
 import kotlinx.android.synthetic.main.item_lrecyclerview.*
@@ -31,7 +31,7 @@ class FreshmanStrategyActivity : DefaultConfigActivity(), IListView<FreshmanStra
         toolbar_back.setOnClickListener { finish() }
 
         val freshmanStrategyPresenter = FreshmanStrategyPresenter(this, this)
-        lRecyclerViewAdapter = FreshmanStrategyAdapter(mContext, dataList).getLAdapter()
+        lRecyclerViewAdapter = FreshmanStrategyRecyclerViewAdapter(mContext, dataList).getLRecyclerViewAdapter()
         lRecyclerViewAdapter.setOnItemClickListener { view, position ->
             val freshmanStrategy = dataList[position]
             val bundle = Bundle()

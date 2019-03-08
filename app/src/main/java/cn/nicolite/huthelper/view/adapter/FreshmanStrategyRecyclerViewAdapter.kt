@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import cn.nicolite.huthelper.R
-import cn.nicolite.huthelper.kbase.BaseLAdapter
+import cn.nicolite.huthelper.kbase.BaseLRecyclerViewAdapter
 import cn.nicolite.huthelper.model.dao.FreshmanStrategy
 import kotlinx.android.synthetic.main.item_freshman_strategy.view.*
 
@@ -15,8 +15,8 @@ import kotlinx.android.synthetic.main.item_freshman_strategy.view.*
  * Created by nicolite on 2019/3/6.
  * email nicolite@nicolite.cn
  */
-class FreshmanStrategyAdapter(private val context: Context, private val dataList: List<FreshmanStrategy>) :
-        BaseLAdapter<FreshmanStrategyAdapter.FSViewHolder>() {
+class FreshmanStrategyRecyclerViewAdapter(private val context: Context, private val dataList: List<FreshmanStrategy>) :
+        BaseLRecyclerViewAdapter<FreshmanStrategyRecyclerViewAdapter.FSViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FSViewHolder {
         return FSViewHolder(LayoutInflater.from(context)
                 .inflate(R.layout.item_freshman_strategy, parent, false))

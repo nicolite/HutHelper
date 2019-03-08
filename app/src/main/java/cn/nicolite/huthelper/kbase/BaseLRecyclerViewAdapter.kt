@@ -8,7 +8,7 @@ import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter
  * email nicolite@nicolite.cn
  * 返回LRecyclerViewAdapter
  */
-abstract class BaseLAdapter<T : RecyclerView.ViewHolder>
+abstract class BaseLRecyclerViewAdapter<T : RecyclerView.ViewHolder>
     : RecyclerView.Adapter<T>() {
-    fun getLAdapter(): LRecyclerViewAdapter = LRecyclerViewAdapter(this)
+    fun getLRecyclerViewAdapter(): LRecyclerViewAdapter = LRecyclerViewAdapter(this)
 }
