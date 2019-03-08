@@ -1,4 +1,4 @@
-### HutHelper
+### HutHelper  [![Build Status](https://travis-ci.org/nicolite/HutHelper.svg?branch=opensource)](https://travis-ci.org/nicolite/HutHelper)
 ![](https://raw.githubusercontent.com/nicolite/HutHelper/opensource/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png)  
 
 工大助手开源版，代码供大家学习，私有API已全改为静态，账号和密码输入任意字符即可进入，部分与敏感信息相关的功能不提供，推送功能需自行到腾讯信鸽推送申请id和key填入openKey.properties相关位置，并在MainActivity中去掉推送注册和反注册的注释，二手市场，失物招领，说说等发布功能不提供，仅能够查看页面，开源版不提供完整支持。

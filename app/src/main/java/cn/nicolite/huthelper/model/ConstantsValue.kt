@@ -6,5 +6,5 @@ package cn.nicolite.huthelper.model
  */
 object ConstantsValue {
     val BASE_API_URL = "http://nicolite.uicp.net"
-    val BASE_API_TEST_URL = "http://192.168.199.237:8082"
+    val BASE_API_TEST_URL = BASE_API_URL// "http://192.168.199.237:8082"
 }

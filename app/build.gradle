@@ -23,30 +23,23 @@ android {
     buildToolsVersion '28.0.3'
     defaultConfig {
         applicationId "cn.nicolite.huthelper"
-        minSdkVersion 18
+        minSdkVersion 19
         targetSdkVersion 27
-        versionCode gitVersionCode()
         versionName gitVersionTag()
+        versionCode gitVersionCode()
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
         ndk {
             abiFilters 'armeabi-v7a', 'arm64-v8a'//, 'x86', 'armeabi'//, 'x86_64', "mips"
         }
-
         //从openKey.properties文件中拉取信息
         def appKeyStream = new FileInputStream(rootProject.file('openKey.properties'))
         def appKeyProperties = new Properties()
         appKeyProperties.load(appKeyStream)
-
         manifestPlaceholders = [
                 XG_ACCESS_ID : appKeyProperties.get("XG_ACCESS_ID"),
                 XG_ACCESS_KEY: appKeyProperties.get("XG_ACCESS_KEY"),
         ]
-    }
-
-    dexOptions {
-        jumboMode true
-        javaMaxHeapSize "2g"
     }
 
     signingConfigs {
@@ -73,9 +66,9 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             zipAlignEnabled true
-            shrinkResources true
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
         }
@@ -83,10 +76,8 @@ android {
         debug {
             minifyEnabled false
             zipAlignEnabled false
-            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
-
         }
     }
 
@@ -155,14 +146,17 @@ dependencies {
     implementation 'com.squareup.okhttp3:logging-interceptor:3.11.0'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.6'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+
     //生命周期管理
     implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1'
     implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
 
     //Glide--图片加载
     implementation 'com.github.bumptech.glide:glide:3.8.0'
+
     //自定义实现加载进度监听 copy source code
-//    implementation 'com.github.bumptech.glide:okhttp3-integration:1.5.0'
+
+    //    implementation 'com.github.bumptech.glide:okhttp3-integration:1.5.0'
 
     //图片滤镜处理
     implementation 'jp.wasabeef:glide-transformations:2.0.2'
