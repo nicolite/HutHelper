@@ -19,9 +19,9 @@ import java.util.concurrent.TimeUnit
  * Created by nicolite on 17-10-17.
  */
 
-private const val CONNECT_TIME_OUT = 6//连接超时时长x秒
-private const val READ_TIME_OUT = 6//读数据超时时长x秒
-private const val WRITE_TIME_OUT = 6//写数据接超时时长x秒
+private const val CONNECT_TIME_OUT = 10//连接超时时长x秒
+private const val READ_TIME_OUT = 10//读数据超时时长x秒
+private const val WRITE_TIME_OUT = 10//写数据接超时时长x秒
 
 val okHttpClient: OkHttpClient
     get() {

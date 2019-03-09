@@ -9,8 +9,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.bean.SearchHistory;
 import cn.nicolite.huthelper.utils.ListUtils;
@@ -64,12 +62,12 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     }
 
     static class SearchViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.text)
+
         TextView text;
 
         public SearchViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            text = (TextView) itemView.findViewById(R.id.text);
         }
     }
 
@@ -81,7 +79,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
         boolean onItemLongClick(View view, int position, long itemId);
     }
 
-    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener){
+    public void setOnItemLongClickListener(OnItemLongClickListener onItemLongClickListener) {
         this.onItemLongClickListener = onItemLongClickListener;
     }
 

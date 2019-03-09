@@ -13,8 +13,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.Goods;
@@ -61,23 +59,28 @@ public class MarketAdapter extends RecyclerView.Adapter<MarketAdapter.MarketView
 
     @Override
     public int getItemCount() {
-        return ListUtils.isEmpty(goodsList)? 0 : goodsList.size();
+        return ListUtils.isEmpty(goodsList) ? 0 : goodsList.size();
     }
 
     static class MarketViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.image)
+
         ImageView image;
-        @BindView(R.id.price)
+
         TextView price;
-        @BindView(R.id.title)
+
         TextView title;
-        @BindView(R.id.date)
+
         TextView date;
-        @BindView(R.id.rootView)
+
         LinearLayout rootView;
+
         public MarketViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            image = (ImageView) itemView.findViewById(R.id.image);
+            price = (TextView) itemView.findViewById(R.id.price);
+            title = (TextView) itemView.findViewById(R.id.title);
+            date = (TextView) itemView.findViewById(R.id.date);
+            rootView = (LinearLayout) itemView.findViewById(R.id.rootView);
         }
     }
 }

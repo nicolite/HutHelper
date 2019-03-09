@@ -14,7 +14,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.BaseActivity;
@@ -35,18 +34,16 @@ import cn.nicolite.huthelper.view.customView.CustomItemTouchHelper;
  */
 
 public class AllActivity extends BaseActivity {
-    @BindView(R.id.toolbar_title)
-    TextView toolbarTitle;
-    @BindView(R.id.toolbar_left_text)
-    TextView toolbarLeftText;
-    @BindView(R.id.tv_al_msg)
-    TextView tvAlMsg;
-    @BindView(R.id.rv_all_main)
-    RecyclerView rvAllMain;
-    @BindView(R.id.rv_all_other)
-    RecyclerView rvAllOther;
-    @BindView(R.id.rootView)
-    LinearLayout rootView;
+
+    private TextView toolbarLeftText;
+
+    private TextView tvAlMsg;
+
+    private RecyclerView rvAllMain;
+
+    private RecyclerView rvAllOther;
+
+    private LinearLayout rootView;
 
     private List<Menu> mainMenuList = new ArrayList<>();
     private List<Menu> otherMenuList = new ArrayList<>();
@@ -71,6 +68,13 @@ public class AllActivity extends BaseActivity {
 
     @Override
     protected void doBusiness() {
+        TextView toolbarTitle = findViewById(R.id.toolbar_title);
+        toolbarLeftText = (TextView) findViewById(R.id.toolbar_left_text);
+        tvAlMsg = (TextView) findViewById(R.id.tv_al_msg);
+        rvAllMain = (RecyclerView) findViewById(R.id.rv_all_main);
+        rvAllOther = (RecyclerView) findViewById(R.id.rv_all_other);
+        rootView = (LinearLayout) findViewById(R.id.rootView);
+
         toolbarTitle.setText("全部应用");
         toolbarLeftText.setText("编辑");
 

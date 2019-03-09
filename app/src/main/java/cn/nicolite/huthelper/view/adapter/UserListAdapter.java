@@ -13,8 +13,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.model.bean.User;
@@ -57,34 +55,6 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
         holder.name.setText(user.getTrueName());
         holder.clazz.setText(user.getClass_name());
         holder.college.setText(user.getDep_name());
-
-        /*holder.itemUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                RongIM.setUserInfoProvider(new RongIM.UserInfoProvider() {
-                    @Override
-                    public UserInfo getUserInfo(String s) {
-                        return new UserInfo(user.getUser_id(), user.getTrueName(),
-                                Uri.parse(Constants.PICTURE_URL + user.getHead_pic()));
-                    }
-                }, true);
-
-                RongIM.getInstance().refreshUserInfoCache(new UserInfo(user.getUser_id(),
-                        user.getTrueName(),
-                        Uri.parse(Constants.PICTURE_URL + user.getHead_pic())));
-
-                //  RongIM.getInstance().startPrivateChat(context, user.getId(),
-                //          user.getTrueName());
-
-                Intent userInfoCard = new Intent(context, UserInfoCardActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("user_id", user.getUser_id());
-                bundle.putString("username", user.getTrueName());
-                userInfoCard.putExtras(bundle);
-                context.startActivity(userInfoCard);
-
-            }
-        }); */
     }
 
     @Override
@@ -93,20 +63,24 @@ public class UserListAdapter extends RecyclerView.Adapter<UserListAdapter.UserLi
     }
 
     static class UserListViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.item_user)
+
         LinearLayout itemUser;
-        @BindView(R.id.head_icon)
+
         ImageView headIcon;
-        @BindView(R.id.name)
+
         TextView name;
-        @BindView(R.id.clazz)
+
         TextView clazz;
-        @BindView(R.id.college)
+
         TextView college;
 
         public UserListViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            itemUser = (LinearLayout) itemView.findViewById(R.id.item_user);
+            headIcon = (ImageView) itemView.findViewById(R.id.head_icon);
+            name = (TextView) itemView.findViewById(R.id.name);
+            clazz = (TextView) itemView.findViewById(R.id.clazz);
+            college = (TextView) itemView.findViewById(R.id.college);
         }
     }
 }

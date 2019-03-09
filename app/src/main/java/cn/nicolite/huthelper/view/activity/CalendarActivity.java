@@ -3,7 +3,6 @@ package cn.nicolite.huthelper.view.activity;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.BaseActivity;
@@ -13,8 +12,7 @@ import cn.nicolite.huthelper.base.BaseActivity;
  */
 
 public class CalendarActivity extends BaseActivity {
-    @BindView(R.id.toolbar_title)
-    TextView toolbarTitle;
+    private TextView toolbarTitle;
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
@@ -29,6 +27,7 @@ public class CalendarActivity extends BaseActivity {
 
     @Override
     protected void doBusiness() {
+        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
         toolbarTitle.setText("校历");
     }
 

@@ -17,16 +17,15 @@ import com.github.jdsjlzx.recyclerview.LRecyclerViewAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.BaseActivity;
 import cn.nicolite.huthelper.model.bean.CareerTalk;
-import cn.nicolite.huthelper.view.presenter.CareerTalkPresenter;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
 import cn.nicolite.huthelper.view.adapter.CareerTalkAdapter;
-import cn.nicolite.huthelper.view.iview.ICareerTalkView;
 import cn.nicolite.huthelper.view.customView.LoadingDialog;
+import cn.nicolite.huthelper.view.iview.ICareerTalkView;
+import cn.nicolite.huthelper.view.presenter.CareerTalkPresenter;
 
 /**
  * 宣讲会页面
@@ -34,18 +33,18 @@ import cn.nicolite.huthelper.view.customView.LoadingDialog;
  */
 
 public class CareerTalkActivity extends BaseActivity implements ICareerTalkView {
-    @BindView(R.id.toolbar_title)
-    TextView toolbarTitle;
-    @BindView(R.id.toolbar_left_text)
-    TextView toolbarLeftText;
-    @BindView(R.id.rl_empty)
-    LinearLayout rlEmpty;
-    @BindView(R.id.lRecyclerView)
-    LRecyclerView lRecyclerView;
-    @BindView(R.id.rootView)
-    LinearLayout rootView;
 
+    private TextView toolbarTitle;
+
+    private TextView toolbarLeftText;
+
+    private LinearLayout rlEmpty;
+
+    private LRecyclerView lRecyclerView;
+
+    private LinearLayout rootView;
     private List<CareerTalk> careerTalkList = new ArrayList<>();
+
     private LRecyclerViewAdapter lRecyclerViewAdapter;
     private CareerTalkPresenter careerTalkPresenter;
     private LoadingDialog loadingDialog;
@@ -66,6 +65,12 @@ public class CareerTalkActivity extends BaseActivity implements ICareerTalkView 
 
     @Override
     protected void doBusiness() {
+        toolbarTitle = (TextView) findViewById(R.id.toolbar_title);
+        toolbarLeftText = (TextView) findViewById(R.id.toolbar_left_text);
+        rlEmpty = (LinearLayout) findViewById(R.id.rl_empty);
+        lRecyclerView = (LRecyclerView) findViewById(R.id.lRecyclerView);
+        rootView = (LinearLayout) findViewById(R.id.rootView);
+
         toolbarTitle.setText("宣讲会");
         toolbarLeftText.setText("省内");
 
@@ -114,7 +119,7 @@ public class CareerTalkActivity extends BaseActivity implements ICareerTalkView 
 
     @Override
     public void showLoading() {
-        if (loadingDialog == null){
+        if (loadingDialog == null) {
             loadingDialog = new LoadingDialog(context)
                     .setLoadingText("加载中...");
         }

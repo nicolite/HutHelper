@@ -54,14 +54,6 @@ android {
             storeFile file(keyProperties.getProperty('KEYSTORE_FILE'))
             storePassword keyProperties.getProperty('KEYSTORE_PWD')
         }
-
-        release {
-            keyAlias keyProperties['KEY_ALIAS']
-            keyPassword keyProperties['KEY_PWD']
-            storeFile file(keyProperties['KEYSTORE_FILE'])
-            storePassword keyProperties['KEYSTORE_PWD']
-        }
-
     }
 
     buildTypes {
@@ -70,14 +62,14 @@ android {
             zipAlignEnabled true
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.config
         }
 
         debug {
             minifyEnabled false
             zipAlignEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.config
         }
     }
 
@@ -96,12 +88,6 @@ android {
                 String releaseTime = format.format(new Date())
                 outputFileName = "huthelper_${variant.flavorName}_${variant.versionCode}_${variant.versionName}_${releaseTime}.apk"
             }
-    }
-
-    lintOptions {
-        checkReleaseBuilds false
-        abortOnError false
-        disable 'MissingTranslation'
     }
 
     productFlavors {

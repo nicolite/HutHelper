@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.bean.ExpLesson;
 import cn.nicolite.huthelper.utils.ListUtils;
@@ -44,9 +42,9 @@ public class ExpLessonAdapter extends RecyclerView.Adapter<ExpLessonAdapter.ExpL
         holder.tvExpitemRealtime.setText(String.valueOf(expLesson.getWeeks_no() + "周周"
                 + getWeekNum(expLesson.getWeek()) + " " + expLesson.getReal_time()));
 
-        if (!TextUtils.isEmpty(expLesson.getObj())){
+        if (!TextUtils.isEmpty(expLesson.getObj())) {
             holder.tvExpitemLesson.setText(String.valueOf(expLesson.getLesson() + "-" + expLesson.getObj()));
-        }else {
+        } else {
             holder.tvExpitemLesson.setText(expLesson.getLesson());
         }
 
@@ -60,24 +58,29 @@ public class ExpLessonAdapter extends RecyclerView.Adapter<ExpLessonAdapter.ExpL
     }
 
     static class ExpLessonViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_expitem_realtime)
+
         TextView tvExpitemRealtime;
-        @BindView(R.id.tv_expitem_lesson)
+
         TextView tvExpitemLesson;
-        @BindView(R.id.tv_expitem_place)
+
         TextView tvExpitemPlace;
-        @BindView(R.id.tv_expitem_teacher)
+
         TextView tvExpitemTeacher;
-        @BindView(R.id.ll_exp_root)
+
         LinearLayout llExpRoot;
+
         public ExpLessonViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            tvExpitemRealtime = (TextView) itemView.findViewById(R.id.tv_expitem_realtime);
+            tvExpitemLesson = (TextView) itemView.findViewById(R.id.tv_expitem_lesson);
+            tvExpitemPlace = (TextView) itemView.findViewById(R.id.tv_expitem_place);
+            tvExpitemTeacher = (TextView) itemView.findViewById(R.id.tv_expitem_teacher);
+            llExpRoot = (LinearLayout) itemView.findViewById(R.id.ll_exp_root);
         }
     }
 
-    private String getWeekNum(String num){
-        switch (num){
+    private String getWeekNum(String num) {
+        switch (num) {
             case "1":
                 return "一";
             case "2":

@@ -11,6 +11,8 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -21,7 +23,6 @@ import com.bumptech.glide.Glide;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.BaseActivity;
@@ -32,7 +33,6 @@ import cn.nicolite.huthelper.model.bean.Menu;
 import cn.nicolite.huthelper.model.bean.Notice;
 import cn.nicolite.huthelper.model.bean.TimeAxis;
 import cn.nicolite.huthelper.model.bean.User;
-import cn.nicolite.huthelper.view.presenter.MainPresenter;
 import cn.nicolite.huthelper.utils.ButtonUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
@@ -42,45 +42,29 @@ import cn.nicolite.huthelper.view.customView.DateLineView;
 import cn.nicolite.huthelper.view.customView.DragLayout;
 import cn.nicolite.huthelper.view.customView.RichTextView;
 import cn.nicolite.huthelper.view.iview.IMainView;
+import cn.nicolite.huthelper.view.presenter.MainPresenter;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
 
 /**
  * 主页
  */
 public class MainActivity extends BaseActivity implements IMainView {
-
-    @BindView(R.id.tv_wd_temp)
-    TextView tvWdTemp;
-    @BindView(R.id.tv_wd_location)
-    TextView tvWdLocation;
-    @BindView(R.id.tv_course_maincontent)
-    TextView tvCourseMaincontent;
-    @BindView(R.id.tv_date_maincontent)
-    TextView tvDateMaincontent;
-    @BindView(R.id.iv_dateline)
-    ImageView ivDateline;
-    @BindView(R.id.dateLineView)
-    DateLineView dateLineView;
-    @BindView(R.id.mu_tongzhi)
-    ImageView muTongzhi;
-    @BindView(R.id.tv_tongzhi_title)
-    TextView tvTongzhiTitle;
-    @BindView(R.id.tv_notice_maincontent)
-    RichTextView tvNoticeMaincontent;
-    @BindView(R.id.tv_tongzhi_contont)
-    TextView tvTongzhiContont;
-    @BindView(R.id.tv_tongzhi_time)
-    TextView tvTongzhiTime;
-    @BindView(R.id.rl_main_tongzhi)
-    RelativeLayout rlMainTongzhi;
-    @BindView(R.id.rv_main_menu)
-    RecyclerView rvMainMenu;
-    @BindView(R.id.rootView)
-    DragLayout rootView;
-    @BindView(R.id.iv_nav_avatar)
-    ImageView ivNavAvatar;
-    @BindView(R.id.tv_nav_name)
-    RichTextView tvNavName;
+    private TextView tvWdTemp;
+    private TextView tvWdLocation;
+    private TextView tvCourseMaincontent;
+    private TextView tvDateMaincontent;
+    private ImageView ivDateline;
+    private DateLineView dateLineView;
+    private ImageView muTongzhi;
+    private TextView tvTongzhiTitle;
+    private RichTextView tvNoticeMaincontent;
+    private TextView tvTongzhiContont;
+    private TextView tvTongzhiTime;
+    private RelativeLayout rlMainTongzhi;
+    private RecyclerView rvMainMenu;
+    private DragLayout rootView;
+    private ImageView ivNavAvatar;
+    private RichTextView tvNavName;
     private MainPresenter mainPresenter;
     private long exitTime = 0;
     private List<Menu> menuList = new ArrayList<>();
@@ -95,7 +79,6 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
-        setLayoutNoLimits();
     }
 
     @Override
@@ -105,6 +88,26 @@ public class MainActivity extends BaseActivity implements IMainView {
 
     @Override
     protected void doBusiness() {
+        ViewGroup contentView = getWindow().getDecorView().findViewById(Window.ID_ANDROID_CONTENT);
+        contentView.getChildAt(0).setFitsSystemWindows(false);
+
+        tvWdTemp = (TextView) findViewById(R.id.tv_wd_temp);
+        tvWdLocation = (TextView) findViewById(R.id.tv_wd_location);
+        tvCourseMaincontent = (TextView) findViewById(R.id.tv_course_maincontent);
+        tvDateMaincontent = (TextView) findViewById(R.id.tv_date_maincontent);
+        ivDateline = (ImageView) findViewById(R.id.iv_dateline);
+        dateLineView = (DateLineView) findViewById(R.id.dateLineView);
+        muTongzhi = (ImageView) findViewById(R.id.mu_tongzhi);
+        tvTongzhiTitle = (TextView) findViewById(R.id.tv_tongzhi_title);
+        tvNoticeMaincontent = (RichTextView) findViewById(R.id.tv_notice_maincontent);
+        tvTongzhiContont = (TextView) findViewById(R.id.tv_tongzhi_contont);
+        tvTongzhiTime = (TextView) findViewById(R.id.tv_tongzhi_time);
+        rlMainTongzhi = (RelativeLayout) findViewById(R.id.rl_main_tongzhi);
+        rvMainMenu = (RecyclerView) findViewById(R.id.rv_main_menu);
+        rootView = (DragLayout) findViewById(R.id.rootView);
+        ivNavAvatar = (ImageView) findViewById(R.id.iv_nav_avatar);
+        tvNavName = (RichTextView) findViewById(R.id.tv_nav_name);
+
         String userId = getLoginUser();
         if (TextUtils.isEmpty(userId)) {
             startActivity(LoginActivity.class);

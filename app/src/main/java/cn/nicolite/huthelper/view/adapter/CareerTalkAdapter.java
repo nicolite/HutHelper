@@ -13,8 +13,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.bean.CareerTalk;
 import cn.nicolite.huthelper.utils.ListUtils;
@@ -62,20 +60,23 @@ public class CareerTalkAdapter extends RecyclerView.Adapter<CareerTalkAdapter.Ca
     }
 
     static class CareerTalkViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.careertalk_log)
         ImageView careertalkLog;
-        @BindView(R.id.careertalk_company)
+
         TextView careertalkCompany;
-        @BindView(R.id.careertalk_address)
+
         TextView careertalkAddress;
-        @BindView(R.id.careertalk_holdtime)
+
         TextView careertalkHoldtime;
-        @BindView(R.id.rootView)
+
         LinearLayout rootView;
 
         public CareerTalkViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            careertalkLog = (ImageView) itemView.findViewById(R.id.careertalk_log);
+            careertalkCompany = (TextView) itemView.findViewById(R.id.careertalk_company);
+            careertalkAddress = (TextView) itemView.findViewById(R.id.careertalk_address);
+            careertalkHoldtime = (TextView) itemView.findViewById(R.id.careertalk_holdtime);
+            rootView = (LinearLayout) itemView.findViewById(R.id.rootView);
         }
     }
 }

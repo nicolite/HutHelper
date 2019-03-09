@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.bean.LostAndFound;
 import cn.nicolite.huthelper.utils.ListUtils;
@@ -63,20 +61,23 @@ public class LostAndFoundAdapter extends RecyclerView.Adapter<LostAndFoundAdapte
 
     static class LostAndFoundViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.tv_item_lose_content)
         TextView tvItemLoseContent;
-        @BindView(R.id.gv_item_lose_img)
+
         PictureGridView gvItemLoseImg;
-        @BindView(R.id.tv_item_lose_author)
+
         TextView tvItemLoseAuthor;
-        @BindView(R.id.tv_item_lose_time)
+
         TextView tvItemLoseTime;
-        @BindView(R.id.rootView)
+
         LinearLayout rootView;
 
         public LostAndFoundViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            tvItemLoseContent = (TextView) itemView.findViewById(R.id.tv_item_lose_content);
+            gvItemLoseImg = (PictureGridView) itemView.findViewById(R.id.gv_item_lose_img);
+            tvItemLoseAuthor = (TextView) itemView.findViewById(R.id.tv_item_lose_author);
+            tvItemLoseTime = (TextView) itemView.findViewById(R.id.tv_item_lose_time);
+            rootView = (LinearLayout) itemView.findViewById(R.id.rootView);
         }
     }
 }

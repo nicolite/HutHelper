@@ -15,8 +15,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.bean.Exam;
 import cn.nicolite.huthelper.utils.ListUtils;
@@ -107,22 +105,26 @@ public class ExamAdapter extends RecyclerView.Adapter<ExamAdapter.ExamViewHolder
     }
 
     static class ExamViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_grade_lesson)
         TextView tvGradeLesson; //日期
-        @BindView(R.id.tv_examitem_time)
+
         TextView tvExamitemTime; //第几周几点到几点
-        @BindView(R.id.tv_grade_time)
+
         TextView tvGradeTime; //课程名
-        @BindView(R.id.tv_grade_jidian)
+
         TextView tvGradeJidian; //地点
-        @BindView(R.id.tv_grade_score)
+
         TextView tvGradeScore; //剩余多少天
-        @BindView(R.id.rootView)
+
         RelativeLayout rootView;
 
         public ExamViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            tvGradeLesson = (TextView) itemView.findViewById(R.id.tv_grade_lesson);
+            tvExamitemTime = (TextView) itemView.findViewById(R.id.tv_examitem_time);
+            tvGradeTime = (TextView) itemView.findViewById(R.id.tv_grade_time);
+            tvGradeJidian = (TextView) itemView.findViewById(R.id.tv_grade_jidian);
+            tvGradeScore = (TextView) itemView.findViewById(R.id.tv_grade_score);
+            rootView = (RelativeLayout) itemView.findViewById(R.id.rootView);
         }
     }
 }

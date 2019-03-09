@@ -16,8 +16,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.app.MApplication;
 import cn.nicolite.huthelper.model.Constants;
@@ -235,38 +233,50 @@ public class SayAdapter extends RecyclerView.Adapter<SayAdapter.SayViewHolder> {
     }
 
     static class SayViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.iv_item_say_avatar)
         ImageView ivItemSayAvatar;
-        @BindView(R.id.tv_item_sayauthor)
+
         TextView tvItemSayauthor;
-        @BindView(R.id.tv_item_say_time)
+
         TextView tvItemSayTime;
-        @BindView(R.id.tv_item_saycontent)
+
         TextView tvItemSaycontent;
-        @BindView(R.id.rv_item_sayimg)
+
         NinePictureLayout rvItemSayimg;
-        @BindView(R.id.tv_item_say_xy)
+
         TextView tvItemSayXy;
-        @BindView(R.id.iv_say_item_addcommit)
+
         ImageView ivSayItemAddcommit;
-        @BindView(R.id.tv_say_item_commitnum)
+
         TextView tvSayItemCommitnum;
-        @BindView(R.id.iv_say_item_like)
+
         ImageView ivSayItemLike;
-        @BindView(R.id.tv_say_item_likenum)
+
         TextView tvSayItemLikenum;
-        @BindView(R.id.iv_item_deletesay)
+
         ImageView ivItemDeletesay;
-        @BindView(R.id.ll_sayitem)
+
         LinearLayout llSayitem;
-        @BindView(R.id.iv_item_say)
+
         ImageView ivItemSay;
-        @BindView(R.id.rv_say_comments)
+
         RecyclerView rvSayComments;
 
         public SayViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            ivItemSayAvatar = (ImageView) itemView.findViewById(R.id.iv_item_say_avatar);
+            tvItemSayauthor = (TextView) itemView.findViewById(R.id.tv_item_sayauthor);
+            tvItemSayTime = (TextView) itemView.findViewById(R.id.tv_item_say_time);
+            tvItemSaycontent = (TextView) itemView.findViewById(R.id.tv_item_saycontent);
+            rvItemSayimg = (NinePictureLayout) itemView.findViewById(R.id.rv_item_sayimg);
+            tvItemSayXy = (TextView) itemView.findViewById(R.id.tv_item_say_xy);
+            ivSayItemAddcommit = (ImageView) itemView.findViewById(R.id.iv_say_item_addcommit);
+            tvSayItemCommitnum = (TextView) itemView.findViewById(R.id.tv_say_item_commitnum);
+            ivSayItemLike = (ImageView) itemView.findViewById(R.id.iv_say_item_like);
+            tvSayItemLikenum = (TextView) itemView.findViewById(R.id.tv_say_item_likenum);
+            ivItemDeletesay = (ImageView) itemView.findViewById(R.id.iv_item_deletesay);
+            llSayitem = (LinearLayout) itemView.findViewById(R.id.ll_sayitem);
+            ivItemSay = (ImageView) itemView.findViewById(R.id.iv_item_say);
+            rvSayComments = (RecyclerView) itemView.findViewById(R.id.rv_say_comments);
         }
     }
 

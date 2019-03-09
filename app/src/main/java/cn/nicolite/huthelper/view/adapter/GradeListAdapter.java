@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.bean.Grade;
 import cn.nicolite.huthelper.utils.ListUtils;
@@ -71,20 +69,24 @@ public class GradeListAdapter extends RecyclerView.Adapter<GradeListAdapter.Grad
     }
 
     static class GradeListViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_grade_lesson)
+
         TextView tvGradeLesson;
-        @BindView(R.id.tv_grade_time)
+
         TextView tvGradeTime;
-        @BindView(R.id.tv_grade_jidian)
+
         TextView tvGradeJidian;
-        @BindView(R.id.tv_grade_score)
+
         TextView tvGradeScore;
-        @BindView(R.id.rootView)
+
         RelativeLayout rootView;
 
         public GradeListViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            tvGradeLesson = (TextView) itemView.findViewById(R.id.tv_grade_lesson);
+            tvGradeTime = (TextView) itemView.findViewById(R.id.tv_grade_time);
+            tvGradeJidian = (TextView) itemView.findViewById(R.id.tv_grade_jidian);
+            tvGradeScore = (TextView) itemView.findViewById(R.id.tv_grade_score);
+            rootView = (RelativeLayout) itemView.findViewById(R.id.rootView);
         }
     }
 }

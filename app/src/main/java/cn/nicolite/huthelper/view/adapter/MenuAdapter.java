@@ -15,8 +15,6 @@ import com.bumptech.glide.Glide;
 import java.util.Collections;
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.bean.Menu;
 import cn.nicolite.huthelper.utils.ButtonUtils;
@@ -155,18 +153,20 @@ public class MenuAdapter extends RecyclerView.Adapter<MenuAdapter.MenuViewHolder
     }
 
     static class MenuViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_menu_title)
         TextView tvTItle;
-        @BindView(R.id.iv_menu_edit)
+
         ImageView ivEdit;
-        @BindView(R.id.iv_menu_pic)
+
         ImageView ivPic;
-        @BindView(R.id.rootView)
+
         RelativeLayout rootView;
 
         public MenuViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            tvTItle = (TextView) itemView.findViewById(R.id.tv_menu_title);
+            ivEdit = (ImageView) itemView.findViewById(R.id.iv_menu_edit);
+            ivPic = (ImageView) itemView.findViewById(R.id.iv_menu_pic);
+            rootView = (RelativeLayout) itemView.findViewById(R.id.rootView);
         }
     }
 }

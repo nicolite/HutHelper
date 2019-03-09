@@ -42,15 +42,9 @@ public class ExpLessonFragment extends BaseFragment {
         return fragment;
     }
 
-
-    @Override
-    protected void initConfig(Bundle savedInstanceState) {
-
-    }
-
     @Override
     protected void initArguments(Bundle arguments) {
-        if (arguments != null){
+        if (arguments != null) {
             type = arguments.getInt("type", UNFINISHED);
         }
     }
@@ -72,12 +66,12 @@ public class ExpLessonFragment extends BaseFragment {
 
     }
 
-    public void updateData(List<ExpLesson> expLessonList){
+    public void updateData(List<ExpLesson> expLessonList) {
 
         this.expLessonList.clear();
         this.expLessonList.addAll(expLessonList);
 
-        if (adapter != null){
+        if (adapter != null) {
             adapter.notifyDataSetChanged();
         }
 

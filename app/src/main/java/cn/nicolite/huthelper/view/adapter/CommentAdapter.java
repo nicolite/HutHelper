@@ -10,8 +10,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.bean.Say;
 import cn.nicolite.huthelper.utils.ListUtils;
@@ -25,6 +23,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     private List<Say.CommentsBean> commentsBeanList;
     private OnItemClickListener onItemClickListener;
     public CommentAdapter commentAdapter;
+
     public CommentAdapter(Context context, List<Say.CommentsBean> commentsBeanList) {
         this.context = context;
         this.commentsBeanList = commentsBeanList;
@@ -58,12 +57,11 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.CommentV
     }
 
     static class CommentViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.text)
         TextView text;
 
         public CommentViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            text = (TextView) itemView.findViewById(R.id.text);
         }
     }
 

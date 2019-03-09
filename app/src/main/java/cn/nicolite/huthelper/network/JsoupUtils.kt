@@ -1,7 +1,6 @@
 package cn.nicolite.huthelper.network
 
 import cn.nicolite.huthelper.exception.handleAPIException
-import cn.nicolite.mvp.utils.LogUtils
 import com.trello.rxlifecycle2.LifecycleProvider
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
@@ -10,6 +9,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
+import java.net.URL
 
 /**
  * Created by nicolite on 2018/7/8.
@@ -63,16 +63,19 @@ fun sendJsoupRequest(address: String, rxRequestListener: RxRequestListener<Docum
             })
 }
 
-fun getDocument(address: String): Document {
+fun getDocument(address: String, host: String = URL(address).host): Document {
     try {
-        LogUtils.d("Jsoup", "address -> $address")
+        val userAgent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36"
         return Jsoup.connect(address)
-                .headers(mapOf("Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
-                        "Accept-Encoding" to "gzip, deflate",
+                .headers(mapOf(
+                        "Accept" to "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
+                        "Accept-Encoding" to "gzip, deflate, br",
                         "Accept-Language" to "zh-CN,zh;q=0.9",
-                        "Connection" to "keep-alive",
-                        "Cache-Control" to " no-cache"))
-                .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/63.0.3239.108 Safari/537.36")
+                        "Cache-Control" to "no-cache",
+                        "Host" to host,
+                        "Connection" to "keep-alive"
+                ))
+                .userAgent(userAgent)
                 .ignoreHttpErrors(true)
                 .maxBodySize(0)
                 .get()

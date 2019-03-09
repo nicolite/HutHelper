@@ -12,8 +12,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.bean.Notice;
 import cn.nicolite.huthelper.utils.ListUtils;
@@ -76,18 +74,21 @@ public class NoticeAdapter extends RecyclerView.Adapter<NoticeAdapter.NoticeView
     }
 
     static class NoticeViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.tv_noticeitem_title)
+
         TextView tvNoticeitemTitle;
-        @BindView(R.id.tv_noticeitem_time)
+
         RichTextView tvNoticeitemTime;
-        @BindView(R.id.tv_noticeitem_content)
+
         TextView tvNoticeitemContent;
-        @BindView(R.id.btn_noticeitem_show)
+
         Button btnNoticeitemShow;
 
         public NoticeViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            tvNoticeitemTitle = (TextView) itemView.findViewById(R.id.tv_noticeitem_title);
+            tvNoticeitemTime = (RichTextView) itemView.findViewById(R.id.tv_noticeitem_time);
+            tvNoticeitemContent = (TextView) itemView.findViewById(R.id.tv_noticeitem_content);
+            btnNoticeitemShow = (Button) itemView.findViewById(R.id.btn_noticeitem_show);
         }
     }
 }

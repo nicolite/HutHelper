@@ -12,8 +12,6 @@ import com.bumptech.glide.Glide;
 
 import java.util.List;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.model.Constants;
 import cn.nicolite.huthelper.utils.ListUtils;
@@ -94,12 +92,11 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ImageViewHol
     }
 
     static class ImageViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.image)
         ImageView image;
 
         public ImageViewHolder(View itemView) {
             super(itemView);
-            ButterKnife.bind(this, itemView);
+            image = (ImageView) itemView.findViewById(R.id.image);
         }
     }
 
