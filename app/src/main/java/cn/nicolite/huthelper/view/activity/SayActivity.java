@@ -47,6 +47,7 @@ public class SayActivity extends BaseActivity {
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
         setDeepColorStatusBar();
+        setSlideExit();
     }
 
 

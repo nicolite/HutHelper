@@ -87,6 +87,7 @@ public class CreateLostAndFoundActivity extends BaseActivity implements ICreateL
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
+        setSlideExit();
     }
 
 

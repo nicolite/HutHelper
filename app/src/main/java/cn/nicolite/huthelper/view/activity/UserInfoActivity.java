@@ -74,6 +74,7 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
         setDeepColorStatusBar();
+        setSlideExit();
     }
 
     @Override

@@ -48,6 +48,7 @@ public class SearchActivity extends BaseActivity implements ISearchView {
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
         setDeepColorStatusBar();
+        setSlideExit();
     }
 
     @Override

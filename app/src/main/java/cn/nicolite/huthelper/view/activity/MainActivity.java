@@ -224,7 +224,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                 startActivity(UserInfoActivity.class);
                 break;
             case R.id.tv_nav_update:
-                showMessage("开源版暂不提供检查更新功能");
+                showMessage("已是最新版！");
                 break;
             case R.id.tv_nav_share:
                 mainPresenter.share();
@@ -236,8 +236,6 @@ public class MainActivity extends BaseActivity implements IMainView {
                         .setPositiveButton("是的", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                //TODO 反注册推送
-//                                mainPresenter.unregisterPush();
                                 startActivity(LoginActivity.class);
                                 commonDialog.dismiss();
                                 finish();

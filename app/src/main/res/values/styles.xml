@@ -14,8 +14,10 @@
     <style name="AppSplash" parent="AppTheme">
         <item name="android:windowFullscreen">true</item>
         <item name="android:fitsSystemWindows">true</item>
-        <!--<item name="android:clipToPadding">true</item>-->
-        <item name="android:windowBackground">@drawable/start_1</item>
+        <item name="android:windowBackground">@drawable/start_placeholder</item>
+        <item name="android:windowDisablePreview">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">false</item>
     </style>
 
     <style name="MainActivity" parent="AppTheme">

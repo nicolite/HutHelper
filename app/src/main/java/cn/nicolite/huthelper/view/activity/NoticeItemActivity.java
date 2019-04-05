@@ -38,6 +38,7 @@ public class NoticeItemActivity extends BaseActivity {
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
         setLayoutNoLimits();
+        setSlideExit();
     }
 
     @Override

@@ -39,6 +39,7 @@ public class FeedBackActivity extends BaseActivity implements IFeedBackView {
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
         setDeepColorStatusBar();
+        setSlideExit();
     }
 
     @Override

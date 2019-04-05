@@ -58,6 +58,7 @@ public class WebViewActivity extends BaseActivity {
         setImmersiveStatusBar();
         setDeepColorStatusBar();
         setPixelFormat();
+        setSlideExit();
     }
 
     @Override

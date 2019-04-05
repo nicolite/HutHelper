@@ -80,6 +80,7 @@ public class CreateGoodsActivity extends BaseActivity implements ICreateGoodsVie
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
+        setSlideExit();
     }
 
 

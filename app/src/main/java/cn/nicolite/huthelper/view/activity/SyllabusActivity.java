@@ -56,6 +56,7 @@ public class SyllabusActivity extends BaseActivity implements ISyllabusView {
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
         setDeepColorStatusBar();
+        setSlideExit();
     }
 
 

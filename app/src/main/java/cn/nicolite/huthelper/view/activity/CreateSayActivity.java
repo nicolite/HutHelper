@@ -55,6 +55,7 @@ public class CreateSayActivity extends BaseActivity implements ICreateSayView {
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
         setDeepColorStatusBar();
+        setSlideExit();
     }
 
     @Override

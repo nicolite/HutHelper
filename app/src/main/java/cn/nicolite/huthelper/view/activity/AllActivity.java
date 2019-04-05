@@ -59,6 +59,7 @@ public class AllActivity extends BaseActivity {
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
         setDeepColorStatusBar();
+        setSlideExit();
     }
 
     @Override

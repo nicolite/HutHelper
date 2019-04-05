@@ -101,7 +101,7 @@ android {
         }
     }
 
-    /*
+    /**
     * 添加kotlin源代码目录
     * */
     sourceSets {
@@ -182,7 +182,7 @@ dependencies {
 
     //数据库
     implementation 'org.greenrobot:greendao:3.2.2'
-    implementation 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.0.1'
+    implementation 'com.github.yuweiguocn:GreenDaoUpgradeHelper:v2.1.0'
 
     //内存泄露检测
     debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'

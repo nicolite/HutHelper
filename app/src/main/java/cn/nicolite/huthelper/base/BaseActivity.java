@@ -13,7 +13,8 @@ import butterknife.Unbinder;
 import cn.nicolite.huthelper.db.DaoUtils;
 import cn.nicolite.huthelper.db.dao.DaoSession;
 import cn.nicolite.huthelper.model.bean.Configure;
-import cn.nicolite.huthelper.swipebackhelper.SwipeBackActivity;
+import cn.nicolite.huthelper.utils.SlideUtils;
+import cn.nicolite.mvp.kBase.KBaseActivity;
 
 /**
  * Activity 基类 包含生命周期管理
@@ -21,7 +22,7 @@ import cn.nicolite.huthelper.swipebackhelper.SwipeBackActivity;
  * Created by nicolite on 17-9-6.
  */
 
-public abstract class BaseActivity extends SwipeBackActivity {
+public abstract class BaseActivity extends KBaseActivity {
     protected final String TAG = getClass().getSimpleName();
     protected Context context;
     protected Activity activity;
@@ -72,40 +73,11 @@ public abstract class BaseActivity extends SwipeBackActivity {
     }
 
     /**
-     * 是否设置沉浸状态栏
-     *
-     * @param isSetStatusBar
-     */
-    public void setImmersiveStatusBar(boolean isSetStatusBar) {
-        setImmersiveStatusBar();
-    }
-
-    /**
-     * 使布局背景填充状态栏
-     */
-    public void setLayoutNoLimits(boolean isNoLimits) {
-        // 布局背景填充状态栏 与键盘监听冲突
-        setLayoutNoLimits();
-    }
-
-    /**
-     * 设置状态栏字体为深色
-     * 注意：如果同时设置了沉浸状态栏，如果开启沉浸状态栏，必须在设置沉浸状态栏之后调用
-     *
-     * @param isDeepColor
-     */
-    public void setDeepColorStatusBar(boolean isDeepColor) {
-        setDeepColorStatusBar();
-    }
-
-    /**
      * 是否设置滑动退出
      * 注意：需要在主题中设置<item name="android:windowIsTranslucent">true</item>，否则将显示异常
-     *
-     * @param isSlideExit
      */
-    public void setSlideExit(boolean isSlideExit) {
-
+    public void setSlideExit() {
+        SlideUtils.INSTANCE.setSlideExit(this);
     }
 
 }

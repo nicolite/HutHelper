@@ -1,13 +1,10 @@
 package cn.nicolite.huthelper.view.activity
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import cn.nicolite.huthelper.BuildConfig
 import cn.nicolite.huthelper.R
 import cn.nicolite.huthelper.kbase.DefaultConfigActivity
 import cn.nicolite.huthelper.model.Constants
-import cn.nicolite.huthelper.utils.ToastUtil
 import com.bumptech.glide.Glide
 import jp.wasabeef.glide.transformations.CropCircleTransformation
 import kotlinx.android.synthetic.main.activity_about.*
@@ -19,6 +16,7 @@ import kotlinx.android.synthetic.main.toolbar_nomenu.*
  */
 
 class AboutActivity : DefaultConfigActivity() {
+
     override fun setLayoutId(): Int {
         return R.layout.activity_about
     }
@@ -52,17 +50,6 @@ class AboutActivity : DefaultConfigActivity() {
             bundle3.putString("url", Constants.OPEN_SOURCE)
             bundle3.putString("title", "HutHelper")
             startActivity(WebViewActivity::class.java, bundle3)
-        }
-        rating.setOnClickListener {
-            try {
-                val uri = Uri.parse("market://details?id=$packageName")
-                val intent = Intent(Intent.ACTION_VIEW, uri)
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                startActivity(intent)
-            } catch (e: Exception) {
-                ToastUtil.showToastShort("您的手机没有安装Android应用市场")
-                e.printStackTrace()
-            }
         }
     }
 }

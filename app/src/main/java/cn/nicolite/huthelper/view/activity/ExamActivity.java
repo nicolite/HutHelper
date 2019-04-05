@@ -49,6 +49,7 @@ public class ExamActivity extends BaseActivity implements IExamView {
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
         setDeepColorStatusBar();
+        setSlideExit();
     }
 
     @Override

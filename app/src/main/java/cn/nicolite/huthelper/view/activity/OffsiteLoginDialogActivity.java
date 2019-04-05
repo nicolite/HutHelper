@@ -23,6 +23,7 @@ public class OffsiteLoginDialogActivity extends BaseActivity {
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
+        setSlideExit();
     }
 
 

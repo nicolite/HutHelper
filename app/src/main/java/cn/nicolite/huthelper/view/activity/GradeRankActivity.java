@@ -56,6 +56,7 @@ public class GradeRankActivity extends BaseActivity implements IGradeRankView {
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
+        setSlideExit();
     }
 
     @Override

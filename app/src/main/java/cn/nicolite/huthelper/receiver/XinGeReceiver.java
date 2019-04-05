@@ -60,13 +60,6 @@ public class XinGeReceiver extends XGPushBaseReceiver {
 
     @Override
     public void onNotifactionClickedResult(Context context, XGPushClickedResult xgPushClickedResult) {
-        // 有冲突
-        // if (notice != null) {
-        //     Intent intent = new Intent(context, NoticeItemActivity.class);
-        //     Bundle bundle = new Bundle();
-        //     bundle.putLong("noticeId", notice.getId());
-        //     context.startActivity(intent, bundle);
-        // }
 
     }
 

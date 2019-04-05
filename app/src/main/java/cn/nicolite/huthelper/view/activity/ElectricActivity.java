@@ -56,6 +56,7 @@ public class ElectricActivity extends BaseActivity implements IElectricView {
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
+        setSlideExit();
     }
 
 

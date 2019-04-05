@@ -81,6 +81,7 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
         setLayoutNoLimits();
+        setSlideExit();
     }
 
     @Override

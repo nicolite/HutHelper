@@ -5,6 +5,6 @@ package cn.nicolite.huthelper.model
  * email nicolite@nicolite.cn
  */
 object ConstantsValue {
-    val BASE_API_URL = "http://nicolite.uicp.net"
-    val BASE_API_TEST_URL = BASE_API_URL// "http://192.168.199.237:8082"
+    const val BASE_API_URL = "http://nicolite.uicp.net"
+    const val BASE_API_TEST_URL = BASE_API_URL// "http://192.168.199.237:8082"
 }

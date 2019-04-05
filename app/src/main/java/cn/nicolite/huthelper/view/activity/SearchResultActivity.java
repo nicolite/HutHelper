@@ -39,6 +39,7 @@ public class SearchResultActivity extends BaseActivity {
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
         setDeepColorStatusBar();
+        setSlideExit();
     }
 
     @Override

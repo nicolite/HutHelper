@@ -38,7 +38,8 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
     @Override
     protected void initConfig(Bundle savedInstanceState) {
-        setImmersiveStatusBar(true);
+        setImmersiveStatusBar();
+        setSlideExit();
     }
 
     @Override

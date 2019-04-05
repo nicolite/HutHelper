@@ -76,6 +76,7 @@ public class LostAndFoundInfoActivity extends BaseActivity implements ILostAndFo
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
+        setSlideExit();
     }
 
     @Override

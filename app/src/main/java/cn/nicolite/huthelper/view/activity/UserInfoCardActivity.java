@@ -48,6 +48,7 @@ public class UserInfoCardActivity extends BaseActivity implements IUserInfoCardV
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
+        setSlideExit();
     }
 
     @Override
