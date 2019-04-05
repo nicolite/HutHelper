@@ -3,22 +3,20 @@ package cn.nicolite.huthelper.view.presenter;
 import android.Manifest;
 import android.content.Intent;
 
-import com.tencent.android.tpush.XGIOperateCallback;
-import com.tencent.android.tpush.XGPushConfig;
-import com.tencent.android.tpush.XGPushManager;
+import com.xiaomi.mipush.sdk.MiPushClient;
 import com.yanzhenjie.permission.AndPermission;
 import com.yanzhenjie.permission.PermissionListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cn.nicolite.huthelper.BuildConfig;
 import cn.nicolite.huthelper.app.MApplication;
 import cn.nicolite.huthelper.base.BasePresenter;
 import cn.nicolite.huthelper.db.dao.LessonDao;
 import cn.nicolite.huthelper.db.dao.MenuDao;
 import cn.nicolite.huthelper.db.dao.NoticeDao;
 import cn.nicolite.huthelper.db.dao.TimeAxisDao;
+import cn.nicolite.huthelper.model.ConstantsValue;
 import cn.nicolite.huthelper.model.bean.HttpResult;
 import cn.nicolite.huthelper.model.bean.Lesson;
 import cn.nicolite.huthelper.model.bean.Menu;
@@ -32,7 +30,6 @@ import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.services.LoginService;
 import cn.nicolite.huthelper.utils.CommUtil;
 import cn.nicolite.huthelper.utils.ListUtils;
-import cn.nicolite.huthelper.utils.LogUtils;
 import cn.nicolite.huthelper.view.activity.MainActivity;
 import cn.nicolite.huthelper.view.activity.WebViewActivity;
 import cn.nicolite.huthelper.view.customView.CommonDialog;
@@ -179,7 +176,9 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
         List<Lesson> list = lessonDao.queryBuilder()
                 .where(LessonDao.Properties.UserId.eq(userId))
                 .list();
-        getView().showSyllabus(CommUtil.getData(), CommUtil.getNextClass(list));
+        if (getView() != null) {
+            getView().showSyllabus(CommUtil.getData(), CommUtil.getNextClass(list));
+        }
     }
 
     public void showMenu() {
@@ -299,34 +298,17 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
     }
 
     public void registerPush() {
-        XGPushManager.registerPush(getActivity().getApplicationContext(), configure.getStudentKH(), new XGIOperateCallback() {
-            @Override
-            public void onSuccess(Object o, int i) {
-                LogUtils.d(TAG, "注册成功，设备token为：" + o);
-            }
-
-            @Override
-            public void onFail(Object o, int i, String s) {
-                LogUtils.d(TAG, "注册失败，错误码：" + i + "，错误信息：" + s);
-                if (getView() == null) {
-                    return;
-                }
-                getView().showMessage("注册推送服务失败：" + s + " code：" + i);
-            }
-        });
-        XGPushConfig.enableDebug(getActivity().getApplicationContext(), BuildConfig.DEBUG);
+        MiPushClient.registerPush(MApplication.appContext, ConstantsValue.MI_PUSH_APP_ID, ConstantsValue.MI_PUSH_APP_KEY);
     }
 
     public void unregisterPush() {
-        XGPushManager.deleteTag(getActivity().getApplicationContext(), configure.getStudentKH());
-        XGPushManager.registerPush(getActivity().getApplicationContext(), "*");
-        XGPushManager.unregisterPush(getActivity().getApplicationContext());
+        MiPushClient.unregisterPush(MApplication.appContext);
     }
 
     public void initUser() {
 
         User user = configure.getUser();
-        if (user != null) {
+        if (user != null && getView() != null) {
             getView().showUser(user);
         }
     }

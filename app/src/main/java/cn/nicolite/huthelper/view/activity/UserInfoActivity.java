@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.tencent.android.tpush.XGPushManager;
 import com.zhihu.matisse.Matisse;
 import com.zhihu.matisse.MimeType;
 import com.zhihu.matisse.engine.impl.GlideEngine;
@@ -26,14 +25,13 @@ import butterknife.OnClick;
 import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.BaseActivity;
 import cn.nicolite.huthelper.model.Constants;
-import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.User;
-import cn.nicolite.huthelper.view.presenter.UserInfoPresenter;
 import cn.nicolite.huthelper.utils.DensityUtils;
 import cn.nicolite.huthelper.utils.ListUtils;
 import cn.nicolite.huthelper.utils.SnackbarUtils;
-import cn.nicolite.huthelper.view.iview.IUserInfoView;
 import cn.nicolite.huthelper.view.customView.CommonDialog;
+import cn.nicolite.huthelper.view.iview.IUserInfoView;
+import cn.nicolite.huthelper.view.presenter.UserInfoPresenter;
 
 
 /**
@@ -120,12 +118,6 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
                 showMessage("开源版暂不提供此功能");
                 break;
             case R.id.user_logout:
-                List<Configure> configureList = getConfigureList();
-                User user = configureList.get(0).getUser();
-                XGPushManager.deleteTag(context, user.getStudentKH());
-                XGPushManager.registerPush(context, "*");
-                XGPushManager.unregisterPush(context);
-
                 startActivity(LoginActivity.class);
                 finish();
                 break;

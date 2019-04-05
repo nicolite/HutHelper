@@ -6,5 +6,7 @@ package cn.nicolite.huthelper.model
  */
 object ConstantsValue {
     const val BASE_API_URL = "http://nicolite.uicp.net"
-    const val BASE_API_TEST_URL = BASE_API_URL// "http://192.168.199.237:8082"
+    const val BASE_API_TEST_URL = BASE_API_URL
+    const val MI_PUSH_APP_ID = "2882303761517605932"
+    const val MI_PUSH_APP_KEY = "5561760591932"
 }

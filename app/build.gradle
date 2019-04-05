@@ -32,14 +32,6 @@ android {
         ndk {
             abiFilters 'armeabi-v7a', 'arm64-v8a'//, 'x86', 'armeabi'//, 'x86_64', "mips"
         }
-        //从openKey.properties文件中拉取信息
-        def appKeyStream = new FileInputStream(rootProject.file('openKey.properties'))
-        def appKeyProperties = new Properties()
-        appKeyProperties.load(appKeyStream)
-        manifestPlaceholders = [
-                XG_ACCESS_ID : appKeyProperties.get("XG_ACCESS_ID"),
-                XG_ACCESS_KEY: appKeyProperties.get("XG_ACCESS_KEY"),
-        ]
     }
 
     signingConfigs {
@@ -174,11 +166,6 @@ dependencies {
 
     //LRecyclerView
     implementation 'com.github.jdsjlzx:LRecyclerView:1.5.0'
-
-    //信鸽推送
-    implementation 'com.tencent.xinge:xinge:3.2.2-release'
-    implementation 'com.tencent.wup:wup:1.0.0.E-release'
-    implementation 'com.tencent.mid:mid:4.0.6-release'
 
     //数据库
     implementation 'org.greenrobot:greendao:3.2.2'

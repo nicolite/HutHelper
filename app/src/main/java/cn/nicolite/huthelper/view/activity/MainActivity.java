@@ -177,7 +177,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         mainPresenter.showSyllabus();
         mainPresenter.showWeather();
         mainPresenter.checkPermission();
-        // mainPresenter.registerPush(); //TODO 在openKey.properties填好key后，可以开启使用
+        mainPresenter.registerPush();
 
         mainPresenter.showNotice(false);
         mainPresenter.startLoginService();
@@ -236,6 +236,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                         .setPositiveButton("是的", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                mainPresenter.unregisterPush();
                                 startActivity(LoginActivity.class);
                                 commonDialog.dismiss();
                                 finish();
