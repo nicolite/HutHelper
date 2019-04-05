@@ -185,14 +185,16 @@ public class WebViewActivity extends BaseActivity {
     }
 
     private void addImgClickListener() {
-        webView.loadUrl("javascript:(function(){" +
-                "var objs = document.getElementsByTagName(\"img\"); " +
-                "for(var i=0;i<objs.length;i++){"
-                + "objs[i].onclick=function(){ "
-                + "window.imageListener.showImage(this.src);" +
-                "}" +
-                "}" +
-                "})()");
+        if (webView != null) {
+            webView.loadUrl("javascript:(function(){" +
+                    "var objs = document.getElementsByTagName(\"img\"); " +
+                    "for(var i=0;i<objs.length;i++){"
+                    + "objs[i].onclick=function(){ "
+                    + "window.imageListener.showImage(this.src);" +
+                    "}" +
+                    "}" +
+                    "})()");
+        }
     }
 
     @Override

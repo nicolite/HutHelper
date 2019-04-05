@@ -80,7 +80,7 @@
                     android:layout_height="wrap_content"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
-                    android:text="团队成员：陈林祥（Android） 汪小祯（iOS） 曾恒(产品策划) 董志东（后台开发） 刘春杰（UI交互） 方泽洲（微信小程序）"
+                    android:text="团队成员：陈林祥（Android） 汪小祯（iOS） 董志东（后台） 曾恒(产品策划) 刘春杰（UI交互）"
                     android:textColor="#404040"
                     android:textSize="14sp" />
 

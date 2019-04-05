@@ -9,6 +9,8 @@ import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -80,7 +82,6 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
-        setLayoutNoLimits();
         setSlideExit();
     }
 
@@ -106,6 +107,9 @@ public class GoodsInfoActivity extends BaseActivity implements IGoodsInfoView {
 
     @Override
     protected void doBusiness() {
+        ViewGroup contentView = getWindow().getDecorView().findViewById(Window.ID_ANDROID_CONTENT);
+        contentView.getChildAt(0).setFitsSystemWindows(false);
+
         toolbarTitle.setText("商品详情");
         if (delete || mUserId.equals(userId)) {
             toolbarUser.setVisibility(View.GONE);

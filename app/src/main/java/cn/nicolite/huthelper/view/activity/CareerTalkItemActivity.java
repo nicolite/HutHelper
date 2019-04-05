@@ -91,7 +91,7 @@ public class CareerTalkItemActivity extends BaseActivity implements ICareerTalkI
 
     @Override
     public void showLoading() {
-        if (loadingDialog == null){
+        if (loadingDialog == null) {
             loadingDialog = new LoadingDialog(context)
                     .setLoadingText("加载中...");
         }
@@ -178,13 +178,15 @@ public class CareerTalkItemActivity extends BaseActivity implements ICareerTalkI
     }
 
     private void addImgClickListener() {
-        webView.loadUrl("javascript:(function(){" +
-                "var objs = document.getElementsByTagName(\"img\"); " +
-                "for(var i=0;i<objs.length;i++){"
-                + "objs[i].onclick=function(){ "
-                + "window.imageListener.showImage(this.src);" +
-                "}" +
-                "}" +
-                "})()");
+        if (webView != null) {
+            webView.loadUrl("javascript:(function(){" +
+                    "var objs = document.getElementsByTagName(\"img\"); " +
+                    "for(var i=0;i<objs.length;i++){"
+                    + "objs[i].onclick=function(){ "
+                    + "window.imageListener.showImage(this.src);" +
+                    "}" +
+                    "}" +
+                    "})()");
+        }
     }
 }
