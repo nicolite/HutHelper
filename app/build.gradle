@@ -7,8 +7,9 @@ apply plugin: 'org.greenrobot.greendao'
 
 static def gitVersionCode() {
     def cmd = 'git rev-list HEAD --count'
-    def gitVersionCode = 22582 + cmd.execute().text.trim().toInteger()
-    return gitVersionCode
+    def cmdExecute = cmd.execute().text.trim()
+    def gitVersionCode = "20190514${cmdExecute}"
+    return gitVersionCode.toBigInteger()
 }
 
 static def gitVersionTag() {
@@ -126,8 +127,8 @@ dependencies {
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 
     //生命周期管理
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.1'
-    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.1'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-android:2.2.2'
+    implementation 'com.trello.rxlifecycle2:rxlifecycle-components:2.2.2'
 
     //Glide--图片加载
     implementation 'com.github.bumptech.glide:glide:3.8.0'
@@ -165,7 +166,7 @@ dependencies {
     implementation 'org.jsoup:jsoup:1.11.3'
 
     //LRecyclerView
-    implementation 'com.github.jdsjlzx:LRecyclerView:1.5.0'
+    implementation 'com.github.jdsjlzx:LRecyclerView:1.5.4.4'
 
     //数据库
     implementation 'org.greenrobot:greendao:3.2.2'

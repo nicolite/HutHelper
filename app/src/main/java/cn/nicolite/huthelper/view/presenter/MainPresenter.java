@@ -25,6 +25,7 @@ import cn.nicolite.huthelper.model.bean.TimeAxis;
 import cn.nicolite.huthelper.model.bean.Update;
 import cn.nicolite.huthelper.model.bean.User;
 import cn.nicolite.huthelper.model.bean.Weather;
+import cn.nicolite.huthelper.network.APIModel;
 import cn.nicolite.huthelper.network.APIUtils;
 import cn.nicolite.huthelper.network.exception.ExceptionEngine;
 import cn.nicolite.huthelper.services.LoginService;
@@ -57,7 +58,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             getView().showWeather(configure.getCity(), configure.getTmp(), configure.getContent());
         }
 
-        APIUtils
+        APIModel.INSTANCE
                 .getWeatherAPI()
                 .getWeather()
                 .compose(getActivity().<Weather>bindToLifecycle())

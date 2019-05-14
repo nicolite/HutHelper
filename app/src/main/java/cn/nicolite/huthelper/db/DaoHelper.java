@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import cn.nicolite.huthelper.db.dao.DaoMaster;
 import cn.nicolite.huthelper.db.dao.DaoSession;
-import cn.nicolite.huthelper.model.Constants;
+import cn.nicolite.huthelper.model.ConstantsValue;
 
 /**
  * Created by nicolite on 17-9-6.
@@ -20,7 +20,7 @@ public class DaoHelper {
 
     private DaoHelper(Context context) {
         //helper = new DaoMaster.DevOpenHelper(context, Constants.DBNAME);
-        helper = new DaoUpgradeHelper(context, Constants.DBNAME);
+        helper = new DaoUpgradeHelper(context, ConstantsValue.DBNAME);
         db = helper.getWritableDatabase();
         daoMaster = new DaoMaster(db);
         daoSession = daoMaster.newSession();

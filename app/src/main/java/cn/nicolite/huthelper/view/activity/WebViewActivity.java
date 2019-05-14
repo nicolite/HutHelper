@@ -148,7 +148,9 @@ public class WebViewActivity extends BaseActivity {
             @Override
             public void onLoadResource(WebView view, String url) {
                 super.onLoadResource(view, url);
-                addImgClickListener();
+                if (type != TYPE_LIBRARY) {
+                    addImgClickListener();
+                }
             }
 
         });

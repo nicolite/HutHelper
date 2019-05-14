@@ -28,6 +28,7 @@ import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.BaseActivity;
 import cn.nicolite.huthelper.manager.ActivityStackManager;
 import cn.nicolite.huthelper.model.Constants;
+import cn.nicolite.huthelper.model.ConstantsValue;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.Menu;
 import cn.nicolite.huthelper.model.bean.Notice;
@@ -153,8 +154,7 @@ public class MainActivity extends BaseActivity implements IMainView {
                                 showMessage("开原版暂不提供此功能");
                                 return;
                             case WebViewActivity.TYPE_LIBRARY:
-                                showMessage("开原版暂不提供此功能");
-                                return;
+                                bundle.putString("url", ConstantsValue.LIBRARY);
                         }
                         bundle.putString("title", menu.getTitle());
                         bundle.putInt("type", menu.getType());

@@ -6,14 +6,11 @@ package cn.nicolite.huthelper.model;
  */
 
 public class Constants {
-    //DB Name
-    public static final String DBNAME = "huthelper-db";
     //API URL
-    public static final String API_BASE_URL = "https://raw.githubusercontent.com/nicolite/HutHelper/";
-    public static final String PICTURE_URL = API_BASE_URL;
+    public static final String API_BASE_URL = ConstantsValue.BASE_API_URL + "/";
+    public static final String PICTURE_URL = "https://raw.githubusercontent.com/nicolite/HutHelper/";//API_BASE_URL;
 
     //SOME URL
-    public static final String LIBRARY = "不开放";
     public static final String HOMEWORK = "不开放";
     public static final String BLOG = "http://nicolite.cn";
     public static final String OPEN_SOURCE = "https://github.com/nicolite/HutHelper";

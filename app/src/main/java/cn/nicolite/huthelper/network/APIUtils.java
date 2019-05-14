@@ -17,7 +17,6 @@ import cn.nicolite.huthelper.network.api.UpdateAPI;
 import cn.nicolite.huthelper.network.api.UploadAPI;
 import cn.nicolite.huthelper.network.api.UserAPI;
 import cn.nicolite.huthelper.network.api.VoteAPI;
-import cn.nicolite.huthelper.network.api.WeatherAPI;
 import cn.nicolite.huthelper.network.retrofit.RetrofitUtils;
 import retrofit2.Retrofit;
 
@@ -31,7 +30,6 @@ public class APIUtils {
     private static LoginAPI loginAPI;
     private static MarketAPI marketAPI;
     private static SayAPI sayAPI;
-    private static WeatherAPI weatherAPI;
     private static TimeAxisAPI dateLineAPI;
 
     private static Retrofit retrofit = RetrofitUtils.getInstance().retrofit();
@@ -69,13 +67,6 @@ public class APIUtils {
             sayAPI = retrofit.create(SayAPI.class);
         }
         return sayAPI;
-    }
-
-    public static WeatherAPI getWeatherAPI() {
-        if (weatherAPI == null) {
-            weatherAPI = retrofit.create(WeatherAPI.class);
-        }
-        return weatherAPI;
     }
 
     public static TimeAxisAPI getDateLineAPI() {
@@ -168,7 +159,6 @@ public class APIUtils {
         }
         return gradeAPI;
     }
-
 
     public static SyllabusAPI getSyllabusAPI() {
         if (syllabusAPI == null) {

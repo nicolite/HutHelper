@@ -19,6 +19,7 @@ import cn.nicolite.huthelper.R;
 import cn.nicolite.huthelper.base.BaseActivity;
 import cn.nicolite.huthelper.db.dao.MenuDao;
 import cn.nicolite.huthelper.model.Constants;
+import cn.nicolite.huthelper.model.ConstantsValue;
 import cn.nicolite.huthelper.model.bean.Configure;
 import cn.nicolite.huthelper.model.bean.Menu;
 import cn.nicolite.huthelper.model.bean.User;
@@ -128,7 +129,7 @@ public class AllActivity extends BaseActivity {
                         Menu menu = mainMenuList.get(position);
                         Bundle bundle = new Bundle();
                         if (menu.getType() == WebViewActivity.TYPE_LIBRARY) {
-                            String url = Constants.LIBRARY;
+                            String url = ConstantsValue.LIBRARY;
                             if (!TextUtils.isEmpty(configure.getLibraryUrl())) {
                                 url = configure.getLibraryUrl() + "/opac/m/index";
                             }
@@ -163,7 +164,7 @@ public class AllActivity extends BaseActivity {
                         Menu menu = otherMenuList.get(position);
                         Bundle bundle = new Bundle();
                         if (menu.getType() == WebViewActivity.TYPE_LIBRARY) {
-                            String url = Constants.LIBRARY;
+                            String url = ConstantsValue.LIBRARY;
                             if (!TextUtils.isEmpty(configure.getLibraryUrl())) {
                                 url = configure.getLibraryUrl() + "/opac/m/index";
                             }

@@ -3,7 +3,7 @@ package cn.nicolite.huthelper.network
 import cn.nicolite.huthelper.BuildConfig
 import cn.nicolite.huthelper.model.ConstantsValue
 import cn.nicolite.huthelper.utils.EncryptUtils
-import cn.nicolite.mvp.utils.LogUtils
+import cn.nicolite.huthelper.utils.LogUtils
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -28,17 +28,15 @@ val okHttpClient: OkHttpClient
         val logging = HttpLoggingInterceptor(HttpLoggingInterceptor.Logger { message -> LogUtils.d("okHttpClient", "okHttp：$message") })
         logging.level = HttpLoggingInterceptor.Level.BASIC
 
-        val xHeader = object : Interceptor {
-            override fun intercept(chain: Interceptor.Chain): Response {
-                return chain.proceed(
-                        chain.request().newBuilder()
-                                .addHeader("token", URLEncoder.encode(EncryptUtils.encryptString(), "UTF-8"))
-                                .addHeader("package_name", BuildConfig.APPLICATION_ID)
-                                .addHeader("channel", BuildConfig.FLAVOR)
-                                .addHeader("version", "${BuildConfig.VERSION_NAME}(${BuildConfig.VERSION_CODE})")
-                                .build()
-                )
-            }
+        val xHeader = Interceptor { chain ->
+            chain.proceed(
+                    chain.request().newBuilder()
+                            .addHeader("token", URLEncoder.encode(EncryptUtils.encryptString(), "UTF-8"))
+                            .addHeader("package_name", BuildConfig.APPLICATION_ID)
+                            .addHeader("channel", BuildConfig.FLAVOR)
+                            .addHeader("version", "${BuildConfig.VERSION_NAME}(${BuildConfig.VERSION_CODE})")
+                            .build()
+            )
         }
 
         return OkHttpClient.Builder()

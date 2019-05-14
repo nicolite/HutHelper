@@ -11,14 +11,14 @@ import retrofit2.http.GET
  * email nicolite@nicolite.cn
  */
 object APIModel {
-    val freshmanStrategyAPI = retrofit.create(FreshmanStrategyAPI::class.java)
-    val weatherAPI = retrofit.create(WeatherAPI::class.java)
+    val freshmanStrategyAPI: FreshmanStrategyAPI = retrofit.create(FreshmanStrategyAPI::class.java)
+    val weatherAPI: WeatherAPI = retrofit.create(WeatherAPI::class.java)
 }
 
 interface WeatherAPI {
     //http://wthrcdn.etouch.cn/weather_mini?city=株洲
     @GET("http://wthrcdn.etouch.cn/weather_mini?city=%E6%A0%AA%E6%B4%B2")
-    abstract fun getWeather(): Observable<Weather>
+    fun getWeather(): Observable<Weather>
 }
 
 interface FreshmanStrategyAPI {
