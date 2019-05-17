@@ -39,7 +39,6 @@ public class LoginActivity extends BaseActivity implements ILoginView {
     @Override
     protected void initConfig(Bundle savedInstanceState) {
         setImmersiveStatusBar();
-        setSlideExit();
     }
 
     @Override
@@ -61,20 +60,18 @@ public class LoginActivity extends BaseActivity implements ILoginView {
 
     @OnClick(R.id.btn_login)
     public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_login:
-                KeyBoardUtils.hideSoftInput(context, getWindow());
+        if (view.getId() == R.id.btn_login) {
+            KeyBoardUtils.hideSoftInput(context, getWindow());
 
-                String username = etUsername.getText().toString();
-                String password = etPassword.getText().toString();
+            String username = etUsername.getText().toString();
+            String password = etPassword.getText().toString();
 
-                if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
-                    ToastUtil.showToastShort("请填写完整再提交");
-                    return;
-                }
+            if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
+                ToastUtil.showToastShort("请填写完整再提交");
+                return;
+            }
 
-                loginPresenter.login(username, password);
-                break;
+            loginPresenter.login(username, password);
         }
     }
 

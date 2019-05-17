@@ -134,8 +134,6 @@ public class AllActivity extends BaseActivity {
                                 url = configure.getLibraryUrl() + "/opac/m/index";
                             }
                             bundle.putString("url", url);
-                        } else if (menu.getType() == WebViewActivity.TYPE_HOMEWORK) {
-                            bundle.putString("url", Constants.HOMEWORK + user.getStudentKH() + "/" + configure.getAppRememberCode());
                         }
                         bundle.putString("title", menu.getTitle());
                         bundle.putInt("type", menu.getType());
@@ -169,8 +167,6 @@ public class AllActivity extends BaseActivity {
                                 url = configure.getLibraryUrl() + "/opac/m/index";
                             }
                             bundle.putString("url", url);
-                        } else if (menu.getType() == WebViewActivity.TYPE_HOMEWORK) {
-                            bundle.putString("url", Constants.HOMEWORK + user.getStudentKH() + "/" + configure.getAppRememberCode());
                         }
                         bundle.putString("title", menu.getTitle());
                         bundle.putInt("type", menu.getType());

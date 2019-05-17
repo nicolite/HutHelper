@@ -23,6 +23,7 @@
     <style name="MainActivity" parent="AppTheme">
         <!--<item name="android:windowIsTranslucent">false</item>-->
         <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowIsTranslucent">false</item>
     </style>
 
     <style name="loading_dialog" parent="@android:style/Theme.Dialog">

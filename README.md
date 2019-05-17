@@ -16,7 +16,7 @@
 
 ### 开发环境
 
-Android Studio 3.1.2 、JDK1.8、Kotlin
+Android Studio 3.4 、JDK1.8、Kotlin
 
 ### 项目架构
 

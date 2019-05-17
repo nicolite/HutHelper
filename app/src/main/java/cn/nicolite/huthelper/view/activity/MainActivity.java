@@ -149,12 +149,8 @@ public class MainActivity extends BaseActivity implements IMainView {
                     try {
                         Menu menu = menuList.get(position);
                         Bundle bundle = new Bundle();
-                        switch (menu.getType()) {
-                            case WebViewActivity.TYPE_HOMEWORK:
-                                showMessage("开原版暂不提供此功能");
-                                return;
-                            case WebViewActivity.TYPE_LIBRARY:
-                                bundle.putString("url", ConstantsValue.LIBRARY);
+                        if (menu.getType() == WebViewActivity.TYPE_LIBRARY) {
+                            bundle.putString("url", ConstantsValue.LIBRARY);
                         }
                         bundle.putString("title", menu.getTitle());
                         bundle.putInt("type", menu.getType());

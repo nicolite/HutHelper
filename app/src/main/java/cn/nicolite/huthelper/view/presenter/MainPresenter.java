@@ -189,7 +189,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
                 .where(MenuDao.Properties.UserId.eq(userId))
                 .list();
 
-        if (ListUtils.isEmpty(menus) || menus.size() > 15) {
+        if (ListUtils.isEmpty(menus) || menus.size() > 13) {
             List<Menu> menuItems = new ArrayList<>();
             Menu item = new Menu(0, 0, WebViewActivity.TYPE_LIBRARY, "图书馆", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
             menuItems.add(item);
@@ -199,7 +199,7 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             menuItems.add(item);
             item = new Menu(3, 3, 0, "成绩查询", "cn.nicolite.huthelper.view.activity.GradeRankActivity", true);
             menuItems.add(item);
-            item = new Menu(4, 4, WebViewActivity.TYPE_HOMEWORK, "网上作业", "cn.nicolite.huthelper.view.activity.WebViewActivity", true);
+            item = new Menu(4, 14, 0, "新生攻略", "cn.nicolite.huthelper.view.activity.FreshmanStrategyActivity", true);
             menuItems.add(item);
             item = new Menu(5, 5, 0, "二手市场", "cn.nicolite.huthelper.view.activity.MarketActivity", true);
             menuItems.add(item);
@@ -216,8 +216,6 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
             item = new Menu(11, 11, 0, "宣讲会", "cn.nicolite.huthelper.view.activity.CareerTalkActivity", true);
             menuItems.add(item);
             item = new Menu(12, 12, 0, "全部", "cn.nicolite.huthelper.view.activity.AllActivity", true);
-            menuItems.add(item);
-            item = new Menu(13, 14, 0, "新生攻略", "cn.nicolite.huthelper.view.activity.FreshmanStrategyActivity", false);
             menuItems.add(item);
 
             for (Menu menu : menuItems) {
@@ -323,19 +321,9 @@ public class MainPresenter extends BasePresenter<IMainView, MainActivity> {
         getActivity().startActivity(Intent.createChooser(intent, "分享"));
     }
 
-    public void startChat() {
-        //TODO 开始聊天， 待添加
-        final CommonDialog commonDialog = new CommonDialog(getActivity());
-        commonDialog
-                .setMessage("私信暂时下线，新的私信已经在路上了！")
-                .setPositiveButton("知道了", null)
-                .show();
-    }
-
     public void checkPermission() {
         String[] permissions = new String[]{
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_PHONE_STATE,
         };
         AndPermission
                 .with(getActivity())

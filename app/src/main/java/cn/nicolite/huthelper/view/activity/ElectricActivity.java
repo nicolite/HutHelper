@@ -85,10 +85,10 @@ public class ElectricActivity extends BaseActivity implements IElectricView {
                 electricPresenter.showElectricData(etElectricLou.getText().toString(), etElectricHao.getText().toString());
                 break;
             case R.id.radio_electric_open:
-                electricPresenter.showVoteDialog(ElectricPresenter.YES);
+                electricPresenter.showVoteDialog(ElectricPresenter.Companion.getYES());
                 break;
             case R.id.radio_electric_unopen:
-                electricPresenter.showVoteDialog(ElectricPresenter.NO);
+                electricPresenter.showVoteDialog(ElectricPresenter.Companion.getNO());
                 break;
         }
     }

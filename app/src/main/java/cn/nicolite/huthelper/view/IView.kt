@@ -21,3 +21,4 @@ interface IListMoreView<T> : IBaseView {
     fun loadFailure(msg: String = "", isLoadMore: Boolean = false)
     fun noMore()
 }
+

@@ -47,7 +47,6 @@ public class WebViewActivity extends BaseActivity {
     private WebSettings settings;
 
     public static final int TYPE_LIBRARY = 278;
-    public static final int TYPE_HOMEWORK = 576;
     public static final int TYPE_NOTICE = 174;
     public static final int TYPE_FRESHMAN_STRATEGY = 519;
     public static final int TYPE_BLOG = 434;

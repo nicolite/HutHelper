@@ -8,8 +8,8 @@ apply plugin: 'org.greenrobot.greendao'
 static def gitVersionCode() {
     def cmd = 'git rev-list HEAD --count'
     def cmdExecute = cmd.execute().text.trim()
-    def gitVersionCode = "20190514${cmdExecute}"
-    return gitVersionCode.toBigInteger()
+    def gitVersionCode = "190514${cmdExecute}"
+    return gitVersionCode.toInteger()
 }
 
 static def gitVersionTag() {
