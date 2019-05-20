@@ -190,14 +190,19 @@ public class UserInfoActivity extends BaseActivity implements IUserInfoView {
 
     @Override
     public void changeAvatar() {
-        Matisse.from(this)
-                .choose(MimeType.of(MimeType.JPEG, MimeType.PNG))
-                .countable(true)
-                .maxSelectable(1)
-                .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
-                .thumbnailScale(0.85f)
-                .imageEngine(new GlideEngine())
-                .forResult(REQUEST_CODE_CHOOSE);
+        try {
+            Matisse.from(this)
+                    .choose(MimeType.of(MimeType.JPEG, MimeType.PNG))
+                    .countable(true)
+                    .maxSelectable(1)
+                    .restrictOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
+                    .thumbnailScale(0.85f)
+                    .imageEngine(new GlideEngine())
+                    .forResult(REQUEST_CODE_CHOOSE);
+
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
 

@@ -13,7 +13,7 @@ import org.greenrobot.greendao.database.Database
  * TODO 每次创建新的表都需要在这里添加
  */
 
-class DaoUpgradeHelper : DaoMaster.OpenHelper {
+class  DaoUpgradeHelper : DaoMaster.OpenHelper {
     constructor(context: Context, name: String) : super(context, name)
 
     constructor(context: Context, name: String, factory: SQLiteDatabase.CursorFactory) : super(context, name, factory)

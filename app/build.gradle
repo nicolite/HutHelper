@@ -147,7 +147,7 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.1.4'
 
     //图片选择
-    implementation 'com.zhihu.android:matisse:0.4.3'
+    implementation 'com.zhihu.android:matisse:0.5.2-beta3'
 
     //ButterKnife
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
@@ -161,9 +161,6 @@ dependencies {
 
     //权限管理
     implementation 'com.yanzhenjie:permission:1.1.2'
-
-    //网页抓取
-    implementation 'org.jsoup:jsoup:1.11.3'
 
     //LRecyclerView
     implementation 'com.github.jdsjlzx:LRecyclerView:1.5.4.4'

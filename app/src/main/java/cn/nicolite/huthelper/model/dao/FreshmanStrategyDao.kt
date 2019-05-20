@@ -10,7 +10,3 @@ data class FreshmanStrategy(
         val title: String,
         val content: String
 )
-
-object FreshmanStrategyDao{
-
-}
