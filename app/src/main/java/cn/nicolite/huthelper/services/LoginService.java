@@ -48,7 +48,6 @@ public class LoginService extends IntentService {
         intent.setAction(ACTION_INIT_WHEN_APP_CREATE);
         context.startService(intent);
         LogUtils.d(TAG, "start");
-
     }
 
     @Override

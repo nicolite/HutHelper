@@ -130,14 +130,15 @@ public class DateLineView extends View {
 
             for (int i = 0; i < timeAxisList.size(); i++) {
                 TimeAxis day = timeAxisList.get(i);
-                canvas2.drawCircle((float) (eachPaddintWidth * i + timeWidth * (i + 0.5)), getHeight() / 2, 10, circlePaint);
-                canvas2.drawText(day.getDate(), (float) (eachPaddintWidth * i + timeWidth * (i + 0.5) - timeWidth / 2), getHeight() / 2 - dp7, textPaint);
+                double startPoint = eachPaddintWidth * i + timeWidth * (i + 0.5);
+                canvas2.drawCircle((float) startPoint, getHeight() / 2, 10, circlePaint);
+                canvas2.drawText(day.getDate(), (float) (startPoint - timeWidth / 2), getHeight() / 2 - dp7, textPaint);
                 Rect dateRect = new Rect();
                 String name = day.getName() + day.getDays() + "天";
                 textPaint.getTextBounds(name, 0, name.length(), dateRect);
                 float nameWidth = dateRect.width();
                 float nameHeight = dateRect.height();
-                canvas2.drawText(name, (float) (eachPaddintWidth * i + timeWidth * (i + 0.5) - nameWidth / 2), getHeight() / 2 + dp7 + nameHeight, textPaint);
+                canvas2.drawText(name, (float) (startPoint - nameWidth / 2), getHeight() / 2 + dp7 + nameHeight, textPaint);
             }
             shouldUpdate = false;
         }
