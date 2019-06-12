@@ -382,7 +382,7 @@ public class DateUtils {
             //TODO 开学时间
             List<Configure> configureList = DaoUtils.getConfigureList();
             Configure configure = configureList.get(0);
-            String newTerm = TextUtils.isEmpty(configure.getNewTermDate()) ? "2018-03-05" : configure.getNewTermDate();
+            String newTerm = TextUtils.isEmpty(configure.getNewTermDate()) ? "2019-02-25" : configure.getNewTermDate();
             Date begin = df.parse(newTerm);
             Date end = new Date();
             be = (end.getTime() - begin.getTime()) / (1000 * 60 * 60 * 24);

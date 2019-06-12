@@ -29,9 +29,11 @@ val okHttpClient: OkHttpClient
         logging.level = HttpLoggingInterceptor.Level.BASIC
 
         val xHeader = Interceptor { chain ->
+            val token = URLEncoder.encode(EncryptUtils.encryptString(), "UTF-8")
+            LogUtils.d("okhttp", "token: $token")
             chain.proceed(
                     chain.request().newBuilder()
-                            .addHeader("token", URLEncoder.encode(EncryptUtils.encryptString(), "UTF-8"))
+                            .addHeader("token", token)
                             .addHeader("package_name", BuildConfig.APPLICATION_ID)
                             .addHeader("channel", BuildConfig.FLAVOR)
                             .addHeader("version", "${BuildConfig.VERSION_NAME}(${BuildConfig.VERSION_CODE})")

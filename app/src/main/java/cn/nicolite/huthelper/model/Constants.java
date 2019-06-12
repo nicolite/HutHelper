@@ -7,7 +7,7 @@ package cn.nicolite.huthelper.model;
 
 public class Constants {
     //API URL
-    public static final String API_BASE_URL = ConstantsValue.BASE_API_URL + "/";
+    public static final String API_BASE_URL = "https://raw.githubusercontent.com/nicolite/HutHelper/";
     public static final String PICTURE_URL = API_BASE_URL;//"https://raw.githubusercontent.com/nicolite/HutHelper/";
 
     //SOME URL

@@ -8,7 +8,7 @@ object ConstantsValue {
     //DB Name
     const val DBNAME = "huthelper-db"
 
-    const val BASE_API_URL = "http://nicolite.uicp.net"
+    const val BASE_API_URL = "https://raw.githubusercontent.com/nicolite/HutHelper/"
     const val BASE_API_TEST_URL = BASE_API_URL
     //图书馆
     const val LIBRARY = "http://218.75.197.122:8001"

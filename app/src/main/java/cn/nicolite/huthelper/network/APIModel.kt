@@ -22,6 +22,6 @@ interface WeatherAPI {
 }
 
 interface FreshmanStrategyAPI {
-    @GET("/huthelper/getFreshmanStrategyList")
+    @GET("opensource/staticAPI/getFreshmanStrategyList")
     fun getFreshmanStrategyList(): Observable<RestResult<List<FreshmanStrategy>>>
 }

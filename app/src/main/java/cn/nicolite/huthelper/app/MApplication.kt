@@ -26,9 +26,9 @@ class MApplication : Application() {
         LogUtils.debug = BuildConfig.DEBUG
         //初始化滑动返回库
         //SwipeBackHelper.init(this)
-        if (!LeakCanary.isInAnalyzerProcess(this)) {
-            LeakCanary.install(this)
-        }
+//        if (!LeakCanary.isInAnalyzerProcess(this)) {
+//            LeakCanary.install(this)
+//        }
     }
 
     override fun attachBaseContext(base: Context) {
